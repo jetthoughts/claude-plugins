@@ -1,0 +1,19 @@
+{
+  "name": "jetthoughts",
+  "interface": {
+    "displayName": "JetThoughts Plugins"
+  },
+  "plugins": [
+    {
+      "name": "jt-delivery",
+      "source": {
+        "source": "local",
+        "path": "./plugins/jt-delivery"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
