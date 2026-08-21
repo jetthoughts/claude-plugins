@@ -10,14 +10,8 @@
   "plugins": [
     {
       "name": "jt-delivery",
-      "source": {
-        "source": "local",
-        "path": "./plugins/jt-delivery"
-      },
-      "policy": {
-        "installation": "AVAILABLE"
-      },
-      "category": "Productivity"
+      "source": "./plugins/jt-delivery",
+      "description": "The JetThoughts autonomous delivery contract: 4-eyes loop, evidence standard, /deliver kickoff, core author/verifier agents"
     }
   ]
 }
