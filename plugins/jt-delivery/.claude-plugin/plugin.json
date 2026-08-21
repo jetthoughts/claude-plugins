@@ -1,7 +1,7 @@
 {
   "name": "jt-delivery",
   "description": "JetThoughts autonomous delivery contract: the DISCOVER-to-LEARN loop with 4-eyes at every stage (author never verifies own work), evidence standard, WIP=1, async-first artifacts - plus the /deliver kickoff command and the core author/verifier agent roster. Repo instructions always override the plugin on conflict.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"

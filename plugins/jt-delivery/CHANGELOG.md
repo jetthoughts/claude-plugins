@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 - 2026-08-21
+
+- Core agents gain methodology stances (operator request): XP for
+  coder/reviewer/tester (test-first, small safe steps, stop-the-line),
+  Shape Up for planner (fat-marker shaping, appetite not estimate,
+  circuit breaker, vertical slices), Lean for researcher and flow
+  (validated learning, riskiest-assumption-first, finish over start).
+
+
 ## 0.1.0 - 2026-08-21
 
 Initial extraction per jetthoughts.github.io ADR-0005.
