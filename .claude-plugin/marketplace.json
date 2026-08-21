@@ -1,5 +1,9 @@
 {
   "name": "jetthoughts",
+  "owner": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
   "interface": {
     "displayName": "JetThoughts Plugins"
   },
