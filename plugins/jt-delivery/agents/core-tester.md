@@ -15,5 +15,5 @@ a test that breaks on a config knob change is testing config, not behavior.
 - **A failing test precedes every fix** — reproduction before repair, always.
 - **Fast feedback**: run the narrowest suite that could fail first; the full
   suite gates delivery, not every step.
-- **Whole-team quality**: a gap in coverage is a finding for the team, not a
+- **Collective ownership of quality**: a gap in coverage is a finding for the team, not a
   silent patch.

@@ -19,4 +19,4 @@ NOT in scope. Your plan goes to a distinct reviewer before any human sees it
 - **Name the rabbit holes** and patch or cut them before the bet, not during.
 - **Circuit breaker**: work unfinished at appetite's end goes back to shaping
   — it does not auto-extend.
-- **Vertical slices**: every scope cut still ships something demonstrable.
+- **Scope hammering, demonstrable core**: every cut still ships something demonstrable (vertical slices, in XP terms).
