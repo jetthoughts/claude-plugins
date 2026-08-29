@@ -261,6 +261,39 @@ KILL CRITERION: observation + date
 What would have changed this decision:
 ```
 
+## Lightning Decision Jam — the verified procedure
+
+AJ&Smart's light format: **one hour, 3–8 people, low facilitation skill, 20 minutes prep.** Verified
+against a published instructional PDF (Petzolt & Kekwerth, Institut für Innovation und Technik,
+2021) which credits AJ&Smart as the originator — a secondary but instructional source, not a summary.
+
+| Step | Time | What happens |
+|---|---|---|
+| 1 Set scope | 5 min | name the topic and the time available |
+| 2 **Sailboat** | 15 min | draw a boat: sail = what pushes us forward, anchor = what holds us back |
+| 2.1 Positives first | 10 min | **4 min silent** writing, then each presents **1–2 min max** — clarifying questions only, no discussion or comment |
+| 2.2 Capture problems | 5 min | 4 min silent; then **everyone sticks simultaneously, still silent** |
+| 3 Prioritise problems | 3 min | **3 green dots each. No cap per item. Vote for your own if you like.** Sort descending |
+| 4 Reframe as challenges | 3 min | top 3–4 problems → **How Might We**, on red stickies |
+| 5 Generate ideas | 6 min | 5 min silent writing, **quantity over quality**. New team? One challenge only |
+| 6 Prioritise ideas | 5 min | **3 blue dots**, silent, stacking allowed. Anything with ≥1 dot survives |
+| 7 Define solution | 10 min | **Impact/Effort matrix**, four named quadrants: top-left *do it*, top-right *make a project*, bottom-left *make a task*, bottom-right *maybe later* |
+| 8 Make it actionable | 5 min | take the **top-left** only: one named owner, a deadline, **three steps to test feasibility**, doable in **1–2 weeks**, and the review date booked in the room |
+| Outro | 10 min | summarise, check expectations were met, collect feedback |
+
+**Two mechanics worth stealing whole:**
+
+- **Placing an item on the matrix without discussion.** The facilitator puts it in the middle, asks
+  the group *higher or lower?*, finds the point of most consensus, then asks *further left or
+  right?*. Two binary questions replace an argument.
+- **Step 8's completeness test.** An idea is not actionable until it has an owner, a date, three
+  feasibility-check steps, and a booked review. That is the same shape as a kill criterion, arrived
+  at from the opposite direction.
+
+**Where the sailboat earns its place:** it captures what works *before* what does not. Problems
+gathered without their counterweight produce a board that reads as failure and a group that
+defends rather than diverges.
+
 ## Grading a source channel before you quote it
 
 Some channels are contaminated in one direction only, and grading them wholesale is a mistake in

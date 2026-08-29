@@ -249,7 +249,14 @@ Two passes, in this order, and the order matters.
 
 **Debate first.** `Council` runs a real multi-round debate where agents respond to each other's actual points. Friction is the product here. Separately, `RedTeam` runs parallel adversaries against the strongest concept — searching for substitutes, prior failed attempts, adoption friction, and disconfirming evidence. `brutal-honesty-review` when the work needs its weakest part named without cushioning.
 
-**Then vote silently.** Everyone commits their vote without seeing others'. Debate is for information; open voting is for anchoring. Three dots per voter, maximum two on any one item, so a voter must either concentrate or spread.
+**Then vote silently.** Everyone commits their vote without seeing others'. Debate is for information; open voting is for anchoring.
+
+**Three dots per voter. Two different caps exist and they are not interchangeable** — pick one and say which:
+
+- **LDJ's rule: no cap.** A voter may stack all three on one item, and may vote for their own. Verified against the published procedure; an earlier version of this skill asserted a max-2 rule that LDJ does not have. Use it when you want conviction to show — someone who believes one thing matters most can say so with their whole vote.
+- **Note-and-Vote's rule: max two on any one item.** Forces a voter to name a second preference. Use it when the risk is a single loud advocate carrying a round.
+
+Whichever you use, **voting for your own item is allowed in both** — the anti-bias mechanism is silence, not self-denial.
 
 **A vote is void if the voters shared a source set.** That is not a guideline — a tally over correlated voters is a chorus with a number on it. Where a script enforces this (`bin/verify-sprint-round` in a repo that has it), let the script refuse. Where none exists, state each voter's sources next to the tally so the reader can refuse it themselves.
 
