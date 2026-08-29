@@ -37,6 +37,13 @@ report is Level 0 evidence on its own — a lead, not a finding.
 
 **The different-model seat is worth more than a fourth Claude seat.** When choosing between adding a fifth persona or routing one seat through Gemini, route through Gemini.
 
+**Exercise the seat before you count on it — a ping is not a model call.** Measured 2026-08-29:
+`mcp__gemini__ping` returned cleanly while `ask-gemini` failed outright (`Could not find the "agy"
+executable` — the backend CLI was absent). Ping echoes locally and proves nothing about the model
+behind it. **Verify a level-1 seat with a real question**, and if it fails, say the panel ran at
+level 2 rather than quietly dropping to it. A panel that claims an independence level it did not
+achieve is worse than one that never claimed it.
+
 ## NotebookLM call sequence
 
 NotebookLM is the evidence spine because it enforces grounding at the tool layer: answers cite the pinned sources, so a claim outside the corpus cannot be generated from it. Prose instructions to "be honest about sources" do not have that property.
