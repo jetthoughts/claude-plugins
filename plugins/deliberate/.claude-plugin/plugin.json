@@ -1,0 +1,9 @@
+{
+  "name": "deliberate",
+  "description": "A domain-agnostic decision harness: gather evidence with mechanically independent scouts, verify every citation by a second agent, generate rival mechanisms, contest them adversarially, vote silently, and synthesize one call with a kill criterion. Engineers independence rather than assuming it - a panel of same-model agents is one opinion sampled repeatedly.",
+  "version": "0.1.0",
+  "author": { "name": "JetThoughts", "url": "https://github.com/jetthoughts" },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": ["decision-making","research","ideation","red-team","four-eyes","multi-agent","claude-code"]
+}

@@ -17,6 +17,11 @@
       "name": "unfix",
       "source": "./plugins/unfix",
       "description": "unFIX organisation-design pattern library: Bases, Crews, Forums, Captains, Chiefs, and the sixteen Role Attributes - for human and AI-agent org structure"
+    },
+    {
+      "name": "deliberate",
+      "source": "./plugins/deliberate",
+      "description": "Decision harness: independent scouts, verified evidence ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion"
     }
   ]
 }
