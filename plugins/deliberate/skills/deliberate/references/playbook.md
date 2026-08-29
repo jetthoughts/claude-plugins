@@ -24,7 +24,14 @@ The point of a lane is that **a claim available in one lane is not available in 
 | **Different model** | the same question, different weights | `mcp__gemini__ask-gemini` / `brainstorm` | **1** | your context entirely — which is the point |
 | **Curated corpus** | only the documents pinned to one notebook | `mcp__notebooklm-mcp__notebook_query` | **2** | everything outside the notebook |
 | **Academic / prior art** | papers, patents | `ArXiv` skill, web search | 3 | commercial reality |
+| **Persistent memory** | corrections, preferences and decisions recorded outside the notes | `mcp__plugin_openviking-memory_openviking__search`, `mcp__memory__search_nodes` | **2** | anything never stored |
 | **Deep research, another vendor** | a long-running research pass by a different system | Perplexity, driven through `claude-in-chrome` — start the research, come back for it | **1** | its own sourcing choices, which you did not make |
+
+**Memory is a separate corpus from the vault, and it is the one most often skipped.** It holds
+standing corrections and preferences that were never written into a note. Query it explicitly — a
+"searched the internal lane" that only ran `qmd` has not searched memory. **Large memory results can
+exceed a tool-output limit**; when that happens the result is written to a file and should be read by
+a subagent so the bulk stays out of the orchestrator's context.
 
 **Perplexity deep research is a level-1 seat**, on the same logic as the Gemini seat: a different
 system with its own retrieval and its own priors. Drive it through the browser
@@ -220,6 +227,22 @@ Smallest next test · pass threshold · by when:
 KILL CRITERION: observation + date
 What would have changed this decision:
 ```
+
+## Grading a source channel before you quote it
+
+Some channels are contaminated in one direction only, and grading them wholesale is a mistake in
+both directions. Measured on Reddit and review sites, 2026-08-29:
+
+- **Complaints are organic. Recommendations are presumptively vendor voice.** VA agencies manufacture
+  testimonials at scale, a SaaS exists solely to auto-plug products into these threads, and one
+  "what admin do you hate?" thread was itself a vendor fishing for leads.
+- So: quote a complaint as evidence of pain; treat a product recommendation in the same thread as
+  advertising until a second, independent channel confirms it.
+- **Grade your own lane by the same rule**, and say in the dissent which side of it your rows sit on.
+
+**Some sources block the crawler.** `reddit.com` refuses the Anthropic crawler; the pages were
+reachable through the Parallel crawler instead. **A fetch failure is not an absence** — try a second
+route before reporting "found 0", or the denominator is wrong.
 
 ## Asking a qualifying question without leaking the answer
 

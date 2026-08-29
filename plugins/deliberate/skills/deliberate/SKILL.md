@@ -31,12 +31,16 @@ Spawning five agents with five different personas does **not** give five perspec
 
 | Level | Mechanism | Why it works |
 |---|---|---|
-| **1 — strongest** | **A different model.** Route one seat through `mcp__gemini__ask-gemini` or `brainstorm` | different weights, different training, genuinely different priors |
+| **1 — strongest** | **A different model or a different system.** `mcp__gemini__ask-gemini`, or Perplexity driven through `claude-in-chrome` | different weights, different retrieval, genuinely different priors |
 | **2** | **A different corpus.** Give each scout a disjoint source set — separate NotebookLM notebooks, or internal-docs vs web vs primary-observation | a claim absent from your corpus cannot be produced from it |
 | **3** | **A different tool.** One on web search, one on the browser, one on the internal index, one on the codebase | tools have different blind spots |
 | **4 — weakest** | **A different lens or persona.** Prompt-level framing | free, and on its own it is theatre |
 
 Most harnesses stop at level 4 and report the resulting agreement as corroboration. **Say in the output which level each seat achieved.** A panel that only differed at level 4 must report itself as one opinion sampled repeatedly.
+
+**Level 1 has more than one route, so exhaust them before dropping.** If the model seat is unavailable, try the other independent system — a browser-driven one — *before* declaring the panel level 2. Measured 2026-08-29: the Gemini backend was missing, the panel silently continued without a level-1 seat, and the browser route that was already documented sat unused until the decider pointed at it. **A fallback you wrote down and did not take is the same as not having one.**
+
+**Exercise the seat with a real question. A ping is not a model call** — `ping` echoed cleanly while `ask-gemini` failed outright on a missing binary.
 
 ## The 4-eyes rule
 
@@ -76,6 +80,25 @@ One decision question, narrow enough to be researchable. Reject the vague form o
 - **Yes:** "which recurring workflow among [specific actor] is underserved enough to justify testing a paid solution in the next 14 days?"
 
 Write down: the question · who decides · what a good answer must contain · what is explicitly out of scope · the date the decision expires. **If the question cannot fail, it is not a question.**
+
+### The frame is the decider's, not the facilitator's ▸ confirm before spawning
+
+**Show the reframed question to the decider and wait.** This is the one place in the harness where
+taking a defensible default and proceeding is wrong, and the reason is arithmetic: every lane, every
+row and every concept inherits the frame, so a wrong default at stage 0 wastes the entire run. Every
+later stage can absorb a bad call; this one cannot.
+
+**When the question contains more than one reading, list them and say which you would take** — do not
+silently pick. Measured 2026-08-29: *"design an AI business OS for JetThoughts-like companies"* holds
+two readings — build it for ourselves, or sell it to companies of that shape. The facilitator picked
+the second, spawned three lanes on it, and the decider's actual meaning was the first. Three lanes of
+good evidence answered a question nobody asked.
+
+The tell that a question has two readings: **a phrase that only matters under one of them.** "For
+companies *like* us" is only load-bearing if you are selling; if you are building for yourself, the
+comparison is decoration. When a phrase is doing that much work, stop and ask.
+
+**Confirming costs one message. Not confirming costs the run.**
 
 ## Stage 0.5 — GOAL AND METRIC ▸ milestone 1
 
@@ -124,6 +147,8 @@ Then label every line, and never let two of these wear the same clothes:
 - **Conflict** — two sources disagree; record both, resolve or flag
 
 **Conflicts are the most valuable output of this stage.** Agreement across scouts that shared a corpus is not corroboration; disagreement between disjoint corpora is real information. If nothing conflicts, suspect the lanes were not disjoint and say so.
+
+**Rows that answer a different question get their own section, headed DROPPED.** When the frame moves — a reframe, a correction, a decider's ruling — the evidence gathered under the old frame is still true and still costly to have produced, and the temptation is to carry it forward because it is *there*. Do not. Name it, say which question it answers, keep it as evidence, and exclude it from the design. **Laundering evidence into a conclusion it does not support is the failure this whole harness exists to prevent**, and it is most tempting when the evidence is your own.
 
 **Gate: no concept may be proposed before the ledger exists.** Ideas generated before evidence are priors wearing new words.
 
@@ -296,5 +321,7 @@ Use LDJ when humans in a room already hold the evidence and need to converge in 
 | Big ideas describe features, not mechanisms | nobody opened the product | require a screenshot or a live tour per card |
 | Concepts do not move the agreed metric | milestone 1 was skipped or ignored | out of scope, however good |
 | No kill criterion | it is an opinion | do not record it as a decision |
+| The decider corrects the frame after lanes ran | stage 0 was never confirmed | confirm the frame next time; file the rows as DROPPED, do not reuse them |
+| A level-1 seat "verified" but never asked a real question | a ping is not a model call | exercise it, and exhaust the other level-1 route before dropping |
 
 Longer reference — worked lane assignments, NotebookLM call sequences, and the full artifact templates: `references/playbook.md`.
