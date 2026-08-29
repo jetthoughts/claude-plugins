@@ -44,6 +44,8 @@ Spawning five agents with five different personas does **not** give five perspec
 
 Most harnesses stop at level 4 and report the resulting agreement as corroboration. **Say in the output which level each seat achieved.** A panel that only differed at level 4 must report itself as one opinion sampled repeatedly.
 
+**Gate: a run may not report an independence level it did not achieve, and may not skip a route because of time.** If the model seat fails, the browser route is attempted *before* the level is written down — a time-box is a reason to run fewer lanes, never a reason to claim a level you skipped the work for. Measured 2026-08-29: a benchmark run read this rule, hit the missing backend, declined the browser fallback citing its time-box, and reported level 3. The rule was present and prose lost to schedule pressure — the same failure it was written to describe.
+
 **Level 1 has more than one route, so exhaust them before dropping.** If the model seat is unavailable, try the other independent system — a browser-driven one — *before* declaring the panel level 2. Measured 2026-08-29: the Gemini backend was missing, the panel silently continued without a level-1 seat, and the browser route that was already documented sat unused until the decider pointed at it. **A fallback you wrote down and did not take is the same as not having one.**
 
 **Exercise the seat with a real question. A ping is not a model call** — `ping` echoed cleanly while `ask-gemini` failed outright on a missing binary.

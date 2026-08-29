@@ -33,6 +33,12 @@ standing corrections and preferences that were never written into a note. Query 
 exceed a tool-output limit**; when that happens the result is written to a file and should be read by
 a subagent so the bulk stays out of the orchestrator's context.
 
+**The fallback is cheap and the excuse for skipping it is always the same.** Opening a browser tab
+and pasting a question costs about a minute. Measured twice on 2026-08-29 — once by the facilitator,
+once by an independent benchmark run — the reason given for skipping it was the time-box on both
+occasions. **Budget the fallback into the stage, or it will always be the thing that gets cut**, and
+the panel will report a level it did not earn.
+
 **Perplexity deep research is a level-1 seat**, on the same logic as the Gemini seat: a different
 system with its own retrieval and its own priors. Drive it through the browser
 (`claude-in-chrome`), kick the research off, and **collect it on a later pass rather than blocking**
