@@ -9,6 +9,12 @@ A decision harness. It exists because the usual failure is not a lack of ideas �
 
 Skip a stage and say which; do not skip the verification inside one.
 
+**Every reply during a run opens with where the run is:** `stage 4 of 8 · CONTEST · 3 stages remain`.
+A deliberation that stops at LEDGER has produced *findings*, not a decision — and findings presented
+without that label read as a conclusion. **An unfinished run must say it is unfinished**, name the
+stage it reached, and name what is still owed. Measured on the first live run: it halted after LEDGER
+and reported evidence as though the question had been answered. It had not been.
+
 ```
 FRAME → GOAL+METRIC → GATHER → LEDGER → IDEATE → CONTEST → DECIDE → ROADMAP
           ▸milestone1  (diverge) (converge)(diverge) (converge)  ▸milestone2
@@ -158,7 +164,9 @@ Diverge deliberately. Use `BeCreative` (verbalized sampling — several internal
 
 ### 3a — Lightning Demos, first
 
-**Do not start by inventing.** Start by looking at what already works somewhere else. This is the single highest-yield ideation step and the one most often skipped.
+**Do not start by inventing. Go and look at the world first — this stage is an online research pass, not a recall exercise.** It is the single highest-yield ideation step, the one most often skipped, and the one a model will happily fake from memory because it *can* produce plausible examples without searching.
+
+**Gate: at least three examples must carry a URL fetched during this run.** An example you already knew is not a Lightning Demo — it is a prior. If the round produced no new fetches, the round did not happen, and IDEATE must not proceed.
 
 Each contributor researches independently — around 25 minutes, or prepared in advance — and brings **three real examples of someone solving a structurally similar problem well**. Then a three-minute demo each: what it is, and what is good about it.
 
@@ -324,4 +332,6 @@ Use LDJ when humans in a room already hold the evidence and need to converge in 
 | The decider corrects the frame after lanes ran | stage 0 was never confirmed | confirm the frame next time; file the rows as DROPPED, do not reuse them |
 | A level-1 seat "verified" but never asked a real question | a ping is not a model call | exercise it, and exhaust the other level-1 route before dropping |
 
-Longer reference — worked lane assignments, NotebookLM call sequences, and the full artifact templates: `references/playbook.md`.
+**Which skill to reach for at each stage — the full routing table is in `references/playbook.md`.** Reach for it rather than improvising: roughly sixty installed skills cover parts of this harness, and re-implementing one by hand is the failure this whole repository exists to stop. Measured on the first live run: the facilitator drove a browser manually for a deep-research pass while `perplexity-researcher-reasoning-pro` sat installed and unused.
+
+Longer reference — worked lane assignments, NotebookLM call sequences, the stage routing table, and the full artifact templates: `references/playbook.md`.
