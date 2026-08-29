@@ -7,14 +7,21 @@ description: "Run a grounded group deliberation that ends in a decision: gather 
 
 A decision harness. It exists because the usual failure is not a lack of ideas — it is **a group that agrees for the wrong reason** and calls that agreement evidence.
 
-Five stages, each ending in an artifact a different agent has checked. Skip a stage and say which; do not skip the verification inside one.
+Skip a stage and say which; do not skip the verification inside one.
 
 ```
-FRAME → GATHER → LEDGER → IDEATE → CONTEST → DECIDE
-        (diverge) (converge) (diverge) (converge)
-         ↑ independent  ↑ 4-eyes   ↑ rival    ↑ debate then
-           scouts         verify     mechanisms  SILENT vote
+FRAME → GOAL+METRIC → GATHER → LEDGER → IDEATE → CONTEST → DECIDE → ROADMAP
+          ▸milestone1  (diverge) (converge)(diverge) (converge)  ▸milestone2
+                        ↑           ↑         ↑          ↑
+                   independent   4-eyes   lightning   debate,
+                     scouts      verify    demos +      then
+                                          mechanisms  SILENT vote
 ```
+
+Lineage: the divergence/convergence spine is the Double Diamond; the silent generation, silent
+voting and impact/effort ranking are Lightning Decision Jam; the goal-and-metric opening, Lightning
+Demos, milestones and closing roadmap are Strategy Signal (AJ&Smart). What is added is the evidence
+layer and the independence engineering — see the comparison at the end.
 
 ## The rule that does the work: independence is mechanical, not rhetorical
 
@@ -45,6 +52,14 @@ Most harnesses stop at level 4 and report the resulting agreement as corroborati
 
 A review that returns "looks good" has failed and is re-run. Default to refuted when uncertain.
 
+## Roles and guidelines
+
+State both before starting; AJ&Smart's Strategy Signal opens this way because an unstated role is negotiated mid-session, which costs more than saying it.
+
+**Roles:** a **facilitator** who owns the clock and the sequence and never argues the content · a **decider** who breaks ties and owns the outcome (in a one-person business this is the owner, and it is not delegable) · **contributors** who produce · a **scribe** who captures, and whose only job is capture.
+
+**Guidelines:** work silently where the stage says silent · no discussion before the vote · every claim carries its source · disagree with the idea, never the person · the decider decides, the group informs.
+
 ## Stage 0 — FRAME
 
 One decision question, narrow enough to be researchable. Reject the vague form out loud rather than proceeding:
@@ -53,6 +68,17 @@ One decision question, narrow enough to be researchable. Reject the vague form o
 - **Yes:** "which recurring workflow among [specific actor] is underserved enough to justify testing a paid solution in the next 14 days?"
 
 Write down: the question · who decides · what a good answer must contain · what is explicitly out of scope · the date the decision expires. **If the question cannot fail, it is not a question.**
+
+## Stage 0.5 — GOAL AND METRIC ▸ milestone 1
+
+Strategy Signal spends its first third here, before anyone looks at a solution, and it is right to: **a group that has not agreed what winning looks like will ideate toward different finish lines and call the disagreement creativity.**
+
+Write two things and stop until both are agreed:
+
+- **Long-term goal** — optimistic, specific, and dated. *"In two years, [who] will [outcome] so reliably they stop [current workaround]."*
+- **The metric** — the one number that moves if the goal is being reached, plus how it is measured and what it reads today. **If it reads "unknown", that is the first research question**, not a footnote.
+
+**Milestone 1: goal and metric are agreed and written.** Nothing downstream may contradict them, and a concept that does not move the metric is out of scope regardless of how good it is.
 
 ## Stage 1 — GATHER
 
@@ -97,7 +123,29 @@ Then label every line, and never let two of these wear the same clothes:
 
 Diverge deliberately. Use `BeCreative` (verbalized sampling — several internally diverse candidates rather than one idea restated) and `Ideate` (multi-cycle generation with fitness testing) rather than asking for a list, which returns variations on the first idea.
 
-Generate rival **mechanisms**, not rival wordings. Lenses that reliably produce genuinely different mechanisms:
+### 3a — Lightning Demos, first
+
+**Do not start by inventing.** Start by looking at what already works somewhere else. This is the single highest-yield ideation step and the one most often skipped.
+
+Each contributor researches independently — around 25 minutes, or prepared in advance — and brings **three real examples of someone solving a structurally similar problem well**. Then a three-minute demo each: what it is, and what is good about it.
+
+**The examples must come from outside the domain in question.** That is the whole mechanic. Ideas that spark the best solutions come from similar problems in different environments; three examples from your own industry produce three versions of what you already do.
+
+The scribe captures **one big idea per demo** — a headline, **its source**, and a rough sketch of the component that inspired it. Not the whole product: the one transferable part. Capture everything; discard nothing at this stage.
+
+```
+Big idea:              (headline — what's transferable)
+Seen at:               (source, with a link)
+From which domain:     (must not be ours)
+The component:         (the specific mechanism, not the whole product)
+Why it might transfer:
+```
+
+**Lightning Demos are also a de-correlation mechanism**, which is why they sit here rather than being optional colour. Assign each contributor a **different domain to search** — one in logistics, one in healthcare, one in gaming, one in a regulated industry. That is level 2 on the independence ladder: different corpora produce genuinely different big ideas, where the same brief produces the same three examples. A demo round where everyone brought examples from one industry has not run.
+
+### 3b — Concept creation
+
+Now build concepts, and build them **from the big-idea board plus the evidence ledger**. Generate rival **mechanisms**, not rival wordings. Lenses that reliably produce genuinely different mechanisms:
 
 - **Inversion** — achieve the outcome without the thing everyone uses
 - **Remove / replace / reverse** — cut a required step, change who buys, run the workflow backwards
@@ -111,6 +159,7 @@ Each concept is a card, and the card is rejected if a field is empty:
 ```
 Concept:
 Which evidence row it answers:     ← must cite the ledger
+Which big idea it borrows:         ← from Lightning Demos, with its source
 Mechanism (how it actually works):
 Why now (what changed):
 Existing substitute:
@@ -163,6 +212,15 @@ What would have changed the decision:
 
 **A decision without a kill criterion and a date is an opinion.**
 
+### Milestone 2 and the roadmap
+
+**Milestone 2: the chosen concepts are named.** Then sequence them — Strategy Signal ends on a roadmap rather than a decision, because a decision with no order of operations is re-litigated the following week.
+
+| When | What | Who | The metric it moves | Kill date |
+|---|---|---|---|---|
+
+Sequence by **what unblocks the most**, not by what is most exciting. Anything not on the roadmap goes to a named backlog rather than staying ambiguously alive.
+
 ## Choosing the depth
 
 Match the machinery to the cost of being wrong. Over-running this on a small question is its own failure.
@@ -170,21 +228,27 @@ Match the machinery to the cost of being wrong. Over-running this on a small que
 | Cost of being wrong | Run |
 |---|---|
 | Reversible, cheap | FRAME → one scout → decide. Say you skipped the rest |
-| Normal | 3 scouts, ledger + verify, concepts, one RedTeam pass, vote |
-| Expensive or irreversible | 5 scouts including a different-model seat, cross-notebook conflict check, Council + RedTeam, silent vote, full record |
+| Normal | 3 scouts, ledger + verify, one Lightning Demo round, concepts, one RedTeam pass, vote |
+| Expensive or irreversible | 5 scouts including a different-model seat, cross-notebook conflict check, Lightning Demos with a domain assigned per contributor, Council + RedTeam, silent vote, full record and roadmap |
 
-## What this improves on in Lightning Decision Jam
+## What is borrowed, and what is added
 
-LDJ is a fast, well-designed human workshop — problems, silent solution writing, dot voting, effort/impact grid, action steps. Its silent-generation and silent-voting mechanics are kept here because they solve real anchoring problems.
+Both AJ&Smart formats are well designed for their job. Nothing here replaces them; the additions exist because the participants are agents rather than people.
 
-What it assumes, and this harness supplies instead:
+| Taken from | What | Why it is kept |
+|---|---|---|
+| **Lightning Decision Jam** | silent solution writing · dot voting before discussion · impact/effort ranking | they solve anchoring, and anchoring is worse among agents, since later speakers read earlier output |
+| **Strategy Signal** | roles and guidelines stated up front · long-term goal and metric *before* solutions · Lightning Demos · explicit milestones · closing roadmap | a group that has not agreed the finish line ideates toward different ones; a decision with no sequence gets re-litigated next week |
+| **Double Diamond** | the diverge/converge spine, problem diamond before solution diamond | it is the same line the multi-agent evidence draws — fan out on divergence, single-thread on convergence |
 
-- **LDJ assumes participants already carry the knowledge.** Stages 1–2 make that an artifact rather than an assumption, and verify it.
-- **LDJ assumes participants are independent people.** With agents that is false by default, which is why independence is engineered and its level reported.
-- **LDJ ends at "action steps".** This ends at a falsifiable test with a threshold and a kill date.
-- **LDJ has no verification.** Here nothing passes a stage on its author's word.
+**What both formats assume, which is false with agents:**
 
-Use LDJ when humans in a room already hold the evidence and need to converge in an hour. Use this when the evidence has to be produced and the conclusion has to survive.
+- **That participants already carry the knowledge.** In a room of experienced humans this is roughly true. Stages 1–2 make it an artifact instead, and verify every citation.
+- **That participants are independent minds.** This is the load-bearing one. Same model, same context, same sources means correlated by construction, so independence is engineered and its level is reported rather than assumed.
+- **That the output is action steps.** This ends at a falsifiable test with a threshold and a kill date, because an action step nobody can fail is not a decision.
+- **That someone verifies.** Neither format has a verification stage. Here nothing passes on its author's word.
+
+Use LDJ when humans in a room already hold the evidence and need to converge in an hour. Use Strategy Signal when a human team needs a strategy day. Use this when the evidence has to be produced first and the conclusion has to survive being attacked.
 
 ## Failure modes to watch for
 
@@ -196,6 +260,8 @@ Use LDJ when humans in a room already hold the evidence and need to converge in 
 | Concepts arrive before evidence | priors wearing new words | discard and gate on the ledger |
 | A clean result with no denominator | nothing was measured | report *searched N, found 0* |
 | The most articulate concept wins | rhetoric beat evidence | check the evidence-quality term was actually scored |
+| Lightning Demo examples all from one industry | the demo round did not run | re-run with a different domain assigned per contributor |
+| Concepts do not move the agreed metric | milestone 1 was skipped or ignored | out of scope, however good |
 | No kill criterion | it is an opinion | do not record it as a decision |
 
 Longer reference — worked lane assignments, NotebookLM call sequences, and the full artifact templates: `references/playbook.md`.

@@ -100,6 +100,45 @@ Reuse rather than re-implement. All of these are installed.
 
 **A note on `Council`.** Its agents respond to each other across rounds. Some harnesses forbid agent-to-agent exchange precisely because it produces convergence. Both hold, at different jobs: Council is for **deliberation, where friction is the product**, and it returns a transcript as a structured artifact. It must never close a decision — the vote and the record do that.
 
+## Lightning Demos — running it with agents
+
+The mechanic, as AJ&Smart run it: each contributor researches individually (~25 minutes, or prepared
+in advance) and brings **three real examples** of someone solving a structurally similar problem
+well. Each gives a **three-minute demo**. A **scribe** captures **one big idea per demo** — a
+headline, its source, and a rough sketch of the inspiring component. Nothing is discarded at this
+stage; the output is a board of borrowable parts.
+
+**The rule that makes it work: look outside the domain.** Examples from your own industry return
+what you already do, wearing a different logo.
+
+**With agents, assign the domain rather than the topic.** This is what converts a colour exercise
+into a level-2 independence mechanism:
+
+| Contributor | Assigned domain | Searches for |
+|---|---|---|
+| A | logistics / operations | how they solve the structurally similar problem |
+| B | healthcare / regulated | same problem under constraint |
+| C | consumer / gaming | same problem where attention is scarce |
+| D | finance / insurance | same problem where the cost of error is high |
+| E | a different *era* — how it was solved before software | same problem without the obvious tool |
+
+Assigning topics instead of domains produces five agents searching the same corpus and returning the
+same three examples. That is the failure to watch for.
+
+**Capture format** — one per demo, and the source is not optional:
+
+```
+Big idea:            (headline — the transferable part)
+Seen at:             (source + link)
+From which domain:   (must not be ours)
+The component:       (the specific mechanism, not the whole product)
+Why it might transfer:
+Why it might not:    (the scribe writes this too — a board of only upside is a wish list)
+```
+
+Feed the board into concept creation alongside the evidence ledger. **A concept card must cite both**
+— which evidence row it answers, and which big idea it borrows. A concept citing neither is a prior.
+
 ## Artifact templates
 
 ### Evidence row
@@ -126,6 +165,7 @@ What it does not rule out:
 ```
 Concept:
 Evidence row it answers:
+Big idea borrowed (+ source):
 Mechanism:
 Why now:
 Existing substitute:
