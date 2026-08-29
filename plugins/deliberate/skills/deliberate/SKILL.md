@@ -29,6 +29,35 @@ voting and impact/effort ranking are Lightning Decision Jam; the goal-and-metric
 Demos, milestones and closing roadmap are Strategy Signal (AJ&Smart). What is added is the evidence
 layer and the independence engineering — see the comparison at the end.
 
+## The stage-exit check — apply this stage's own rule to this stage's own output
+
+**Every gate here is written about contributors' work. Run it against the facilitator's work too,
+before leaving the stage.** Ten defects in a single measured session traced to one structure: rules
+applied to the object level and never to the harness itself.
+
+| The stage demands | So also check |
+|---|---|
+| GATHER — every row carries an openable source | **the facilitator's own summary prose.** A sentence outside a table is unsourced by default, and that is where the errors live |
+| GATHER — search disjoint corpora | **this repository first.** Prior work already on disk is an input, not something to rediscover |
+| LEDGER — author never verifies | **the ledger's own construction**, and every instrument that judges it — a grader, an assertion, a checker is an output and gets verified like one |
+| IDEATE — examples fetched, not recalled | **the frame the facilitator seeded**, and the demo domains it chose |
+| Any stage — say what was searched and not found | **what the facilitator did not look at**, with the denominator |
+
+**The test, in one question:** *the rule I just enforced on someone else — does it hold for what I
+just produced?* If it has never been asked, this stage has not exited.
+
+**Why this rather than more rules.** Four point fixes shipped in one session — an ask check, a
+fallback gate, a research gate, a prior-art check — each a patch for the instance that had just
+occurred. A harness that cannot apply its own rules to itself generates an unbounded supply of them.
+The three failure branches all reduce to the same thing:
+
+- **Provenance is a property of evidence, never of statements** — so ~90% of output, being prose,
+  is unsourced by design.
+- **Four-eyes is required for content, never for the instruments that judge content** — so nothing
+  verifies the verifier, and a self-authored grader errs in one direction only.
+- **The harness is built to discover and has no concept of resuming** — so every run starts from
+  zero regardless of what the repository already holds.
+
 ## The rule that does the work: independence is mechanical, not rhetorical
 
 Spawning five agents with five different personas does **not** give five perspectives. They share a model, a context, and usually a source set — they are correlated by construction. Worse, a language model will produce a fluent, well-argued objection for *any* position on request, so "it dissented" is not evidence that it thought independently.
