@@ -1,9 +1,20 @@
 {
   "name": "deliberate",
-  "description": "A domain-agnostic decision harness: gather evidence with mechanically independent scouts, verify every citation by a second agent, generate rival mechanisms, contest them adversarially, vote silently, and synthesize one call with a kill criterion. Engineers independence rather than assuming it - a panel of same-model agents is one opinion sampled repeatedly.",
-  "version": "0.1.0",
-  "author": { "name": "JetThoughts", "url": "https://github.com/jetthoughts" },
+  "description": "Two decision formats. `deliberate`: a domain-agnostic evidence harness - independent scouts, verified ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion. `ldj`: AJ&Smart's 30-90 minute problem-first Lightning Decision Jam, verified procedure, no research required. Opposite entry points - LDJ starts from what holds us back, deliberate from what is true.",
+  "version": "0.2.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
   "homepage": "https://github.com/jetthoughts/claude-plugins",
   "license": "MIT",
-  "keywords": ["decision-making","research","ideation","red-team","four-eyes","multi-agent","claude-code"]
+  "keywords": [
+    "decision-making",
+    "research",
+    "ideation",
+    "red-team",
+    "four-eyes",
+    "multi-agent",
+    "claude-code"
+  ]
 }

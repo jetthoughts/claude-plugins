@@ -1,17 +1,19 @@
 # deliberate
 
-## 0.1.0 — 2026-08-29
+## 0.2.0 — 2026-08-29
 
-First release. Assembled from skills already installed rather than written from
-scratch — `Research`, `BeCreative`, `Ideate`, `Council`, `RedTeam`, `Science`,
-`FirstPrinciples`, `sadd-do-competitively` — plus the NotebookLM, parallel-search,
-browser, qmd and Gemini MCP tools.
+Adds a second skill and hardens the first against a measured benchmark.
 
-The contribution over a role-based panel is the **independence ladder**: a
-different model (1) beats a different corpus (2) beats a different tool (3) beats
-a different persona (4), and level 4 alone is theatre. Every run reports the level
-each seat achieved, so a panel that only differed by prompt must say so.
+- **`ldj`** — AJ&Smart's Lightning Decision Jam as a runnable 30–90 minute procedure. Problem-first,
+  no research, eight steps with time-boxes. Opposite entry point to `deliberate`: LDJ starts from
+  what holds us back, `deliberate` from what is true.
+- **`deliberate`** — frame gate (the decider confirms before lanes spawn), Lightning-Demo research
+  gate (≥3 URLs fetched this run), level-1 fallback gate, stage routing table across ~60 installed
+  skills, Concept Gallery, split goal/metric confirmation, single-surface close, run-light mode.
 
-Grounding is enforced at the tool layer via NotebookLM — answers cite pinned
-sources, so a claim outside the corpus cannot be produced from it — rather than by
-instructing agents to be honest about sources.
+Benchmarked against a pre-fix snapshot: frame gate 3/5 → 5/5, research gate 0 → 3 fetched URLs,
+fallback gate obeyed 2/2 where prose was declined 2/2. The completion contract measured **no**
+improvement — the baseline already scored full marks, so the defect was execution, not the skill.
+
+Corrected here: an earlier write-up gave LDJ a max-two-dots-per-item rule. LDJ has no cap; that rule
+belongs to Note-and-Vote. Two formats conflated from memory.
