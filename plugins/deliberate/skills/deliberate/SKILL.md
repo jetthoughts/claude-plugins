@@ -117,6 +117,9 @@ Write two things and stop until both are agreed:
 - **Long-term goal** — optimistic, specific, and dated. *"In two years, [who] will [outcome] so reliably they stop [current workaround]."*
 - **The metric** — the one number that moves if the goal is being reached, plus how it is measured and what it reads today. **If it reads "unknown", that is the first research question**, not a footnote.
 
+**The goal and the metric take separate confirmations.** Bundling them lets a weak metric ride in on
+a strong goal — the decider nods at the destination and inherits a number nobody examined. Ask twice.
+
 **Milestone 1: goal and metric are agreed and written.** Nothing downstream may contradict them, and a concept that does not move the metric is out of scope regardless of how good it is.
 
 ## Stage 1 — GATHER
@@ -229,6 +232,17 @@ Smallest test that could falsify it:
 
 **"Different" means a different mechanism, not a different feature list.**
 
+### 3c — Concept Gallery
+
+**Lay every concept out together before anyone judges one.** In the Strategy Signal boards this is
+its own frame, and the reason is mechanical: concepts assessed one at a time are assessed against
+whatever was said last, not against each other. A gallery makes the comparison simultaneous.
+
+One line per concept, same shape for each — concept · mechanism · which evidence row · which big
+idea · most dangerous assumption. **If one card is richer than the others because its author wrote
+more, trim it.** Presentation length is not evidence, and the vote that follows cannot tell them
+apart.
+
 ## Stage 4 — CONTEST
 
 Two passes, in this order, and the order matters.
@@ -285,6 +299,10 @@ The reason is specific and it is the one AJ&Smart give: up to this point every d
 
 | When | What | Who | The metric it moves | Kill date |
 |---|---|---|---|---|
+
+**The run ends on one surface: goal, metric and roadmap together.** Not the decision record — that is
+the audit trail. This is the single board a reader takes in at a glance, and it is what survives the
+week; a decision spread across three documents is re-litigated because nobody can hold it at once.
 
 Sequence by **what unblocks the most**, not by what is most exciting. Anything not on the roadmap goes to a named backlog rather than staying ambiguously alive.
 

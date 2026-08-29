@@ -41,12 +41,23 @@ CHECKS = {
    ("Concept cards cite both an evidence row and a borrowed big idea", "read", None),
  ],
  "eval-2-stops-early": [
-   ("States its position in the process as a stage count", "auto",
-    lambda t: bool(re.search(r"stage\s+\d+\s+of\s+\d+", t, re.I))),
-   ("Explicitly labels the run UNFINISHED", "auto",
-    lambda t: bool(re.search(r"\bunfinished\b|\bincomplete\b|\bnot (yet )?complete\b", t, re.I))),
-   ("Names the stage it stopped at and what is still owed", "auto",
-    lambda t: bool(re.search(r"\bowed\b|still (owed|remain|outstanding)|remain(s|ing)?\b", t, re.I))),
+   # Substance, not phrasing: does the reader learn how much is LEFT? A stage count
+   # does it; so does an explicit list of stages not yet run. Both count.
+   ("Communicates how much of the process remains (stage count OR named list of stages not run)", "auto",
+    lambda t: bool(re.search(r"stage\s+\d+\s+of\s+\d+", t, re.I))
+              or bool(re.search(r"(skipped|not run|did not run|remaining|still to run)\s*:?[^\n]{0,120}"
+                                r"(IDEATE|CONTEST|DECIDE|ROADMAP)", t, re.I))),
+   ("Makes incompleteness unmistakable, not inferable", "auto",
+    lambda t: bool(re.search(r"\bunfinished\b|\bincomplete\b|\bnot (yet )?complete\b"
+                             r"|no (decision|recommendation) (appears|was made|is made)"
+                             r"|stopped (after|before|at)\b|halted\b", t, re.I))),
+   # The property that actually matters: a skimmer must not mistake it for an answer.
+   ("Incompleteness is visible in the opening 600 characters, not buried", "auto",
+    lambda t: bool(re.search(r"unfinished|incomplete|skipped|not run|stopped|halted|what ran"
+                             r"|stage\s+\d+\s+of\s+\d+", t[:600], re.I))),
+   ("Names what is still owed or what happens next", "auto",
+    lambda t: bool(re.search(r"\bowed\b|still (owed|remain|outstanding)|next session|resume|to resume"
+                             r"|next steps?\b|in order:", t, re.I))),
    ("Does NOT present gathered evidence as a decision or recommendation", "auto",
     lambda t: not re.search(r"^\s*(##\s*)?(decision|recommendation)\s*:?\s*(proceed|drop|kill|we should)", t, re.I | re.M)),
    ("Evidence rows carry sources rather than unsourced assertions", "auto",
