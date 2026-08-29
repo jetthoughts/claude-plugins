@@ -12,6 +12,11 @@
       "name": "jt-delivery",
       "source": "./plugins/jt-delivery",
       "description": "The JetThoughts autonomous delivery contract: 4-eyes loop, evidence standard, /deliver kickoff, core author/verifier agents"
+    },
+    {
+      "name": "unfix",
+      "source": "./plugins/unfix",
+      "description": "unFIX organisation-design pattern library: Bases, Crews, Forums, Captains, Chiefs, and the sixteen Role Attributes - for human and AI-agent org structure"
     }
   ]
 }

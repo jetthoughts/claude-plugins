@@ -1,0 +1,19 @@
+{
+  "name": "unfix",
+  "description": "Jurgen Appelo's unFIX pattern library for organisation design: Bases, the seven Crew types, Forums, Captains, Chiefs, Chairs and the sixteen Role Attributes. Use for org structure, team topology, decision rights, reteaming, or naming the seats in an AI-agent organisation - including when the user says circles, squads, tribes, chapters, holacracy, sociocracy or Spotify model. Records what does not transfer to an agent org rather than papering over it.",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "organization-design",
+    "unfix",
+    "team-topologies",
+    "governance",
+    "agent-orchestration",
+    "claude-code"
+  ]
+}
