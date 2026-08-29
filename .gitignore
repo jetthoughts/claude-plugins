@@ -1,0 +1,4 @@
+
+# eval workspaces: run artifacts are reproducible, the harness is not
+plugins/*/[a-z]*-workspace/iteration-*/
+plugins/*/[a-z]*-workspace/skill-snapshot*/

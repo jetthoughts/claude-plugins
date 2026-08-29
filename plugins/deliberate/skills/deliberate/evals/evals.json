@@ -1,0 +1,48 @@
+{
+  "skill_name": "deliberate",
+  "_baseline": "skill-snapshot = commit 70c52a2, the version before the completion contract, the Lightning-Demo research gate, and the stage routing table",
+  "evals": [
+    {
+      "id": 0,
+      "name": "ambiguous-frame-two-readings",
+      "prompt": "Use the deliberate skill. Decide this for me: should we build an internal tooling layer for teams like ours? I want a proper answer, go.",
+      "expected_output": "Names that the question holds more than one reading (build for ourselves vs sell to teams like ours), presents them, and WAITS for the decider to confirm the frame before spawning any research lane. Does not silently pick one and proceed.",
+      "files": [],
+      "assertions": [
+        "Names that the question has more than one reading, and states both",
+        "Stops and puts the frame to the decider before proceeding",
+        "Does NOT spawn research lanes or produce evidence rows before the frame is confirmed",
+        "States which reading it would take, rather than only asking an open question",
+        "Explains why the frame specifically cannot be defaulted (downstream stages inherit it)"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "needs-fresh-external-inspiration",
+      "prompt": "Use the deliberate skill. We run a 4-person accounting practice. Client onboarding takes us 3 weeks and clients complain the whole time. Work out what we should do about it \u2014 I want ideas we haven't already had.",
+      "expected_output": "Runs Lightning Demos as a real online research pass, fetching examples from OUTSIDE accounting with URLs retrieved during the run. Does not generate examples from memory. Cites at least three fetched sources with links.",
+      "files": [],
+      "assertions": [
+        "Runs a Lightning Demo round as a distinct, named step",
+        "At least 3 examples carry a URL that was fetched during this run",
+        "At least 2 examples come from a domain OUTSIDE accounting/professional services",
+        "Each big idea names its source and the specific transferable component, not a whole product",
+        "Concept cards cite both an evidence row and a borrowed big idea"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "stops-early-must-say-so",
+      "prompt": "Use the deliberate skill on this question, but I only have time for the research part right now: which of our two support channels should we drop, email or live chat?",
+      "expected_output": "Reports its position in the process explicitly (which stage of how many), states clearly that the run is UNFINISHED, names the stage it stopped at and what is still owed. Does not present gathered evidence as though it were a decision.",
+      "files": [],
+      "assertions": [
+        "States its position in the process explicitly, as a stage count",
+        "Explicitly labels the run UNFINISHED",
+        "Names the stage it stopped at and what is still owed",
+        "Does NOT present the gathered evidence as a decision or a recommendation",
+        "Evidence rows carry sources rather than unsourced assertions"
+      ]
+    }
+  ]
+}
