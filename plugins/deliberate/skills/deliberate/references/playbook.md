@@ -171,7 +171,7 @@ inherits these domains, so this table is not decoration — it decides what the 
 
 | If the ask is about... | Demo domains that produce usable concepts |
 |---|---|
-| **How work is organised** — roles, ownership, structure, who decides | Basecamp/37signals · W.L. Gore's lattice · Haier's microenterprises · Valve's handbook · a law firm's partner/associate model · a film production's crew roles · a restaurant kitchen brigade |
+| **How work is organised** — roles, ownership, structure, who decides | **`unfix` skill first** — it is a pattern library for exactly this, so start from named patterns rather than inventing vocabulary · then Basecamp/37signals · W.L. Gore's lattice · Haier's microenterprises · Valve's handbook · a law firm's partner/associate model · a film production's crew roles · a restaurant kitchen brigade |
 | **A process or workflow** | manufacturing cells · hospital triage · air-traffic handoffs · newsroom editorial flow |
 | **Reliability and not-failing** | aviation · ICU alarms · SRE · industrial control · rail |
 | **Pricing or packaging** | insurance · SaaS tiers · airlines · utilities · membership clubs |
