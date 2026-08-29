@@ -166,6 +166,17 @@ stage; the output is a board of borrowable parts.
 **The rule that makes it work: look outside the domain.** Examples from your own industry return
 what you already do, wearing a different logo.
 
+**Match the domain to the SHAPE of the request first, then diversify within it.** The concept space
+inherits these domains, so this table is not decoration — it decides what the run can conclude.
+
+| If the ask is about... | Demo domains that produce usable concepts |
+|---|---|
+| **How work is organised** — roles, ownership, structure, who decides | Basecamp/37signals · W.L. Gore's lattice · Haier's microenterprises · Valve's handbook · a law firm's partner/associate model · a film production's crew roles · a restaurant kitchen brigade |
+| **A process or workflow** | manufacturing cells · hospital triage · air-traffic handoffs · newsroom editorial flow |
+| **Reliability and not-failing** | aviation · ICU alarms · SRE · industrial control · rail |
+| **Pricing or packaging** | insurance · SaaS tiers · airlines · utilities · membership clubs |
+| **Getting the first customers** | door-to-door · trade shows · brokered markets · concierge services |
+
 **With agents, assign the domain rather than the topic.** This is what converts a colour exercise
 into a level-2 independence mechanism:
 

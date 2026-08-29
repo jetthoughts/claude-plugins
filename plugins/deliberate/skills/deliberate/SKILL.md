@@ -245,6 +245,34 @@ idea · most dangerous assumption. **If one card is richer than the others becau
 more, trim it.** Presentation length is not evidence, and the vote that follows cannot tell them
 apart.
 
+### 3d — The ask check ▸ before anything is contested
+
+**Re-read the requester's original words, verbatim, and ask: would this concept set read as an
+answer to them?**
+
+Not *"does it move the metric"* — milestone 1 already gates that, and **a concept set can move the
+metric while answering a different question.** The failure mode is specific and it is invisible from
+inside the run: **the concept space inherits the Lightning Demo domains.** Demo safety engineering
+and you will concept watchdogs; demo organisational design and you will concept org charts. Every
+stage passes its own gate and the whole run misses the ask.
+
+Measured 2026-08-29: a request to *"design and organise how the whole business runs — instructions,
+processes, org charts"* was demoed against aviation, ICU, rail, SRE and industrial control. All five
+concepts came back as monitoring primitives and the final recommendation was **to add a frontmatter
+field.** The org material the requester actually wanted already existed in the vault and never
+entered the run. The requester's verdict: *"like you asked for a real rocket and got a kid's drawing
+of one."*
+
+**If the concept set does not answer the ask, do not contest it.** Return to 3a and assign demo
+domains that match **the shape of the thing requested** — an org question needs org demos, a pricing
+question needs pricing demos, a workflow question needs workflow demos.
+
+**A related trap, from the same run:** an adversary as the last word converges on the smallest
+survivor, and its winning argument was *"this is the only one testable in the next four weeks."*
+**Testability is not a selection criterion.** It decides what you can *learn* soonest, never what is
+worth building. If the cheapest-to-measure concept wins, say so out loud — that is a finding about
+the evidence, not a verdict about the options.
+
 ## Stage 4 — CONTEST
 
 Two passes, in this order, and the order matters.
@@ -366,6 +394,8 @@ Use LDJ when humans in a room already hold the evidence and need to converge in 
 | Big ideas describe features, not mechanisms | nobody opened the product | require a screenshot or a live tour per card |
 | Concepts do not move the agreed metric | milestone 1 was skipped or ignored | out of scope, however good |
 | No kill criterion | it is an opinion | do not record it as a decision |
+| Concepts answer a narrower question than was asked | the concept space inherited the demo domains | re-run 3a with domains shaped like the request; do not contest the wrong set |
+| The winning concept won on being easiest to measure | testability selected the deliverable | say so explicitly; re-judge on value, not on measurability |
 | The decider corrects the frame after lanes ran | stage 0 was never confirmed | confirm the frame next time; file the rows as DROPPED, do not reuse them |
 | A level-1 seat "verified" but never asked a real question | a ping is not a model call | exercise it, and exhaust the other level-1 route before dropping |
 
