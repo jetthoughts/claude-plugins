@@ -125,6 +125,20 @@ into a level-2 independence mechanism:
 Assigning topics instead of domains produces five agents searching the same corpus and returning the
 same three examples. That is the failure to watch for.
 
+**Tools, by step.** All installed; reuse rather than improvising a search.
+
+| Step | Reach for | Why this one |
+|---|---|---|
+| Find candidates | `mcp__parallel__web_search` · `competitor-intel` · `Apify` · `just-scrape` | `competitor-intel` returns verified metrics rather than marketing claims |
+| Open and see it | `agent-browser` · `browser-use` · `Interceptor` (real Chrome) · `lightpanda` (fast) · `mcp__claude-in-chrome__*` · chrome-devtools `take_screenshot` | the component usually lives in what the product *does* |
+| **Look at the capture** | the `Read` tool on the screenshot | it renders images — reasoning about a filename is not looking |
+| Judge the visual | `web-design-reviewer` · `screenshot` | a structured read beats an impression |
+| What users say | reviews and forums via search; `competitor-alternatives` for positioning | a slick interface with three identical one-star reviews is a different lesson |
+| Prior art / patents | `ArXiv` | when the mechanism might be documented rather than shipped |
+
+**A demo where nobody opened the product is not a demo.** If an example could only be reached
+through descriptions, mark the card `Seen how: reviews only` so the reader can discount it.
+
 **Capture format** — one per demo, and the source is not optional:
 
 ```
@@ -132,6 +146,8 @@ Big idea:            (headline — the transferable part)
 Seen at:             (source + link)
 From which domain:   (must not be ours)
 The component:       (the specific mechanism, not the whole product)
+Seen how:            (screenshot path | live tour | reviews only)
+What users say:      (one line + source)
 Why it might transfer:
 Why it might not:    (the scribe writes this too — a board of only upside is a wish list)
 ```

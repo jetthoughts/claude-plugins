@@ -131,14 +131,26 @@ Each contributor researches independently — around 25 minutes, or prepared in 
 
 **The examples must come from outside the domain in question.** That is the whole mechanic. Ideas that spark the best solutions come from similar problems in different environments; three examples from your own industry produce three versions of what you already do.
 
-The scribe captures **one big idea per demo** — a headline, **its source**, and a rough sketch of the component that inspired it. Not the whole product: the one transferable part. Capture everything; discard nothing at this stage.
+**A demo is a product tour, not a summary.** In the room, someone screen-shares the actual thing. With agents that means: **find it, open it, look at it.** A description of an interface is not the interface — the transferable component usually lives in what the thing *does*, which text search will not surface.
+
+The chain per example:
+
+1. **Find** — `mcp__parallel__web_search` for candidates; `competitor-intel` when you need verified metrics rather than claims; `Apify` or `just-scrape` for structured extraction at volume.
+2. **Open and see it** — a browser (`agent-browser`, `browser-use`, `Interceptor` for real-Chrome, `lightpanda` when speed matters) or `mcp__claude-in-chrome__*` / chrome-devtools `take_screenshot`. **Then actually read the screenshot** — the `Read` tool renders images, so look at it rather than reasoning about the alt text.
+3. **Judge what you see** — `web-design-reviewer` for a structured visual read of a page; `screenshot` for capture. What is on screen at the decisive moment is the thing worth stealing.
+4. **Hear what users say about it** — reviews and forums. A slick interface with three one-star reviews describing the same failure is a different lesson from a slick interface that works, and only the reviews tell you which.
+
+The scribe captures **one big idea per demo** — a headline, **its source**, a **screenshot or sketch** of the component, and one line on what users say. Not the whole product: the one transferable part. Capture everything; discard nothing at this stage.
 
 ```
 Big idea:              (headline — what's transferable)
 Seen at:               (source, with a link)
 From which domain:     (must not be ours)
 The component:         (the specific mechanism, not the whole product)
+Seen how:              (screenshot path | live tour | reviews only — say which)
+What users say:        (one line, with a source)
 Why it might transfer:
+Why it might not:
 ```
 
 **Lightning Demos are also a de-correlation mechanism**, which is why they sit here rather than being optional colour. Assign each contributor a **different domain to search** — one in logistics, one in healthcare, one in gaming, one in a regulated industry. That is level 2 on the independence ladder: different corpora produce genuinely different big ideas, where the same brief produces the same three examples. A demo round where everyone brought examples from one industry has not run.
@@ -261,6 +273,7 @@ Use LDJ when humans in a room already hold the evidence and need to converge in 
 | A clean result with no denominator | nothing was measured | report *searched N, found 0* |
 | The most articulate concept wins | rhetoric beat evidence | check the evidence-quality term was actually scored |
 | Lightning Demo examples all from one industry | the demo round did not run | re-run with a different domain assigned per contributor |
+| Big ideas describe features, not mechanisms | nobody opened the product | require a screenshot or a live tour per card |
 | Concepts do not move the agreed metric | milestone 1 was skipped or ignored | out of scope, however good |
 | No kill criterion | it is an opinion | do not record it as a decision |
 
