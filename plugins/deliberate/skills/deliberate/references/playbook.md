@@ -206,6 +206,21 @@ KILL CRITERION: observation + date
 What would have changed this decision:
 ```
 
+## Asking a qualifying question without leaking the answer
+
+Whenever a stage puts a question to a human — screening an interviewee, a survey, a qualifying
+question in outreach — AJ&Smart's screener-survey rules apply, and they are about evidence quality
+rather than logistics:
+
+- **Make it hard to guess the answer you want.** Every option should sound plausible and options
+  should be mutually exclusive, or respondents pattern-match to whatever seems rewarded.
+- **No visible fail state.** If a survey says "sorry, you do not fit the profile", people retake it
+  until they pass. The same applies to any qualifying question an agent drafts.
+- **Expect some answers to be bent** — by a reward, or by curiosity. With a small n, one wrong
+  respondent skews everything.
+- **Oversample and confirm.** Recruit more than needed and confirm shortly before, because no-shows
+  are normal and a silent absence looks like a null result.
+
 ## Spawning the panel
 
 Give each scout its lane, its tool, and **nothing about the other scouts' briefs**. A scout that knows what its peers were asked will converge toward them.

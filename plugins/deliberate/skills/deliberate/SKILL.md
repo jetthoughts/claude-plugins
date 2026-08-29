@@ -60,6 +60,14 @@ State both before starting; AJ&Smart's Strategy Signal opens this way because an
 
 **Guidelines:** work silently where the stage says silent · no discussion before the vote · every claim carries its source · disagree with the idea, never the person · the decider decides, the group informs.
 
+**"Together alone"** is the principle underneath all of it: produce in parallel and in silence, then share. It is what makes fan-out worth more than a conversation.
+
+Three facilitation mechanics that carry over from remote workshops, each with its reason:
+
+- **One frame per stage.** A separate surface for each exercise gives a focal point and a sense of progress, and stops a stage's output contaminating the next. **Do not split one stage's output between chat and a file** — every channel switch loses someone.
+- **A scribe who only captures.** In a remote room the facilitator sorting notes is *dead air* where nobody is guided. Same here: the agent running the stage should never be the one tidying its output.
+- **Timebox, then check once.** Budget each stage, and when it is nearly spent ask whether anyone needs more rather than cutting hard. A silent overrun and a silent truncation look identical in the artifact.
+
 ## Stage 0 — FRAME
 
 One decision question, narrow enough to be researchable. Reject the vague form out loud rather than proceeding:
@@ -157,7 +165,11 @@ Why it might not:
 
 ### 3b — Concept creation
 
-Now build concepts, and build them **from the big-idea board plus the evidence ledger**. Generate rival **mechanisms**, not rival wordings. Lenses that reliably produce genuinely different mechanisms:
+**Seed the frame before anyone creates.** AJ&Smart's rule, learned across hundreds of sprints: *"You don't start from a blank canvas."* They pre-fill the board from pre-interviews so the group edits rather than invents — it is faster, less intimidating, and produces better outcomes, because attention goes to the problem instead of to phrasing.
+
+The agent version: **the ideation frame opens already populated** with the evidence rows, the big-idea board, the goal and metric, and any prior concepts that were killed and why. An agent handed an empty prompt fills it from its priors; an agent handed the ledger argues with it.
+
+Now build concepts **from the big-idea board plus the evidence ledger**. Generate rival **mechanisms**, not rival wordings. Lenses that reliably produce genuinely different mechanisms:
 
 - **Inversion** — achieve the outcome without the thing everyone uses
 - **Remove / replace / reverse** — cut a required step, change who buys, run the workflow backwards
@@ -192,6 +204,8 @@ Two passes, in this order, and the order matters.
 
 **A vote is void if the voters shared a source set.** That is not a guideline — a tally over correlated voters is a chorus with a number on it. Where a script enforces this (`bin/verify-sprint-round` in a repo that has it), let the script refuse. Where none exists, state each voter's sources next to the tally so the reader can refuse it themselves.
 
+**Vote on parts, not only wholes.** AJ&Smart deliberately avoid their whiteboard's built-in voting because it only accepts whole objects — they use dots so a vote can land on *one component inside* a concept, producing a heatmap. Keep that: a concept usually fails or succeeds on one mechanism, and a whole-concept vote loses which one. Record both the concept tally and which components drew the dots.
+
 **Every voter states one thing that would change their vote.** A voter who cannot name it did not deliberate.
 
 ## Stage 5 — DECIDE
@@ -223,6 +237,12 @@ What would have changed the decision:
 ```
 
 **A decision without a kill criterion and a date is an opinion.**
+
+### Flow before detail
+
+Before anything is specified, borrow the sprint's storyboard guard rail: **each contributor writes the winning concept as six steps, start to end** — high level, no detail. The decider picks one flow, mixing steps between versions if useful. That chosen flow is the skeleton everything else hangs on.
+
+The reason is specific and it is the one AJ&Smart give: up to this point every discussion was cut short by process, but detail is where a group goes circular. Six steps agreed in advance are the guard rails that stop it. Then describe each step in shorthand — elements and content, no finished screens — which is Shape Up's **breadboarding**, and it keeps the argument about the mechanism rather than the wording.
 
 ### Milestone 2 and the roadmap
 
