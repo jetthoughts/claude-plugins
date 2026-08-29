@@ -114,7 +114,7 @@ Strategy Signal spends its first third here, before anyone looks at a solution, 
 
 Write two things and stop until both are agreed:
 
-- **Long-term goal** — optimistic, specific, and dated. *"In two years, [who] will [outcome] so reliably they stop [current workaround]."*
+- **The goal** — specific and dated. **The horizon scales to the decision, not to the format.** The Strategy Signal boards ask for 12–24 months because they are run as a two-day workshop; run light, a two-week goal is equally valid and often better: *"find a new service and get the first paying client within two weeks."* A short horizon is not a lesser goal — it is a goal you can be wrong about quickly.
 - **The metric** — the one number that moves if the goal is being reached, plus how it is measured and what it reads today. **If it reads "unknown", that is the first research question**, not a footnote.
 
 **The goal and the metric take separate confirmations.** Bundling them lets a weak metric ride in on
@@ -216,7 +216,9 @@ Now build concepts **from the big-idea board plus the evidence ledger**. Generat
 - **Non-consumption** — what would serve people currently doing nothing, or using a spreadsheet
 - **Wedge** — solve one high-frequency moment instead of the whole problem
 
-Each concept is a card, and the card is rejected if a field is empty:
+**A concept is something you could show someone — a pitch, a landing page, a one-pager, a mock — not an analysis of one.** The card below is the *check* on a concept, not the concept itself. If the only artifact is the card, nobody outside the room can react to it, and reactions are what the next stage needs.
+
+Each concept carries a card, and the card is rejected if a field is empty:
 
 ```
 Concept:
@@ -312,6 +314,14 @@ the audit trail. This is the single board a reader takes in at a glance, and it 
 week; a decision spread across three documents is re-litigated because nobody can hold it at once.
 
 Sequence by **what unblocks the most**, not by what is most exciting. Anything not on the roadmap goes to a named backlog rather than staying ambiguously alive.
+
+## Running it light
+
+The full shape is a two-day workshop. **The same five frames run in an afternoon**, and that is the common case: **goal + metric → Lightning Demos → concepts → roadmap → one-page summary.**
+
+What changes when you run light: fewer lanes, one Lightning Demo round instead of several, one concept per contributor rather than a gallery of variants, and the contest compressed to a single adversarial pass. **What does not change:** the goal and metric are still agreed before anyone looks at a solution, the demos still fetch from outside the domain, the vote is still silent, and the run still ends on one page.
+
+**The one-pager is the deliverable, not a summary of it.** Goal · metric · the chosen concept · the roadmap · the kill criterion and its date. If it does not fit on a page, the decision is not made yet.
 
 ## Choosing the depth
 
