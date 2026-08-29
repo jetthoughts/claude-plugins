@@ -60,8 +60,10 @@ CHECKS = {
                              r"|next steps?\b|in order:", t, re.I))),
    ("Does NOT present gathered evidence as a decision or recommendation", "auto",
     lambda t: not re.search(r"^\s*(##\s*)?(decision|recommendation)\s*:?\s*(proceed|drop|kill|we should)", t, re.I | re.M)),
-   ("Evidence rows carry sources rather than unsourced assertions", "auto",
-    lambda t: bool(re.search(r"https?://", t)) or bool(re.search(r"\|\s*Source", t, re.I))),
+   # A named publication is not a citation: a reader must be able to OPEN it.
+   # Accepting the presence of a "Source" column was the earlier, weaker check.
+   ("Evidence rows carry RESOLVABLE sources (URL or doc id), not just publication names", "auto",
+    lambda t: len(set(re.findall(r"https?://[^\s\)\]\|>»\"']+", t))) >= 3),
  ],
 }
 

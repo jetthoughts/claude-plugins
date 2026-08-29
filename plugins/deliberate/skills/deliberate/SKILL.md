@@ -136,7 +136,7 @@ Set up the evidence spine first, because it is what stops laundering:
 
 Other tools by lane, so lanes stay disjoint: `mcp__parallel__web_search` and `web_fetch` (open the page for exact wording) · `mcp__plugin_qmd_qmd__query` for internal/prior work · a browser MCP for what a page actually does — pricing, onboarding, public behaviour · `mcp__plugin_github_github__search_code` for feasibility · `mcp__gemini__ask-gemini` for the different-model seat.
 
-**Every scout returns rows, not prose**, and every row carries what would let someone else refute it:
+**Every scout returns rows, not prose**, and every row carries what would let someone else refute it. **The Source cell holds a URL or a document id — a publication name is not a citation**, because a reader cannot open it and the verifier cannot check it. Measured 2026-08-29: a run produced a good ledger whose sources were all named-but-unopenable, and the 4-eyes check silently had nothing to open.
 
 | Claim | Source (URL/id) | Date | Direct quote or figure | Type | Confidence | What this does NOT prove |
 |---|---|---|---|---|---|---|
