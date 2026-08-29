@@ -24,6 +24,14 @@ The point of a lane is that **a claim available in one lane is not available in 
 | **Different model** | the same question, different weights | `mcp__gemini__ask-gemini` / `brainstorm` | **1** | your context entirely — which is the point |
 | **Curated corpus** | only the documents pinned to one notebook | `mcp__notebooklm-mcp__notebook_query` | **2** | everything outside the notebook |
 | **Academic / prior art** | papers, patents | `ArXiv` skill, web search | 3 | commercial reality |
+| **Deep research, another vendor** | a long-running research pass by a different system | Perplexity, driven through `claude-in-chrome` — start the research, come back for it | **1** | its own sourcing choices, which you did not make |
+
+**Perplexity deep research is a level-1 seat**, on the same logic as the Gemini seat: a different
+system with its own retrieval and its own priors. Drive it through the browser
+(`claude-in-chrome`), kick the research off, and **collect it on a later pass rather than blocking**
+— deep research runs for minutes, not seconds. Then treat what comes back the way you would treat
+any lane: rows with sources, opened and verified by someone who did not fetch them. An AI research
+report is Level 0 evidence on its own — a lead, not a finding.
 
 **Never give one scout two lanes.** It will merge them internally and you lose the ability to tell where a claim came from.
 
