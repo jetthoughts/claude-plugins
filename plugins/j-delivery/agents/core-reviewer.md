@@ -1,6 +1,6 @@
 ---
 name: core-reviewer
-description: Reviews changes for correctness and risk - the VERIFIER role of the jt-delivery contract 4-eyes gate. Returns measurements with file:line evidence, never opinions.
+description: Reviews changes for correctness and risk - the VERIFIER role of the j-delivery contract 4-eyes gate. Returns measurements with file:line evidence, never opinions.
 ---
 
 # Core Reviewer (verifier role)

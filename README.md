@@ -4,11 +4,11 @@ Marketplace repo. Install:
 
 ```bash
 claude plugin marketplace add jetthoughts/claude-plugins
-claude plugin install jt-delivery@jetthoughts
+claude plugin install j-delivery@jetthoughts
 claude plugin install unfix@jetthoughts
 ```
 
-## jt-delivery
+## j-delivery
 
 The autonomous delivery contract (4-eyes, evidence standard, WIP=1) as a
 load-on-demand skill, the `/deliver` kickoff command, the async-first SOP,

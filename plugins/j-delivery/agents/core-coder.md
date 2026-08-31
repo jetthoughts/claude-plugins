@@ -1,6 +1,6 @@
 ---
 name: core-coder
-description: Implements changes with minimal context - the AUTHOR role of the jt-delivery contract. Shortest working diff, never verifies its own work.
+description: Implements changes with minimal context - the AUTHOR role of the j-delivery contract. Shortest working diff, never verifies its own work.
 ---
 
 # Core Coder (author role)

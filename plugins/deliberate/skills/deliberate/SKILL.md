@@ -1,433 +1,242 @@
 ---
 name: deliberate
-description: "Run a grounded group deliberation that ends in a decision: gather evidence with mechanically independent scouts, build a verified evidence ledger, generate rival concepts, contest them adversarially, vote silently, and synthesize one call with its kill criterion. Use whenever a question needs more than one opinion and the answer must be defensible — choosing between options, 'what should we build/do next', strategy calls, vendor or approach selection, prioritising a backlog of ideas, running a decision workshop or Lightning Decision Jam, or any time someone asks for a panel, a council, multiple perspectives, or 'research this and tell me what to do'. Also use it to audit a decision already made. Domain-agnostic."
+description: Run a grounded group deliberation that ends in a decision: gather evidence in disjoint lanes, build a verified evidence ledger, generate rival concepts, force a written dissent, and synthesize one call with its kill criterion. Use whenever a question needs more than one opinion and the answer must be defensible — choosing between options, 'what should we build/do next', strategy calls, vendor or approach selection, prioritising a backlog of ideas, running a decision workshop, or any time someone asks for a panel, a council, multiple perspectives, or 'research this and tell me what to do'. Also use it to audit a decision already made. Domain-agnostic.
 ---
 
 # Deliberate
 
 A decision harness. It exists because the usual failure is not a lack of ideas — it is **a group that agrees for the wrong reason** and calls that agreement evidence.
 
-Skip a stage and say which; do not skip the verification inside one.
-
-**Every reply during a run opens with where the run is:** `stage 4 of 8 · CONTEST · 3 stages remain`.
-A deliberation that stops at LEDGER has produced *findings*, not a decision — and findings presented
-without that label read as a conclusion. **An unfinished run must say it is unfinished**, name the
-stage it reached, and name what is still owed. Measured on the first live run: it halted after LEDGER
-and reported evidence as though the question had been answered. It had not been.
-
 ```
-FRAME → GOAL+METRIC → GATHER → LEDGER → IDEATE → CONTEST → DECIDE → ROADMAP
-          ▸milestone1  (diverge) (converge)(diverge) (converge)  ▸milestone2
-                        ↑           ↑         ↑          ↑
-                   independent   4-eyes   lightning   debate,
-                     scouts      verify    demos +      then
-                                          mechanisms  SILENT vote
+FRAME → GATHER → LEDGER → IDEATE → DECIDE
+        (disjoint) (verify) (diverge)  (dissent, then call)
 ```
 
-Lineage: the divergence/convergence spine is the Double Diamond; the silent generation, silent
-voting and impact/effort ranking are Lightning Decision Jam; the goal-and-metric opening, Lightning
-Demos, milestones and closing roadmap are Strategy Signal (AJ&Smart). What is added is the evidence
-layer and the independence engineering — see the comparison at the end.
+**Every reply opens with the stage:** `stage 3 of 5 · LEDGER`. A run that stops early says **UNFINISHED**, names the stage it reached, and names what is still owed. Findings presented without that label read as a conclusion, and once did.
 
-## The stage-exit check — apply this stage's own rule to this stage's own output
+**Skip a stage and say which. Do not skip the verification inside one.**
 
-**Every gate here is written about contributors' work. Run it against the facilitator's work too,
-before leaving the stage.** Ten defects in a single measured session traced to one structure: rules
-applied to the object level and never to the harness itself.
+## What this file can and cannot do
 
-| The stage demands | So also check |
-|---|---|
-| GATHER — every row carries an openable source | **the facilitator's own summary prose.** A sentence outside a table is unsourced by default, and that is where the errors live |
-| GATHER — search disjoint corpora | **this repository first.** Prior work already on disk is an input, not something to rediscover |
-| LEDGER — author never verifies | **the ledger's own construction**, and every instrument that judges it — a grader, an assertion, a checker is an output and gets verified like one |
-| IDEATE — examples fetched, not recalled | **the frame the facilitator seeded**, and the demo domains it chose |
-| Any stage — say what was searched and not found | **what the facilitator did not look at**, with the denominator |
+It is prose, and prose is advisory. This project measured its rules drifting into up to five contradictory versions while its one script-enforced gate had zero violations. **Nothing here blocks anything.**
 
-**The test, in one question:** *the rule I just enforced on someone else — does it hold for what I
-just produced?* If it has never been asked, this stage has not exited.
+**Do not answer that by writing a checker.** A script is worth building only for something stable with a strict constraint — a file-format convention, a test over code, a result with a fixed shape. A deliberation is judgment work: any script enforcing it is written once, goes stale against the next real question, and then nobody runs it. That is a worse failure than advisory prose, because a dead gate looks like a live one. (Paul, 2026-08-30.)
 
-**Why this rather than more rules.** Four point fixes shipped in one session — an ask check, a
-fallback gate, a research gate, a prior-art check — each a patch for the instance that had just
-occurred. A harness that cannot apply its own rules to itself generates an unbounded supply of them.
-The three failure branches all reduce to the same thing:
+**The lever that is left is brevity.** A rule survives by being read at the moment it applies, so the file has to stay short enough that reading it is cheap. Treat every rule below as one you choose to keep.
 
-- **Provenance is a property of evidence, never of statements** — so ~90% of output, being prose,
-  is unsourced by design.
-- **Four-eyes is required for content, never for the instruments that judge content** — so nothing
-  verifies the verifier, and a self-authored grader errs in one direction only.
-- **The harness is built to discover and has no concept of resuming** — so every run starts from
-  zero regardless of what the repository already holds.
+Consequence for whoever edits this file: **a new rule replaces an old one or it does not go in.** Appending a paragraph per incident is how the previous version reached 459 lines and stopped being read.
 
-## The rule that does the work: independence is mechanical, not rhetorical
+## Independence: report what you achieved, not what you attempted
 
-Spawning five agents with five different personas does **not** give five perspectives. They share a model, a context, and usually a source set — they are correlated by construction. Worse, a language model will produce a fluent, well-argued objection for *any* position on request, so "it dissented" is not evidence that it thought independently.
+Five agents with five personas are not five perspectives. They share a model, a context and usually a source set — correlated by construction. A model will also produce a fluent objection to *any* position on request, so "it dissented" is not evidence it thought independently.
 
-**Rank your de-correlation, and require level 2 or better on any decision that matters:**
+**Do not claim a ranking. Claim a measurement.** Across 350+ models, errors agree ~60% of the time when both err, and *more capable* models are *more* correlated even across vendors; a nine-judge panel from seven model families carries roughly 2.2 effective independent votes against 4–6 for humans. A frontier-model panel buys far less than it looks like, and no published work ranks the mechanisms against each other.
 
-| Level | Mechanism | Why it works |
-|---|---|---|
-| **1 — strongest** | **A different model or a different system.** `mcp__gemini__ask-gemini`, or Perplexity driven through `claude-in-chrome` | different weights, different retrieval, genuinely different priors |
-| **2** | **A different corpus.** Give each scout a disjoint source set — separate NotebookLM notebooks, or internal-docs vs web vs primary-observation | a claim absent from your corpus cannot be produced from it |
-| **3** | **A different tool.** One on web search, one on the browser, one on the internal index, one on the codebase | tools have different blind spots |
-| **4 — weakest** | **A different lens or persona.** Prompt-level framing | free, and on its own it is theatre |
+In the output:
 
-Most harnesses stop at level 4 and report the resulting agreement as corroboration. **Say in the output which level each seat achieved.** A panel that only differed at level 4 must report itself as one opinion sampled repeatedly.
+- **Name each seat's de-correlation mechanism** — different system · different corpus · different tool · different lens — and which it actually got.
+- **Name the disagreement it produced.** Seats that agreed on everything are one seat. Report that.
+- **Disjoint corpora are the only mechanism with a guarantee.** A claim absent from a corpus cannot be produced from it. Model diversity is a statistical hope; corpus disjointness is arithmetic.
+- **Never report a level you skipped the work for.** A time-box is a reason to run fewer lanes, never a reason to claim a lane you did not run. A fallback you wrote down and did not take is the same as not having one.
 
-**Gate: a run may not report an independence level it did not achieve, and may not skip a route because of time.** If the model seat fails, the browser route is attempted *before* the level is written down — a time-box is a reason to run fewer lanes, never a reason to claim a level you skipped the work for. Measured 2026-08-29: a benchmark run read this rule, hit the missing backend, declined the browser fallback citing its time-box, and reported level 3. The rule was present and prose lost to schedule pressure — the same failure it was written to describe.
+**Order of operations (Paul, 2026-08-30): Claude subagents carry the lanes; a foreign model reviews them afterwards.** The subagents hold the repository, the closed decisions and the house rules — they produce the lanes, the ledger and the concepts. The foreign seat goes **on top**, briefed on facts only and told to refute: the `gemini` CLI, or Perplexity driven through `claude-in-chrome` — **that is what `claude-in-chrome` is for here, and the only thing.** Ordinary page-reading uses `WebFetch` and the external drivers listed under GATHER. Run instead of the lanes it reviews nothing; run first it anchors what it was meant to check.
 
-**Level 1 has more than one route, so exhaust them before dropping.** If the model seat is unavailable, try the other independent system — a browser-driven one — *before* declaring the panel level 2. Measured 2026-08-29: the Gemini backend was missing, the panel silently continued without a level-1 seat, and the browser route that was already documented sat unused until the decider pointed at it. **A fallback you wrote down and did not take is the same as not having one.**
+**Working level-1 route on this machine:** `mcp__gemini__ask-gemini` is down (missing `agy`). Use `GEMINI_CLI_TRUST_WORKSPACE=true gemini -m gemini-3.1-pro-preview --skip-trust -p "$(cat prompt.txt)"` — the CLI's default model 404s, so name it. Exercise the seat with a real question; a ping is not a model call.
 
-**Exercise the seat with a real question. A ping is not a model call** — `ping` echoed cleanly while `ask-gemini` failed outright on a missing binary.
+**On a blocked spawn, change the agent type — never the mechanism.** Running a lane inline because a hook refused an agent collapses the panel and makes the facilitator both author and checker of that lane.
 
-## The 4-eyes rule
+## 4-eyes
 
-**No stage output is accepted on the word of the agent that produced it, and the checker must have had different inputs.** Same-agent self-review returns "looks good"; same-input review returns the same blind spots. Concretely:
+**No stage output is accepted on the word of the agent that produced it, and the checker must have had different inputs.** Same-agent review returns "looks good"; same-input review returns the same blind spots.
 
 | Produced by | Checked by | The check is |
 |---|---|---|
-| scout's findings | a verifier that did not gather them | **open the citation and read it** — does the source say what the row claims? |
-| the evidence ledger | a second reader on a different corpus | is anything asserted that no row supports? |
-| concept cards | the red team | does a substitute already do this? |
-| the vote | the tally rule | did voters share a source set? then it is not a vote |
-| the decision | the kill criterion | what observation would retire this, and on what date? |
+| a lane's findings | someone who did not gather them | **open the citation and read it** |
+| the ledger | a second reader on a different corpus | is anything asserted that no row supports? |
+| concepts | the dissent | does a substitute already do this? |
+| the decision | the kill criterion | what observation retires this, and on what date? |
 
-A review that returns "looks good" has failed and is re-run. Default to refuted when uncertain.
+A review returning "looks good" has failed and is re-run. **Default to refuted when uncertain.**
 
-## Roles and guidelines
+**Then run it on yourself.** Before leaving any stage: *the rule I just enforced on someone else — does it hold for what I just produced?* Ten defects in one measured session traced to that question never being asked. Sourcing applies to the facilitator's own prose; prior work on disk is an input; an instrument that judges output is itself an output.
 
-State both before starting; AJ&Smart's Strategy Signal opens this way because an unstated role is negotiated mid-session, which costs more than saying it.
+## Roles
 
-**Roles:** a **facilitator** who owns the clock and the sequence and never argues the content · a **decider** who breaks ties and owns the outcome (in a one-person business this is the owner, and it is not delegable) · **contributors** who produce · a **scribe** who captures, and whose only job is capture.
+A **facilitator** who owns the sequence and never argues the content · a **decider** who breaks ties and owns the outcome (not delegable) · **contributors** who produce.
 
-**Guidelines:** work silently where the stage says silent · no discussion before the vote · every claim carries its source · disagree with the idea, never the person · the decider decides, the group informs.
+**Together alone** is the principle underneath: produce in parallel and in silence, then share. Interacting groups generate measurably fewer ideas than the same people working separately — a large effect, replicated since 1991. Silence is not a style preference; it removes the mechanism by which the loudest position wins.
 
-**"Together alone"** is the principle underneath all of it: produce in parallel and in silence, then share. It is what makes fan-out worth more than a conversation.
+---
 
-Three facilitation mechanics that carry over from remote workshops, each with its reason:
+## Stage 1 — FRAME
 
-- **One frame per stage.** A separate surface for each exercise gives a focal point and a sense of progress, and stops a stage's output contaminating the next. **Do not split one stage's output between chat and a file** — every channel switch loses someone.
-- **A scribe who only captures.** In a remote room the facilitator sorting notes is *dead air* where nobody is guided. Same here: the agent running the stage should never be the one tidying its output.
-- **Timebox, then check once.** Budget each stage, and when it is nearly spent ask whether anyone needs more rather than cutting hard. A silent overrun and a silent truncation look identical in the artifact.
-
-## Stage 0 — FRAME
-
-One decision question, narrow enough to be researchable. Reject the vague form out loud rather than proceeding:
+One decision question, narrow enough to be researchable. Reject the vague form out loud:
 
 - **No:** "find innovative ideas for X"
-- **Yes:** "which recurring workflow among [specific actor] is underserved enough to justify testing a paid solution in the next 14 days?"
+- **Yes:** "which recurring workflow among [specific actor] is underserved enough to justify testing a paid solution in 14 days?"
 
-Write down: the question · who decides · what a good answer must contain · what is explicitly out of scope · the date the decision expires. **If the question cannot fail, it is not a question.**
+Write: the question · who decides · what a good answer must contain · what is out of scope · the date the decision expires. **If the question cannot fail, it is not a question.**
 
-### The frame is the decider's, not the facilitator's ▸ confirm before spawning
+Then, before anyone looks at a solution:
 
-**Show the reframed question to the decider and wait.** This is the one place in the harness where
-taking a defensible default and proceeding is wrong, and the reason is arithmetic: every lane, every
-row and every concept inherits the frame, so a wrong default at stage 0 wastes the entire run. Every
-later stage can absorb a bad call; this one cannot.
+- **The goal** — specific and dated. The horizon scales to the decision, not to the format; a two-week goal is one you can be wrong about quickly.
+- **The metric** — the one number that moves if the goal is being reached, and what it reads today. If it reads "unknown", that is the first research question.
 
-**When the question contains more than one reading, list them and say which you would take** — do not
-silently pick. Measured 2026-08-29: *"design an AI business OS for JetThoughts-like companies"* holds
-two readings — build it for ourselves, or sell it to companies of that shape. The facilitator picked
-the second, spawned three lanes on it, and the decider's actual meaning was the first. Three lanes of
-good evidence answered a question nobody asked.
+**Confirm the goal and the metric separately.** Bundled, a weak metric rides in on a strong goal.
 
-The tell that a question has two readings: **a phrase that only matters under one of them.** "For
-companies *like* us" is only load-bearing if you are selling; if you are building for yourself, the
-comparison is decoration. When a phrase is doing that much work, stop and ask.
+**Show the frame to the decider and wait.** Every lane, row and concept inherits it, so a wrong default here wastes the whole run; every later stage can absorb a bad call, this one cannot. **When the question holds more than one reading, state both and say which you would take** — never silently pick. The tell is a phrase that only matters under one reading. If the host forbids ending a turn on a question, name your reading, mark the run **UNCONFIRMED**, and run on it so the decider can kill it in one line.
 
-**Confirming costs one message. Not confirming costs the run.**
+## Stage 2 — GATHER
 
-## Stage 0.5 — GOAL AND METRIC ▸ milestone 1
+**Resume before you gather.** Read what the repository already holds and check the project's closed-decision register *before* spawning anything. A KILL there is binding without new contradicting evidence, and an option it killed reappearing later is a defect, not a candidate. Cite prior corpora — file, date, lane — and re-run only a lane whose question has moved. Say what you did not re-run and the rule that forbade it. The pathology this prevents is measured here: *11 scans, 18 reports, 0 customers.*
 
-Strategy Signal spends its first third here, before anyone looks at a solution, and it is right to: **a group that has not agreed what winning looks like will ideate toward different finish lines and call the disagreement creativity.**
+Then three to five lanes, **each with a disjoint source domain**, briefed with **evidence and never with your conclusion** — a panel handed your inference returns it wearing independent-sounding confidence.
 
-Write two things and stop until both are agreed:
+Run `Research` for the web lane rather than hand-rolling it; it already runs cross-vendor seats with URL verification. Use the internal index for prior work and a code-search tool for feasibility. Lane assignments and brief templates: `references/playbook.md`.
 
-- **The goal** — specific and dated. **The horizon scales to the decision, not to the format.** The Strategy Signal boards ask for 12–24 months because they are run as a two-day workshop; run light, a two-week goal is equally valid and often better: *"find a new service and get the first paying client within two weeks."* A short horizon is not a lesser goal — it is a goal you can be wrong about quickly.
-- **The metric** — the one number that moves if the goal is being reached, plus how it is measured and what it reads today. **If it reads "unknown", that is the first research question**, not a footnote.
+**Reading a page: start native, escalate only when it fails.** Each rung costs more than the one above it, so stop at the first that works.
 
-**The goal and the metric take separate confirmations.** Bundling them lets a weak metric ride in on
-a strong goal — the decider nods at the destination and inherits a number nobody examined. Ask twice.
+| Need | Reach for |
+|---|---|
+| The text of a page, a quote, a figure | **`WebFetch`** — native, no setup. This is the default and covers most rows |
+| `WebFetch` 403s or the content is JS-rendered | `mcp__parallel__web_fetch` (different fetcher, different result — it recovered a page `WebFetch` refused) · `lightpanda` when speed matters |
+| What the page *does* — interaction, a flow, a logged-in view | an external driver: `agent-browser` · `browser-use` · `Interceptor` (real Chrome) · `remote-browser` (sandboxed) · `playwright` |
+| A screenshot to actually look at | `chrome-devtools` `take_screenshot` · `screenshot` · then `web-design-reviewer` for a structured visual read |
+| A site that resists, or extraction at volume | `BrightData` · `Apify` · `just-scrape` |
 
-**Milestone 1: goal and metric are agreed and written.** Nothing downstream may contradict them, and a concept that does not move the metric is out of scope regardless of how good it is.
+**`claude-in-chrome` is reserved for the Perplexity seat** and is not a general page-reader — it drives the user's own logged-in browser, which is a heavier and more intrusive instrument than any row above needs.
 
-## Stage 1 — GATHER
+**Every lane returns rows, not prose:**
 
-Spawn scouts in parallel — three to five, more only if the corpora genuinely differ. **Assign each a disjoint source domain**, and record its independence level.
-
-Set up the evidence spine first, because it is what stops laundering:
-
-1. `mcp__notebooklm-mcp__notebook_create` — one notebook per decision.
-2. `mcp__notebooklm-mcp__source_add` — add each source as it is found (url, text, drive, or file).
-3. `mcp__notebooklm-mcp__notebook_query` — ask questions **against those sources only**. Answers come back grounded with citations, so a claim that is not in the corpus cannot be produced from it. This is tool-enforced grounding rather than an instruction to be honest.
-4. `mcp__notebooklm-mcp__cross_notebook_query` — when scouts hold separate notebooks, this is how you check whether they actually disagree, and about what.
-5. `mcp__notebooklm-mcp__research_start` / `research_status` / `research_import` for its own deep-research pass on a hard question.
-
-Other tools by lane, so lanes stay disjoint: `mcp__parallel__web_search` and `web_fetch` (open the page for exact wording) · `mcp__plugin_qmd_qmd__query` for internal/prior work · a browser MCP for what a page actually does — pricing, onboarding, public behaviour · `mcp__plugin_github_github__search_code` for feasibility · `mcp__gemini__ask-gemini` for the different-model seat.
-
-**Every scout returns rows, not prose**, and every row carries what would let someone else refute it. **The Source cell holds a URL or a document id — a publication name is not a citation**, because a reader cannot open it and the verifier cannot check it. Measured 2026-08-29: a run produced a good ledger whose sources were all named-but-unopenable, and the 4-eyes check silently had nothing to open.
-
-| Claim | Source (URL/id) | Date | Direct quote or figure | Type | Confidence | What this does NOT prove |
+| Claim | Source (URL or openable path) | Date | Direct quote or figure | Type | Confidence | What this does NOT prove |
 |---|---|---|---|---|---|---|
 
-**Each scout must also return what it looked for and did not find.** An absence is a finding — and it is the only defence against a clean result that means nothing was measured. Say the denominator: *"searched N, found 0"* beats silence.
+**A publication name is not a citation** — a reader cannot open it and the verifier has nothing to check.
 
-Run `Research` (multi-agent web research with mandatory URL verification) for the web lane rather than hand-rolling it.
+**Every lane also returns what it looked for and did not find**, with the denominator. *Searched N, found 0* beats silence; a clean result often means nothing was measured.
 
-## Stage 2 — LEDGER
+## Stage 3 — LEDGER
 
 One writer merges the rows. A **different** agent verifies by opening citations — not by reading the ledger.
 
-Then label every line, and never let two of these wear the same clothes:
+Label every line: **Fact** (sourced, dated, checkable) · **Interpretation** (what we think it means) · **Assumption** (believed, unproven, named as such) · **Question** (still unknown) · **Conflict** (two sources disagree — record both).
 
-- **Fact** — sourced, dated, someone could go and check it
-- **Interpretation** — what we think the fact means
-- **Assumption** — believed, unproven, and named as such
-- **Question** — what we still do not know
-- **Conflict** — two sources disagree; record both, resolve or flag
+**Conflicts are this stage's most valuable output.** Agreement between lanes that shared a corpus is not corroboration. If nothing conflicts, suspect the lanes were not disjoint and say so.
 
-**Conflicts are the most valuable output of this stage.** Agreement across scouts that shared a corpus is not corroboration; disagreement between disjoint corpora is real information. If nothing conflicts, suspect the lanes were not disjoint and say so.
+**Rows answering a superseded question go under a DROPPED heading.** They are still true and still cost something to produce, which is exactly why they get carried into a design they do not support. Name them, keep them as evidence, exclude them from the concepts.
 
-**Rows that answer a different question get their own section, headed DROPPED.** When the frame moves — a reframe, a correction, a decider's ruling — the evidence gathered under the old frame is still true and still costly to have produced, and the temptation is to carry it forward because it is *there*. Do not. Name it, say which question it answers, keep it as evidence, and exclude it from the design. **Laundering evidence into a conclusion it does not support is the failure this whole harness exists to prevent**, and it is most tempting when the evidence is your own.
+**No concept may be proposed before the ledger exists.** Ideas generated before evidence are priors wearing new words.
 
-**Gate: no concept may be proposed before the ledger exists.** Ideas generated before evidence are priors wearing new words.
+## Stage 4 — IDEATE
 
-## Stage 3 — IDEATE
+### 4a — Lightning Demos ("related worlds")
 
-Diverge deliberately. Use `BeCreative` (verbalized sampling — several internally diverse candidates rather than one idea restated) and `Ideate` (multi-cycle generation with fitness testing) rather than asking for a list, which returns variations on the first idea.
+**Go and look at the world before inventing.** A model will happily produce plausible examples from memory; that is a prior, not a demo.
 
-### 3a — Lightning Demos, first
+**Gate: at least three examples must carry a URL fetched during this run, from outside the question's own domain.** No new fetches, no round.
 
-**Do not start by inventing. Go and look at the world first — this stage is an online research pass, not a recall exercise.** It is the single highest-yield ideation step, the one most often skipped, and the one a model will happily fake from memory because it *can* produce plausible examples without searching.
+Assign each contributor **a different domain**, and **shape the domains like the ask** — an org question gets org demos, a pricing question gets pricing demos. The concept space inherits the demo domains: demo safety engineering and you will concept watchdogs, and every stage will pass its own gate while the run misses the question.
 
-**Gate: at least three examples must carry a URL fetched during this run.** An example you already knew is not a Lightning Demo — it is a prior. If the round produced no new fetches, the round did not happen, and IDEATE must not proceed.
+**Run `lightning-demos` — it owns the procedure, and never restate it here.** What that skill adds and this stage depends on: reject the famous handful (they are the highest-probability answers, which is why they carry nothing) · steal the mechanism, never the model · capture a scannable headline plus the component and its source · **do not decide or debate during the round**, because judgment kills the examples that only look irrelevant. Aim for ten to twenty ideas before anything is assessed.
 
-Each contributor researches independently — around 25 minutes, or prepared in advance — and brings **three real examples of someone solving a structurally similar problem well**. Then a three-minute demo each: what it is, and what is good about it.
+### 4b — Generate silently, then build on
 
-**The examples must come from outside the domain in question.** That is the whole mechanic. Ideas that spark the best solutions come from similar problems in different environments; three examples from your own industry produce three versions of what you already do.
+**Seed the frame.** Open the ideation surface already populated with the ledger, the demo board, the goal and metric, and any concept previously killed and why. An agent handed a blank prompt fills it from its priors; an agent handed the ledger argues with it.
 
-**A demo is a product tour, not a summary.** In the room, someone screen-shares the actual thing. With agents that means: **find it, open it, look at it.** A description of an interface is not the interface — the transferable component usually lives in what the thing *does*, which text search will not surface.
+Two rounds, both silent:
 
-The chain per example:
+1. **Diverge.** Ask each contributor for **a distribution of candidates with their probabilities**, not a list — a list returns the top of the distribution, which is everyone's first idea. Measured at 1.6–2.1× the diversity of direct prompting, and it costs one prompt.
+2. **Build on.** Pass each contributor another's cards and have them extend those, silently. This is the mechanism with the largest measured advantage in LLM ideation — it beat the alternatives in 15 of 15 comparisons — and the one most harnesses omit. A single model switching roles captures ~70% of the multi-agent gain: **structure beats architecture.**
 
-1. **Find** — `mcp__parallel__web_search` for candidates; `competitor-intel` when you need verified metrics rather than claims; `Apify` or `just-scrape` for structured extraction at volume.
-2. **Open and see it** — a browser (`agent-browser`, `browser-use`, `Interceptor` for real-Chrome, `lightpanda` when speed matters) or `mcp__claude-in-chrome__*` / chrome-devtools `take_screenshot`. **Then actually read the screenshot** — the `Read` tool renders images, so look at it rather than reasoning about the alt text.
-3. **Judge what you see** — `web-design-reviewer` for a structured visual read of a page; `screenshot` for capture. What is on screen at the decisive moment is the thing worth stealing.
-4. **Hear what users say about it** — reviews and forums. A slick interface with three one-star reviews describing the same failure is a different lesson from a slick interface that works, and only the reviews tell you which.
+Generate rival **mechanisms**, not rival wordings. Lenses that produce genuinely different ones: inversion (achieve the outcome without the thing everyone uses) · remove / replace / reverse · adjacent transfer · 10× constraint · non-consumption · wedge (one high-frequency moment instead of the whole problem).
 
-The scribe captures **one big idea per demo** — a headline, **its source**, a **screenshot or sketch** of the component, and one line on what users say. Not the whole product: the one transferable part. Capture everything; discard nothing at this stage.
+Each concept carries a card, rejected if a field is empty: **what it is · which evidence row it answers · which demo mechanism it borrows · how it actually works · the existing substitute · what is genuinely different · the most dangerous assumption · the smallest test that would falsify it.** "Different" means a different mechanism, not a different feature list.
 
-```
-Big idea:              (headline — what's transferable)
-Seen at:               (source, with a link)
-From which domain:     (must not be ours)
-The component:         (the specific mechanism, not the whole product)
-Seen how:              (screenshot path | live tour | reviews only — say which)
-What users say:        (one line, with a source)
-Why it might transfer:
-Why it might not:
-```
+**Lay all cards out together before judging any of them**, in the same shape and the same length. A card that is richer because its author wrote more wins on style, and style bias is now the dominant judging bias.
 
-**Lightning Demos are also a de-correlation mechanism**, which is why they sit here rather than being optional colour. Assign each contributor a **different domain to search** — one in logistics, one in healthcare, one in gaming, one in a regulated industry. That is level 2 on the independence ladder: different corpora produce genuinely different big ideas, where the same brief produces the same three examples. A demo round where everyone brought examples from one industry has not run.
+### 4c — The ask check
 
-### 3b — Concept creation
-
-**Seed the frame before anyone creates.** AJ&Smart's rule, learned across hundreds of sprints: *"You don't start from a blank canvas."* They pre-fill the board from pre-interviews so the group edits rather than invents — it is faster, less intimidating, and produces better outcomes, because attention goes to the problem instead of to phrasing.
-
-The agent version: **the ideation frame opens already populated** with the evidence rows, the big-idea board, the goal and metric, and any prior concepts that were killed and why. An agent handed an empty prompt fills it from its priors; an agent handed the ledger argues with it.
-
-Now build concepts **from the big-idea board plus the evidence ledger**. Generate rival **mechanisms**, not rival wordings. Lenses that reliably produce genuinely different mechanisms:
-
-- **Inversion** — achieve the outcome without the thing everyone uses
-- **Remove / replace / reverse** — cut a required step, change who buys, run the workflow backwards
-- **Adjacent transfer** — a mechanism that works in an unrelated field
-- **10× constraint** — an order of magnitude less time, cost, expertise or risk
-- **Non-consumption** — what would serve people currently doing nothing, or using a spreadsheet
-- **Wedge** — solve one high-frequency moment instead of the whole problem
-
-**A concept is something you could show someone — a pitch, a landing page, a one-pager, a mock — not an analysis of one.** The card below is the *check* on a concept, not the concept itself. If the only artifact is the card, nobody outside the room can react to it, and reactions are what the next stage needs.
-
-Each concept carries a card, and the card is rejected if a field is empty:
-
-```
-Concept:
-Which evidence row it answers:     ← must cite the ledger
-Which big idea it borrows:         ← from Lightning Demos, with its source
-Mechanism (how it actually works):
-Why now (what changed):
-Existing substitute:
-What is genuinely different:
-Most dangerous assumption:
-Smallest test that could falsify it:
-```
-
-**"Different" means a different mechanism, not a different feature list.**
-
-### 3c — Concept Gallery
-
-**Lay every concept out together before anyone judges one.** In the Strategy Signal boards this is
-its own frame, and the reason is mechanical: concepts assessed one at a time are assessed against
-whatever was said last, not against each other. A gallery makes the comparison simultaneous.
-
-One line per concept, same shape for each — concept · mechanism · which evidence row · which big
-idea · most dangerous assumption. **If one card is richer than the others because its author wrote
-more, trim it.** Presentation length is not evidence, and the vote that follows cannot tell them
-apart.
-
-### 3d — The ask check ▸ before anything is contested
-
-**Re-read the requester's original words, verbatim, and ask: would this concept set read as an
-answer to them?**
-
-Not *"does it move the metric"* — milestone 1 already gates that, and **a concept set can move the
-metric while answering a different question.** The failure mode is specific and it is invisible from
-inside the run: **the concept space inherits the Lightning Demo domains.** Demo safety engineering
-and you will concept watchdogs; demo organisational design and you will concept org charts. Every
-stage passes its own gate and the whole run misses the ask.
-
-Measured 2026-08-29: a request to *"design and organise how the whole business runs — instructions,
-processes, org charts"* was demoed against aviation, ICU, rail, SRE and industrial control. All five
-concepts came back as monitoring primitives and the final recommendation was **to add a frontmatter
-field.** The org material the requester actually wanted already existed in the vault and never
-entered the run. The requester's verdict: *"like you asked for a real rocket and got a kid's drawing
-of one."*
-
-**If the concept set does not answer the ask, do not contest it.** Return to 3a and assign demo
-domains that match **the shape of the thing requested** — an org question needs org demos, a pricing
-question needs pricing demos, a workflow question needs workflow demos.
-
-**A related trap, from the same run:** an adversary as the last word converges on the smallest
-survivor, and its winning argument was *"this is the only one testable in the next four weeks."*
-**Testability is not a selection criterion.** It decides what you can *learn* soonest, never what is
-worth building. If the cheapest-to-measure concept wins, say so out loud — that is a finding about
-the evidence, not a verdict about the options.
-
-## Stage 4 — CONTEST
-
-Two passes, in this order, and the order matters.
-
-**Debate first.** `Council` runs a real multi-round debate where agents respond to each other's actual points. Friction is the product here. Separately, `RedTeam` runs parallel adversaries against the strongest concept — searching for substitutes, prior failed attempts, adoption friction, and disconfirming evidence. `brutal-honesty-review` when the work needs its weakest part named without cushioning.
-
-**Then vote silently.** Everyone commits their vote without seeing others'. Debate is for information; open voting is for anchoring.
-
-**Three dots per voter. Two different caps exist and they are not interchangeable** — pick one and say which:
-
-- **LDJ's rule: no cap.** A voter may stack all three on one item, and may vote for their own. Verified against the published procedure; an earlier version of this skill asserted a max-2 rule that LDJ does not have. Use it when you want conviction to show — someone who believes one thing matters most can say so with their whole vote.
-- **Note-and-Vote's rule: max two on any one item.** Forces a voter to name a second preference. Use it when the risk is a single loud advocate carrying a round.
-
-Whichever you use, **voting for your own item is allowed in both** — the anti-bias mechanism is silence, not self-denial.
-
-**A vote is void if the voters shared a source set.** That is not a guideline — a tally over correlated voters is a chorus with a number on it. Where a script enforces this (`bin/verify-sprint-round` in a repo that has it), let the script refuse. Where none exists, state each voter's sources next to the tally so the reader can refuse it themselves.
-
-**Vote on parts, not only wholes.** AJ&Smart deliberately avoid their whiteboard's built-in voting because it only accepts whole objects — they use dots so a vote can land on *one component inside* a concept, producing a heatmap. Keep that: a concept usually fails or succeeds on one mechanism, and a whole-concept vote loses which one. Record both the concept tally and which components drew the dots.
-
-**Every voter states one thing that would change their vote.** A voter who cannot name it did not deliberate.
+**Re-read the requester's verbatim words. Would this concept set read as an answer to them?** Not "does it move the metric" — a set can move the metric and answer a different question. If it does not answer the ask, return to 4a with domains shaped like the request. Do not contest the wrong set.
 
 ## Stage 5 — DECIDE
 
-Score openly, and keep the numbers provisional — their job is comparability and transparency, not precision. Weight what matters for the question; a defensible default:
+**Dissent is required, written, and never discussed.** Each contributor names the strongest case *against* the leading concept, independently and without seeing the others. Adversarial passes here have a 7-for-7 record of finding something the author missed; none ever returned an approval.
 
-```
-priority = 0.25·pain + 0.20·frequency + 0.15·willingness-to-pay
-         + 0.15·differentiation + 0.15·feasibility + 0.10·evidence-quality
-         − risk penalty
-```
+Run `sadd-judge-with-debate` for the pass, or spawn the adversary yourself with a facts-only brief. Either is fine — **saying which, in the record, is not.** A table entry is not an invocation: name the skill at the moment you need it or admit you hand-rolled it.
 
-**Evidence quality is a scored term on purpose.** Without it the best-argued concept wins rather than the best-evidenced one.
+**Every dissent gets a disposition in the record: UPHELD, PARTLY UPHELD, or REFUTED, with the reason.** Without this the run logs the objection and proceeds on the original plan — defects identified, none remediated.
 
-Then write the record — this is the harness's memory, and it is what stops the next cycle rediscovering a dead end:
+**Do not hold a debate before deciding.** Debate does not reliably beat cheaper aggregation; roughly 37% of position changes in it are noise rather than persuasion, and structurally-fluent-but-empty argument induces error adoption around 30%. Debate re-correlates the seats you just paid to de-correlate. Written dissent is not debate: it is produced in isolation and disposed of in writing.
+
+**Do not tally a vote over agents.** An agent panel is ~2.2 effective votes, so a tally is one opinion counted three times with a number on it — and here it produced 0 valid tallies from 3 attempts, declared VOID twice for exactly this reason. When *humans* vote, dot-voting is the right instrument and `ldj` owns the procedure.
+
+**The decider decides.** For two live alternatives, place them by two binary questions — *higher or lower on impact? further left or right on effort?* — which replaces an argument nobody has to defend out loud. Score openly if it helps, and keep **evidence quality as an explicit term**, or the best-argued concept beats the best-evidenced one.
+
+Then write the record:
 
 ```
 DECISION: proceed | iterate | pause | kill
-Question:
-Decided by / date:
+Question · Decided by / date
 Evidence: N rows, M independent sources, K conflicts unresolved
-Independence achieved: level per seat
-What we now know:
-What remains assumed:
-The call, and why this one:
-Smallest next test · pass threshold · by when:
+Independence: mechanism and disagreement achieved, per seat
+Dissents and their disposition
+What we now know · What remains assumed
+The call, and why this one
+Smallest next test · pass threshold · by when
 KILL CRITERION: the observation that retires this, and the date it is checked
-What would have changed the decision:
 ```
 
-**A decision without a kill criterion and a date is an opinion.**
+**A decision without a kill criterion and a date is an opinion.** And a kill date living only in prose is invisible — put it on whatever surface the project actually checks, or it passes unnoticed. That has already cost this project real time.
 
-### Flow before detail
+**Beware the ideation–execution gap:** ideas that look best on paper deflate most once built, and AI-generated ones deflate more than human ones. The kill criterion is the only defence, which is why no concept leaves without one.
 
-Before anything is specified, borrow the sprint's storyboard guard rail: **each contributor writes the winning concept as six steps, start to end** — high level, no detail. The decider picks one flow, mixing steps between versions if useful. That chosen flow is the skeleton everything else hangs on.
+**End on one surface** — goal · metric · the call · the roadmap · the kill date. Not the decision record; that is the audit trail. A decision spread across three documents is re-litigated because nobody can hold it at once. Sequence by what unblocks the most; anything unsequenced goes to a named backlog rather than staying ambiguously alive.
 
-The reason is specific and it is the one AJ&Smart give: up to this point every discussion was cut short by process, but detail is where a group goes circular. Six steps agreed in advance are the guard rails that stop it. Then describe each step in shorthand — elements and content, no finished screens — which is Shape Up's **breadboarding**, and it keeps the argument about the mechanism rather than the wording.
-
-### Milestone 2 and the roadmap
-
-**Milestone 2: the chosen concepts are named.** Then sequence them — Strategy Signal ends on a roadmap rather than a decision, because a decision with no order of operations is re-litigated the following week.
-
-| When | What | Who | The metric it moves | Kill date |
-|---|---|---|---|---|
-
-**The run ends on one surface: goal, metric and roadmap together.** Not the decision record — that is
-the audit trail. This is the single board a reader takes in at a glance, and it is what survives the
-week; a decision spread across three documents is re-litigated because nobody can hold it at once.
-
-Sequence by **what unblocks the most**, not by what is most exciting. Anything not on the roadmap goes to a named backlog rather than staying ambiguously alive.
-
-## Running it light
-
-The full shape is a two-day workshop. **The same five frames run in an afternoon**, and that is the common case: **goal + metric → Lightning Demos → concepts → roadmap → one-page summary.**
-
-What changes when you run light: fewer lanes, one Lightning Demo round instead of several, one concept per contributor rather than a gallery of variants, and the contest compressed to a single adversarial pass. **What does not change:** the goal and metric are still agreed before anyone looks at a solution, the demos still fetch from outside the domain, the vote is still silent, and the run still ends on one page.
-
-**The one-pager is the deliverable, not a summary of it.** Goal · metric · the chosen concept · the roadmap · the kill criterion and its date. If it does not fit on a page, the decision is not made yet.
+---
 
 ## Choosing the depth
 
-Match the machinery to the cost of being wrong. Over-running this on a small question is its own failure.
+Over-running this on a small question is its own failure.
 
 | Cost of being wrong | Run |
 |---|---|
-| Reversible, cheap | FRAME → one scout → decide. Say you skipped the rest |
-| Normal | 3 scouts, ledger + verify, one Lightning Demo round, concepts, one RedTeam pass, vote |
-| Expensive or irreversible | 5 scouts including a different-model seat, cross-notebook conflict check, Lightning Demos with a domain assigned per contributor, Council + RedTeam, silent vote, full record and roadmap |
+| Reversible, cheap | FRAME → one lane → decide. Say you skipped the rest |
+| Normal | 3 lanes · ledger + verify · one demo round · concepts · one dissent pass |
+| Expensive or irreversible | 5 lanes including a foreign-model seat · demos with a domain per contributor · dissent from every seat · full record and roadmap |
 
-## What is borrowed, and what is added
+**Running it light is the common case:** frame + metric → demos → concepts → dissent → one page. What does not change at any depth: the metric is agreed before anyone looks at a solution, the demos are fetched from outside the domain, dissent is written in isolation, and the run ends on one page with a kill date.
 
-Both AJ&Smart formats are well designed for their job. Nothing here replaces them; the additions exist because the participants are agents rather than people.
+## Where the work is delegated
 
-| Taken from | What | Why it is kept |
+**Prefer the side-effect-free ones.** Measured 2026-08-30: 38 installed skills open with a mandatory `curl` to a `localhost:31337` notifier — nothing listens on that port and no permission rule covers it, so each invocation costs a prompt for a call that always fails. Several also run in a forked context and load a customization tree. That family is second choice here, not first (Paul, 2026-08-30).
+
+| Stage job | First reach | Second choice |
 |---|---|---|
-| **Lightning Decision Jam** | silent solution writing · dot voting before discussion · impact/effort ranking | they solve anchoring, and anchoring is worse among agents, since later speakers read earlier output |
-| **Strategy Signal** | roles and guidelines stated up front · long-term goal and metric *before* solutions · Lightning Demos · explicit milestones · closing roadmap | a group that has not agreed the finish line ideates toward different ones; a decision with no sequence gets re-litigated next week |
-| **Double Diamond** | the diverge/converge spine, problem diamond before solution diamond | it is the same line the multi-agent evidence draws — fan out on divergence, single-thread on convergence |
+| Panel briefing and forced veto | `structural-decisions` | — |
+| Web gathering, cross-vendor seats, URL verification | — | `Research` (the one worth its friction — its verification machinery has no substitute) |
+| Divergent generation | the lenses in 4b, inline | `BeCreative` · `Ideate` |
+| Adversarial passes | `sadd-judge-with-debate` | `RedTeam` · `brutal-honesty-review` |
+| Human dot-vote, impact/effort, actionability | `ldj` — owns the procedure; never restate it here | — |
+| Cheapest falsifying test | `pol-probe` | — |
 
-**What both formats assume, which is false with agents:**
+**A table entry is not an invocation.** Across twelve run artifacts every one of these was invoked zero times and every pass was hand-rolled — because "reach for this" in a table is not a step anyone takes. Name the skill imperatively at the moment the stage needs it, as stages 2 and 5 do, or hand-roll it deliberately. **Either is fine; not saying which, in the record, is not.**
 
-- **That participants already carry the knowledge.** In a room of experienced humans this is roughly true. Stages 1–2 make it an artifact instead, and verify every citation.
-- **That participants are independent minds.** This is the load-bearing one. Same model, same context, same sources means correlated by construction, so independence is engineered and its level is reported rather than assumed.
-- **That the output is action steps.** This ends at a falsifiable test with a threshold and a kill date, because an action step nobody can fail is not a decision.
-- **That someone verifies.** Neither format has a verification stage. Here nothing passes on its author's word.
+## Failure modes
 
-Use LDJ when humans in a room already hold the evidence and need to converge in an hour. Use Strategy Signal when a human team needs a strategy day. Use this when the evidence has to be produced first and the conclusion has to survive being attacked.
-
-## Failure modes to watch for
-
-| Symptom | What it means | What to do |
+| Symptom | What it means | Do |
 |---|---|---|
-| Every scout agrees | lanes were not disjoint | check with `cross_notebook_query`; re-run with separate corpora |
-| Nothing conflicts in the ledger | the corpus is one echo | add a different-model or different-corpus seat |
-| The red team returns "looks good" | failed review | re-run; default to refuted |
+| Every lane agrees | lanes were not disjoint | re-run with separate corpora; report it |
+| Nothing conflicts in the ledger | the corpus is one echo | add a different-corpus seat |
+| A review returns "looks good" | failed review | re-run; default to refuted |
 | Concepts arrive before evidence | priors wearing new words | discard and gate on the ledger |
+| The run re-derives evidence already on disk | stage 2's resume rule was skipped | cite the prior ledger; re-run only the moved lane |
 | A clean result with no denominator | nothing was measured | report *searched N, found 0* |
-| The most articulate concept wins | rhetoric beat evidence | check the evidence-quality term was actually scored |
-| Lightning Demo examples all from one industry | the demo round did not run | re-run with a different domain assigned per contributor |
-| Big ideas describe features, not mechanisms | nobody opened the product | require a screenshot or a live tour per card |
-| Concepts do not move the agreed metric | milestone 1 was skipped or ignored | out of scope, however good |
-| No kill criterion | it is an opinion | do not record it as a decision |
-| Concepts answer a narrower question than was asked | the concept space inherited the demo domains | re-run 3a with domains shaped like the request; do not contest the wrong set |
-| The winning concept won on being easiest to measure | testability selected the deliverable | say so explicitly; re-judge on value, not on measurability |
-| The decider corrects the frame after lanes ran | stage 0 was never confirmed | confirm the frame next time; file the rows as DROPPED, do not reuse them |
-| A level-1 seat "verified" but never asked a real question | a ping is not a model call | exercise it, and exhaust the other level-1 route before dropping |
+| The most articulate concept wins | rhetoric beat evidence | check evidence-quality was scored; normalise card length |
+| Demo examples all from one industry, or all recalled | the demo round did not happen | re-run with fetched URLs and a domain per contributor |
+| Concepts answer a narrower question than was asked | the concept space inherited the demo domains | re-run 4a with domains shaped like the request |
+| The winner won on being cheapest to measure | testability selected the deliverable | say so out loud; that is a finding about the evidence, not a verdict |
+| A dissent is recorded but nothing changed | no disposition was written | mark each UPHELD / REFUTED with its reason |
+| The decision has no kill criterion | it is an opinion | do not record it as a decision |
+| A seat reports a level it did not exercise | a ping is not a model call | exercise it, or report the level you got |
 
-**Which skill to reach for at each stage — the full routing table is in `references/playbook.md`.** Reach for it rather than improvising: roughly sixty installed skills cover parts of this harness, and re-implementing one by hand is the failure this whole repository exists to stop. Measured on the first live run: the facilitator drove a browser manually for a deep-research pass while `perplexity-researcher-reasoning-pro` sat installed and unused.
-
-Longer reference — worked lane assignments, NotebookLM call sequences, the stage routing table, and the full artifact templates: `references/playbook.md`.
+Lane assignments, brief templates and the full artifact formats: `references/playbook.md`.
