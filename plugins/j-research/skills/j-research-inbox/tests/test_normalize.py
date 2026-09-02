@@ -179,5 +179,31 @@ class TestPublish(BaseCase):
         self.assertTrue(list((self.vault / "research" / "quarantine").glob("*.reason.txt")))
 
 
+    def test_perplexity_goes_to_evidence_convention_and_hub(self):
+        hub = self.vault / "evidence" / "perplexity" / "perplexity-library.md"
+        hub.parent.mkdir(parents=True, exist_ok=True)
+        hub.write_text("---\ntype: Research\n---\n\n# Perplexity library\n\n## Business OS\n\n- [[pplx-old]] \u2014 thread: old\n\n## Sessions\n\n- [[pplx-x]] \u2014 thread: x\n")
+        self.inbox("perplexity").mkdir(parents=True, exist_ok=True)
+        (self.inbox("perplexity") / "abcdef12-0000-0000-0000-000000000000.md").write_text(
+            '---\nsource: perplexity\nsource_id: abcdef12-0000-0000-0000-000000000000\n'
+            'url: https://www.perplexity.ai/search/abcdef12-0000-0000-0000-000000000000\n'
+            'date: 2026-09-03\ntitle: "Vault: sync test"\nproject: "Business OS"\n---\n\nAnswer with https://example.com cited.\n')
+        code, out = self.run_cli(["ingest"])
+        self.assertEqual(code, 0)
+        dest = self.vault / "evidence" / "perplexity" / "business-os" / "pplx-abcdef12-vault-sync-test.md"
+        self.assertTrue(dest.exists(), out)
+        text = dest.read_text()
+        self.assertIn("kind: thread", text)
+        self.assertIn('Belongs to:\n  - "[[jt-business-os]]"', text)
+        self.assertIn("citations_preserved: true", text)
+        self.assertIn("# Perplexity thread \u2014 Vault: sync test", text)
+        self.assertIn("- [[pplx-abcdef12-vault-sync-test]] \u2014 thread: Vault: sync test", hub.read_text())
+        # same id again -> skip (hub is the source of truth)
+        (self.inbox("perplexity") / "again.md").write_text(
+            '---\nsource: perplexity\nsource_id: abcdef12-0000-0000-0000-000000000000\nurl: https://www.perplexity.ai/search/abcdef12-0000-0000-0000-000000000000\n---\n\ndifferent body\n')
+        code, out = self.run_cli(["ingest"])
+        self.assertIn("skip", out)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -63,6 +63,60 @@ def humanize(stem):
     return stem.replace("-", " ").replace("_", " ").strip().title() or "Untitled"
 
 
+# Perplexity notes follow the vault's own convention: evidence/perplexity/<project>/pplx-<id8>-<slug>.md
+# plus one bullet in the hub note. Project folder -> the vault project note it belongs to.
+PPLX_BELONGS = {
+    "jetthoughts-marketing": "[[jt-business-os]]", "business-os": "[[jt-business-os]]",
+    "ai-harness-setup": "[[jt-business-os]]", "job-seek-in-berlin": "[[find-an-eng-leading-job]]",
+    "investments": "[[build-finance-portfolio]]", "sessions": "[[pkm]]",
+}
+PPLX_HUB = "evidence/perplexity/perplexity-library.md"
+
+
+def existing_pplx_ids(vault):
+    return {m.group(1) for path in (vault / "evidence" / "perplexity").glob("*/pplx-*.md")
+            for m in [re.match(r"pplx-([0-9a-f]{8})-", path.name)] if m}
+
+
+def write_pplx_note(vault, source_id, title, body, url, date, project, dry_run):
+    id8 = source_id[:8]
+    if id8 in existing_pplx_ids(vault):
+        return "skip", None
+    kind = "computer-task" if "/computer/tasks/" in (url or "") else "thread"
+    folder = slugify(project or "sessions", 40)
+    belongs = PPLX_BELONGS.get(folder, "[[pkm]]")
+    label = "Perplexity Computer task" if kind == "computer-task" else "Perplexity thread"
+    body = body.strip()
+    safe_title = title.replace('"', "'")
+    text = "\n".join([
+        "---", "type: Research", "state: organized", "provenance: external-research",
+        "source: perplexity", f"kind: {kind}", f"url: {url}",
+        f'project: "{project or folder.title()}"', f"filed: {date}",
+        "Belongs to:", f'  - "{belongs}"', "Related to:", '  - "[[perplexity-library]]"',
+        f"content_hash: {sha256_hex(body)}",
+        f"citations_preserved: {'true' if re.search(r'https?://', body) else 'false'}",
+        "---", "", f"# {label} \u2014 {safe_title}", "",
+        f"Captured {date} from {url} as page text: Paul's prompts and Perplexity's answers, unedited.", "",
+        body, "",
+    ])
+    dest = vault / "evidence" / "perplexity" / folder / f"pplx-{id8}-{slugify(title, 50)}.md"
+    if not dry_run:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(text, encoding="utf-8")
+        hub = vault / PPLX_HUB
+        if hub.exists():
+            h = hub.read_text(encoding="utf-8")
+            heading = "## " + (project or folder.replace("-", " ").title())
+            bullet = f"- [[{dest.stem}]] \u2014 {'task' if kind == 'computer-task' else 'thread'}: {safe_title[:90]}\n"
+            if heading in h:
+                i = h.index(heading); j = h.find("\n## ", i + 1); j = len(h) if j < 0 else j
+                h = h[:j].rstrip("\n") + "\n" + bullet + h[j:]
+            else:
+                h = h.rstrip("\n") + f"\n\n{heading}\n\n" + bullet
+            hub.write_text(h, encoding="utf-8")
+    return "ok", dest
+
+
 def existing_hashes(vault):
     hashes = set()
     for path in vault.glob("research-*.md"):
@@ -146,6 +200,8 @@ def process_markdown_file(vault, source, path, known_hashes, dry_run):
     title = fm.get("title") or extract_h1(body) or humanize(path.stem)
     source_id = fm.get("source_id") or path.stem
     date = fm.get("date") or datetime.fromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+    if fm.get("source", source) == "perplexity":
+        return write_pplx_note(vault, source_id, title, body, fm.get("url"), date, fm.get("project"), dry_run)
     status, dest = write_note(
         vault, fm.get("source", source), source_id, title, body,
         fm.get("url"), date, [], dry_run, known_hashes,
