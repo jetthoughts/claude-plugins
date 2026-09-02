@@ -48,8 +48,9 @@ Work newest `filed:` first, at most 5 notes per run unless asked for more.
 
 ## Finish
 
-Commit with `Triage research: N notes (A/B/C counts)` from the vault root; the vault's post-commit
-hook re-indexes the changed notes (≤25 per commit). Report per note: tier, the takeaways, the links
+In an interactive session, commit with `Triage research: N notes (A/B/C counts)` from the vault
+root; the vault's post-commit hook re-indexes the changed notes (≤25 per commit). Under the headless
+runner, do not run git and do not create Linear issues: the runner commits. Report per note: tier, the takeaways, the links
 added, and anything marked UNKNOWN.
 
 ## Headless run
