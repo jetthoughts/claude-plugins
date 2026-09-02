@@ -54,3 +54,5 @@ input to `research/quarantine/` with a sibling `<name>.reason.txt` and processin
 `ingest` exits 1 if anything was quarantined, 0 otherwise. Each processed item prints one line:
 `ok|skip|quarantine  <path>`. `skip` means a note with the same `content_hash` already exists in
 the vault — safe to re-run `ingest` on the same inbox.
+
+Notes: `research/_inbox/_done/` is gitignored in the vault; input frontmatter `title` values containing a colon must be double-quoted or the vault's commit hook rejects the file.

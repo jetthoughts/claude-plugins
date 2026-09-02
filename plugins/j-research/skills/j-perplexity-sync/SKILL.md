@@ -32,7 +32,7 @@ Paths: inbox `~/Documents/pkm/research/_inbox/perplexity/`, watermark
    `skipped` with the reason.
 4. Write `research/_inbox/perplexity/<uuid>.md` with frontmatter `source: perplexity`,
    `source_id`, `url`, `date` (ISO), `title` (the thread's H1 or the query's first 60
-   chars), `tags: [perplexity, research]`, then the body with the tool's
+   chars, always double-quoted: the vault's commit hook rejects unquoted colons), `tags: [perplexity, research]`, then the body with the tool's
    `UNTRUSTED_PAGE_CONTENT` marker lines removed.
 5. Run `python3 ~/.claude/skills/j-research-inbox/scripts/normalize.py ingest`. Expect one
    `ok` per new thread; `skip` means an identical body already exists.
@@ -46,3 +46,4 @@ Paths: inbox `~/Documents/pkm/research/_inbox/perplexity/`, watermark
 - A Cloudflare challenge or a login page means the BrowserOS profile lost its Perplexity
   session: stop and ask Paul to log in there; do not try another fetcher.
 - Never write into `research/_inbox/_done/` or the vault root directly; the normalizer owns that.
+  `_done/` is gitignored in the vault (raw inputs are transient; the normalized notes are the record).
