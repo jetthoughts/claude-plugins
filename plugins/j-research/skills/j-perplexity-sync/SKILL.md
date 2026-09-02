@@ -15,34 +15,35 @@ Paths: inbox `~/Documents/pkm/research/_inbox/perplexity/`, watermark
 
 ## Procedure
 
-1. Read the watermark. Open `https://www.perplexity.ai/library` in a new BrowserOS tab
-   (`tabs action=new`, keep the returned `session`). Read `main` as markdown: rows carry the
-   title and a relative age (`3h ago`, `1d ago`). Library rows are not anchors; get thread
-   IDs from the sidebar instead: `read format=links selector=nav` lists
-   `/search/<uuid>` links in the same recency order as the library.
-2. Keep the `/search/<uuid>` IDs whose age is inside the requested window and that are not
-   in `synced_ids`. `/computer/tasks/<uuid>` pages are a different page type; leave them out
-   and record that in the report.
-3. For each kept ID: `tabs action=new url=https://www.perplexity.ai/search/<uuid>
-   background=true`, then `read format=markdown selector=main includeLinks=true`. Answers
-   over 5,000 characters are saved by the tool to `~/.browseros/tool-output/read-*.md`; use
-   that file as the body. The first line of the pane holds the query and the local time
-   (`Sep 2, 5:01 PM`); take the date from it. If the pane shows only the query, the answer
-   did not render: retry once after `wait for=time value=4000`, else add the ID to
-   `skipped` with the reason.
-4. Write `research/_inbox/perplexity/<uuid>.md` with frontmatter `source: perplexity`,
-   `source_id`, `url`, `date` (ISO), `title` (the thread's H1 or the query's first 60
-   chars, always double-quoted: the vault's commit hook rejects unquoted colons), `tags: [perplexity, research]`, then the body with the tool's
-   `UNTRUSTED_PAGE_CONTENT` marker lines removed.
-5. Run `python3 ~/.claude/skills/j-research-inbox/scripts/normalize.py ingest`. Expect one
-   `ok` per new thread; `skip` means an identical body already exists.
+1. Read the watermark. Open `https://www.perplexity.ai/library` with `mcp__browseros-neo__run`
+   (`browser.pages.newPage(url)`, keep the `session`). Library rows are React data-table rows with
+   no anchors; get every row's path with `mcp__browseros-neo__evaluate` on that page: scroll the rows'
+   scroll container to the end until the row count stops growing (never click buttons: a
+   "load more"-looking control navigates away), then for each `main [role="row"]` walk its
+   `__reactFiber$` props (≤6 parents) and regex `/(search|computer/tasks)/<uuid>`. Rows are newest
+   first; the last cell holds the age (`3h ago`, `1d ago`). 25 rows was the whole library on 2026-09-03.
+2. Keep paths inside the requested window that are not in `synced_ids`. `/computer/tasks/<uuid>` pages
+   are read the same way as threads; tag them `computer-task`.
+3. Fetch in `run` batches of 3 (the run cap is 30 s; each page needs ~6 s): `newPage(url)`, sleep
+   5.5 s, `browser.read(pid, { selector: 'main' })`, `browser.pages.close(pid)`. Pages over 5,000 chars
+   are saved by the tool to `~/.browseros/tool-output/read-*.md` (path in the returned string); shorter
+   pages come back inline, so re-read them without the selector to force a saved file and cut the answer
+   out from the first `[<Project>/](https://www.perplexity.ai/spaces/` anchor. If a pane shows only the
+   query, retry once after 4 s, else record it under `skipped`.
+4. Write `research/_inbox/perplexity/<uuid>.md` with frontmatter `source: perplexity`, `source_id`,
+   `url`, `date` (ISO; from the pane's `Sep 2, 5:01 PM` line, else from the library age), `title`
+   (H1 or the query's first 60 chars, always double-quoted: the vault's commit hook rejects unquoted
+   colons), `tags: [perplexity, research]`, then the body with the tool's `UNTRUSTED_PAGE_CONTENT`
+   marker lines removed.
+5. Run `python3 ~/.claude/skills/j-research-inbox/scripts/normalize.py ingest`. Expect one `ok` per
+   new item; `skip` means an identical body already exists.
 6. Update the watermark: add the new IDs to `synced_ids`, set `last_run`, keep `skipped`.
-7. Report: threads synced, skipped (with reasons), the notes' `citations_preserved` values,
-   and remind that the vault's post-commit hook indexes at most 25 files per commit.
+7. Report: items synced, skipped (with reasons), `citations_preserved` values, and remind that the
+   vault's post-commit hook indexes at most 25 files per commit.
 
 ## Budget and failure
 
-- One library read plus one tab and one read per thread; 15 threads is about 30 calls.
+- One evaluate for the library plus one `run` per 3 items; 25 items is about 10 calls.
 - A Cloudflare challenge or a login page means the BrowserOS profile lost its Perplexity
   session: stop and ask Paul to log in there; do not try another fetcher.
 - Never write into `research/_inbox/_done/` or the vault root directly; the normalizer owns that.
