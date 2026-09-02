@@ -1,0 +1,22 @@
+decision_type: new-service | market | feature | experiment | ux
+title: ""
+desired_outcome: ""
+target_customer_or_user: ""
+decision_to_make: ""
+deadline: ""
+constraints:
+  budget_eur: null
+  max_delivery_effort_days: null
+  required_margin_percent: null
+  geography: ""
+  legal_or_compliance_constraints: []
+  existing_assets_to_reuse: []
+reversibility: unknown | type-1 | type-2
+available_evidence:
+  internal_paths: []
+  analytics_sources: []
+  customer_sources: []
+  external_sources: []
+decision_owner: ""
+human_decider: ""
+what_evidence_would_change_the_decision: ""

@@ -22,6 +22,16 @@
       "name": "deliberate",
       "source": "./plugins/deliberate",
       "description": "Decision harness: independent scouts, verified evidence ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion"
+    },
+    {
+      "name": "j-ideation",
+      "source": "./plugins/j-ideation",
+      "description": "Independent Ideation: evidence-based, groupthink-resistant decision workflow \u2014 router /j-independent-ideation, 11 stage skills, 13 isolated role agents, templates and validators"
+    },
+    {
+      "name": "j-research",
+      "source": "./plugins/j-research",
+      "description": "Local keyless research tooling guidance: j-perplexica-search and j-deep-research (Local Deep Research + SearXNG MCPs over the ~/.infra stack)"
     }
   ]
 }

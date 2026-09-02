@@ -1,0 +1,20 @@
+{
+  "name": "j-ideation",
+  "description": "Independent Ideation: an evidence-based, groupthink-resistant decision workflow for services, markets, features, experiments and UX. Router /j-independent-ideation plus 11 stage skills (framing, research, lightning demos, opportunities, variants, assumptions, council, experiments, interfaces, call, learning), 13 isolated role agents, templates, and four stdlib validators. Every claim labelled FACT/INFERENCE/ASSUMPTION/ESTIMATE/CONTRADICTION/UNKNOWN; dissent preserved; a named human makes the call.",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "ideation",
+    "decision-making",
+    "research",
+    "council",
+    "experiments",
+    "jetthoughts",
+    "claude-code"
+  ]
+}

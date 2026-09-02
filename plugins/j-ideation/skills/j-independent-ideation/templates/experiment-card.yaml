@@ -1,0 +1,29 @@
+experiment_id: ""
+decision_id: ""
+concept_id: ""
+assumption_id: ""
+hypothesis: ""
+falsification_condition: ""
+method: ""
+target_participants_or_traffic: ""
+sample_or_exposure_target: ""
+primary_metric: ""
+guardrail_metrics: []
+success_threshold: ""
+failure_threshold: ""
+inconclusive_rule: ""
+duration_days: 0
+budget_eur: 0
+effort_person_days: 0
+owner: ""
+instrumentation_required: []
+privacy_or_legal_checks: []
+decision_unlocked: ""
+next_if_pass: ""
+next_if_fail: ""
+next_if_inconclusive: ""
+# scoring inputs (single number or [low, high])
+expected_information_gain: 0   # 1-5
+decision_importance: 0         # 1-5
+evidence_basis: model-consensus | anecdote | customer-signals | prototype | behavioral | paid
+requires_human_approval: false

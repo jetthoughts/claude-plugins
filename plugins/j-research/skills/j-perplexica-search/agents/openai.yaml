@@ -1,0 +1,4 @@
+interface:
+  display_name: "Perplexica Search"
+  short_description: "Search the web, papers, and discussions locally"
+  default_prompt: "Use $j-perplexica-search to research this topic with cited sources."
