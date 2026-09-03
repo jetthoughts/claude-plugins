@@ -58,7 +58,8 @@ They live at `https://www.perplexity.ai/computer/artifacts`, grouped by month, a
 3. Same-named cards: per card, click its `Artifact options` → `Download` (the granular `download` tool
    on the menu item, or in `run` open the menu and press `ArrowDown`×(index+1), `Enter`). Cards whose menu
    has no `Download` item (`Generated Document`) cannot be exported; list them as skipped.
-4. Stage the files (dedupe by sha256, keep ` (n)` suffixes until deduped). Filing is judgment work, not
+4. Stage the files: copy with names untouched (keep ` (n)` suffixes: stripping them made two different
+   Business OS drafts overwrite each other on 2026-09-03), then dedupe by sha256. Filing is judgment work, not
    a script: an agent reads each artifact and files it per `j-research-triage` §Computer documents —
    project folder, `Belongs to`, link to the task that produced it (card menu `Open session` shows it),
    Takeaways, tier. Binaries (`.png/.zip/.pdf/.docx`) go to
@@ -75,3 +76,8 @@ They live at `https://www.perplexity.ai/computer/artifacts`, grouped by month, a
   `_done/` is gitignored in the vault (raw inputs are transient; the normalized notes are the record).
 - A single thread can also be exported by hand: main pane `Session actions` → `Export as Markdown`
   (official, no extension, no credits); drop the file into `research/_inbox/perplexity/` with `source: perplexity`.
+  **Rename it to `<thread-uuid>.md` the moment it lands**: the export is named after the thread title,
+  so two sessions with the same title (re-runs, "Site Rebranding" ×2, the `.Md` cards) get the same
+  filename and the later one overwrites the earlier — in `~/Downloads` the browser only adds ` (n)`.
+  The id is in the thread URL. Same rule for artifacts: never strip ` (n)` before hashing; a same-named
+  file with a different hash is a different artifact, and the uuid or `content_hash` is the identity, never the title.
