@@ -1,6 +1,6 @@
 ---
 name: j-independent-ideation
-description: Daily entry point (/j-independent-ideation) for evidence-based decisions on new services, markets/ICPs/channels, features, experiment prioritisation, and UI/UX direction. Use whenever the user wants to find, assess, test, or decide on an opportunity, or asks "what should we build/offer/test next". Routes to the lower-level ideation skills, creates the decision workspace, and enforces the human decision gate. Do not use for implementation work or for research that has no decision attached.
+description: Daily entry point (/j-independent-ideation) for evidence-based decisions on new services, markets/ICPs/channels, features, experiment prioritisation, UI/UX direction, and finding a non-trivial solution to one concrete problem (technical or business). Use whenever the user wants to find, assess, test, or decide on an opportunity, or asks "what should we build/offer/test next". Routes to the lower-level ideation skills, creates the decision workspace, and enforces the human decision gate. Do not use for implementation work or for research that has no decision attached.
 ---
 
 # Independent Ideation (router)
@@ -39,6 +39,7 @@ Create the rest only when the route below uses them. Record every skill and tool
 | market | j-framing-the-question → j-running-independent-research → j-mapping-opportunities → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
 | feature | j-framing-the-question → **inspect product analytics + customer evidence first** (`01-existing-evidence.md`) → j-running-independent-research → j-mapping-opportunities (use `pm-product-discovery:opportunity-solution-tree`) → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
 | experiment | j-framing-the-question → read existing decision/opportunity/experiment artifacts in `.claude/artifacts/independent-ideation/` → j-mapping-assumptions → j-designing-experiments (prioritised portfolio) → j-making-the-call |
+| solution | j-framing-the-question (the problem, the constraint that makes the obvious answer fail, what "solved" measures) → j-running-independent-research starting from triaged `evidence/` notes (`feeds:` matching this decision) → j-generating-independent-variants with the **solution lenses** and a **Crazy 8s** divergence round → j-mapping-assumptions → j-designing-experiments (code spike / prototype / paper test cards, time-boxed) → j-making-the-call |
 | ux | j-framing-the-question → evaluate UI context + behavioral analytics → j-running-independent-research only for factual gaps → j-scanning-lightning-demos → j-generating-independent-variants (UX archetypes) → j-evaluating-interfaces → j-mapping-assumptions → j-designing-experiments → j-making-the-call |
 
 Invoke each step with the Skill tool by name. Each step reads its declared inputs from the workspace and

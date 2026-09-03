@@ -38,13 +38,30 @@ Work newest `filed:` first, at most 5 notes per run unless asked for more.
 
    3–6 bullets, each labelled FACT / INFERENCE / ESTIMATE / UNKNOWN. Numbers keep their source.
    No bullet may claim more than the captured text supports.
-3. Frontmatter: add `triage: A|B|C` and `triaged: <YYYY-MM-DD>`; add the found notes to
+3. Feeds: decide what the note can feed and write it as frontmatter
+   `feeds: [<decision_type>:<form>, …]` where decision_type ∈ new-service · market · feature ·
+   experiment · ux · solution (one concrete problem) and form ∈ approach · experiment · crazy-8 ·
+   code-spike · lightning-demo · process-change. A note can feed several. Examples:
+   `feeds: [new-service:lightning-demo]`, `feeds: [solution:code-spike, feature:experiment]`. Add one
+   `Route:` bullet to the Takeaways for tier A: the `/j-independent-ideation` intake line it would
+   start (`decision_type: solution`, `title: …`, `available_evidence.internal_paths: [this note]`).
+   `feeds: []` is a valid answer for reference-only notes.
+4. Frontmatter: add `triage: A|B|C` and `triaged: <YYYY-MM-DD>`; add the found notes to
    `Related to:` (keep `[[perplexity-library]]`). Tiers: **A** informs an active project or decision
    (link it) · **B** reference material, keep as is · **C** disposable (a one-off lookup, a
    duplicate, or superseded) → also set `state: parked` and say why in a `triage_note:` field.
    Never touch fields starting with `_` (Tolaria-managed), never change `state` except for tier C,
    and quote any frontmatter string that contains a colon (the vault's commit hook rejects it).
-4. Do not rewrite, trim or "clean" the captured body.
+5. Do not rewrite, trim or "clean" the captured body.
+
+## Digested
+
+When every actionable item in a note has been handled (a decision was made, the work is done, or each
+proposal has a recorded verdict), close it out so it stops looking like open input: add
+`digested: <YYYY-MM-DD>` to the frontmatter, end the Takeaways with a `Digested:` bullet naming where
+the outcomes live, and rename the source thread in Perplexity through BrowserOS so the library shows it
+too: open the thread, `Session actions` → `Rename`, prefix the title with `✅ digested <YYYY-MM-DD> · `.
+Do not rename threads that still hold open items.
 
 ## Finish
 

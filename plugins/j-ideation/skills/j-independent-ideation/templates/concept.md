@@ -2,7 +2,8 @@
 concept_id: ""
 anonymized_label: ""
 decision_id: ""
-concept_type: service | market | feature | channel | experiment | ux
+concept_type: service | market | feature | channel | experiment | ux | solution
+form: approach | experiment | crazy-8-sketch | code-spike | lightning-demo | process-change
 lens: ""
 ---
 

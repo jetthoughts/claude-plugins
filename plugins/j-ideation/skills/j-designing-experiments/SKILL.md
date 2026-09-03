@@ -11,7 +11,7 @@ Method aids: `pm-product-discovery:brainstorm-experiments-new` / `:brainstorm-ex
 
 ## Allowed patterns
 
-Customer problem interview · JTBD interview · expert interview · competitor/search-demand test · landing-page smoke test · fake-door · pricing/WTP interview · proposal/pre-sale test · concierge pilot · Wizard-of-Oz · channel response test · technical spike · paper/Figma prototype · first-click · five-second comprehension · tree test/card sort · moderated/unmoderated usability session · A/B only with adequate traffic and instrumentation.
+Customer problem interview · JTBD interview · expert interview · competitor/search-demand test · landing-page smoke test · fake-door · pricing/WTP interview · proposal/pre-sale test · concierge pilot · Wizard-of-Oz · channel response test · technical spike / code spike (time-boxed, throwaway code, ends in a written verdict against the hypothesis) · paper/Figma prototype · first-click · five-second comprehension · tree test/card sort · moderated/unmoderated usability session · A/B only with adequate traffic and instrumentation.
 
 ## Procedure
 

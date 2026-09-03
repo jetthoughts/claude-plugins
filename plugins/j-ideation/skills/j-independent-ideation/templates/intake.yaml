@@ -1,4 +1,4 @@
-decision_type: new-service | market | feature | experiment | ux
+decision_type: new-service | market | feature | experiment | ux | solution   # solution = one concrete problem that needs a non-trivial answer
 title: ""
 desired_outcome: ""
 target_customer_or_user: ""
