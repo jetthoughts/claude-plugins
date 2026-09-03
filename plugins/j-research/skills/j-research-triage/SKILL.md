@@ -60,7 +60,7 @@ When every actionable item in a note has been handled (a decision was made, the 
 proposal has a recorded verdict), close it out so it stops looking like open input: add
 `digested: <YYYY-MM-DD>` to the frontmatter, end the Takeaways with a `Digested:` bullet naming where
 the outcomes live, and rename the source thread in Perplexity through BrowserOS so the library shows it
-too: open the thread, `Session actions` → `Rename`, prefix the title with `✅ digested <YYYY-MM-DD> · `.
+too: open the thread, use the **main pane's** `Session actions` (top of the answer; the sidebar copy's menu items can be covered) → `Rename Session`, fill the dialog, `Save`; prefix the title with `✅ digested <YYYY-MM-DD> · `.
 Do not rename threads that still hold open items.
 
 ## Finish

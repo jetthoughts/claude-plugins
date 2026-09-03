@@ -52,3 +52,5 @@ is the source of truth for "already synced": `grep -o 'pplx-[0-9a-f]\{8\}' …/p
   session: stop and ask Paul to log in there; do not try another fetcher.
 - Never write into `research/_inbox/_done/` or the vault root directly; the normalizer owns that.
   `_done/` is gitignored in the vault (raw inputs are transient; the normalized notes are the record).
+- A single thread can also be exported by hand: main pane `Session actions` → `Export as Markdown`
+  (official, no extension, no credits); drop the file into `research/_inbox/perplexity/` with `source: perplexity`.
