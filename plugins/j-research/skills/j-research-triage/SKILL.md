@@ -54,6 +54,18 @@ Work newest `filed:` first, at most 5 notes per run unless asked for more.
    and quote any frontmatter string that contains a colon (the vault's commit hook rejects it).
 5. Do not rewrite, trim or "clean" the captured body.
 
+## Computer documents (artifacts a Perplexity task produced)
+
+A downloaded artifact is filed by reading it, never by a script deciding from its filename. Wrap the
+unedited text in the `type: Research` frontmatter with `kind: computer-document`, `source: perplexity`,
+`content_hash`, `filed`, then place it: folder = the project it serves (`evidence/perplexity/<project>/`;
+`sessions/` only when no project fits), `Belongs to` = that project's vault note, `Related to` = the
+task or thread note that produced it (name it `pplx-<id8>-doc-<slug>.md` after that note's id; `pplx-doc-<slug>.md`
+when the producer is unknown) plus the decision or opportunity notes it informs. Then triage it like any
+note (Takeaways, `feeds`, tier) and give it one bullet in the hub under the project section:
+`- [[note]] — document: <title> (<Mon YYYY>)`. Legal, tax and contract documents are tier B reference at
+most; say who the counterparty is in the takeaways so the note is findable later.
+
 ## Digested
 
 When every actionable item in a note has been handled (a decision was made, the work is done, or each
