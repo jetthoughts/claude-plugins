@@ -45,6 +45,28 @@ is the source of truth for "already synced": `grep -o 'pplx-[0-9a-f]\{8\}' …/p
 7. Report: items synced, skipped (with reasons), `citations_preserved` values, and remind that the
    vault's post-commit hook indexes at most 25 files per commit.
 
+## Computer artifacts (files the tasks produced)
+
+Artifacts are not on the thread pages and the Chrome "Perplexity Thread Exporter" does not export them.
+They live at `https://www.perplexity.ai/computer/artifacts`, grouped by month, and download natively:
+
+1. Open the page in BrowserOS, scroll to the bottom until every month group is rendered (they lazy-load).
+2. Bulk: `act` click one card's `Select artifact` checkbox → a `Select all artifacts in <Month>` checkbox
+   appears per group → tick the groups you want → `download` on the toolbar `Download` button. The tool
+   captures one file; the rest land in `~/Downloads` as one file **per distinct filename** (same-named
+   artifacts such as three `claude-code-business-os.md` or four `.Md` cards yield one file).
+3. Same-named cards: per card, click its `Artifact options` → `Download` (the granular `download` tool
+   on the menu item, or in `run` open the menu and press `ArrowDown`×(index+1), `Enter`). Cards whose menu
+   has no `Download` item (`Generated Document`) cannot be exported; list them as skipped.
+4. Stage the files (dedupe by sha256, keep ` (n)` suffixes until deduped) and file them:
+   `python3 ~/.claude/skills/j-perplexity-sync/scripts/file_artifacts.py <stage-dir> <YYYY-MM>` writes
+   text artifacts as `evidence/perplexity/artifacts/pplx-doc-<slug>.md` (`kind: computer-document`,
+   `content_hash`), keeps `.csv/.py/.txt` as files beside them, copies binaries (`.png/.zip/.pdf/.docx`)
+   to `~/Google Drive/My Drive/Documents/2. Resource/Perplexity artifacts/`, and appends one bullet per
+   item under `## Computer artifacts` in the hub. Re-running skips a slug whose note carries the same hash.
+5. Commit in chunks of ≤25 files (the post-commit hook indexes at most 25 per commit).
+   2026-09-03 baseline: 80 cards (Sep 41, Aug 7, Mar 34) → 64 vault files + 9 Drive files; 3 `Generated Document` cards not exportable.
+
 ## Budget and failure
 
 - One evaluate for the library plus one `run` per 3 items; 25 items is about 10 calls.
