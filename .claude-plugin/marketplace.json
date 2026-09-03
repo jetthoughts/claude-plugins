@@ -32,6 +32,11 @@
       "name": "j-research",
       "source": "./plugins/j-research",
       "description": "Local keyless research tooling guidance: j-perplexica-search and j-deep-research (Local Deep Research + SearXNG MCPs over the ~/.infra stack)"
+    },
+    {
+      "name": "j-paperclip",
+      "source": "./plugins/j-paperclip",
+      "description": "Operating the self-hosted Paperclip control plane: loopback API, agents and adapter config, managed instruction bundles, issues and wakeups, budgets, run logs"
     }
   ]
 }

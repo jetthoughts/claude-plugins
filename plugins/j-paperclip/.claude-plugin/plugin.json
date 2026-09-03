@@ -1,0 +1,18 @@
+{
+  "name": "j-paperclip",
+  "description": "Operating the self-hosted Paperclip control plane: the loopback API, agents and their adapter config, managed instruction bundles, issues and wakeups, budgets and costs, run logs, and the traps that waste a session.",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "paperclip",
+    "agent-control-plane",
+    "claude-code",
+    "orchestration",
+    "jetthoughts"
+  ]
+}
