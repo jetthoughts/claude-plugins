@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0 - 2026-09-03
+
+- New `board-flow` skill: the JetThoughts Kanban delivery flow for agents and
+  sessions — Backlog → Ready → In Progress → Code Review → Verify → Done, pull
+  right-to-left and top-to-bottom, one card In Progress per worker, two in
+  flight, never move back, split at the time box, the ordered WIP-limit list
+  (help reviews first, never new logic), bugs zero, stale cards, violations
+  reported before they happen. `references/boards.md` maps the lists onto
+  Paperclip, Linear, GitHub Projects, markdown kanban and a session TODO list.
+  Source: the "Delivery Flow for Distributed Remote Teams" and "WIP limit
+  reached" posts. `contract` §6 and `/deliver` now point at it.
+
 ## 0.2.0 - 2026-08-21
 
 - Core agents gain methodology stances (operator request): XP for

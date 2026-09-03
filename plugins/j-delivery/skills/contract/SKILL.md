@@ -147,7 +147,11 @@ silent skip.
 
 ## 6. WIP = 1
 
-One unit in flight. One PR open — the sprint's. Parallelism in exactly three
+One unit in flight. One PR open — the sprint's. Which unit, and how it moves,
+is the `j-delivery:board-flow` skill: pull right-to-left and top-to-bottom,
+one card In Progress per worker, two in flight until Done, never move a card
+back, split what outgrows its time box, and the fixed list of what to do at
+the limit (help reviews first, never new logic). Parallelism in exactly three
 places: reviewer panels judging one artifact · a knowledge-maintainer riding
 the same commit without touching the work's files · explicitly-requested swarm
 workers, each in its own worktree. Otherwise never run parallel agents over the
