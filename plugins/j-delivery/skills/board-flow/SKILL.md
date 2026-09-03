@@ -56,6 +56,10 @@ Never let a card silently run into a second box.
 
 ## When you hit the WIP limit — in this order, and never new logic
 
+First finish your own part: a card of yours that outgrew its box is split and its landable half handed to
+review before anything else, because that is finishing, not starting, and it lowers your in-flight count.
+Then, with nothing of yours left to push:
+
 1. Help finish cards in Code Review or In Progress: review, propose a fix, ask the clarifying question,
    unblock. Finishing someone else's card moves the whole board.
 2. Groom the Backlog: close stale or redundant cards, confirm the next cards have everything needed,

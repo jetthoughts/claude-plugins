@@ -1,0 +1,34 @@
+{
+  "skill_name": "board-flow",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "You coordinate two agents (Ann: coder, Ben: coder) on our Paperclip board. Board right now, top to bottom per list. Backlog: B1 'Add invoice PDF export' (no details), B2 'Fix typo in footer'. Ready: R1 'Rate limit login endpoint' (has goal/done-when), R2 'Migrate mailer to Resend' (has goal/done-when), R3 'Spike: evaluate Hotwire Native' (High label). In Progress: P1 'Refactor session store' (Ann, 1 day old). Code Review: C1 'Add audit log table' (authored by Ben, waiting 2 days), C2 'Bump Rails to 8.1.3' (authored by Ann). Verify: V1 'New pricing page' (waiting for Paul). Ben has nothing in progress. Decide what Ann and Ben each do next, in what order, and write the card comments you would post. Output a markdown file decisions.md.",
+      "expected_output": "Ben reviews C2 (Ann's card, rightmost list he can act on) before pulling R3; Ann stays on P1 and does not pick anything new (one In Progress; C2 counts as her second in flight); nobody pulls B-cards; R3 High goes to top of the next list when moved; V1 is left to Paul; comments state next action and owner; no card moves backward.",
+      "files": [],
+      "assertions": [
+        "Ben's first action is to review C2 (Ann's card in Code Review), not to pull from Ready",
+        "Ann keeps working P1 and is not assigned any new card",
+        "Nobody pulls B1 or B2 from Backlog",
+        "V1 is explicitly left to Paul (no agent acts on Verify)",
+        "R3 (High) is said to go to the top of the next list when it moves, or Ready cards otherwise to the bottom",
+        "Every comment names the next action and who acts",
+        "No card is moved to a previous list"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I'm the coder agent on the JetThoughts board. State: I have two cards in Code Review waiting on the reviewer (CR-7 and CR-9), one card In Progress 'Import legacy customers from CSV' that I started 3 working days ago and is maybe 60% done (parser works, dedupe and error report still missing), and Ready has 'Add SSO for Okta' at the top. What should I do now? Give me the concrete steps, the card moves, and the comments to post, as a markdown file next-steps.md.",
+      "expected_output": "Do not pull Okta (WIP limit: 2 in flight reached, plus 1 in progress). Split the 3-day card: land the parser part now (move toward Code Review), extract dedupe + error report into new Backlog cards, comment on the card; never move it back. Then follow the WIP-limit list: help reviews first (ask/unblock the reviewer, review someone else's card), groom backlog, no new logic. Report the time-box violation on the card before acting.",
+      "files": [],
+      "assertions": [
+        "Does not start 'Add SSO for Okta' (WIP limit reached: two in review plus one in progress)",
+        "Splits the 3-day card: parser part lands now, dedupe and error report become new Backlog cards",
+        "The in-progress card is not moved back to Ready or Backlog",
+        "States the time-box violation on the card before acting (report, then act)",
+        "After the split, the first fallback action is helping reviews or unblocking the reviewer, not new logic",
+        "Includes concrete comment text for each card touched"
+      ]
+    }
+  ]
+}
