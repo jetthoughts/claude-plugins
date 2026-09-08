@@ -1,0 +1,19 @@
+{
+  "name": "wigolo",
+  "description": "Local-first web intelligence: search, fetch, crawl, cache, extract, diff, watch and deep research through the wigolo daemon, with the wigolo skill pack conventions (cache-first, keyword query arrays, domain scoping).",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "wigolo",
+    "web-intelligence",
+    "search",
+    "crawl",
+    "mcp",
+    "jetthoughts"
+  ]
+}

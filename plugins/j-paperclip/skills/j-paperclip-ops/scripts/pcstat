@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# One-shot Paperclip health overview. No args: every company. Arg 1: company name substring.
+# Env: PAPERCLIP_URL (default http://localhost:3100)
+set -euo pipefail
+B="${PAPERCLIP_URL:-http://localhost:3100}/api"
+# Since the board moved to authenticated mode, every call needs a board token.
+# Mint one with: paperclipai token board create --name ops-scripts   (after signing in once)
+[ -z "${PAPERCLIP_TOKEN:-}" ] && [ -r "$HOME/.secrets" ] && { set -a; . "$HOME/.secrets"; set +a; }
+AUTH=(); [ -n "${PAPERCLIP_TOKEN:-}" ] && AUTH=(-H "Authorization: Bearer $PAPERCLIP_TOKEN")
+
+h=$(curl -s "${AUTH[@]}" --retry 2 --retry-all-errors --max-time 8 "$B/health" || true)
+[ -z "$h" ] && { echo "Paperclip UNREACHABLE at $B — start it: ~/.infra/services/paperclip/bin/start"; exit 1; }
+echo "server   $(jq -r '.status' <<<"$h")  $(jq -r '.version' <<<"$h")  $(jq -r '.deploymentMode // "?"' <<<"$h")"
+
+# Guard denials (JET-369): one global log across every seat, not per company.
+GUARD_LOG="${GUARD_LOG:-$HOME/dev/jt-lab/guard/denied.log}"
+if [ -s "$GUARD_LOG" ]; then
+  jq -rs --argjson cut "$(( $(date -u +%s) - 86400 ))" '
+    def rule_of: (if ((.rule // "")=="") then .reason else .rule end);
+    def agent_of: (if ((.agent // "")=="") then (.cwd|split("/")|last) else .agent end);
+    . as $all
+    | ($all|map(select((.ts|fromdateiso8601) >= $cut))) as $recent
+    | if ($recent|length)==0 then "guard    none in last 24h (\($all|length) total)"
+      else
+        ($recent|group_by(rule_of)|sort_by(-length)|.[0:3]|map("\(.[0]|rule_of) (\(length))")|join(", ")) as $rules
+      | ($recent|group_by(agent_of)|sort_by(-length)|.[0:3]|map("\(.[0]|agent_of) (\(length))")|join(", ")) as $agents
+      | "guard    \($recent|length) in last 24h — top rules: \($rules) — top agents: \($agents)"
+      end' "$GUARD_LOG"
+else
+  echo "guard    none"
+fi
+
+report() {
+  local C="$1" NAME="$2" agents issues att cost p=0
+  agents=$(curl -s "${AUTH[@]}" "$B/companies/$C/agents")
+  issues=$(curl -s "${AUTH[@]}" "$B/companies/$C/issues")
+  att=$(curl -s "${AUTH[@]}" "$B/companies/$C/attention")
+  cost=$(curl -s "${AUTH[@]}" "$B/companies/$C/costs/summary")
+
+  echo
+  echo "company  $NAME  $C"
+  jq -r '"money    \(.spendCents)¢ of \(.budgetCents)¢ this month (\(.utilizationPercent // 0)%)"' <<<"$cost"
+  jq -r 'group_by(.status)|map("\(length) \(.[0].status)")|join(" · ")|"seats    " + .' <<<"$agents"
+  jq -r '"work     \([.[]|select(.status|IN("done","cancelled")|not)]|length) open · \([.[]|select(.status=="in_progress")]|length) in progress · \([.[]|select(.status=="blocked")]|length) blocked"' <<<"$issues"
+  jq -r '"you      \(.totalCount) waiting on you"' <<<"$att"
+  # Focus metrics — the founder's approval throughput is the binding constraint, not agent count
+  now=$(date +%s)
+  jq -r --argjson now "$now" '
+    [.[]|select(.status|IN("done","cancelled")|not)] as $open
+    | ($open|map(($now - ((.lastActivityAt//.updatedAt)|sub("\\.[0-9]+Z$";"Z")|fromdateiso8601))/86400)|max//0) as $stale
+    | ([.[]|select(.status=="cancelled")]|length) as $killed
+    | ([.[]|select(.status|IN("done","cancelled"))]|length) as $closed
+    | "focus    oldest untouched \($stale|floor)d · kill rate \(if $closed>0 then (100*$killed/$closed|floor) else 0 end)% of \($closed) closed (healthy 40-60%)"' <<<"$issues"
+  jq -r '.items[]? | "         · \(.subject.identifier // .subject.kind): \(.subject.title)"' <<<"$att" | head -8
+  # Approval dwell — how long a pending approval has waited, not just how many are pending
+  approvals=$(curl -s "${AUTH[@]}" "$B/companies/$C/approvals")
+  jq -r --argjson now "$now" '
+    [.[]|select(.status=="pending")|($now-(.createdAt|sub("\\.[0-9]+Z$";"Z")|fromdateiso8601))/3600] as $ages
+    | if ($ages|length)==0 then "approve  none pending"
+      else ($ages|sort) as $s | ($s|length) as $n
+      | (if $n%2==1 then $s[($n-1)/2] else ($s[$n/2-1]+$s[$n/2])/2 end) as $med
+      | "approve  \($n) pending, median dwell \($med|floor)h" +
+        (([$ages[]|select(.>24)]|length) as $over24 | if $over24>0 then " · \($over24) open over 24h" else "" end)
+      end' <<<"$approvals"
+
+  echo "problems"
+  while read -r l; do
+    [ -n "$l" ] && { printf '  %s\n' "$l"; p=1; }
+  done <<EOF
+$(jq -r 'select((.pendingApprovals // 0) > 3)|"flow APPROVE \(.pendingApprovals) approvals pending — stop the line, nothing new starts until these clear"' <<<"$(curl -s "${AUTH[@]}" "$B/companies/$C/dashboard")")
+$(jq -r '[.[]|select(.status=="blocked")]|select(length>=2)|"flow BLOCKED \(length) cards blocked — each still holds WIP because seats skip it in pick order; review the blockers before starting anything"' <<<"$issues")
+$(jq -r '.[]|select((.projectWorkspaceId//"")=="" and (.status|IN("done","cancelled")|not))|"card NOWSPC  \(.identifier) has no execution workspace — its next run dies at adapter launch (workspace_validation_failed). Give it a project and that project'"'"'s workspace"' <<<"$issues")
+$(jq -r '.[]|select(.status=="error")|"seat ERROR   \(.name): \(.errorReason // "no reason given")"' <<<"$agents")
+$(jq -r '.[]|select(.budgetMonthlyCents>0 and .spentMonthlyCents>=(.budgetMonthlyCents*0.9))|"seat BUDGET  \(.name) at \(.spentMonthlyCents)¢ of \(.budgetMonthlyCents)¢ — runs stop mid-plan, not broken"' <<<"$agents")
+$(jq -r --argjson a "$agents" '
+   ($a|map(select(.status=="paused"))|map(.id)) as $paused
+   | .[]|select(.status|IN("done","cancelled")|not)|select(.assigneeAgentId as $x|$paused|index($x))
+   | "card PAUSED  \(.identifier) assigned to a paused seat — the wake was dropped and is never retried"' <<<"$issues")
+$(jq -r '.[]|select(.status|IN("done","cancelled"))|select(.assigneeAgentId!=null)|"card STALE   \(.identifier) is \(.status) but still holds an assignee — seats keep waking on it"' <<<"$issues")
+$(jq -r '.[]|select(.activeRecoveryAction!=null)|"card STUCK   \(.identifier) \(.activeRecoveryAction.kind // .activeRecoveryAction.type // "recovery") — POST /api/issues/\(.id)/recovery-actions/resolve"' <<<"$issues")
+$(jq -r --argjson a "$agents" '
+   ($a|map(select(.status=="paused"))|map(.id)) as $paused
+   | $a[]|select(.status=="active")|select(.reportsTo as $r|$paused|index($r))
+   | "seat ESCALN  \(.name) reports to a paused seat — its escalation path is dead"' <<<"$agents")
+EOF
+  [ "$p" = 0 ] && echo "  none"
+  return 0
+}
+
+cos=$(curl -s "${AUTH[@]}" "$B/companies")
+case "$cos" in *'"error"'*) echo "auth: $(jq -r '.error' <<<"$cos") — the board is in authenticated mode. Export PAPERCLIP_TOKEN (mint: paperclipai token board create --name ops-scripts)"; exit 1;; esac
+case "${1:-}" in
+  "")     sel=$(jq '[.[]|select(.status=="active")]' <<<"$cos") ;;
+  --all)  sel="$cos" ;;
+  *)      sel=$(jq --arg n "$1" '[.[]|select(.name|test($n;"i"))]' <<<"$cos") ;;
+esac
+[ "$(jq length <<<"$sel")" = 0 ] && { echo "no company matches ${1:-}"; exit 1; }
+while read -r id name; do report "$id" "$name"; done < <(jq -r '.[]|"\(.id) \(.name)"' <<<"$sel")

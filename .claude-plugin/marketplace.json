@@ -26,7 +26,7 @@
     {
       "name": "j-ideation",
       "source": "./plugins/j-ideation",
-      "description": "Independent Ideation: evidence-based, groupthink-resistant decision workflow \u2014 router /j-independent-ideation, 11 stage skills, 13 isolated role agents, templates and validators"
+      "description": "Independent Ideation: evidence-based, groupthink-resistant decision workflow — router /j-independent-ideation, 11 stage skills, 13 isolated role agents, templates and validators"
     },
     {
       "name": "j-research",
@@ -42,6 +42,16 @@
       "name": "harness-setup",
       "source": "./plugins/harness-setup",
       "description": "Review-first project harness setup: discover current capabilities, clarify gaps, draft missing skills, and stage restricted configuration changes for operator approval"
+    },
+    {
+      "name": "cognee",
+      "source": "./plugins/cognee",
+      "description": "Agent memory via Cognee: remember/recall/forget against the knowledge graph (tenant API or local), with the bin/cognee CLI for agents without an MCP client"
+    },
+    {
+      "name": "wigolo",
+      "source": "./plugins/wigolo",
+      "description": "Local-first web intelligence: search, fetch, crawl, cache, extract, diff, watch and deep research through the wigolo daemon, with the wigolo skill pack conventions"
     }
   ]
 }
