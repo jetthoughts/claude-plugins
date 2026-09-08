@@ -13,13 +13,28 @@ this skill is only about driving the machine. The board flow is the same six lis
 
 | Thing | Value |
 |---|---|
-| URL | `http://127.0.0.1:3100` — loopback only, `local_trusted`, no login |
+| URL | `http://127.0.0.1:3100`, and `http://192.168.178.66:3100` from the LAN — `authenticated` since 2026-09-05 |
 | Service | LaunchAgent `dev.pftg.paperclip` |
 | Start / repair | `~/.infra/services/paperclip/bin/start` (installs the plist, waits for health) |
 | Data | `~/.infra/services/paperclip/data` (embedded Postgres on 54329, run logs, company files) |
 | Health | `curl -s localhost:3100/api/health \| jq .status` → `"ok"` |
 
-There is no auth, so plain `curl` is the whole client. Do not add one.
+**Every call needs a board token.** The instance moved to `authenticated` on 2026-09-05 so it could
+be reached from the LAN — the vendor refuses `local_trusted` on any non-loopback bind. Tokenless
+requests now get `401 Unauthorized` or `403 Board access required`, from loopback too.
+
+```bash
+export PAPERCLIP_TOKEN=...          # paperclipai token board create --name ops-scripts
+curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" localhost:3100/api/companies
+```
+
+The token lives in `~/.secrets` as `PAPERCLIP_TOKEN` (the house convention — `~/.zshrc` sources it),
+and `pcstat` falls back to reading that file when the variable is unset. Mint a replacement with
+`paperclipai token board create --name <label> --never-expires`, which returns the plaintext once
+under `.key.token`; `token board list --json` and `token board revoke <id>` manage the rest. The CLI
+can only mint while it is already authorised — from loopback under `local_trusted`, or with an
+existing token — so **never revoke the last live key**. Seats are unaffected — each local
+run gets its own short-lived `PAPERCLIP_API_KEY` injected.
 
 ## The one route trap
 
@@ -47,6 +62,7 @@ Per-resource routes are flat once you have an id: `/api/agents/:id`, `/api/issue
 | Wake an agent | `POST /api/agents/:id/wakeup` — body optional; `source` defaults to `on_demand`, add `"forceFreshSession": true` to drop the resumed session |
 | Issues | `GET /api/companies/:companyId/issues` · `POST` same path to create · `PATCH /api/issues/:id` |
 | Comment | `GET|POST /api/issues/:id/comments` |
+| **Did it run, and did it finish** | `GET /api/issues/:id/runs` — every run with `status`, `startedAt`, `finishedAt`, `agentId`. Run state comes from here; the card's own `status` and `checkoutRunId` describe the card |
 | Why is it stuck | `GET /api/issues/:id/diagnostics/blockers` · `/wakes` · `/recovery-actions` |
 | Money | `GET /api/companies/:companyId/budgets/overview` · `/costs/summary` · `/costs/by-agent-model` |
 | Budget limits | `PATCH /api/companies/:companyId/budgets` · `PATCH /api/agents/:agentId/budgets` |
@@ -98,9 +114,13 @@ instructions that depend on them.
 ~/.infra/services/paperclip/data/instances/default/data/run-logs/<companyId>/<agentId>/<runId>.ndjson
 ```
 
-One JSON object per line, the agent's whole turn stream. `GET /api/issues/:id/comments` is the
-summary the agent chose to publish; the ndjson is what it actually did. Prefer the comments,
-fall back to the log when the two disagree.
+One JSON object per line, the agent's whole turn stream. `/runs` is whether it ran at all,
+`/comments` is what the agent chose to publish, the ndjson is what it did — three different
+questions, and a card with no run answers none of them. Open the one that matches the claim you are
+about to write.
+
+Health overview, the stuck-card runbook and the weekly sweep live in **`j-paperclip-ops`**
+(`scripts/pcstat` prints every company in one screen). This skill is the API; that one is the ops.
 
 ## Traps
 
@@ -108,6 +128,13 @@ fall back to the log when the two disagree.
   contains a URI or hostname is denied as "mutating HTTP request to a non-loopback host". Write the
   payload to a scratch file and post `--data @file`. This is the normal way to comment, not a
   workaround for a real block.
+- **`GET /api/agents/:id` hides half the config.** `reportsToAgentId`, `heartbeat` and
+  `canCreateAgents` come back null there whatever they really are. `GET /api/agents/:id/configuration`
+  is the honest view — read that before concluding a field is unset.
+- **The reporting line is `reportsTo`, not `reportsToAgentId`.** `PATCH /api/agents/:id` (and the
+  create POST) accept `reportsToAgentId` silently and ignore it. Set `reportsTo` with the parent's
+  id, then assert against `/configuration`. `POST /companies/:companyId/agents` creates an agent;
+  it drops `reportsTo` too, so PATCH after create.
 - **A wakeup on a busy agent is skipped, not queued.** The response says so. Check
   `GET /api/agents/:id/runtime-state` before concluding the change did not land.
 - **Budget is per company and per agent, in cents.** An agent that stops mid-plan is usually out of
@@ -115,3 +142,15 @@ fall back to the log when the two disagree.
 - **Restarting**: `launchctl kickstart -k gui/$(id -u)/dev.pftg.paperclip`, or run
   `~/.infra/services/paperclip/bin/start` which reinstalls the plist and waits for health. Never
   edit the plist in `~/Library/LaunchAgents` — it is generated from the repo template.
+- **Combo lanes rot silently, and every run failure on one is terminal to the card.** OmniRoute
+  combos never appear in `/v1/models` and free providers delist models without notice — on
+  2026-09-08 all 6 `free-thinking` members died overnight, 10 of 14 seats rode that lane, and 12
+  cards went blocked before anyone looked. Two signatures in the run log, two different causes:
+  `400 ... not available in the active live catalog` is config (a dead combo member — probe the
+  members with a real 1-token request and swap the dead ones), `504 ... rate-limit execution
+  expiration` is OmniRoute's **own queue deadline** (`requestQueue.maxWaitMs`, default 15s), not an
+  upstream timeout — the fix is raising it (15s -> 120s measured 2026-09-08), and retry-storming
+  only re-queues into the same deadline. Neither signature is the seat's fault: resolve the
+  recovery action and requeue. `pcsweep` classifies both and requeues itself; keep at least one
+  seat on a different lane as the canary that keeps working while a combo rots (CoS on
+  moonshot/kimi-k3 was exactly that, by accident).
