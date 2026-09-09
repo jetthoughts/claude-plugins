@@ -105,3 +105,7 @@ Verify has E waiting on the human. You have one card In Progress.
 3. Finish your In Progress card, hand it to Code Review (bottom of the list, or top if High). Now two in
    flight and nothing In Progress: pull A only if your in-flight count is below two; otherwise go to the
    WIP-limit list and groom B.
+
+## Outside seat before a plan, pitch before a document (Paul, 2026-09-06)
+
+Before planning anything, search `evidence/perplexity` and `research/_inbox` in the vault for an existing answer (`qmd query`), and say which note you found. If none, ask for one Perplexity query on the card before writing. A plan is a Shape Up pitch: Problem, Appetite, Solution, Rabbit holes, No-gos, 150 words. Everything longer is evidence, linked from the pitch. Twice in two days a 20-minute outside answer beat hours of in-session planning; the reader has five seconds.

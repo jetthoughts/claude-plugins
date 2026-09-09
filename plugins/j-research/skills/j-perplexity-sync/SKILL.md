@@ -10,6 +10,10 @@ Perplexity has no export API. The sync drives the logged-in agent browser (Brows
 research inbox, and runs the normalizer. Everything is idempotent: a watermark file skips
 threads already synced, and the normalizer's content hash skips unchanged bodies.
 
+This skill only *reads*. Never launch a Perplexity run from here, and never in **Computer or
+orchestrator mode** anywhere (Paul, 2026-09-03) — a new run uses **Search**, **Deep Research** or
+**Model Counseling** only. Capturing `/computer/tasks/<uuid>` pages that already exist stays correct.
+
 Paths: inbox `~/Documents/pkm/research/_inbox/perplexity/`; notes land in
 `evidence/perplexity/<project>/pplx-<id8>-<slug>.md` (the vault's own convention, see its
 AGENTS.md) and the hub `evidence/perplexity/perplexity-library.md` lists every captured id. The hub
