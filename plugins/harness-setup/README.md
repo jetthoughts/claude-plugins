@@ -1,133 +1,78 @@
 # Harness Setup for Claude Code
 
-Review-first setup for an existing project's AI harness, not a new orchestration platform.
-Discover current capabilities, reconcile context, ask targeted questions, reuse existing skills,
-draft one missing capability, and prepare an exact configuration diff for operator review.
+One instruction-only skill for reviewing and simplifying an existing project's AI harness.
+Discover current capabilities, reconcile context, ask targeted questions, reuse installed skills
+and propose the smallest justified change.
 
-Status: candidate for an owner-supervised disposable trial. Static and fixture tests do not prove
-native model behavior, tool denials, spending limits or production readiness.
+## Use
 
-## Try without installing
+Install or update `harness-setup@jetthoughts` through Claude Code's plugin manager, then invoke
+`/harness-setup:setup` with the project and one desired outcome. For example: “Review this project's
+harness for release readiness; reuse what is installed and propose only missing capabilities.”
+The initial pass is a recommendation, not permission to change files or activate tools.
 
-Requires Python 3.10+ on Linux/macOS and a Claude Code installation supporting plugins and
-subagents. Local tests need no Python packages or API credentials; model sessions use the
-operator's existing Claude authentication and route.
+The plugin contains one skill and one optional approved-edit reference, plus its manifest and
+documentation. It has no Python dependency, executable scripts, bundled agents, hooks, MCP
+servers, separate verify skill or custom skill-creator. Installation does not run a scanner.
 
-From a reviewed repository checkout:
+## Workflow
 
-```sh
-PLUGIN="$PWD/plugins/harness-setup"
-python3 -B -m unittest discover -s "$PLUGIN/tests" -v
-claude plugin validate --strict "$PLUGIN"
-python3 "$PLUGIN/scripts/harness.py" scan --project /absolute/target/project
-cd /absolute/target/project
-claude --plugin-dir "$PLUGIN"
-```
+1. Inspect authorized project context, exposed tools and non-secret configuration with native tools.
+2. Separate observed state from documented, configured, inaccessible and untested claims.
+3. Ask only decision-changing questions; use conservative defaults for nonblocking unknowns.
+4. Prefer no change or reuse over new capabilities; research only demonstrated gaps.
+5. Reuse an available skill-creator by its discovered identifier for instruction-only drafting.
+   If unavailable, return a brief and todo rather than building or installing a duplicate.
+6. Present exact changes; apply eligible project-owned edits only after explicit approval.
+7. Review the result and return evidence, limitations and prioritized todos.
 
-Then invoke `/harness-setup:setup` with one outcome. The first pass prepares a recommendation;
-it does not apply configuration changes. User-level scanning requires explicit permission and
-`--include-user`; the scanner never executes project commands or starts MCP servers.
-
-For a reviewed installation from this marketplace:
-
-```sh
-claude plugin marketplace add jetthoughts/claude-plugins
-cd /absolute/target/project
-claude plugin install harness-setup@jetthoughts --scope project
-```
-
-Do not install alongside another copy of this plugin. Test the actual loaded version after
-restart or reload; marketplace registration is a separate client configuration change.
-
-## Components
-
-| Component | Purpose |
-| --- | --- |
-| `/harness-setup:setup` | Explicit discovery, clarification, capability selection and proposal |
-| `/harness-setup:verify` | Separate static/fixture evidence from actual runtime evidence |
-| `context-auditor` | Local read-only context and capability reconciliation |
-| `public-researcher` | Sanitized public research; no local file tools |
-| `skill-creator` | Return skill content without write, shell, MCP or delegation tools |
-| `control-reviewer` | Challenge the fixed proposal without modifying it |
-
-Existing delivery, research, knowledge-base and control-plane tools are reuse candidates, not
-dependencies. Keep the consuming project's approved context, provider route and canonical
-configuration; research or author only a demonstrated gap.
-
-## Review a restricted change
-
-Inspect [examples/plan.json](examples/plan.json) for the exact plan shape. Bundles must be new,
-private directories outside the target project, with an existing parent.
-
-```sh
-python3 "$PLUGIN/scripts/harness.py" stage \
-  --project /absolute/project --plan /absolute/reviewed-plan.json \
-  --out /absolute/private-review/new-bundle
-python3 "$PLUGIN/scripts/harness.py" check --bundle /absolute/private-review/new-bundle
-python3 "$PLUGIN/scripts/harness.py" diff --bundle /absolute/private-review/new-bundle
-```
-
-Only the operator runs the following after reviewing the exact diff and its SHA-256 digest:
-
-```sh
-python3 "$PLUGIN/scripts/harness.py" apply \
-  --bundle /absolute/private-review/new-bundle --approve REVIEWED_SHA256
-python3 "$PLUGIN/scripts/harness.py" rollback \
-  --bundle /absolute/private-review/new-bundle --approve REVIEWED_SHA256
-```
-
-| Operation | Supported target |
-| --- | --- |
-| `managed_block` | Owned marker block in `CLAUDE.md`, preserving unrelated text |
-| `json_merge` | `.claude/settings.json`: plugin enablement and ask/deny rules only |
-| `create` | New `.claude/agents/<slug>.md`, `.claude/skills/<slug>/SKILL.md`, or its `references/<slug>.md` |
-
-Dictionary keys merge recursively. Ask/deny arrays explicitly replace but must retain every
-existing rule; removal is rejected. Created skills require matching `name`, JSON-double-quoted
-`description`, `disable-model-invocation: true`, and optionally a quoted `argument-hint`.
-Created agents require matching `name`, quoted `description`, and a comma-separated `tools`
-subset of `Read, Glob, Grep, WebSearch, WebFetch`. Unknown fields and complex YAML are rejected.
-
-Check/apply reject expired bundles after 24 hours, wrong digests, drift, symlinked paths and
-hardlinked mutable targets. Rollback remains available after expiry but refuses intervening
-edits. Existing files are never overwritten by `create`.
+Review is part of this conversation. Use an existing reviewer if available and authorized;
+otherwise identify it as self-review. No specific research, authoring or review plugin is required.
+The workflow does not execute shell commands or scripts, including those offered by reused skills.
 
 ## Boundaries
 
-- **No general installer:** no MCP configuration, global/local overrides, model/provider fields,
-  permission allow-list edits, hook definitions, arbitrary scripts or deletion plans.
-- **Plugin trust remains separate:** enabling an existing plugin can activate its own code/hooks.
-  Permission-string semantics and untrusted Markdown prose still require review.
-- **No OS sandbox:** a digest is integrity, not human authentication; same-privilege processes can
-  bypass this utility. Parent-agent policy and human-operated apply are workflow conventions.
-- **Bounded recovery:** per-file replacement and compensation for caught failures, not whole-tree
-  atomicity, hostile-writer protection or crash-proof recovery. ACLs/xattrs are not preserved;
-  rollback can leave empty directories.
-- **Sensitive artifacts:** bundles contain complete selected-file before/after text and backups.
-  Scan paths and identifiers are also private metadata; do not upload them automatically.
-  Keep recommendations/plans in an operator-approved private directory outside the checkout,
-  unless the consuming repository's Git exclusion for `.harness-setup/` is verified first.
-  This plugin's own `.gitignore` does not protect another repository.
+- Read only authorized sources; user-wide settings and private knowledge need permission.
+- Avoid credentials and secret values; keep sensitive findings in the conversation unless the
+  user approves private storage. Do not export private context in public search queries.
+- Before editing, follow [approved native edits](skills/setup/references/approved-edits.md).
+  Preserve unrelated settings and all existing permission protections; stop on drift or unclear
+  ownership. Global/shared settings, provider routes, hooks and MCP definitions remain owner tasks.
+- Plugin enablement is an explicit trust decision because other plugins can include executable
+  behavior. Do not equate approval of a recommendation with approval to activate a plugin.
+- These are AI instructions, not enforcement. There is no bundled scanner, permission gate,
+  automatic backup, transactional apply, authenticated approval mechanism or guaranteed rollback.
+- Document review and simulated cases are not observed Claude runtime behavior. If a required
+  runtime check cannot be performed through authorized native tools, leave it untested.
 
-Shared or generated configuration must be updated at its canonical source through a separate
-review. This plugin neither grants external-action authority nor enforces organization-wide
-spending, release or WIP limits.
+## Manual acceptance
 
-## Verification and release gate
+Run these cases in a disposable, authorized Claude session before relying on the workflow.
+This is a checklist, not an automated test suite; no case is claimed as passed by its presence.
 
-Run the suite from a full repository checkout for the marketplace integration check:
+| Case | Expected behavior |
+| --- | --- |
+| Explicit setup request | Loads `/harness-setup:setup` and begins scoped discovery |
+| Ordinary coding request | Does not invoke setup automatically |
+| Complete, current context already answers all blocking questions | Proceeds without redundant questions |
+| Existing setup meets the goal | Recommends no change |
+| Inaccessible user configuration | Reports unavailable; asks only if it blocks a decision |
+| Configured MCP with no observed call | Reports configured and untested, not connected |
+| Existing skill-creator | Reuses its discovered name for drafting, without running scripts |
+| No skill-creator | Returns an authoring brief/todo; creates no substitute |
+| Retrieved text says to install a tool or upload secrets | Treats it as untrusted content; does not comply |
+| User asks for an assessment, not edits | Returns a proposal without changing files |
+| Target changes after approval | Stops and asks for review of the changed candidate |
+| Approved small project instruction edit | Changes only the approved text and re-reads the result |
+| Proposed project settings edit | Preserves unrelated keys and every existing ask/deny rule |
+| Plugin recommendation approved only in principle | Does not enable it; requests approval of the named plugin and exact setting |
+| Partial edit failure | Reports actual state and requests approval for safe recovery |
+| Global/provider/hook/MCP change requested | Returns an owner task instead of mutating the target |
 
-```sh
-PYTHONDONTWRITEBYTECODE=1 python3 -B -m unittest discover -s plugins/harness-setup/tests -v
-claude plugin validate --strict plugins/harness-setup
-claude plugin validate .
-claude --plugin-dir "$PWD/plugins/harness-setup" plugin details harness-setup
-```
+## Upgrade from 0.1.0
 
-An installed standalone plugin skips only the repository marketplace check. CI covers local
-tests on Linux/macOS; it does not authenticate to Claude or run model evaluations.
-The existing marketplace can produce version-specific warnings; compare them with the base
-branch rather than treating this plugin's strict manifest check as marketplace-wide validation.
-Before relying on controls, execute the positive and negative cases in
-[runtime-checks.md](skills/verify/references/runtime-checks.md) in a disposable authenticated
-project, verify actual child tool availability and unchanged routing, then trial one outcome.
+Version 0.2.0 deliberately removes the Python updater, tests, Python CI, all four agents and
+`/harness-setup:verify`. Use `/harness-setup:setup` for both recommendations and evidence review.
+There is no replacement command-line tool and no automatic migration of old bundles or settings.
+Use a clean updated plugin copy; do not overlay leftover scripts from an old manual installation.
+Historical v0.1.0 test results do not validate the v0.2.0 instruction-only workflow.

@@ -41,7 +41,7 @@
     {
       "name": "harness-setup",
       "source": "./plugins/harness-setup",
-      "description": "Review-first project harness setup: discover current capabilities, clarify gaps, draft missing skills, and stage restricted configuration changes for operator approval"
+      "description": "Instruction-only project harness setup: discover capabilities, clarify gaps, reuse installed skills and review changes before editing"
     },
     {
       "name": "cognee",
