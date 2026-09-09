@@ -34,6 +34,21 @@ recruitment and compensation and agents have neither.
 Use it for org structure, team topology, decision rights, reteaming, or
 naming the seats in an agent org.
 
+## harness-setup
+
+Review-first project harness setup: scan current capabilities, reconcile context,
+ask targeted questions, reuse existing skills, and stage only justified changes.
+Two skills and four read-only agents support a supervised trial, not autonomous
+installation or a new orchestration platform.
+
+```bash
+claude plugin install harness-setup@jetthoughts --scope project
+```
+
+Invoke `/harness-setup:setup` with one project outcome. Installation is optional:
+use a reviewed checkout with `claude --plugin-dir /absolute/path/to/plugins/harness-setup`
+for a temporary trial. See [setup and safety boundaries](plugins/harness-setup/README.md).
+
 ## Adding a skill to this repo
 
 Skills authored for JetThoughts live here and are symlinked into

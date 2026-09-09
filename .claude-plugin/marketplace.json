@@ -37,6 +37,11 @@
       "name": "j-paperclip",
       "source": "./plugins/j-paperclip",
       "description": "Operating the self-hosted Paperclip control plane: loopback API, agents and adapter config, managed instruction bundles, issues and wakeups, budgets, run logs"
+    },
+    {
+      "name": "harness-setup",
+      "source": "./plugins/harness-setup",
+      "description": "Review-first project harness setup: discover current capabilities, clarify gaps, draft missing skills, and stage restricted configuration changes for operator approval"
     }
   ]
 }
