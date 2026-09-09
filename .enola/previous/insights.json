@@ -1,0 +1,1270 @@
+[
+  {
+    "title": "High fan-in symbol: plugins/harness-setup/scripts/harness.require (29 dependents)",
+    "source": "god-class",
+    "description": "\"plugins/harness-setup/scripts/harness.require\" is depended upon by 29 other symbols — well above the repo average. High fan-in concentrates change risk: edits here ripple across many call sites, and it often indicates a missing or overly broad abstraction.",
+    "confidence": 0.95,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "29 symbols depend on this",
+        "line": 78,
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.approve",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "563ca71c40ce8c0c6674cfc2b355d2c6"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.atomic_write",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "fcc7cf7e1364ce6f2207c4f688463756"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.check",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "6026e68ac3d1d55d97c2a1223a0a7026"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.decode_image",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "ad0b1774bfedaf246f57c607d753b369"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.ensure_parents",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "4cec052ad117bc3ac0cdbecddc8b60d2"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.exact_keys",
+        "detail": "depends on plugins/harness-setup/scripts/harness.require",
+        "fact_id": "35e02ec2ea142f6a852ef37c8375ea74"
+      }
+    ],
+    "suggested_actions": [
+      "Split the symbol along distinct responsibilities its callers use",
+      "Introduce narrower interfaces so callers depend only on what they need",
+      "Stabilize its public contract to limit churn for dependents"
+    ]
+  },
+  {
+    "title": "High fan-in symbol: plugins/harness-setup/scripts/harness.safe_path (15 dependents)",
+    "source": "god-class",
+    "description": "\"plugins/harness-setup/scripts/harness.safe_path\" is depended upon by 15 other symbols — well above the repo average. High fan-in concentrates change risk: edits here ripple across many call sites, and it often indicates a missing or overly broad abstraction.",
+    "confidence": 0.95,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.safe_path",
+        "detail": "15 symbols depend on this",
+        "line": 115,
+        "fact_id": "e6aca18faff3d563501acf1a0437abe0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.atomic_write",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "fcc7cf7e1364ce6f2207c4f688463756"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.directory_entries",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "621fc299b66b3b89f624e2c9a14bbf36"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.ensure_parents",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "4cec052ad117bc3ac0cdbecddc8b60d2"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.exclusive_write",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "25e950842754a2ecc4622be4d158ac8f"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.load_bundle",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "2df395b26cb2f969d84e6ac7c98b5ddf"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.main",
+        "detail": "depends on plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "1dde51bf1c7ea1102bba68ee3091e253"
+      }
+    ],
+    "suggested_actions": [
+      "Split the symbol along distinct responsibilities its callers use",
+      "Introduce narrower interfaces so callers depend only on what they need",
+      "Stabilize its public contract to limit churn for dependents"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.load_bundle (fan-in 4, fan-out 15)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.load_bundle\" is a pinch point: 4 symbols call into it and it calls out to 15 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.load_bundle",
+        "detail": "fan-in 4 × fan-out 15 = score 60",
+        "line": 433,
+        "fact_id": "2df395b26cb2f969d84e6ac7c98b5ddf"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "calls into plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.check",
+        "detail": "calls into plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "6026e68ac3d1d55d97c2a1223a0a7026"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.diff",
+        "detail": "calls into plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "9de8371ab4d2189c263e8da576da627b"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.rollback",
+        "detail": "calls into plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "d313a06ceb8aaa6ceb3d04e9b962aad0"
+      },
+      {
+        "symbol": "MAX_BUNDLE",
+        "detail": "called by plugins/harness-setup/scripts/harness.load_bundle"
+      },
+      {
+        "symbol": "Path",
+        "detail": "called by plugins/harness-setup/scripts/harness.load_bundle"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "called by plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.candidate_digest",
+        "detail": "called by plugins/harness-setup/scripts/harness.load_bundle",
+        "fact_id": "0dd2b143aa04a94f28c0eb9d69fd817b"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-fetch/SKILL.md (fan-in 6, fan-out 8)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-fetch/SKILL.md\" is a pinch point: 6 symbols call into it and it calls out to 8 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "detail": "fan-in 6 × fan-out 8 = score 48",
+        "line": 1,
+        "fact_id": "f6c2001fee5ef46ea764fab8e9a22bb5"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "41072ccb3804aa684fba8a22ca3fd556"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "6bb9b241834f743ddd7695359044830c"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "4223d934c32feaaab7e743415d9290ee"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "44141ecd434d15bda03e26fb567792c0"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-watch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "887de915afa43845fa150223ed567992"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch",
+        "detail": "called by plugins/wigolo/skills/wigolo-fetch/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "2a50c0e37c8d4a41117c9820c23ec803"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#output",
+        "detail": "called by plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "676f69b0cab9035ebf601b08de15bb7a"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "bc91f134f2045e2e1829c8468fbf0b07"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#quick-reference",
+        "detail": "called by plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+        "fact_id": "c11585eee9148fb1e3292259a1b95bd5"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.safe_path (fan-in 15, fan-out 3)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.safe_path\" is a pinch point: 15 symbols call into it and it calls out to 3 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.safe_path",
+        "detail": "fan-in 15 × fan-out 3 = score 45",
+        "line": 115,
+        "fact_id": "e6aca18faff3d563501acf1a0437abe0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "calls into plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.atomic_write",
+        "detail": "calls into plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "fcc7cf7e1364ce6f2207c4f688463756"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "calls into plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.directory_entries",
+        "detail": "calls into plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "621fc299b66b3b89f624e2c9a14bbf36"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.ensure_parents",
+        "detail": "calls into plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "4cec052ad117bc3ac0cdbecddc8b60d2"
+      },
+      {
+        "symbol": "Path",
+        "detail": "called by plugins/harness-setup/scripts/harness.safe_path"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "called by plugins/harness-setup/scripts/harness.safe_path",
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-search/SKILL.md (fan-in 5, fan-out 9)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-search/SKILL.md\" is a pinch point: 5 symbols call into it and it calls out to 9 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "detail": "fan-in 5 × fan-out 9 = score 45",
+        "line": 1,
+        "fact_id": "d6ed294cb36c498ac2ed54ead7bc884e"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "4c16e98883adb865a7f7180a5a4711e5"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "285eff5310aa88efb61b595f63104929"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "d327cb1ba0aa2958fb0a45cf6b44710b"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "2d5a23e345a71d434eebc869ee0c6f0e"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search",
+        "detail": "called by plugins/wigolo/skills/wigolo-search/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#always-emitted-fields",
+        "detail": "called by plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "50c52a3f48ab8b32b5f6d015b992fb75"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "2aafd6a3449ad8975d824d21fd2c2f0a"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "cb482de54e569eae2b173b2423fbcd20"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-search/SKILL.md",
+        "fact_id": "ccda7902c79e54bd20dc0c10dd8be104"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-cache/SKILL.md (fan-in 4, fan-out 10)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-cache/SKILL.md\" is a pinch point: 4 symbols call into it and it calls out to 10 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "detail": "fan-in 4 × fan-out 10 = score 40",
+        "line": 1,
+        "fact_id": "b02630cf60e842f8b239b0766fdb5e3a"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "41072ccb3804aa684fba8a22ca3fd556"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "6bb9b241834f743ddd7695359044830c"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-watch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "887de915afa43845fa150223ed567992"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache",
+        "detail": "called by plugins/wigolo/skills/wigolo-cache/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "b37fa317ddd7629b8d74ae512176fde7"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#modes",
+        "detail": "called by plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "87c4fb70f7fa38f2b7eef0d8fda21f2c"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "e0c4310572e0d58f42ead863949caf36"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#quick-reference",
+        "detail": "called by plugins/wigolo/skills/wigolo-cache/SKILL.md",
+        "fact_id": "f4b6076194292de9e8ed2666907b0264"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.decode_image (fan-in 6, fan-out 6)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.decode_image\" is a pinch point: 6 symbols call into it and it calls out to 6 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.decode_image",
+        "detail": "fan-in 6 × fan-out 6 = score 36",
+        "line": 180,
+        "fact_id": "ad0b1774bfedaf246f57c607d753b369"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "calls into plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.diff",
+        "detail": "calls into plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "9de8371ab4d2189c263e8da576da627b"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.load_bundle",
+        "detail": "calls into plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "2df395b26cb2f969d84e6ac7c98b5ddf"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.postimage",
+        "detail": "calls into plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "9f5103934df47b2309583666e15b473d"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.restore",
+        "detail": "calls into plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "df302eb76a588ff0547db28f90dbe96a"
+      },
+      {
+        "symbol": "HarnessError",
+        "detail": "called by plugins/harness-setup/scripts/harness.decode_image"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.exact_keys",
+        "detail": "called by plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "35e02ec2ea142f6a852ef37c8375ea74"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "called by plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.sha",
+        "detail": "called by plugins/harness-setup/scripts/harness.decode_image",
+        "fact_id": "bd9440b49a57d5874096ba77ee6e5758"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-extract/SKILL.md (fan-in 3, fan-out 12)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-extract/SKILL.md\" is a pinch point: 3 symbols call into it and it calls out to 12 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "detail": "fan-in 3 × fan-out 12 = score 36",
+        "line": 1,
+        "fact_id": "977c1a57300f46034581d46c685d33ab"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "93cf603844936ee702c63569067646b8"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "285eff5310aa88efb61b595f63104929"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract",
+        "detail": "called by plugins/wigolo/skills/wigolo-extract/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "58b3d020277da31ff0df4bf3ef57c613"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#brand-mode",
+        "detail": "called by plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "62d43062e7f82916d2588fab400bfa84"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#chart-hints",
+        "detail": "called by plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "41fc007e8d3bc55362c0085a2713d190"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#modes",
+        "detail": "called by plugins/wigolo/skills/wigolo-extract/SKILL.md",
+        "fact_id": "0168972dda941ad61870b90e4ff37f40"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-find-similar/SKILL.md (fan-in 3, fan-out 11)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-find-similar/SKILL.md\" is a pinch point: 3 symbols call into it and it calls out to 11 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "detail": "fan-in 3 × fan-out 11 = score 33",
+        "line": 1,
+        "fact_id": "ef7102bad408af9d13b531a990204e70"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "4c16e98883adb865a7f7180a5a4711e5"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "41072ccb3804aa684fba8a22ca3fd556"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar",
+        "detail": "called by plugins/wigolo/skills/wigolo-find-similar/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "e5ab784bd6e3380aff9e4b7483cbd434"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#cold-start-signal",
+        "detail": "called by plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "4f1d82a101b4e1c9f185847c6127cdd6"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#how-it-works",
+        "detail": "called by plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "04cafb5b143fa3f113c2b278e0afca4d"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#important-build-the-cache-first",
+        "detail": "called by plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+        "fact_id": "99aea43331b0137d649888bfc9910a79"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-crawl/SKILL.md (fan-in 4, fan-out 8)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-crawl/SKILL.md\" is a pinch point: 4 symbols call into it and it calls out to 8 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "detail": "fan-in 4 × fan-out 8 = score 32",
+        "line": 1,
+        "fact_id": "dc8080ee22797168f1b29edac7bdf79d"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "4c16e98883adb865a7f7180a5a4711e5"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-fetch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "285eff5310aa88efb61b595f63104929"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "d327cb1ba0aa2958fb0a45cf6b44710b"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl",
+        "detail": "called by plugins/wigolo/skills/wigolo-crawl/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#after-crawling",
+        "detail": "called by plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "34d27f41c271c1da065e7253ee058b09"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "1cced38c180d37de890fb09310c337ba"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "fbe0df1e5e4e59f728b5c2087dca20fc"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-crawl/SKILL.md#quick-reference",
+        "detail": "called by plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+        "fact_id": "c23ba5b8b564b2ef03be6654aa5aa333"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.strict_json (fan-in 6, fan-out 5)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.strict_json\" is a pinch point: 6 symbols call into it and it calls out to 5 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.strict_json",
+        "detail": "fan-in 6 × fan-out 5 = score 30",
+        "line": 92,
+        "fact_id": "02839ede26675d65d3719d884f55e15e"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.load_bundle",
+        "detail": "calls into plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "2df395b26cb2f969d84e6ac7c98b5ddf"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.metadata",
+        "detail": "calls into plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "9d7bd5f88603269e248196e0695dda85"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.postimage",
+        "detail": "calls into plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "9f5103934df47b2309583666e15b473d"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.read_receipt",
+        "detail": "calls into plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "a034257b47276aa36802ec9735a66cf0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.stage",
+        "detail": "calls into plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "97b543f26b08cf492839e4fedc6ba90e"
+      },
+      {
+        "symbol": "HarnessError",
+        "detail": "called by plugins/harness-setup/scripts/harness.strict_json"
+      },
+      {
+        "symbol": "RecursionError",
+        "detail": "called by plugins/harness-setup/scripts/harness.strict_json"
+      },
+      {
+        "symbol": "UnicodeError",
+        "detail": "called by plugins/harness-setup/scripts/harness.strict_json"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "called by plugins/harness-setup/scripts/harness.strict_json",
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-agent/SKILL.md (fan-in 3, fan-out 9)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-agent/SKILL.md\" is a pinch point: 3 symbols call into it and it calls out to 9 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "detail": "fan-in 3 × fan-out 9 = score 27",
+        "line": 1,
+        "fact_id": "9b83d1b2fa7f573f4d9879995a8cacfc"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-extract/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "4223d934c32feaaab7e743415d9290ee"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "2d5a23e345a71d434eebc869ee0c6f0e"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent",
+        "detail": "called by plugins/wigolo/skills/wigolo-agent/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "5d9ee0bfe3146d9008a9402c00f691cd"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#how-it-works",
+        "detail": "called by plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "a2a6863c326de3bbd9d307aff8f186ef"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#output-transparency",
+        "detail": "called by plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "94659613cee0f2e00066291b2cb82845"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-agent/SKILL.md",
+        "fact_id": "a503347e183b5f532961947e029b4677"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-diff/SKILL.md (fan-in 3, fan-out 9)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-diff/SKILL.md\" is a pinch point: 3 symbols call into it and it calls out to 9 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "detail": "fan-in 3 × fan-out 9 = score 27",
+        "line": 1,
+        "fact_id": "112b5f61b859f1d43e505ce865f64f2b"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-cache/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "4c16e98883adb865a7f7180a5a4711e5"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-watch/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "887de915afa43845fa150223ed567992"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff",
+        "detail": "called by plugins/wigolo/skills/wigolo-diff/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "804cbac9db77c0a57c54cf193fe967bf"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#comparing-against-the-cache",
+        "detail": "called by plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "292f5f00cc3ca9aab305f07b6871e939"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#output-shapes",
+        "detail": "called by plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "6c449da004484d56fa7b126f0908a1be"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-diff/SKILL.md#parameters",
+        "detail": "called by plugins/wigolo/skills/wigolo-diff/SKILL.md",
+        "fact_id": "403fbac76e55a0a05be21771ce7a12cb"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo-research/SKILL.md (fan-in 3, fan-out 9)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo-research/SKILL.md\" is a pinch point: 3 symbols call into it and it calls out to 9 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "detail": "fan-in 3 × fan-out 9 = score 27",
+        "line": 1,
+        "fact_id": "9d49df5ce4a59a025e5f08f70e357b8d"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-agent/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "93cf603844936ee702c63569067646b8"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-search/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "44141ecd434d15bda03e26fb567792c0"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#per-tool-details",
+        "detail": "calls into plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "41c466568d7b57a8b619b631d7270376"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research",
+        "detail": "called by plugins/wigolo/skills/wigolo-research/SKILL.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#anti-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "c0e557e9af3aeb24357f923e395fd150"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#depth-levels",
+        "detail": "called by plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "7bf901ad68793de878d70c81cf4fe18c"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#output-structured-brief",
+        "detail": "called by plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "f510b1ef90dd61b1bcfc90242f5fec5d"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#quick-reference",
+        "detail": "called by plugins/wigolo/skills/wigolo-research/SKILL.md",
+        "fact_id": "e4d029b6c813b255f5ae5325f3beebc9"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.bounded_read (fan-in 6, fan-out 4)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.bounded_read\" is a pinch point: 6 symbols call into it and it calls out to 4 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "fan-in 6 × fan-out 4 = score 24",
+        "line": 138,
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.load_bundle",
+        "detail": "calls into plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "2df395b26cb2f969d84e6ac7c98b5ddf"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.metadata",
+        "detail": "calls into plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "9d7bd5f88603269e248196e0695dda85"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.read_receipt",
+        "detail": "calls into plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "a034257b47276aa36802ec9735a66cf0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.snapshot",
+        "detail": "calls into plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "b568966beaf28dc5de49ea69707430fc"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.stage",
+        "detail": "calls into plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "97b543f26b08cf492839e4fedc6ba90e"
+      },
+      {
+        "symbol": "os",
+        "detail": "called by plugins/harness-setup/scripts/harness.bounded_read"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "called by plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.safe_path",
+        "detail": "called by plugins/harness-setup/scripts/harness.bounded_read",
+        "fact_id": "e6aca18faff3d563501acf1a0437abe0"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/harness-setup/scripts/harness.read_receipt (fan-in 3, fan-out 7)",
+    "source": "hotspots",
+    "description": "\"plugins/harness-setup/scripts/harness.read_receipt\" is a pinch point: 3 symbols call into it and it calls out to 7 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/harness-setup/scripts/harness.py",
+        "symbol": "plugins/harness-setup/scripts/harness.read_receipt",
+        "detail": "fan-in 3 × fan-out 7 = score 21",
+        "line": 489,
+        "fact_id": "a034257b47276aa36802ec9735a66cf0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "calls into plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.check",
+        "detail": "calls into plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "6026e68ac3d1d55d97c2a1223a0a7026"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.rollback",
+        "detail": "calls into plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "d313a06ceb8aaa6ceb3d04e9b962aad0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts",
+        "detail": "called by plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "c7f2b288241396c8bd7fae49def42362"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "called by plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.exact_keys",
+        "detail": "called by plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "35e02ec2ea142f6a852ef37c8375ea74"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.parse_stamp",
+        "detail": "called by plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "ce7fbd576ed308f5345f12692dd84fe0"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.require",
+        "detail": "called by plugins/harness-setup/scripts/harness.read_receipt",
+        "fact_id": "04a55f08899ce7fbd9839f9bf16f31b3"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Call-graph hotspot: plugins/wigolo/skills/wigolo/rules/synthesis.md (fan-in 3, fan-out 5)",
+    "source": "hotspots",
+    "description": "\"plugins/wigolo/skills/wigolo/rules/synthesis.md\" is a pinch point: 3 symbols call into it and it calls out to 5 others, so a large share of call chains pass through it (degree-centrality proxy for betweenness). Such chokepoints are high-risk to change and high-value to test.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "symbol": "plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "detail": "fan-in 3 × fan-out 5 = score 15",
+        "line": 1,
+        "fact_id": "dd82509454403b8badf9a081f86ebdad"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#see-also",
+        "detail": "calls into plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "2d5a23e345a71d434eebc869ee0c6f0e"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo-research/SKILL.md#writing-the-report",
+        "detail": "calls into plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "205425e9a455a07eda56794ed065e8da"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/SKILL.md#key-rules",
+        "detail": "calls into plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "2990e147ea202023d55887374228f289"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/rules",
+        "detail": "called by plugins/wigolo/skills/wigolo/rules/synthesis.md"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/rules/synthesis.md#from-research-briefs-research-tool",
+        "detail": "called by plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "4d041331075145d5ce4a7ca4077a0d59"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/rules/synthesis.md#from-sampling-synthesis-format-answer--stream_answer",
+        "detail": "called by plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "daf42d99edf5225b028bd0977a6d547a"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/rules/synthesis.md#from-search-evidence-default-shape",
+        "detail": "called by plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "936c2797fd8e8137aa7ff06bd1c1fef8"
+      },
+      {
+        "symbol": "plugins/wigolo/skills/wigolo/rules/synthesis.md#synthesis-patterns",
+        "detail": "called by plugins/wigolo/skills/wigolo/rules/synthesis.md",
+        "fact_id": "f571918695e799b4311a767e34b2f4b3"
+      }
+    ],
+    "suggested_actions": [
+      "Add focused tests around this chokepoint before refactoring",
+      "Consider decomposing it so call paths don't all funnel through one symbol",
+      "Verify it isn't doing orchestration that belongs in callers"
+    ]
+  },
+  {
+    "title": "Large public surface: plugins/harness-setup/scripts/harness exports 44 of 44 symbols (100%)",
+    "source": "exported-surface",
+    "description": "Module \"plugins/harness-setup/scripts/harness\" exports 44 of its 44 symbols (100%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
+    "confidence": 0.6,
+    "evidence": [
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.HarnessError",
+        "detail": "exported",
+        "fact_id": "b4664e53a69d45a8c68dc5c8718bcb4e"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.apply",
+        "detail": "exported",
+        "fact_id": "bbf5cabc980213fc6ad6ec7a72ab5dfb"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.approve",
+        "detail": "exported",
+        "fact_id": "563ca71c40ce8c0c6674cfc2b355d2c6"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.atomic_write",
+        "detail": "exported",
+        "fact_id": "fcc7cf7e1364ce6f2207c4f688463756"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.bounded_read",
+        "detail": "exported",
+        "fact_id": "2e6fec0be50bd0d17fafed1cfc5ee87c"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.candidate_digest",
+        "detail": "exported",
+        "fact_id": "0dd2b143aa04a94f28c0eb9d69fd817b"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.canonical",
+        "detail": "exported",
+        "fact_id": "0cc4ec7e23e5fe8dd0ae057b210d79b1"
+      },
+      {
+        "symbol": "plugins/harness-setup/scripts/harness.check",
+        "detail": "exported",
+        "fact_id": "6026e68ac3d1d55d97c2a1223a0a7026"
+      }
+    ],
+    "suggested_actions": [
+      "Unexport symbols that are only used within the module",
+      "Define a small, intentional public API and hide the rest",
+      "Split the module if it has several independent public responsibilities"
+    ]
+  },
+  {
+    "title": "Large public surface: plugins/j-research/skills/j-research-inbox/scripts/normalize exports 18 of 18 symbols (100%)",
+    "source": "exported-surface",
+    "description": "Module \"plugins/j-research/skills/j-research-inbox/scripts/normalize\" exports 18 of its 18 symbols (100%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
+    "confidence": 0.6,
+    "evidence": [
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.build_note",
+        "detail": "exported",
+        "fact_id": "6c1accff7a6939db6b2272aa513612e7"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.default_vault",
+        "detail": "exported",
+        "fact_id": "292460e73f2f87f7ff83e2807296c443"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.existing_hashes",
+        "detail": "exported",
+        "fact_id": "dec6230fab543aa8f74078408d4078cc"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.existing_pplx_ids",
+        "detail": "exported",
+        "fact_id": "4364a1c8ea529bbd8ee7a3b61117184d"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.extract_h1",
+        "detail": "exported",
+        "fact_id": "217d1670d534bee1a4cf0cf015c25f87"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.humanize",
+        "detail": "exported",
+        "fact_id": "de2a1d021f7f920cd5d1872daccdc9f2"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.ingest",
+        "detail": "exported",
+        "fact_id": "6ef0b6becc4ab379d6c4633c84a56bb7"
+      },
+      {
+        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.main",
+        "detail": "exported",
+        "fact_id": "21194c3c2d4626b456e5d43c37c6402b"
+      }
+    ],
+    "suggested_actions": [
+      "Unexport symbols that are only used within the module",
+      "Define a small, intentional public API and hide the rest",
+      "Split the module if it has several independent public responsibilities"
+    ]
+  },
+  {
+    "title": "High cyclomatic complexity: plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.main (45)",
+    "source": "complexity-outliers",
+    "description": "\"plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.main\" has a cyclomatic complexity of 45 — well above the repo average. Highly branched functions are hard to test fully and are frequent defect sites.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.py",
+        "symbol": "plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.main",
+        "detail": "cyclomatic complexity 45 at line 41",
+        "line": 41,
+        "fact_id": "a46fdf8e27e1dcf220c1dd5c8b5ea3b1"
+      }
+    ],
+    "suggested_actions": [
+      "Extract guard clauses and nested branches into helper functions",
+      "Replace deep conditionals with table/strategy dispatch where possible",
+      "Add tests covering the distinct branches before refactoring"
+    ]
+  },
+  {
+    "title": "High cyclomatic complexity: plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.main (44)",
+    "source": "complexity-outliers",
+    "description": "\"plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.main\" has a cyclomatic complexity of 44 — well above the repo average. Highly branched functions are hard to test fully and are frequent defect sites.",
+    "confidence": 0.7,
+    "evidence": [
+      {
+        "file": "plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.py",
+        "symbol": "plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.main",
+        "detail": "cyclomatic complexity 44 at line 19",
+        "line": 19,
+        "fact_id": "72cf29433aca927bc5e1083585a2b8ab"
+      }
+    ],
+    "suggested_actions": [
+      "Extract guard clauses and nested branches into helper functions",
+      "Replace deep conditionals with table/strategy dispatch where possible",
+      "Add tests covering the distinct branches before refactoring"
+    ]
+  }
+]

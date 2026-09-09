@@ -1,0 +1,100 @@
+{
+  "snapshot_id": "sha256:956ae79534b39b5827272a0abe9d5f8a57c2f356514bad69f7a45ba9e9cf3965",
+  "format_version": 1,
+  "enola_version": "0.4.16",
+  "extractor_version": "v265",
+  "generated_at": "2026-09-09T18:24:42Z",
+  "duration": "237.4ms",
+  "repo_path": "/Users/pftg/dev/claude-plugins",
+  "git": {
+    "ref": "master",
+    "commit": "230a88177bcc080ec12cd3f9d4d7d86b44726a4d",
+    "dirty": true,
+    "remote": "github.com/jetthoughts/claude-plugins"
+  },
+  "extractors": [
+    "mdintent",
+    "python"
+  ],
+  "explainers": [
+    "cycles",
+    "layers",
+    "crossrepo",
+    "coverage",
+    "unused-routes",
+    "domain",
+    "query-loops",
+    "dead-methods",
+    "entry-points",
+    "messaging-coverage",
+    "god-class",
+    "hotspots",
+    "dependency-depth",
+    "exported-surface",
+    "complexity-outliers",
+    "intent",
+    "constraints",
+    "vendored-candidates",
+    "import-closure"
+  ],
+  "renderers": [
+    "llm_context"
+  ],
+  "config_hash": "sha256:f8233549c49910b52327defe5523379e050b55de00b039017b649b3c0545ee96",
+  "ignore_glob_hash": "sha256:7523cc6397a498e151125a682d28fbf6df20c6f51f6dfaf18fd8f5239a20d2d8",
+  "output_hashes": {
+    "facts.jsonl": "sha256:5c6520bde8ebcb666fcec2752e74a005fd3843b979c9aae904158ecc8d6133a8",
+    "insights.json": "sha256:5e4c9b379b30584c26fc6209415241e31d14c009442fe4481a52e4cadc67d097",
+    "llm_context.md": "sha256:32571b2e57854707d051220c7c1eecd34982af4b128be5ebfef4431933e15306"
+  },
+  "fact_count": 987,
+  "insight_count": 22,
+  "quality": {
+    "files_seen": 203,
+    "files_parsed": 133,
+    "files_skipped": 4,
+    "dirs_skipped": 4,
+    "skipped_sample": [
+      ".git/ (glob: **/.git/**)",
+      "plugins/deliberate/deliberate-workspace/__pycache__/ (glob: **/__pycache__/**)",
+      "plugins/harness-setup/tests/test_harness.py (glob: **/test_*.py)",
+      "plugins/harness-setup/tests/test_independent_regressions.py (glob: **/test_*.py)",
+      "plugins/harness-setup/tests/test_plugin_contract.py (glob: **/test_*.py)",
+      "plugins/j-research/skills/j-research-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
+      "plugins/j-research/skills/j-research-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
+      "plugins/j-research/skills/j-research-inbox/tests/test_normalize.py (glob: **/test_*.py)"
+    ],
+    "parse_errors": 0,
+    "heuristic_insights": 22,
+    "coverage": {
+      "services_total": 0,
+      "coverage_gaps": 0,
+      "unresolved_edges": 0,
+      "extractors_reporting": 1,
+      "extraction_unresolved": 127
+    },
+    "census": {
+      "files_walked": 207,
+      "parsed": 133,
+      "excluded_by_ignore": 4,
+      "excluded_by_kind": 69,
+      "excluded_kinds": {
+        "(no extension)": 25,
+        ".ds_store": 1,
+        ".gitignore": 2,
+        ".json": 35,
+        ".jsonl": 1,
+        ".sh": 1,
+        ".yaml": 3,
+        ".yml": 1
+      },
+      "skipped_with_cause": 1,
+      "top_skip_causes": [
+        {
+          "cause": "claimed by typescript, which did not run this snapshot",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

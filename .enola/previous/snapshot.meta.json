@@ -1,0 +1,1009 @@
+{
+  "repo_path": "/Users/pftg/dev/claude-plugins",
+  "repo_label": "claude-plugins",
+  "generated_at": "2026-09-09T18:13:31Z",
+  "duration": "265.537542ms",
+  "extractors": [
+    "mdintent",
+    "python"
+  ],
+  "explainers": [
+    "cycles",
+    "layers",
+    "crossrepo",
+    "coverage",
+    "unused-routes",
+    "domain",
+    "query-loops",
+    "dead-methods",
+    "entry-points",
+    "messaging-coverage",
+    "god-class",
+    "hotspots",
+    "dependency-depth",
+    "exported-surface",
+    "complexity-outliers",
+    "intent",
+    "constraints",
+    "vendored-candidates",
+    "import-closure"
+  ],
+  "renderers": [
+    "llm_context"
+  ],
+  "file_hashes": [
+    {
+      "path": "plugins/j-ideation/skills/j-mapping-assumptions/SKILL.md",
+      "hash": "b2784186a4d4d54da2786a9037733815f7812d5aa71185f9e5b3e01817ffd293",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-paperclip/skills/j-paperclip/references/api.md",
+      "hash": "c1b0886f87658ccdea181a1ec6ff50fb97c004ff834589bde1b82e6f01d78649",
+      "mod_time": "2026-09-03T11:02:20Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-fetch/SKILL.md",
+      "hash": "45eb8936cf4c7c7274ff4c4135ad41c1d8b812e62d539ccd2ef30c81aa75222c",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/verify/SKILL.md",
+      "hash": "c21aa01b783a4022b4badb74bd53b16cf0f01155f8d0a34e6d788a468f824e1f",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery/agents/core-tester.md",
+      "hash": "0b4cc2950fd318107674463fb8799b23f665420d586b872301bb72563cd8b1f4",
+      "mod_time": "2026-08-21T12:19:36Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/SKILL.md",
+      "hash": "95d3e86f5cf1347d8fe48434bf8c9bbc00a2b6d5c5f1b8f2d73ee647e1b69332",
+      "mod_time": "2026-09-03T00:14:52Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-research/SKILL.md",
+      "hash": "0de922659b92512a5251a42a159d889489216dd55e86a9fa948232ba4d0af823",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/old_skill_prev/grading.json",
+      "hash": "c4613d355e03413552b7c1ad43b6b24b56929d6d3350857faa17470225f3a3b8",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/j-delivery/skills/contract/SKILL.md",
+      "hash": "556a465370471e165f2beab6870bc49e48a68d475dea44824061f7665b9a26c6",
+      "mod_time": "2026-09-03T09:42:33Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-wip-limit-oversized-card/eval_metadata.json",
+      "hash": "420541ad9c258746a970958bcbac16adef91bec660cd0150b9994a477d98028f",
+      "mod_time": "2026-09-03T10:01:01Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-accessibility-auditor.md",
+      "hash": "d4c731bbcc47a13e3f792035523f5ee0321523ff1113d8d2f7892fab0e9c04f7",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "INSTALL.md",
+      "hash": "9679d059d9c7775d11b6e2a9ce6886fc8b1017d885fee786428eb1d8e6b9252b",
+      "mod_time": "2026-09-09T17:51:28Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/old_skill/outputs/response.md",
+      "hash": "34ea110cd120bc38c1930425c20d0a0aff74d902f02adb9f54e3892b009aa667",
+      "mod_time": "2026-08-29T19:35:41Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/setup/references/discovery.md",
+      "hash": "20c3e92a2718375541e30f7eab2e974cb45b95469b76edcc02574a1009595aa4",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/agents/core-planner.md",
+      "hash": "f26c8ff565197743b63c340b4918418e1903000bfd382db91b7c65b5b50628b2",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/old_skill/grading.json",
+      "hash": "b0b68b62fee192707dcb13d9e4c007e721e7d87ecdb44fdf2e2cff93d1ebcb92",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/skills/deliberate/evals/evals.json",
+      "hash": "c39fed2e575292f8077bcbcb07b10678f1439c98081561c9b0c478b3d045a20c",
+      "mod_time": "2026-08-29T23:37:30Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-commercial-analyst.md",
+      "hash": "d9929b2a8a5086b79810d6f6e0c78b285cfc9c75881970fe05ea0c439453ea33",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-learning-from-decisions/SKILL.md",
+      "hash": "bbd2d2d65148bc156f362dec2238e453c8edfb0bd9578de78d5399e7339c91c7",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-diff/SKILL.md",
+      "hash": "9edd77e27048136975550c0b2af9e3037d6ce985c58f3d1dd58487af437b7694",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/examples/plan.json",
+      "hash": "0c1e0597c76fbffea402953379bf3ae8202193a3286ab8facd1f1a0b5871ec7f",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery/agents/core-planner.md",
+      "hash": "f26c8ff565197743b63c340b4918418e1903000bfd382db91b7c65b5b50628b2",
+      "mod_time": "2026-08-21T12:19:36Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-technical-feasibility-reviewer.md",
+      "hash": "4832ebc5be00adb37bb1e76cbdd07570c477de0d97042b985a729224e3f5232a",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-linkedin-post/.claude-plugin/plugin.json",
+      "hash": "2730d04e62bd21a58dcdad76260d6293119810db1a003c0d797360b31d78275e",
+      "mod_time": "2026-08-31T19:18:42Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-research-inbox/SKILL.md",
+      "hash": "b2f64fa46c2e9530da02aac11eb807a939216b4c11de922bb7cf0586d4aa5f1e",
+      "mod_time": "2026-09-02T22:26:04Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo/rules/synthesis.md",
+      "hash": "12d15a7f60d9795930ea924df14a8a20cda0f50086ede2906cf286c410c9ed3f",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-crawl/SKILL.md",
+      "hash": "8565bf7fc82a79d2414163176c0f68548eb04d64b784d6b186cd8a1ebeefb635",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": ".github/workflows/harness-setup.yml",
+      "hash": "319de90d0c5d8684f85a8d05df009bcaf39cd411373158f3da398cb4d2b831fb",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/old_skill_prev/outputs/response.md",
+      "hash": "e467c40edda549c5b284f6b12416c811d08cc50af4a1ec1afe417150a8d9e18b",
+      "mod_time": "2026-08-29T19:38:32Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/agents/core-coder.md",
+      "hash": "ab0a1c075de5c18deef7bb88eeae0a5034289e5f637c5f5dc1f3594edbb20606",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-research-lead.md",
+      "hash": "d8cd89218f96c9136e5ffad245b2ccb6c0fa0ba79b069f0b3d730cd7a3d844e1",
+      "mod_time": "2026-09-02T20:56:45Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-designing-experiments/SKILL.md",
+      "hash": "ea6d13b02311683f87139b6e79ea0442d5e7875b0a9d54ccc4d8d43d80e1f8ac",
+      "mod_time": "2026-09-03T00:14:52Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-mapping-opportunities/SKILL.md",
+      "hash": "2f441b341d4b7f90f48cd31f3e12cd98c4891c707bfc9253166dd048a7790815",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/with_skill/grading.json",
+      "hash": "f62dd1284864ed3241b02611ad4756805536a5e6eca87a1fe586c3a8706f0c6a",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/skills/deliberate/SKILL.md",
+      "hash": "d0a7296b74b2874c7d53e901f8dfbbefec0515399b7c4906caece1d8670c7b80",
+      "mod_time": "2026-08-30T00:09:54Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/DECISION-POLICY.md",
+      "hash": "a7afcab4187f5a6735d5705e4ce61b90608270c8232b5ec854441c133c494980",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/eval_metadata.json",
+      "hash": "f984b5d29ee08d5c51510439f2d7b06cfd8a9489eb575f70e97bbc258e0d3661",
+      "mod_time": "2026-08-29T19:35:33Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/verify/references/runtime-checks.md",
+      "hash": "8be42f217ad1699afa16395b23defd6846b64303e793915899b1dbc87b52f4ce",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/agents/core-reviewer.md",
+      "hash": "6dcb2c6e7248ff883590cd8bb7fcf30e4b5fe37d648c88de068d59b16e9b7304",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/.claude-plugin/plugin.json",
+      "hash": "f60fa3215e7d75e98b34172319410a0382770c7c990ac68f2f8f19487b45cd20",
+      "mod_time": "2026-09-02T20:47:03Z"
+    },
+    {
+      "path": "plugins/j-delivery/skills/async-first/SKILL.md",
+      "hash": "fec678e642d1071449fe70f3e3316a9e42d0f70d130a5b9268af477a93cacc8c",
+      "mod_time": "2026-08-21T11:38:31Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/benchmark.json",
+      "hash": "118154734095eeda8ccd6244c7ce9ef00f9f6750235d9c87fedc44444632aa34",
+      "mod_time": "2026-09-03T10:01:48Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/decision-record.md",
+      "hash": "e913a6c067e24fd615b260b9bc3ee8efb20998ad295fc8721d344c8494b12291",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/unfix/skills/unfix/references/patterns.md",
+      "hash": "74ac4be92bede7bd91cf946701638b7682299405335b341a01686ed2bc4c4942",
+      "mod_time": "2026-08-29T18:31:25Z"
+    },
+    {
+      "path": "plugins/deliberate/skills/.DS_Store",
+      "hash": "9f9f5901aa3452b3deef3239f5fde350c9d564257ed9aeb0588c3feab2aef14e",
+      "mod_time": "2026-08-29T18:54:31Z"
+    },
+    {
+      "path": "plugins/j-delivery/skills/board-flow/references/boards.md",
+      "hash": "8ea596b5df628371cc114ab456799de76dd4403961a3b63ff490282d2fff94e7",
+      "mod_time": "2026-09-03T09:42:30Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/review.html",
+      "hash": "3c1b97b0c5136d492faa0e14c27dd1e04bcfbf12456bb6e8a19f5365334dc85f",
+      "mod_time": "2026-09-03T10:01:48Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/commands/deliver.md",
+      "hash": "0dbde5f2d52247d9f05124b01b2aede190ce6d3520235f2603ab1ef18692ed2e",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/experiment-portfolio.md",
+      "hash": "2fde5d1fbd05a427f49f6f2ddb0129d5b1bb51fba470916591917b13ca403e03",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-paperclip/skills/j-paperclip-ops/scripts/pc",
+      "hash": "64a2b86ebc6ac608e21a035bbf2fcb8275426eb3157d2df181c48e01a61f9952",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery/.claude-plugin/plugin.json",
+      "hash": "b17d11b5d5c73f31908847b61e27a269339c206d882c0ce53e746142fe046278",
+      "mod_time": "2026-09-03T09:42:44Z"
+    },
+    {
+      "path": "plugins/j-delivery/skills/board-flow/evals/evals.json",
+      "hash": "fbd48c144a8e29d593cfe5f2d39febf5b490dfb7823c786f2fce3eaedc6987c8",
+      "mod_time": "2026-09-03T10:01:01Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-pick-next-card/old_skill/run-1/grading.json",
+      "hash": "013880a78f631ba339154abf8819bfc3a1102d89bbf4424c5e1273767a3215a3",
+      "mod_time": "2026-09-03T09:56:32Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/evidence-ledger.jsonl",
+      "hash": "a25c6f2081be6df6364000ab7552f65648fa45644c2dff91246bd31450ca8515",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-paperclip/skills/j-paperclip/SKILL.md",
+      "hash": "664a2b704431eca8574591356bc8e3da61460ee1f1920676318d9924e8cd2718",
+      "mod_time": "2026-09-09T14:41:30Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo/rules/cache-first.md",
+      "hash": "29c1e609947834bb6ca8cc65da3935c66f21510f135513c0d6fd82d4afb2f46a",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/with_skill_nobudget/grading.json",
+      "hash": "8bb94e9a9469af16cbf943dbd4db1bf36736441794442842ec9cde7ac7fbdaf7",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/skills/ldj/SKILL.md",
+      "hash": "100accc2b48361fffe6b4d33fb8f4d01f4256aff2bd1f7cc80d138808272c184",
+      "mod_time": "2026-08-29T20:29:59Z"
+    },
+    {
+      "path": "plugins/harness-setup/.gitignore",
+      "hash": "5610ab04594dc29248fbb797ee4d6fb23ad9099d2e58cc94770847e5debe63b8",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/agents/public-researcher.md",
+      "hash": "4d03c0cc6d0b1f75f2ba36617a73cf8e08eff9d87724d5c563e7d2189e1ef9c1",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-pick-next-card/eval_metadata.json",
+      "hash": "bd5dd0a86a451d275403e6a774a9efa71cbd68e7bb8ee618ce82acc68f9f4fb1",
+      "mod_time": "2026-09-03T09:45:20Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/concept.md",
+      "hash": "c3e6fa0389f42e97d88addb579129db2727e4f5ff37d040117a7e556a22dc745",
+      "mod_time": "2026-09-03T00:14:52Z"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "hash": "5abafd22251157b2ef89af03c051ef3676758abc055d4d63e7554704b6d536dd",
+      "mod_time": "2026-09-09T17:51:24Z"
+    },
+    {
+      "path": "plugins/j-delivery/agents/core-researcher.md",
+      "hash": "afe3ad1c34f831d33ce2e0ddde5bbe2877503437c4c39bfcc092d661c552219c",
+      "mod_time": "2026-08-21T12:15:47Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-convening-the-council/scripts/aggregate_council.py",
+      "hash": "ca96f2bb5f5c7307d552034c5802cf01e2b1e3d6ca527763bcd9611ef4ba8640",
+      "mod_time": "2026-09-02T19:55:12Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-running-independent-research/SKILL.md",
+      "hash": "1ee62c3e11b883c60ecdc17964e98df1b580b4988528e0e88713f83093f6e042",
+      "mod_time": "2026-09-02T20:56:45Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-perplexica-search/agents/openai.yaml",
+      "hash": "2a22be7715937aafe9c76807509747c5cbfc55fc2580ce9ab701b85aab049d49",
+      "mod_time": "2026-09-02T20:47:03Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-find-similar/SKILL.md",
+      "hash": "5ebdd7f7673ba36cc6445f9c4f0a52ef32095613c64f7dab05668987dd8215a3",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-search/SKILL.md",
+      "hash": "b3b3fbcf1a749e0e4ca438f8bf5e79a95bd96eb68993947555a1eb6dd6c2a2d1",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/old_skill/outputs/response.md",
+      "hash": "96fded6a3ed363f6215bf7b47f503c2c67ae9c592ffbf51c0a5f1544de1d0422",
+      "mod_time": "2026-08-29T19:44:15Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/with_skill/grading.json",
+      "hash": "33eff7854df86b899ffd9a8a964957f8534b72364d3758569c0b6c903ea23b68",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-wip-limit-oversized-card/old_skill/run-1/outputs/next-steps.md",
+      "hash": "acda7c7734902107ff921992ebec10f3a310e0ca9c9f38c5362c6a28ce077fc8",
+      "mod_time": "2026-09-03T09:46:22Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-cache/SKILL.md",
+      "hash": "cde29e3e3d7ab7623b77336e2493ad1da41a17dca54307d2521ad16d72767331",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/old_skill/grading.json",
+      "hash": "f29d32f2088af80f3d2193de70be2331a1ebb222cc85bfb46b9e40df7ec80bef",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/with_skill/outputs/evidence-ledger.md",
+      "hash": "b743bd3532b4348cf8baee28917ca26c6178652857425e8c1921d12ea9922512",
+      "mod_time": "2026-08-29T19:45:17Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/old_skill/outputs/response.md",
+      "hash": "b6157ce3eab249a89f49faaab3d5c78a69e7279135b9fdeddfede66dab2ea2b2",
+      "mod_time": "2026-08-29T19:47:45Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-pick-next-card/old_skill/run-1/outputs/decisions.md",
+      "hash": "b55217a66a26fe86bed95aa36a367e37d6185d305170c8f7b2c2f5e8b9b29f56",
+      "mod_time": "2026-09-03T09:46:24Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-information-architecture-reviewer.md",
+      "hash": "b283f35718a27928ef3c4dae7c3ef46311fbbf7c0470d6e66e551649790201ac",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/learning-log.md",
+      "hash": "edf0a5bc1cfeee81d8cc8b00ab61619fafc3c0a5e235b95784cae2d1e3e3ffcb",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/cognee/.claude-plugin/plugin.json",
+      "hash": "964d7a70bc82126679b9873b3ca4c28f3ea7d9455a073dcb9ad81d5230725615",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/.claude-plugin/plugin.json",
+      "hash": "845f8e95bd897ce0d8c349ca52ff4f4a07a2eef78d54b9e2a779bdcb99ca43e8",
+      "mod_time": "2026-08-29T20:30:23Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/grade.py",
+      "hash": "7d388f04f0546e148cacbbdbb6a1e9b2f1cc72086db3d865226c8a6266365bca",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/with_skill/outputs/response.md",
+      "hash": "5fa3e9b27285c4f5918ebdc885fa879c8d69aca7182d78b9a5000e2122b7ba22",
+      "mod_time": "2026-08-29T19:35:54Z"
+    },
+    {
+      "path": "plugins/harness-setup/README.md",
+      "hash": "225765cd04103db6ad126d15b0801cb3f2e9f61087be45c54cdaf544be256821",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/setup/references/protocol.md",
+      "hash": "61594eb4a3efc44b1c8b4286a04e5b9f85d1b1e88423a297222909737c3fdd52",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-pick-next-card/with_skill/run-1/outputs/decisions.md",
+      "hash": "fe19aee9dda6867ad9458217e61adf27faaa584d4c54a09ffc4204ed5597e669",
+      "mod_time": "2026-09-03T09:47:02Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-conversion-analyst.md",
+      "hash": "a7fad3e1366a2aec9fc4b5197934137aaedec4704583f2488bc726b88f2abfe8",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/with_skill/outputs/response.md",
+      "hash": "f9929a6f03994a8982ca9dda17d744589ea704aa34936a89d0d4156afb042435",
+      "mod_time": "2026-08-29T19:59:46Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/with_skill_nobudget/outputs/response.md",
+      "hash": "389cd48c0b750c13e77b3013581ee76831a5d9ff2e31398db0084c4569a0f463",
+      "mod_time": "2026-08-29T20:17:50Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-ux-heuristic-evaluator.md",
+      "hash": "c7919499375a7acc3e03af997cc9ceaaa92e84af458e5550d349b19aa1d4869a",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-framing-the-question/SKILL.md",
+      "hash": "f8529cb8655153401bbaa9d4b188e00746f4900554f7e67f08fb74b595e5c87c",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-scanning-lightning-demos/SKILL.md",
+      "hash": "8263c10f7989dae9fdb672e81f1489e7e2ba5cd44a972d77aab59a76595396b6",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-research/CHANGELOG.md",
+      "hash": "29deb2d45aa3f53ef6a8cf6879f63c7c2cdc4363219e0c257b203e76704c4ffe",
+      "mod_time": "2026-09-02T20:47:03Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-deep-research/SKILL.md",
+      "hash": "91661e84254ba6f897e78383b06743294b1381e6445aba94153dbe6376125ac7",
+      "mod_time": "2026-09-02T21:03:36Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-research-inbox/scripts/normalize.py",
+      "hash": "eb7198650968f509c0b61a3e7b0ed63bfe629e3ac7877e120f0b8585df07ce36",
+      "mod_time": "2026-09-02T22:46:15Z"
+    },
+    {
+      "path": ".gitignore",
+      "hash": "4a058b01a0276bf104e42b2d962d93e5affc430b49b4b7c7a4d974212c7a211d",
+      "mod_time": "2026-09-03T09:44:08Z"
+    },
+    {
+      "path": "README.md",
+      "hash": "ce6a87b2b8216dd1fcc670fbee4f1d6efcf8fdaf5f3d451e94bffa9046ff022a",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-2-stops-early/old_skill/grading.json",
+      "hash": "8ac0b32911139790931a0ac6cb36dcc644001e75f35337ed09c412564166ccaf",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/harness-setup/agents/context-auditor.md",
+      "hash": "71a872ad9ae99eae8406624bbc800bb5cca5ce876d23dab7795b704e02439166",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery/agents/core-reviewer.md",
+      "hash": "6dcb2c6e7248ff883590cd8bb7fcf30e4b5fe37d648c88de068d59b16e9b7304",
+      "mod_time": "2026-08-31T08:39:48Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/CHANGELOG.md",
+      "hash": "95552617ca835428346acf5619c1ce6d1fb0f52007d2714eba19871cbfaa1343",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-evidence-auditor.md",
+      "hash": "6a33c5ce68c8e49b3903cad6446ecb387fb163ea574924a30a3fa2b90d3cc859",
+      "mod_time": "2026-09-02T20:47:16Z"
+    },
+    {
+      "path": "plugins/j-paperclip/skills/j-paperclip-ops/SKILL.md",
+      "hash": "a88f2feaa43497042d61129abd2bf5378c2be228ad7fa0e71bc4ab00c618082b",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/cognee/skills/cognee-memory/SKILL.md",
+      "hash": "1ca74c4f8e4520ceb35e8d618fc2eb7a75724685a2a198c5977e9cae345b6499",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-wip-limit-oversized-card/with_skill/run-1/grading.json",
+      "hash": "90ede9019131bd3b0850ef64a2b6b081c02440bc3670bccbac6073fce80cb3ee",
+      "mod_time": "2026-09-03T10:01:01Z"
+    },
+    {
+      "path": "plugins/wigolo/.claude-plugin/plugin.json",
+      "hash": "7cd2325ef2490dac661f3296810fd845359ccd1f34e076b958a97e8d9e0ceffa",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-agent/SKILL.md",
+      "hash": "9fc5c54d8ba87999f926e0a2633671230bb728ba13f903f8797b61f56b34c1e9",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/agents/core-tester.md",
+      "hash": "0b4cc2950fd318107674463fb8799b23f665420d586b872301bb72563cd8b1f4",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-generating-independent-variants/SKILL.md",
+      "hash": "df8148911d2ff62c0a7bc2317ba5232cccc89178c5b5b102f066454936300afa",
+      "mod_time": "2026-09-03T00:14:52Z"
+    },
+    {
+      "path": "plugins/unfix/.claude-plugin/plugin.json",
+      "hash": "18b7a36787b64ec07dc8d68de388ae6b90a6d5a92b7d79a8c2f3dcfee66bec92",
+      "mod_time": "2026-08-29T18:36:11Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/setup/SKILL.md",
+      "hash": "e41716f056e04853cdf0109a83a52f3d9b7e67d785ff7d1d889481472335eb88",
+      "mod_time": "2026-09-09T17:56:57Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-cold-eyes-reviewer.md",
+      "hash": "12b514d54324e1335e15194818c63a34defe85346c9fc5a7c6547cc206a2f31c",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/council-review.md",
+      "hash": "3e29b67b50dba531e7f169bc07779b762093bf2867adc270947a8d095d9a1151",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-paperclip/skills/j-paperclip-ops/scripts/pcstat",
+      "hash": "7802296cdf2abf853968194c4c1f8b50219d24c73d80807f471df4fb4e0f9062",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/skill-snapshot-prev/SKILL.md",
+      "hash": "0af1636995ffe1c46dfb7bb5092c64b844c4766873d2e0a35bbb81ebe38053a4",
+      "mod_time": "2026-08-29T19:09:58Z"
+    },
+    {
+      "path": "plugins/harness-setup/LICENSE",
+      "hash": "b4c6ae9630331b874b24c9790d0230cda5a9435b9ded98eab79f5adeba7ed76e",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/agents/control-reviewer.md",
+      "hash": "846241e29d18695db2672d55c25fde97daa16a7fd5033be6efe69457e2db1f6d",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery/agents/core-coder.md",
+      "hash": "ab0a1c075de5c18deef7bb88eeae0a5034289e5f637c5f5dc1f3594edbb20606",
+      "mod_time": "2026-08-31T08:39:48Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/assumption-map.md",
+      "hash": "1860bd3c14ff18a6ad17f7d534f0dd521f50ba100c5664fffe16c609d8855411",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/experiment-card.yaml",
+      "hash": "63eb92b86a7a26a9e3b099a4fb8acfd57ce1d0e934eaf9bada949016a288bf95",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.py",
+      "hash": "6b39e2aa18828fcde2a517d68392e3dee14a999fd5172decd67f0fdb91937b29",
+      "mod_time": "2026-09-02T19:55:12Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-perplexity-sync/SKILL.md",
+      "hash": "c71c6186f675251961669e37529b56beb1ac576a18789edadaddaf6db97cecc8",
+      "mod_time": "2026-09-09T14:41:30Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/skills/async-first/SKILL.md",
+      "hash": "fec678e642d1071449fe70f3e3316a9e42d0f70d130a5b9268af477a93cacc8c",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-evaluating-interfaces/SKILL.md",
+      "hash": "941dad698d68191d81ac541919776cfb10c22f81c2021aebecc8ca579c797e9e",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/scripts/validate.sh",
+      "hash": "cc45912230651e07798a3bf45190c67c67adea65e825ef0719a401c9b0aa70f8",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugin.json",
+      "hash": "f8fef5822b28321ab9bb2326e243946e371e72d9f29d2575c459b14ffd7cb5f6",
+      "mod_time": "2026-09-09T17:51:24Z"
+    },
+    {
+      "path": "plugins/j-delivery/commands/deliver.md",
+      "hash": "da1eaa12964373bb96a9336a7907f38746d63de9f8bcb51a3b40700ed4605ac4",
+      "mod_time": "2026-09-03T09:42:37Z"
+    },
+    {
+      "path": "plugins/j-delivery/skills/board-flow/SKILL.md",
+      "hash": "abaa48cdef7cfcb8229e94a3dd9880fe6952f18db7ca23ca3bce4687709683d7",
+      "mod_time": "2026-09-09T14:41:30Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-decision-agent.md",
+      "hash": "ccd949968082a920683c6cc5c58a8504a144d5e0e909f2746acf403f8ae5c7b0",
+      "mod_time": "2026-09-02T20:47:16Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/contradiction-register.md",
+      "hash": "cc34436d23486106dfd559a5321bb135661a050d56a3fa9d49a28be64590166d",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/research-plan.md",
+      "hash": "dd9c4e6e61d79a7b36370b413024ba6f8dba0a7b67d648b480b932da54a3de97",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-extract/SKILL.md",
+      "hash": "59021e699232505dc09fe297235e9faea01c50fcbdee0c01fb2ab4b9ed43eaa9",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/BENCHMARK-DEFECT.md",
+      "hash": "e5a6a11e0f50a5ec1ea5cde845a542f48c4b9e131a079d44c6f260ea84f989a7",
+      "mod_time": "2026-08-29T19:36:38Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/.claude-plugin/plugin.json",
+      "hash": "8305605f316026b3183b0604b7049cdbc709e65af23ef71cd121012a912f8ae4",
+      "mod_time": "2026-09-09T17:40:39Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/.claude-plugin/plugin.json",
+      "hash": "51da9db7483063da6ff95fdad4228eebdfcc103a451272401f4989d1ff08d9c4",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-convening-the-council/SKILL.md",
+      "hash": "97c4e4ac888647a7fcd1e7101b3b447f3821b300a34dba1bdf1a2fbe5726662a",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/intake.yaml",
+      "hash": "a23f212579644f64917fde61f9239802deb2b3f199aa8d1184b0a9d24c2ca11a",
+      "mod_time": "2026-09-03T00:14:52Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/opportunity-tree.md",
+      "hash": "4d85edf4f4b0745c646442c35627ecd4fa656c1c2aab81b6f86760a598078cad",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-research/.claude-plugin/plugin.json",
+      "hash": "ed97d014bb62be078512c4bc9c07f9584e6ec5d4bb1be7833dbf46c0cef60f5a",
+      "mod_time": "2026-09-02T20:47:03Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-perplexica-search/SKILL.md",
+      "hash": "eb6d646edd700228041cb6cfdc80162e0dbf0e0da562432e0674787ea18c6dcd",
+      "mod_time": "2026-09-02T21:03:36Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/skill-snapshot/SKILL.md",
+      "hash": "09b941a76fcfd6450f30f0dc8a76d19439cdb3798cc407c533ade4662b6e7d37",
+      "mod_time": "2026-08-29T19:19:43Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/skill-snapshot/references/playbook.md",
+      "hash": "324ad8d46f90f5af13af7343f399b2620e54be4982ae29192f32ccfde5c1d20e",
+      "mod_time": "2026-08-29T19:19:43Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-making-the-call/SKILL.md",
+      "hash": "917c97a96545b8e128546f1deaf00aae75b4af3cb14e7bb58e7227588de6b2ab",
+      "mod_time": "2026-09-02T20:46:44Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.py",
+      "hash": "57841c2bdf203f91a064dcb5384582e61f7b0868f81abed817e4d6cdfdcb4104",
+      "mod_time": "2026-09-02T19:55:12Z"
+    },
+    {
+      "path": "plugins/j-research/skills/j-research-triage/SKILL.md",
+      "hash": "0a5ca8fa5c8ab422aab70aadd800bf67ca191e5275bff88a82398d1090f004d2",
+      "mod_time": "2026-09-03T00:59:42Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo/SKILL.md",
+      "hash": "992d38226fbcca38843b7806cfaecd786d34682c17b10eaf9820835df94a7c4a",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/with_skill/grading.json",
+      "hash": "a481936fc305eb1029e76475aeb560b4f81304379f30f0a4e2b2c455feecf311",
+      "mod_time": "2026-08-29T20:19:12Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/eval_metadata.json",
+      "hash": "ad9f7446e6919b648f993fbb53246553ea0c0c08ec32e7b3cc0b3050b14072f6",
+      "mod_time": "2026-08-29T19:35:33Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/with_skill/outputs/response.md",
+      "hash": "4e4ed23236b523fd9dfc88abe6618e2830b2764838ef4e29951d7368e55fa81a",
+      "mod_time": "2026-08-29T19:59:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/benchmark.md",
+      "hash": "c50fa0871ec2dc336fa0341fd0846dd8a9125b03d8d23fb8bc3794efe785539f",
+      "mod_time": "2026-09-03T10:01:48Z"
+    },
+    {
+      "path": "plugins/j-ideation/CHANGELOG.md",
+      "hash": "b481da6253fcfe0058054aa26b6619d1a0664d1a1ba924bd6ea76aa9d29fa22f",
+      "mod_time": "2026-09-02T20:47:03Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-customer-advocate.md",
+      "hash": "25857ae8c04a80a6253517069239760f47d64892ce22c891bce5dc80606daaf1",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/j-paperclip/.claude-plugin/plugin.json",
+      "hash": "6e662fb5f5c091b2d29c7b201c25c6e3d0ef050a28411fda140b37e5053c2812",
+      "mod_time": "2026-09-03T11:01:08Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/eval_metadata.json",
+      "hash": "205f21a3ffe6135acd232e43dabe7902f95a5f01923976f0df84660a829635e5",
+      "mod_time": "2026-08-29T19:35:33Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-1-fresh-inspiration/with_skill/outputs/concepts-and-demos.md",
+      "hash": "c90007cf5dc1092e526331cdf902e022133aebe8607be1fa7b90669c913d97a1",
+      "mod_time": "2026-08-29T19:45:44Z"
+    },
+    {
+      "path": "plugins/harness-setup/agents/skill-creator.md",
+      "hash": "5fb15706c6a78004d98e2b84ef3a1f41370d3044fec711e42264297275879a0a",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-pick-next-card/with_skill/run-1/grading.json",
+      "hash": "c23014adefe0f7b6f94d3e990a8ba8df115637a19e610aae24629e9549f3d6ca",
+      "mod_time": "2026-09-03T09:56:13Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/agents/core-researcher.md",
+      "hash": "afe3ad1c34f831d33ce2e0ddde5bbe2877503437c4c39bfcc092d661c552219c",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/lightning-demos.md",
+      "hash": "7804daabe7b4dd45c183f70b435d10120fb04c3dbda7a8393491766caa33774e",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/j-linkedin-post/skills/j-linkedin-post/SKILL.md",
+      "hash": "c47774c6e6ed308f36d8661037a7f224b5ea951f720a2df5d27cda127b30fdd9",
+      "mod_time": "2026-08-31T19:18:37Z"
+    },
+    {
+      "path": "plugins/deliberate/CHANGELOG.md",
+      "hash": "fd907efa98f937bb658f9a5398e7545c681907a9ff4ba96779a9d71ee4378a6c",
+      "mod_time": "2026-08-29T20:31:21Z"
+    },
+    {
+      "path": "plugins/harness-setup/CHANGELOG.md",
+      "hash": "eedbaf21120f9649c8e35bf7ab8ac47451fb4bb78214707c3f6346beec4d14ea",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/scripts/harness.py",
+      "hash": "b2e4891a24bc564f6d34ac965ab6b16694c528cca5140ceb9e4cecd737785daa",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/harness-setup/skills/setup/references/selection.md",
+      "hash": "1a7949ea433a6cfaef149da7854b45b8aeaee73c7c4ecb8aa22db8d1382e9bc6",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/wigolo/skills/wigolo-watch/SKILL.md",
+      "hash": "84710dc69b7d9f9b585664af3325854b1aab0b5b32b3de54aa4f0f0c862491cf",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/eval-0-ambiguous-frame/with_skill/outputs/stage-0-frame.md",
+      "hash": "a6cb8ac6bc90d86f534b1e7baa0aed7ec531b198091699e95e4b89f86567dae3",
+      "mod_time": "2026-08-29T19:36:02Z"
+    },
+    {
+      "path": "plugins/harness-setup/.claude-plugin/plugin.json",
+      "hash": "8d4eeacdb139a610392e4f1d4c44e7c70b7aafc4c9b38c40080a920e92341557",
+      "mod_time": "2026-09-09T14:39:56Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/skill-snapshot/skills/contract/SKILL.md",
+      "hash": "dacbbce86952d5c082eb5efe9a7d9516bd3a1d99144347a384bc2fa2e4958cac",
+      "mod_time": "2026-09-03T09:41:19Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-independent-ideation/templates/decision-brief.md",
+      "hash": "4e19139dfce60a709d5ff006b896de9d3d006ec0bc33d1fafb14254d5e236c08",
+      "mod_time": "2026-09-02T19:52:17Z"
+    },
+    {
+      "path": "plugins/deliberate/skills/deliberate/references/playbook.md",
+      "hash": "d7175941cc80989aa5317f714095708990e3ca0bda18375808d73d73164876d3",
+      "mod_time": "2026-08-29T23:37:17Z"
+    },
+    {
+      "path": "plugins/j-delivery/CHANGELOG.md",
+      "hash": "6e98cda2c4b5b318130271c0575484cc25178278db498289e5f6d7680569bef1",
+      "mod_time": "2026-09-03T09:42:44Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-wip-limit-oversized-card/with_skill/run-1/outputs/next-steps.md",
+      "hash": "8b2ad7bbccb729607d09e72e4e9690c8ccb2b45abf555a3d1210d89605ea9f1a",
+      "mod_time": "2026-09-03T09:46:25Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-growth-strategist.md",
+      "hash": "195073b146f9da612b1830e7ccfaa41b9ac4a2b30a6460b69be5acc099f82c64",
+      "mod_time": "2026-09-02T20:46:20Z"
+    },
+    {
+      "path": "plugins/unfix/CHANGELOG.md",
+      "hash": "4cf5c6cee85fbfdecfbf24b8c75866155e6d80e65ca333f972f44f00f9aca60d",
+      "mod_time": "2026-08-29T18:36:11Z"
+    },
+    {
+      "path": "plugins/unfix/skills/unfix/SKILL.md",
+      "hash": "d62f8005e5c9cbee3fd2903489655a8fc37a4e598a3ffe652dcbf6e761918dc0",
+      "mod_time": "2026-08-29T18:30:49Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/iteration-1/FINDING-fallback-skipped-n3.md",
+      "hash": "f59396f31877985335410ab895c3f8426d1bfc2d3101bdd06fe7d09f719415a4",
+      "mod_time": "2026-08-29T19:48:36Z"
+    },
+    {
+      "path": "plugins/deliberate/deliberate-workspace/skill-snapshot-prev/references/playbook.md",
+      "hash": "28bd705005bc01902941b5e598ac929a8691bcec7fbea5c893f71f281736b1f3",
+      "mod_time": "2026-08-29T19:09:58Z"
+    },
+    {
+      "path": "plugins/j-delivery-workspace/iteration-1/eval-wip-limit-oversized-card/old_skill/run-1/grading.json",
+      "hash": "ad1d602c9aadb8cd21b4313f0f7cb7e491c96cb7393c26ef4bfb8085d6420d29",
+      "mod_time": "2026-09-03T10:01:48Z"
+    },
+    {
+      "path": "plugins/j-ideation/agents/j-service-designer.md",
+      "hash": "3cdfb7e52477c66589b2ead6c8429512a570633d4419291ddb733932b6e30487",
+      "mod_time": "2026-09-02T20:47:16Z"
+    },
+    {
+      "path": "plugins/j-ideation/skills/j-designing-experiments/scripts/score_portfolio.py",
+      "hash": "71eb98672603039f4d7a95ad87eaeef1f3c6fa997f7137c36b4eea571bf6d5e4",
+      "mod_time": "2026-09-02T19:55:12Z"
+    }
+  ],
+  "fact_count": 982,
+  "insight_count": 22,
+  "enola_version": "0.4.16",
+  "snapshot_id": "sha256:d0c719f43bcfc1f222c409c9708064d819a59457d357f4935dae3797a5e2683a",
+  "git": {
+    "ref": "master",
+    "commit": "230a88177bcc080ec12cd3f9d4d7d86b44726a4d",
+    "dirty": true,
+    "remote": "github.com/jetthoughts/claude-plugins"
+  },
+  "config_hash": "sha256:f8233549c49910b52327defe5523379e050b55de00b039017b649b3c0545ee96",
+  "extractor_version": "v265",
+  "files_seen": 202,
+  "files_parsed": 132,
+  "source_bytes": 661310,
+  "files_skipped": 4,
+  "dirs_skipped": 4,
+  "skipped_sample": [
+    ".git/ (glob: **/.git/**)",
+    "plugins/deliberate/deliberate-workspace/__pycache__/ (glob: **/__pycache__/**)",
+    "plugins/harness-setup/tests/test_harness.py (glob: **/test_*.py)",
+    "plugins/harness-setup/tests/test_independent_regressions.py (glob: **/test_*.py)",
+    "plugins/harness-setup/tests/test_plugin_contract.py (glob: **/test_*.py)",
+    "plugins/j-research/skills/j-research-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
+    "plugins/j-research/skills/j-research-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
+    "plugins/j-research/skills/j-research-inbox/tests/test_normalize.py (glob: **/test_*.py)"
+  ],
+  "ignore_glob_hash": "sha256:7523cc6397a498e151125a682d28fbf6df20c6f51f6dfaf18fd8f5239a20d2d8",
+  "heuristic_insights": 22,
+  "coverage": {
+    "services_total": 0,
+    "coverage_gaps": 0,
+    "unresolved_edges": 0,
+    "extractors_reporting": 1,
+    "extraction_unresolved": 127
+  },
+  "census": {
+    "files_walked": 206,
+    "parsed": 132,
+    "excluded_by_ignore": 4,
+    "excluded_by_kind": 69,
+    "excluded_kinds": {
+      "(no extension)": 25,
+      ".ds_store": 1,
+      ".gitignore": 2,
+      ".json": 35,
+      ".jsonl": 1,
+      ".sh": 1,
+      ".yaml": 3,
+      ".yml": 1
+    },
+    "skipped_with_cause": 1,
+    "top_skip_causes": [
+      {
+        "cause": "claimed by typescript, which did not run this snapshot",
+        "count": 1
+      }
+    ]
+  },
+  "output_hashes": {
+    "facts.jsonl": "sha256:8e52288eb85ef170c04fe6fc1e990ce091673e30bacb88ea582f74bcf74ec207",
+    "insights.json": "sha256:5e4c9b379b30584c26fc6209415241e31d14c009442fe4481a52e4cadc67d097",
+    "llm_context.md": "sha256:4f11e76cf529a0773a90958215031225167c56f2d16fdde7e0a9871ed5798922"
+  },
+  "unseen": {
+    "files_excluded_by_ignore": 4,
+    "dirs_excluded_by_ignore": 4,
+    "outside_graph": {
+      "imports": 44
+    },
+    "dead_exemptions": 0,
+    "dynamic_feature_classes": 0
+  }
+}

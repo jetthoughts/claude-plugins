@@ -1,0 +1,20 @@
+{
+  "name": "jetthoughts",
+  "version": "0.0.1",
+  "interface": {
+    "displayName": "JetThoughts Plugins"
+  },
+  "plugins": [
+    "cognee",
+    "deliberate",
+    "harness-setup",
+    "j-delivery",
+    "j-delivery-workspace",
+    "j-ideation",
+    "j-linkedin-post",
+    "j-paperclip",
+    "j-research",
+    "unfix",
+    "wigolo"
+  ]
+}
