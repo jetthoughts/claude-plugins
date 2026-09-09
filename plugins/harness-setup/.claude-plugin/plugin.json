@@ -1,7 +1,7 @@
 {
   "name": "harness-setup",
-  "version": "0.1.0",
-  "description": "Review-first project harness assembly with bounded skill authoring and reversible local configuration proposals.",
+  "version": "0.2.0",
+  "description": "Instruction-only project harness setup: discover capabilities, clarify gaps, reuse existing skills and review changes before editing.",
   "author": {"name": "JetThoughts"},
   "license": "MIT"
 }

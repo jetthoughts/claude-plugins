@@ -36,10 +36,10 @@ naming the seats in an agent org.
 
 ## harness-setup
 
-Review-first project harness setup: scan current capabilities, reconcile context,
-ask targeted questions, reuse existing skills, and stage only justified changes.
-Two skills and four read-only agents support a supervised trial, not autonomous
-installation or a new orchestration platform.
+Instruction-only project harness setup: discover current capabilities, reconcile context,
+ask targeted questions, reuse installed skills and review changes before editing.
+One explicit skill, no bundled agents, Python, scripts, hooks or MCP servers.
+Reuse an available skill-creator instead of installing a duplicate.
 
 ```bash
 claude plugin install harness-setup@jetthoughts --scope project
@@ -48,6 +48,8 @@ claude plugin install harness-setup@jetthoughts --scope project
 Invoke `/harness-setup:setup` with one project outcome. Installation is optional:
 use a reviewed checkout with `claude --plugin-dir /absolute/path/to/plugins/harness-setup`
 for a temporary trial. See [setup and safety boundaries](plugins/harness-setup/README.md).
+Version 0.2.0 replaces the former Python updater and separate verify skill; verification is
+part of the setup conversation, not an executable enforcement layer.
 
 ## Adding a skill to this repo
 
