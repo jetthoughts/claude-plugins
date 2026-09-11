@@ -26,7 +26,7 @@
     {
       "name": "j-ideation",
       "source": "./plugins/j-ideation",
-      "description": "Independent Ideation: evidence-based, groupthink-resistant decision workflow — router /j-independent-ideation, 11 stage skills, 13 isolated role agents, templates and validators"
+      "description": "Independent Ideation: evidence-based, groupthink-resistant decision workflow \u2014 router /j-independent-ideation, 11 stage skills, 13 isolated role agents, templates and validators"
     },
     {
       "name": "j-research",
@@ -52,6 +52,11 @@
       "name": "wigolo",
       "source": "./plugins/wigolo",
       "description": "Local-first web intelligence: search, fetch, crawl, cache, extract, diff, watch and deep research through the wigolo daemon, with the wigolo skill pack conventions"
+    },
+    {
+      "name": "j-business",
+      "source": "./plugins/j-business",
+      "description": "Three cluster entry points for the commercial side: j-market (what is true out there), j-offer (what someone can buy), j-publish (what a stranger reads)."
     }
   ]
 }

@@ -33,6 +33,15 @@ A 30–90 minute workshop that replaces open discussion with structured silence.
 | 8 | **Make it actionable** | 5 min | Take **only the top-left**. See the completeness test below |
 | — | **Outro** | 10 min | Summarise what was produced, check expectations were met, collect feedback on the session |
 
+## Running it with agents instead of a room
+
+Most runs here are one person and a session, not six people and a wall. **The format still works, because its mechanism is isolation, not humanity** — but only if you preserve the isolation rather than simulating it.
+
+- **Steps 2.2 and 5 (silent generation)** — spawn contributors in parallel, each with a *different lens* and none seeing another's output. A single agent asked for "six perspectives" returns one perspective six times; that is the failure the silence exists to prevent. `j-service-designer` takes one forced-constraint lens per spawn and is built for exactly this.
+- **Steps 3 and 6 (dot voting)** — **do not delegate these.** A tally over agents is one opinion counted three times; this vault produced 0 valid tallies from 3 attempts. Dot voting is the instrument for *humans in a room*. Solo, replace it with the step 7 grid, which needs no votes.
+- **Step 7 (impact/effort)** — the two-binary-questions mechanic below works unchanged with one person.
+- **Step 8 (the owner)** — an agent cannot be the named person. If nobody human is on the hook, the run produced a suggestion, not an action.
+
 ## Two mechanics worth using everywhere
 
 **Placing an item on the grid without an argument.** The facilitator puts the sticky in the middle, asks the group *"higher or lower?"*, settles where consensus is strongest, then asks *"further left or right?"*. **Two binary questions replace a debate**, and nobody has to defend a position out loud.
@@ -46,6 +55,8 @@ A 30–90 minute workshop that replaces open discussion with structured silence.
 - **the review date booked in the room**, before anyone leaves
 
 That is a kill criterion arrived at from the opposite direction: instead of asking what would prove this wrong, it asks what would prove it real, by when, and who is on the hook.
+
+**Then put it where the project actually looks.** A dated action living only in the session transcript is invisible by tomorrow — measured here more than once. Write it to the board (`j-paperclip` — a card with the owner, the date and the three steps), or to the note that owns the topic. If the jam settled something future sessions must not reopen, `adr-skill` records it and `c-level-agents:freeze` locks it. **A jam whose output never left the room did not finish.**
 
 ## Why the sailboat comes first
 
@@ -62,7 +73,7 @@ Positives before problems, always. **A board of problems gathered without their 
 | The thing that is unclear | Use |
 |---|---|
 | **What is holding us back** | **LDJ** — this skill |
-| **Where we are going** | a goal-first format: goal + metric, demos, concepts, roadmap, one-pager |
+| **Where we are going** | `j-independent-ideation` — goal + metric, lightning demos, isolated variants, council, one call. `j-framing-the-question` alone when only the question is fuzzy |
 | **What is actually true** | `deliberate` — independent lanes, verified citations, adversarial contest |
 
 **LDJ and goal-first formats are opposite entry points, not competitors.** Pick by which one is genuinely unknown. Reaching for the heavy evidence harness when the team already knows the problem is how a forty-five minute decision becomes a two-day project.

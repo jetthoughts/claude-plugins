@@ -41,7 +41,7 @@ In the output:
 
 **Order of operations (Paul, 2026-08-30): Claude subagents carry the lanes; a foreign model reviews them afterwards.** The subagents hold the repository, the closed decisions and the house rules — they produce the lanes, the ledger and the concepts. The foreign seat goes **on top**, briefed on facts only and told to refute: the `gemini` CLI, or Perplexity driven through `claude-in-chrome` — **that is what `claude-in-chrome` is for here, and the only thing.** Ordinary page-reading uses `WebFetch` and the external drivers listed under GATHER. Run instead of the lanes it reviews nothing; run first it anchors what it was meant to check.
 
-**Working level-1 route on this machine:** `mcp__gemini__ask-gemini` is down (missing `agy`). Use `GEMINI_CLI_TRUST_WORKSPACE=true gemini -m gemini-3.1-pro-preview --skip-trust -p "$(cat prompt.txt)"` — the CLI's default model 404s, so name it. Exercise the seat with a real question; a ping is not a model call.
+**Working level-1 route, re-measured 2026-09-12 — the previous note had it backwards.** `mcp__gemini__ask-gemini` **is connected and works**, but is slow enough to exceed a 120s tool budget, so launch it and collect the result rather than blocking on it. The **CLI is the one that is broken** (`gemini -p` dies in `_doSetupUser`). Exercise the seat with a real question; a ping is not a model call.
 
 **On a blocked spawn, change the agent type — never the mechanism.** Running a lane inline because a hook refused an agent collapses the panel and makes the facilitator both author and checker of that lane.
 
@@ -92,17 +92,30 @@ Then, before anyone looks at a solution:
 
 Then three to five lanes, **each with a disjoint source domain**, briefed with **evidence and never with your conclusion** — a panel handed your inference returns it wearing independent-sounding confidence.
 
-Run `Research` for the web lane rather than hand-rolling it; it already runs cross-vendor seats with URL verification. Use the internal index for prior work and a code-search tool for feasibility. Lane assignments and brief templates: `references/playbook.md`.
+**Pick lanes by what the question is made of, and name the instrument.** A generic "web lane" returns generic evidence; the corpora below are disjoint by construction, which is the only independence mechanism with a guarantee.
+
+| The question turns on | Lane | Instrument |
+|---|---|---|
+| What is published on the open web | web | `Research` — cross-vendor seats with URL verification, worth its friction |
+| Market size, segment, persona, journey, sentiment | market | `pm-market-research:market-sizing` · `:market-segments` · `:sentiment-analysis` |
+| Who else sells this and how | competitive | `competitor-intel` · `startup-business-analyst:competitive-landscape` · `exec-teardown` for verbatim positioning |
+| Unit economics, runway, pricing viability | money | `finance-skills:financial-analyst` · `startup-business-analyst:startup-financial-modeling` |
+| What an installed tool actually does | product truth | `mcp__deepwiki__ask_question` on its repo, then Context7, then probe this install — a day was once spent on a premise one DeepWiki question refuted |
+| What is already decided or written here | internal | `qmd query` across `pkm`, and `-c skills` `-c plugin-skills` `-c skills-share` for capability; `semble` for code; the project's NotebookLM notebook for un-indexed Drive corpora |
+| What people are saying right now | recency | `pulse:cs-pulse` — Reddit + HN + web in parallel, cross-platform patterns |
+| A claim that must survive triangulation | adversarial research | `deep-research:cs-deep-research` — refuses a claim under 3 independent sources |
+
+Lane assignments and brief templates: `references/playbook.md`.
 
 **Reading a page: start native, escalate only when it fails.** Each rung costs more than the one above it, so stop at the first that works.
 
 | Need | Reach for |
 |---|---|
 | The text of a page, a quote, a figure | **`WebFetch`** — native, no setup. This is the default and covers most rows |
-| `WebFetch` 403s or the content is JS-rendered | `mcp__parallel__web_fetch` (different fetcher, different result — it recovered a page `WebFetch` refused) · `lightpanda` when speed matters |
+| `WebFetch` 403s or the content is JS-rendered | `wigolo` `fetch` (local-first, no API key, caches — check `cache` first, it is free) · `mcp__tavily__tavily_extract` · `lightpanda` when speed matters. *`parallel` is named in older copies of this file and is not configured on this machine* |
 | What the page *does* — interaction, a flow, a logged-in view | an external driver: `agent-browser` · `browser-use` · `Interceptor` (real Chrome) · `remote-browser` (sandboxed) · `playwright` |
 | A screenshot to actually look at | `chrome-devtools` `take_screenshot` · `screenshot` · then `web-design-reviewer` for a structured visual read |
-| A site that resists, or extraction at volume | `BrightData` · `Apify` · `just-scrape` |
+| A site that resists, or extraction at volume | `BrightData` · `Apify` · `mcp__tavily__tavily_crawl` · `wigolo` `crawl` |
 
 **`claude-in-chrome` is reserved for the Perplexity seat** and is not a general page-reader — it drives the user's own logged-in browser, which is a heavier and more intrusive instrument than any row above needs.
 
@@ -162,7 +175,17 @@ Each concept carries a card, rejected if a field is empty: **what it is · which
 
 **Dissent is required, written, and never discussed.** Each contributor names the strongest case *against* the leading concept, independently and without seeing the others. Adversarial passes here have a 7-for-7 record of finding something the author missed; none ever returned an approval.
 
-Run `sadd-judge-with-debate` for the pass, or spawn the adversary yourself with a facts-only brief. Either is fine — **saying which, in the record, is not.** A table entry is not an invocation: name the skill at the moment you need it or admit you hand-rolled it.
+**Reach for the adversary with a track record, not the nearest one.** In this vault's last 30 days `cold-reviewer` ran 21 times and `exec-challenger` 24; both are separate-context seats barred from the maker's story, which is the mechanism the evidence supports — self-review inside one context confirms its own draft (measured: 9 of 10), and prompt-only honesty fails outright under instruction pressure (Anthropic's own claude-code#2969, reproducible, 100%).
+
+| The decision is | Adversary |
+|---|---|
+| A business move — offer, price, channel, build-or-not | `roast:roast` — five angles in parallel, then one GO / RESHAPE / KILL and the cheapest 48-hour test |
+| An artifact someone produced in this run | `cold-reviewer` — sees the artifact, never the reasoning that made it |
+| A JetThoughts executive move | `exec-challenger` — must return a dissent |
+| A plan with documented prior decisions | `grill-with-docs:cs-grill-with-docs` — walks the plan against the recorded ADRs |
+| A structured judged pass | `sadd-judge-with-debate` |
+
+Or spawn the adversary yourself with a facts-only brief. Either is fine — **saying which, in the record, is not.** A table entry is not an invocation: name the skill at the moment you need it or admit you hand-rolled it.
 
 **Every dissent gets a disposition in the record: UPHELD, PARTLY UPHELD, or REFUTED, with the reason.** Without this the run logs the objection and proceeds on the original plan — defects identified, none remediated.
 
@@ -217,7 +240,9 @@ Over-running this on a small question is its own failure.
 | Divergent generation | the lenses in 4b, inline | `BeCreative` · `Ideate` |
 | Adversarial passes | `sadd-judge-with-debate` | `RedTeam` · `brutal-honesty-review` |
 | Human dot-vote, impact/effort, actionability | `ldj` — owns the procedure; never restate it here | — |
-| Cheapest falsifying test | `pol-probe` | — |
+| Cheapest falsifying test | `roast:roast` returns one with its verdict; otherwise `j-designing-experiments` | *`pol-probe` was named here until 2026-09-12 and no longer resolves* |
+| A named owner, then locking the call so it stops being reopened | `c-level-agents:decide` → `:freeze` | `adr-skill` when a future session must not re-litigate it |
+| Root cause when the same decision keeps recurring | `kaizen-why` | — |
 
 **A table entry is not an invocation.** Across twelve run artifacts every one of these was invoked zero times and every pass was hand-rolled — because "reach for this" in a table is not a step anyone takes. Name the skill imperatively at the moment the stage needs it, as stages 2 and 5 do, or hand-roll it deliberately. **Either is fine; not saying which, in the record, is not.**
 

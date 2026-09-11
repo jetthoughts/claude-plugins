@@ -9,6 +9,10 @@ Paperclip runs the agent company: org chart, issues, budgets, heartbeats, approv
 it starts are real `claude` CLI processes. Board *process* rules live in the `board-flow` skill;
 this skill is only about driving the machine. The board flow is the same six lists.
 
+## What it can do
+
+`references/capabilities.md` lists every native mechanism on this build, what each enforces, and how we use it: execution policies (the completion gate, a field on the issue), approvals, documents with the optimistic lock, interactions, blockers and recovery, monitors, routines, budgets, skills catalog, bundles, permissions, workspaces, the tool gateway, run logs. Read it before proposing a rule or a script; the mechanism usually exists.
+
 ## Where it runs
 
 | Thing | Value |
@@ -28,8 +32,8 @@ export PAPERCLIP_TOKEN=...          # paperclipai token board create --name ops-
 curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" localhost:3100/api/companies
 ```
 
-The token lives in `~/.secrets` as `PAPERCLIP_TOKEN` (the house convention — `~/.zshrc` sources it),
-and `pcstat` falls back to reading that file when the variable is unset. Mint a replacement with
+The token lives in `~/.secrets` as `PAPERCLIP_TOKEN` (the house convention — `~/.zshrc` sources it).
+Mint a replacement with
 `paperclipai token board create --name <label> --never-expires`, which returns the plaintext once
 under `.key.token`; `token board list --json` and `token board revoke <id>` manage the rest. The CLI
 can only mint while it is already authorised — from loopback under `local_trusted`, or with an
@@ -119,8 +123,8 @@ One JSON object per line, the agent's whole turn stream. `/runs` is whether it r
 questions, and a card with no run answers none of them. Open the one that matches the claim you are
 about to write.
 
-Health overview, the stuck-card runbook and the weekly sweep live in **`j-paperclip-ops`**
-(`scripts/pcstat` prints every company in one screen). This skill is the API; that one is the ops.
+Health overview, the stuck-card runbook and the weekly sweep live in **`j-paperclip-ops`**. This
+skill is the API; that one is the ops.
 
 ## Traps
 
@@ -151,6 +155,6 @@ Health overview, the stuck-card runbook and the weekly sweep live in **`j-paperc
   expiration` is OmniRoute's **own queue deadline** (`requestQueue.maxWaitMs`, default 15s), not an
   upstream timeout — the fix is raising it (15s -> 120s measured 2026-09-08), and retry-storming
   only re-queues into the same deadline. Neither signature is the seat's fault: resolve the
-  recovery action and requeue. `pcsweep` classifies both and requeues itself; keep at least one
-  seat on a different lane as the canary that keeps working while a combo rots (CoS on
-  moonshot/kimi-k3 was exactly that, by accident).
+  recovery action and requeue by hand — there is no scheduled sweep any more (Paul, 2026-09-11).
+  Keep at least one seat on a different lane as the canary that keeps working while a combo rots
+  (CoS on moonshot/kimi-k3 was exactly that, by accident).
