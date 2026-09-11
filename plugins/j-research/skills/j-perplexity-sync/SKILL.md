@@ -30,6 +30,34 @@ is the source of truth for "already synced": `grep -o 'pplx-[0-9a-f]\{8\}' …/p
    first; the last cell holds the age (`3h ago`, `1d ago`). 25 rows was the whole library on 2026-09-03.
 2. Keep paths inside the requested window whose 8-char id prefix is not in the hub. `/computer/tasks/<uuid>` pages
    are read the same way as threads; tag them `computer-task`.
+
+   **No session is fully synced until its artifacts are too — check every kind, not just
+   `computer-task`.** A reply's own text is a summary; a document it names under "Saved and
+   attached" (Computer) or a generated file/report a Deep Research or Model Council thread
+   produced is the actual output, and the thread pane never shows that content inline. Do not
+   gate the artifact check on the thread's `kind` tag — a thread's displayed title and kind can
+   be stale (see below), so treat "does this reply name a saved document?" as the trigger, on
+   every thread synced this pass, regardless of kind.
+
+   For every id whose reply names a saved document: go to `https://www.perplexity.ai/computer/artifacts`,
+   find each card whose title matches a document the reply names, open its `Artifact options`
+   menu, and confirm via `Open session` that the card's task id matches the thread being synced
+   (titles repeat across unrelated tasks; the task id is the only reliable match — see §Computer
+   artifacts step 3 for the download mechanics). Fetch every matching card, not just the first —
+   a Computer task's own answer already names all of its saved documents, so cross-check that
+   count against how many cards you actually retrieved before moving on.
+
+   **One Perplexity session can span more than one `/computer/tasks/<uuid>`.** A follow-up
+   question in the same conversation gets its own task id, and opening either task id's "Open
+   session" link renders the whole cumulative conversation, not just that turn — so an id
+   already in the hub does not mean every later turn in the same conversation is synced too.
+   Treat each task id in a conversation as its own sync unit with its own artifacts, and note
+   the earlier task id it continues from in `Related to`.
+
+   **Match every card by task id, never by the displayed title.** Perplexity's own sidebar and
+   task-history labels a task with a stale name carried over from an earlier, unrelated task in
+   the same UI slot — confirmed 2026-09-11 on a "Dependable Chief of Staff" task labelled "Upwork
+   Lead Generation Automation." A title mismatch is expected, not a sign of the wrong task.
 3. Fetch in `run` batches of 3 (the run cap is 30 s; each page needs ~6 s): `newPage(url)`, sleep
    5.5 s, `browser.read(pid, { selector: 'main' })`, `browser.pages.close(pid)`. Pages over 5,000 chars
    are saved by the tool to `~/.browseros/tool-output/read-*.md` (path in the returned string); shorter
