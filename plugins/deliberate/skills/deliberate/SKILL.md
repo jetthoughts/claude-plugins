@@ -41,7 +41,17 @@ In the output:
 
 **Order of operations (Paul, 2026-08-30): Claude subagents carry the lanes; a foreign model reviews them afterwards.** The subagents hold the repository, the closed decisions and the house rules — they produce the lanes, the ledger and the concepts. The foreign seat goes **on top**, briefed on facts only and told to refute: the `gemini` CLI, or Perplexity driven through `claude-in-chrome` — **that is what `claude-in-chrome` is for here, and the only thing.** Ordinary page-reading uses `WebFetch` and the external drivers listed under GATHER. Run instead of the lanes it reviews nothing; run first it anchors what it was meant to check.
 
-**Working level-1 route, re-measured 2026-09-12 — the previous note had it backwards.** `mcp__gemini__ask-gemini` **is connected and works**, but is slow enough to exceed a 120s tool budget, so launch it and collect the result rather than blocking on it. The **CLI is the one that is broken** (`gemini -p` dies in `_doSetupUser`). Exercise the seat with a real question; a ping is not a model call.
+**Level-1 route, measured 2026-09-12: both gemini doors are down.** The MCP server connects and the tool accepts the call, then fails in its `agy` backend — *"found a SQLite transcript but could not extract a model reply from its schema"*. The CLI dies earlier, in `_doSetupUser`. **Connected is not working**, and a tool that returns an error after 120 s is worse than one that is absent, because it looks like a route.
+
+Working foreign seats, in the order to try them:
+
+| Route | State |
+|---|---|
+| **Perplexity driven through `claude-in-chrome`** | the established route here, and the only thing `claude-in-chrome` is for in this skill. Search or Deep Research mode only — never Computer mode |
+| `codex:codex-rescue` | a genuinely different vendor's model through the shared runtime. Untested as a deliberation seat; exercise it before claiming the level |
+| An OmniRoute free lane (`free-thinking`) | non-Claude models behind one endpoint. Probe the lane first — free providers delist silently |
+
+**Exercise the seat with a real question; a ping is not a model call.** And if no foreign seat answers, say so and report level 0 — a lane you could not run is never a lane you claim.
 
 **On a blocked spawn, change the agent type — never the mechanism.** Running a lane inline because a hook refused an agent collapses the panel and makes the facilitator both author and checker of that lane.
 
