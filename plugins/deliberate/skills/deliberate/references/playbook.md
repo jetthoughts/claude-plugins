@@ -22,7 +22,7 @@ The point of a lane is that **a claim available in one lane is not available in 
 | **Internal / prior** | own notes, past decisions, previous experiments | `mcp__plugin_qmd_qmd__query` | 2 | anything never written down |
 | **Primary observation** | what a page or product actually does — signup, pricing, onboarding | browser MCP | 2 | intent behind behaviour |
 | **Feasibility** | code, APIs, integration constraints, effort | `mcp__plugin_github_github__search_code`, `mcp__package-search__*` | 3 | whether anyone wants it |
-| **Different model** | the same question, different weights | `mcp__gemini__ask-gemini` / `brainstorm` | **1** | your context entirely — which is the point |
+| **Different model** | the same question, different weights | `codex:codex-rescue`, or an OmniRoute free lane (probe it first) — *not gemini: both doors measured dead 2026-09-12* | **1** | your context entirely — which is the point |
 | **Curated corpus** | only the documents pinned to one notebook | `mcp__notebooklm-mcp__notebook_query` | **2** | everything outside the notebook |
 | **Academic / prior art** | papers, patents | `ArXiv` skill, web search | 3 | commercial reality |
 | **Persistent memory** | corrections, preferences and decisions recorded outside the notes | `mcp__plugin_openviking-memory_openviking__search`, `mcp__memory__search_nodes` | **2** | anything never stored |

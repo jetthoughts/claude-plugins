@@ -79,15 +79,23 @@ Evidence before enthusiasm · specific buyer language beats abstract market anal
 
 Pick one before starting.
 
-**1. Opportunity research** — a precise problem statement · affected buyer role and company type · **the forcing party and its date** · trigger events · current workaround and its cost · evidence links with exact quotations, source type, date, confidence · competitors and alternatives · why alternatives are inadequate · a preliminary service hypothesis. No conclusions without source-backed evidence.
+**1–2. Research and pre-validation → run `j-market`.** It owns the lanes and returns openable
+sources. Brief it with the theme plus what it does not know: **the forcing party and its date** (no
+gate passes without it) · **six evidence classes kept separate** — pain · urgency · willingness to
+pay · reachability · delivery fit · competitive risk, because a complaint merged into a pain score
+is not proof of spend · **the sources that carry budget signals** — job postings for recurring
+operational work, competitor pricing, marketplace listings, public talk of staffing cost. Return
+also the current workaround and its cost, and a preliminary service hypothesis.
 
-**2. Pre-validation** — mine public reviews, Reddit/HN/specialist forums, job postings revealing recurring operational work, SaaS marketplaces, competitor case studies and pricing, operator interviews and podcasts, public discussion of implementation/staffing/budget problems, search demand and terminology, "how do I solve this?" requests. Keep six evidence classes **separate**: pain · urgency · budget/willingness-to-pay · reachability · delivery fit · competitive risk. A complaint alone is not proof of willingness to pay.
-
-**3. Offer design** — ICP (exact buyer, org type, size, geography if relevant) · trigger · problem · outcome (a result, not a task list) · mechanism · scope with exclusions and required buyer inputs · timeline, ideally 2–4 weeks · proof plan · price hypothesis across diagnostic / pilot / implementation / optional retainer · risk reversal · why us over software, hiring, or another agency · objections with honest responses.
+**3–4. Offer, prospecting and outreach → run `j-offer`.** It owns pricing, packaging, motion and
+the outreach draft, and carries the approval gate and the scan. Add what a *venture* offer needs:
 
 > For **[specific ICP]** experiencing **[urgent, costly problem]**, we deliver **[measurable outcome]** within **[timeframe]** through **[distinct mechanism]**, without **[major alternative pain or risk]**.
 
-**4. Prospecting and outreach prep** — per prospect: company and site · buyer name, role, public context · why they fit the ICP · a **publicly verifiable** trigger or personalisation fact · problem hypothesis · relevance score · recommended offer angle · evidence URLs. Never invent personalisation, revenue, funding, stack, pain or relationships. Drafts only.
+a first deliverable inside **2–4 weeks** priced across diagnostic / pilot / implementation / retainer
+· **why us over software, hiring or another agency**, since the real competitor is the free status
+quo · every personalisation fact **publicly verifiable with its URL** — never invent revenue,
+funding, stack, pain or a relationship · **drafts only**, a human approves the batch and the list.
 
 **5. Conversation analysis** — per conversation: buyer role, company type, trigger, current workflow, pain, consequences, urgency, budget signals, decision process, alternatives, objections, next step. Separate confirmed fact from assumption. Extract buyer language verbatim. Classify: qualified · positive-not-urgent · no budget · no pain · wrong ICP · competitor chosen · timing · referral · unclear. Update the hypothesis only on repeated evidence, never on one loud prospect.
 
@@ -95,14 +103,12 @@ Pick one before starting.
 
 ## Specialist delegation
 
-Delegate non-trivial research to specialists with isolated objectives. These are the installed ones (vault-scoped agents unless marked):
+Sourcing, competitor mapping and pricing are `j-market` and `j-offer`'s job now — brief them, do not
+re-delegate underneath them. What remains is the work neither owns (vault-scoped agents unless marked):
 
 | Job | Agent |
 | --- | --- |
-| Signal scouting, ICP research, buyer-language mining, prospect research — sourcing and counting rather than estimating | `exec-sourcer`; one isolated evidence lane per lens → `j-research-lead` (`j-ideation` plugin) |
-| Competitor and comparable-offer mapping, verbatim positioning | `exec-teardown` |
 | Service concept for one forced-constraint lens | `j-service-designer` (`j-ideation` plugin) |
-| Pricing hypothesis, unit economics | `j-commercial-analyst` (`j-ideation` plugin); the `commercial-skills:pricing-strategist` skill for the framework |
 | Validation — citation integrity, tiers, contradictions | `j-evidence-auditor` (`j-ideation` plugin); `exec-fact-verifier` opens the primary source |
 | Red team — must return a dissent | `exec-challenger`, or `cold-reviewer` / `j-cold-eyes-reviewer` when the reviewer must not see the reasoning chain |
 | Outreach and proposal drafts, with their evidence and kill criterion | `exec-proposer` |

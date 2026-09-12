@@ -19,7 +19,7 @@ Say which operation to run — `next`, `apply <url>`, `engage [company|intake|pi
 - NotebookLM is strictly read-only — no create, edit, delete, share or download.
 - Never message a person who has not seen Paul's name first. Engage with their posts, or the posts of people they follow, before any connection note or DM (Paul, 2026-09-02).
 - Never send or post any message to a person without showing Paul the exact text and getting his confirmation in this conversation. Short, natural, one ask; respect their time and privacy.
-- Every outbound message and every filled form gets a cold-eyes review first — a fresh subagent (`cold-reviewer`, vault-scoped agent) or a foreign harness (`codex:codex-rescue`; Gemini via `mcp__gemini__ask-gemini`). Draft → review → fix → show Paul → wait.
+- Every outbound message and every filled form gets a cold-eyes review first — `cold-reviewer` (vault-scoped agent), or `codex:codex-rescue` for a different vendor. *Gemini was listed here until 2026-09-12: both its doors were measured dead — the MCP connects then fails in its `agy` backend, the CLI dies in `_doSetupUser`.* Draft → review → fix → show Paul → wait.
 
 Hitting one is not a failure and does not end the run. Write the row into `jobseek-pipeline.md` with `owner: paul` and a `due:`, then carry on with everything else. Report the queue at the end.
 
