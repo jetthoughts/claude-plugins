@@ -16,7 +16,7 @@ approvals) is the exception — and its outcome gets written back the same day.
 |---|---|
 | Decisions | the doc that owns the topic, with the reasoning (ADRs for architecture) |
 | Findings | the PR they affect, with evidence (no PR yet → the commit message or the sprint's working doc) |
-| Status | derived from git/PRs — never hand-maintained status docs |
+| Status | derived from git/PRs, or the card's last comment on a board (`board-flow`) — never a hand-maintained status doc |
 | Handoffs | an explicit list in the artifact the next person will open |
 | Durable learnings | the repo's knowledge base, same commit as the change |
 | Cross-session decisions/corrections | persistent memory (searched before deciding) |

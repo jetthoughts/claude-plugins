@@ -1,6 +1,6 @@
 ---
 name: board-flow
-description: How agents and sessions coordinate work on a task board the JetThoughts way — Backlog → Ready → In Progress → Code Review → Verify → Done, pull right-to-left and top-to-bottom, one card in progress per agent, two in flight, never move a card back, split what outgrows its time box, and a fixed list of what to do when the WIP limit is hit. Use this whenever you pick the next task, move or comment on a card, report status, decide who acts next, or find a stale, blocked or oversized card — on Paperclip, Linear, GitHub Projects, a markdown kanban, or a plain TODO list — and whenever the user says board, kanban, backlog, ready, in progress, in review, WIP, sprint, stale, "what next" or "what should I pick up". Also use it when several agents share one board and someone must decide which card each takes.
+description: How agents and sessions coordinate work on a task board the JetThoughts way — Backlog → Ready → In Progress → Code Review → Verify → Done, pull right-to-left and top-to-bottom, one card in progress per agent, two in flight, never move a card back, split what outgrows its time box, and a fixed list of what to do when the WIP limit is hit. Use this whenever you pick the next task, move or comment on a card, report status, decide who acts next, or find a stale, blocked or oversized card — on Paperclip, GitHub Projects, a markdown kanban, or a plain TODO list — and whenever the user says board, kanban, backlog, ready, in progress, in review, WIP, sprint, stale, "what next" or "what should I pick up". Also use it when several agents share one board and someone must decide which card each takes.
 ---
 
 # Board flow
@@ -20,13 +20,13 @@ are in [references/boards.md](references/boards.md).
 | Backlog | wanted, ordered by the product owner or decision-maker | the owner | everything needed is written on the card |
 | Ready | what will be delivered this week/sprint; built at kickoff by confirming detail and splitting top items into ≤2-day tasks | the team at kickoff | a `GOAL / DONE WHEN / NOT IN SCOPE` block a stranger could execute (contract §1) |
 | In Progress | one card per worker, self-assigned from the top of Ready | the worker who pulls it | a diff or artifact exists and is handed to review |
-| Code Review | a second pair of eyes reviews; the author never reviews own work | the author, when the artifact is ready | reviewer's written verdict with evidence (contract §5) |
+| Code Review | a second pair of eyes — `cold-reviewer` by default, `codex:codex-rescue` for a different vendor; the author never reviews own work | the author, when the artifact is ready | reviewer's written verdict with evidence (contract §5) |
 | Verify | QA/operator confirms the change does what was asked and nothing else broke | the reviewer, on pass | the verifier's written confirmation; on a gated run, the human approval |
 | Done | merged/approved/deployed | the human who holds the merge or approval | — |
 
 Agent boards keep the same six lists even when the tool has fewer statuses: map them, do not drop them
-(references/boards.md). "Blocked" is not a list: a blocked card stays where it is with a `Blocked by:` line
-and the name of who acts next.
+(references/boards.md). "Blocked" is not a list: a blocked card keeps its list, its assignee, a `Blocked by:`
+line and the name of who acts next. Waiting on a human is Verify, never blocked.
 
 ## Pull order: right to left, top to bottom
 
@@ -108,4 +108,4 @@ Verify has E waiting on the human. You have one card In Progress.
 
 ## Outside seat before a plan, pitch before a document (Paul, 2026-09-06)
 
-Before planning anything, search `evidence/perplexity` and `research/_inbox` in the vault for an existing answer (`qmd query`), and say which note you found. If none, ask for one Perplexity query on the card before writing. A plan is a Shape Up pitch: Problem, Appetite, Solution, Rabbit holes, No-gos, 150 words. Everything longer is evidence, linked from the pitch. Twice in two days a 20-minute outside answer beat hours of in-session planning; the reader has five seconds.
+Before planning anything, search `evidence/perplexity` and `research/_inbox` in the vault for an existing answer (`qmd query`), and say which note you found. If none, ask for one Perplexity query on the card (Search or Deep Research in BrowserOS neo, never Computer mode) before writing. A plan is a Shape Up pitch: Problem, Appetite, Solution, Rabbit holes, No-gos, 150 words. Everything longer is evidence, linked from the pitch. Twice in two days a 20-minute outside answer beat hours of in-session planning; the reader has five seconds.

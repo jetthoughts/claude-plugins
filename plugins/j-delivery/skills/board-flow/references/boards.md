@@ -1,25 +1,26 @@
 # Board tools — mapping the six lists
 
-Keep the six lists in the team's head even where the tool has fewer statuses. Map, do not drop.
+Keep the six lists in the team's head even where the tool has fewer statuses. Map, do not drop. Linear is not a
+column: unlinked 2026-09-04, nothing new goes there, and no `linear` skill or MCP tool resolves in a session.
 
-| List | Paperclip issue | Linear | GitHub Projects (Status field) | markdown kanban (`kanban-markdown` skill) | Session TODO list |
-|---|---|---|---|---|---|
-| Backlog | `backlog` | Backlog | Backlog | `status: backlog` | pending, unordered |
-| Ready | `todo` (ordered; top = next) | Todo | Ready | `status: ready` | pending, top of list |
-| In Progress | `in_progress`, assignee set | In Progress | In Progress | `status: in-progress` | in_progress (one at a time) |
-| Code Review | `in_review` if present, else `in_progress` + comment `Review: <agent>` | In Review | In Review | `status: review` | — (spawn the verifier) |
-| Verify | Paperclip **approval request** (pending → approved / rejected / revision_requested) | Todo for QA + label `verify`, or a state named Verify | Verify (add the option) | `status: verify` | — |
-| Done | `done` after the human merges/approves | Done | Done | `status: done` | completed |
+| List | Paperclip issue | GitHub Projects (Status field) | markdown kanban (`kanban-markdown` skill) | Session TODO list |
+|---|---|---|---|---|
+| Backlog | `backlog` | Backlog | `status: backlog` | pending, unordered |
+| Ready | `todo` (ordered; top = next) | Ready | `status: ready` | pending, top of list |
+| In Progress | `in_progress`, assignee set | In Progress | `status: in-progress` | in_progress (one at a time) |
+| Code Review | `in_review` + comment `Review: <agent>` | In Review | `status: review` | — (spawn the verifier) |
+| Verify | `in_review` + Paperclip **approval request** (pending → approved / rejected / revision_requested) | Verify (add the option) | `status: verify` | — |
+| Done | `done` after the human merges/approves | Done | `status: done` | completed |
 
 Notes per tool:
 
-- **Paperclip**: status names seen in the CLI: `todo`, `in_progress`, `done`; check `paperclipai issue update --help`
-  for the full set on your version. Blocking is real: `blockedByIssueIds` (API only; `PATCH /api/issues/{id}`)
-  and `GET /api/issues/{id}/diagnostics/blockers`. Priority `high` = the High label. Assignment wakes the agent
-  when `wakeOnAssignment` is on, so moving a card to In Progress with an assignee **is** the pull. The card's
-  comment thread is the status surface (`issue comments` / the issue page).
-- **Linear**: use the `linear` skill; states are per team — read them once (`list_issue_statuses`) and map.
-  Priority 1 (Urgent) or 2 (High) = the High label. Ordering inside a state is the manual sort.
+- **Paperclip**: statuses in `/api/openapi.json` (read 2026-09-12): `backlog`, `todo`, `in_progress`, `in_review`,
+  `done`, `blocked`, `cancelled`. `blocked` keeps its assignee — releasing it spawns liveness incidents — and means
+  another card or agent owes the next move; a card waiting on a human is `in_review`. Blocking is real:
+  `blockedByIssueIds` on `PATCH /api/issues/{id}` (the array replaces, include existing) and
+  `GET /api/issues/{id}/diagnostics/blockers`. Priority `high` = the High label. Assignment wakes the agent when
+  `runtimeConfig.heartbeat.wakeOnAssignment` is on and the status is not `backlog`, so assigning a card **is** the
+  pull. The card's comment thread is the status surface; the ops runbook is the `j-paperclip-ops` skill.
 - **GitHub Projects**: the Status single-select field; add `Ready` and `Verify` options if missing. Card order
   inside a column is the manual sort; label `high` = the High label.
 - **markdown kanban**: one `.md` per card with `status:` frontmatter; order by a `priority:` or `order:` field.

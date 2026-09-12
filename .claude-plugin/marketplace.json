@@ -57,6 +57,11 @@
       "name": "j-business",
       "source": "./plugins/j-business",
       "description": "Three cluster entry points for the commercial side: j-market (what is true out there), j-offer (what someone can buy), j-publish (what a stranger reads)."
+    },
+    {
+      "name": "j-lanes",
+      "source": "./plugins/j-lanes",
+      "description": "The two income lanes as skills: j-jobseek (Berlin job search from the Paperclip board, stops at Paul-only steps), j-venture (evidence-led discovery of a JetThoughts service offer to first paid pilot)."
     }
   ]
 }

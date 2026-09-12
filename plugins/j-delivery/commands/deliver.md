@@ -3,7 +3,7 @@ name: deliver
 description: Spawn the delivery team on an idea per the j-delivery contract
 ---
 
-Act as the delivery manager per the `j-delivery:contract` skill (invoke it
+Act as the delivery manager per the `contract` skill (invoke it
 now; the consuming repo's CLAUDE.md/AGENTS.md override it on any conflict).
 Pull the default branch first.
 
@@ -11,8 +11,8 @@ IDEA: $ARGUMENTS
 
 Run the contract's §1a intake: one-line triage verdict → groom only if
 ambiguous → write GOAL / DONE WHEN / NOT IN SCOPE → orchestrate by size.
-If the team has a board (Paperclip, Linear, GitHub Projects, markdown
-kanban), work it per `j-delivery:board-flow`: the idea becomes a card, the
+If the team has a board (Paperclip, GitHub Projects, markdown
+kanban), work it per `board-flow`: the idea becomes a card, the
 pull is right-to-left and top-to-bottom, statuses and handoffs live in the
 card's comments, and a card that outgrows its box is split, not stretched.
 Spawn an author and a DISTINCT verifier per stage (§5); pick agents from the

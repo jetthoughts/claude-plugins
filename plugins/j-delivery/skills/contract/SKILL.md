@@ -28,7 +28,9 @@ cycles are adjacent, defensible, and not asked for.
 
 1. **TRIAGE**: now / sequenced / backlog / groom-first. One-line verdict so the
    operator can override.
-2. **SHAPE**: ambiguous or structural → groom first. Concrete → straight to GOAL.
+2. **SHAPE**: ambiguous or structural → groom first (`superpowers:brainstorming`);
+   a multi-step unit gets a plan (`superpowers:writing-plans`). Concrete →
+   straight to GOAL.
 3. **GOAL**: write §1's three lines. No re-runnable DONE WHEN → no dispatch.
 4. **ORCHESTRATE by size** — the contract holds at every scale:
    - *trivial edit*: inline; a verifier agent still reviews before commit.
@@ -63,7 +65,7 @@ DISCOVER → DECIDE → BUILD → VERIFY → SHIP → LEARN
 |---|---|---|
 | DISCOVER | what is already true | a file:line or URL citation for every premise, read by a reviewer |
 | DECIDE | the smallest unit that delivers value | you named what you are NOT doing |
-| BUILD | the shortest working diff | it runs |
+| BUILD | the shortest working diff, test first (`superpowers:test-driven-development`) | it runs; a failure gets `superpowers:systematic-debugging`, never a patch |
 | VERIFY | evidence from the live artifact | a check that would FAIL if the work were wrong |
 | SHIP | a reviewed commit; the sprint merges via its one PR | the repo's gate matrix for THIS change class, quoted with real numbers |
 | LEARN | a durable learning captured, or an explicit "none this pass" | a cold session could repeat or avoid it |
@@ -72,16 +74,17 @@ Review weight scales with the stage's cost of being wrong, but none is zero. A
 cheap stage gets one skeptical pass with a named lens — and leaves one line in
 the record: lens, strongest objection, disposition.
 
-**Continuous delivery**: every unit lands on its own — a reviewed commit safe
-to merge alone; a unit that cannot land alone was scoped wrong. **Continuous
-discovery**: DISCOVER runs every pass; what pass N learned changes N+1's scope.
+**Continuous discovery**: DISCOVER runs every pass; what pass N learned changes
+N+1's scope. A unit that cannot land alone was scoped wrong.
 
 ## 3. Evidence standard
 
-**Produce the check that would fail if the claim were false, and cite it.**
+**Produce the check that would fail if the claim were false, and cite it**
+(`superpowers:verification-before-completion`, run before any "done").
 
 - **Measure the artifact, not a proxy.** Source ≠ what shipped; a green suite ≠
-  no visual change; read the element that paints, not the one you selected.
+  no visual change; read the element that paints (`chrome-devtools` for
+  anything in a browser), not the one you selected.
 - **Test the instrument.** Ask what the command returns if the claim were
   FALSE — if it cannot differ, it is a ritual. Run a positive control and a
   negative control; a known-positive returning nothing means the instrument is
@@ -99,10 +102,11 @@ discovery**: DISCOVER runs every pass; what pass N learned changes N+1's scope.
 0. **Memory first.** Search persistent memory for prior decisions and
    corrections on the topic. A stored correction outranks fresh reasoning; a
    stored decision is not re-litigated without new evidence.
-1. **In-tree.** The answer is usually already written down; arguing from the
-   model's own recollection instead of looking is the recurring error.
-2. **Then the world.** Current docs and targeted research; take the best
-   available pattern, not the first plausible one.
+1. **In-tree, by meaning first.** `semble` for code, `qmd` for prose, grep
+   only for a literal already found; the model's recollection is not a source.
+2. **Then the world.** `mcp__deepwiki__ask_question` for what an installed
+   tool does (Paul, 2026-09-11: a day spent on a premise one question
+   refuted), Context7 for docs, then a live probe on this install.
 3. **Cite what you used.** A decision with no citation is a guess wearing
    confidence.
 
@@ -130,11 +134,12 @@ The review lands **before the artifact leaves the workshop**: a plan before the
 operator sees it, a diff before commit, a finding before it is reported, a
 measurement before it is quoted.
 
-**No reviewer available?** Fall back agent → external tool → peer session →
-human; if none is reachable, ship marked **UNREVIEWED** — disclosure, never a
-silent skip.
+**Who reviews:** `cold-reviewer` by default (goal, artifact and the author's
+assumptions; never the author's summary of the result) → `codex:codex-rescue`
+(a different vendor) → peer session → human; if none is reachable, ship marked
+**UNREVIEWED** — disclosure, never a silent skip.
 
-- **Panels must disagree by construction** — distinct lens per reviewer;
+- **Panels must disagree by construction** (`deliberate`) — distinct lens per reviewer;
   independent agreement is valid, manufactured disagreement is not.
 - **Ask for measurements, not verdicts** — a critic who returns a count cannot
   be argued with.
@@ -148,10 +153,7 @@ silent skip.
 ## 6. WIP = 1
 
 One unit in flight. One PR open — the sprint's. Which unit, and how it moves,
-is the `j-delivery:board-flow` skill: pull right-to-left and top-to-bottom,
-one card In Progress per worker, two in flight until Done, never move a card
-back, split what outgrows its time box, and the fixed list of what to do at
-the limit (help reviews first, never new logic). Parallelism in exactly three
+is the `board-flow` skill (this plugin). Parallelism in exactly three
 places: reviewer panels judging one artifact · a knowledge-maintainer riding
 the same commit without touching the work's files · explicitly-requested swarm
 workers, each in its own worktree. Otherwise never run parallel agents over the
@@ -162,10 +164,8 @@ the branch state, not just the task.
 ## 7. Async-first
 
 A task is not done until its state is readable by a cold session with zero
-questions. Decisions → the doc that owns them, with reasoning. Findings → the
-PR, with evidence. Handoffs → an explicit list in the artifact the next person
-opens. Debt → named, never silent. A concept that stores STATE rots; one that
-stores REASONING does not.
+questions; where each artifact goes is the `async-first` skill (this plugin).
+A concept that stores STATE rots; one that stores REASONING does not.
 
 ## 8. Scope, and when to stop
 
