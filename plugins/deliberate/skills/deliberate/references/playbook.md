@@ -26,7 +26,7 @@ The point of a lane is that **a claim available in one lane is not available in 
 | **Curated corpus** | only the documents pinned to one notebook | `mcp__notebooklm-mcp__notebook_query` | **2** | everything outside the notebook |
 | **Academic / prior art** | papers, patents | `ArXiv` skill, web search | 3 | commercial reality |
 | **Persistent memory** | corrections, preferences and decisions recorded outside the notes | `mcp__plugin_openviking-memory_openviking__search`, `mcp__memory__search_nodes` | **2** | anything never stored |
-| **Deep research, another vendor** | a long-running research pass by a different system | Perplexity, driven through `claude-in-chrome` — start the research, come back for it | **1** | its own sourcing choices, which you did not make |
+| **Deep research, another vendor** | a long-running research pass by a different system | Perplexity, driven through **BrowserOS neo** (`mcp__browseros-neo__run`) — it holds the login; start the research, come back for it | **1** | its own sourcing choices, which you did not make |
 
 **Memory is a separate corpus from the vault, and it is the one most often skipped.** It holds
 standing corrections and preferences that were never written into a note. Query it explicitly — a
@@ -42,7 +42,7 @@ the panel will report a level it did not earn.
 
 **Perplexity deep research is a level-1 seat**, on the same logic as the Gemini seat: a different
 system with its own retrieval and its own priors. Drive it through the browser
-(`claude-in-chrome`), kick the research off, and **collect it on a later pass rather than blocking**
+(BrowserOS neo), kick the research off, and **collect it on a later pass rather than blocking**
 — deep research runs for minutes, not seconds. Then treat what comes back the way you would treat
 any lane: rows with sources, opened and verified by someone who did not fetch them. An AI research
 report is Level 0 evidence on its own — a lead, not a finding.
@@ -146,7 +146,7 @@ same three examples. That is the failure to watch for.
 | Step | Reach for | Why this one |
 |---|---|---|
 | Find candidates | `mcp__parallel__web_search` · `competitor-intel` · `Apify` · `just-scrape` | `competitor-intel` returns verified metrics rather than marketing claims |
-| Open and see it | `agent-browser` · `browser-use` · `Interceptor` (real Chrome) · `lightpanda` (fast) · `mcp__claude-in-chrome__*` · chrome-devtools `take_screenshot` | the component usually lives in what the product *does* |
+| Open and see it | behind a login → **BrowserOS neo** · public and fast → `lightpanda` · verifying or debugging a build → `chrome-devtools` `take_screenshot` | the component usually lives in what the product *does* |
 | **Look at the capture** | the `Read` tool on the screenshot | it renders images — reasoning about a filename is not looking |
 | Judge the visual | `web-design-reviewer` · `screenshot` | a structured read beats an impression |
 | What users say | reviews and forums via search; `competitor-alternatives` for positioning | a slick interface with three identical one-star reviews is a different lesson |

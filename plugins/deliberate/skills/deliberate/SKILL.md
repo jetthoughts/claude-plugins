@@ -39,7 +39,7 @@ In the output:
 - **Disjoint corpora are the only mechanism with a guarantee.** A claim absent from a corpus cannot be produced from it. Model diversity is a statistical hope; corpus disjointness is arithmetic.
 - **Never report a level you skipped the work for.** A time-box is a reason to run fewer lanes, never a reason to claim a lane you did not run. A fallback you wrote down and did not take is the same as not having one.
 
-**Order of operations (Paul, 2026-08-30): Claude subagents carry the lanes; a foreign model reviews them afterwards.** The subagents hold the repository, the closed decisions and the house rules — they produce the lanes, the ledger and the concepts. The foreign seat goes **on top**, briefed on facts only and told to refute: the `gemini` CLI, or Perplexity driven through `claude-in-chrome` — **that is what `claude-in-chrome` is for here, and the only thing.** Ordinary page-reading uses `WebFetch` and the external drivers listed under GATHER. Run instead of the lanes it reviews nothing; run first it anchors what it was meant to check.
+**Order of operations (Paul, 2026-08-30): Claude subagents carry the lanes; a foreign model reviews them afterwards.** The subagents hold the repository, the closed decisions and the house rules — they produce the lanes, the ledger and the concepts. The foreign seat goes **on top**, briefed on facts only and told to refute: a different vendor's model, or Perplexity driven through **BrowserOS neo** (`mcp__browseros-neo__run`) — it holds the logged-in session, which is what a Perplexity seat needs. Ordinary page-reading uses `WebFetch` and the external drivers listed under GATHER. Run instead of the lanes it reviews nothing; run first it anchors what it was meant to check.
 
 **Level-1 route, measured 2026-09-12: both gemini doors are down.** The MCP server connects and the tool accepts the call, then fails in its `agy` backend — *"found a SQLite transcript but could not extract a model reply from its schema"*. The CLI dies earlier, in `_doSetupUser`. **Connected is not working**, and a tool that returns an error after 120 s is worse than one that is absent, because it looks like a route.
 
@@ -47,7 +47,7 @@ Working foreign seats, in the order to try them:
 
 | Route | State |
 |---|---|
-| **Perplexity driven through `claude-in-chrome`** | the established route here, and the only thing `claude-in-chrome` is for in this skill. Search or Deep Research mode only — never Computer mode |
+| **Perplexity through BrowserOS neo** (`mcp__browseros-neo__run`) | the established route — it carries the login. Search or Deep Research mode only, never Computer mode |
 | `codex:codex-rescue` | a genuinely different vendor's model through the shared runtime. Untested as a deliberation seat; exercise it before claiming the level |
 | An OmniRoute free lane (`free-thinking`) | non-Claude models behind one endpoint. Probe the lane first — free providers delist silently |
 
@@ -127,7 +127,7 @@ Lane assignments and brief templates: `references/playbook.md`.
 | A screenshot to actually look at | `chrome-devtools` `take_screenshot` · `screenshot` · then `web-design-reviewer` for a structured visual read |
 | A site that resists, or extraction at volume | `BrightData` · `Apify` · `mcp__tavily__tavily_crawl` · `wigolo` `crawl` |
 
-**`claude-in-chrome` is reserved for the Perplexity seat** and is not a general page-reader — it drives the user's own logged-in browser, which is a heavier and more intrusive instrument than any row above needs.
+**Three browser doors, one owner each** (Paul, 2026-09-12): anything with a **session or login** → BrowserOS neo · **simple browsing** → `lightpanda` or `wigolo` · **development, verification or debugging** → `chrome-devtools`. Claude in Chrome is none of them: it drives the user's own everyday browser, heavier and more intrusive than any row here needs, and is reached for only when they point at a tab already open.
 
 **Every lane returns rows, not prose:**
 
