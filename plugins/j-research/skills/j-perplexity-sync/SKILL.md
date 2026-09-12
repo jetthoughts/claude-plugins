@@ -69,11 +69,11 @@ is the source of truth for "already synced": `grep -o 'pplx-[0-9a-f]\{8\}' …/p
    (H1 or the query's first 60 chars, always double-quoted: the vault's commit hook rejects unquoted
    colons), `project:` (the pane's first line shows `[<Project>/](…/spaces/…)`; omit when absent →
    folder `sessions`), then the body with the tool's `UNTRUSTED_PAGE_CONTENT` marker lines removed.
-5. Run `python3 ~/.claude/skills/j-research-inbox/scripts/normalize.py ingest`. It writes the
+5. Run `python3 ~/.claude/skills/j-inbox/scripts/normalize.py ingest`. It writes the
    `pplx-*` note in the project folder, adds the hub bullet, and prints `skip` for an id the hub
    already has.
 6. Commit from the vault root (`Sync Perplexity: N threads`); the post-commit hook indexes them.
-   Then run `j-research-triage` on the new notes, or leave them for the next triage run.
+   Then run `j-triage` on the new notes, or leave them for the next triage run.
 7. Report: items synced, skipped (with reasons), `citations_preserved` values, and remind that the
    vault's post-commit hook indexes at most 25 files per commit.
 
@@ -92,7 +92,7 @@ They live at `https://www.perplexity.ai/computer/artifacts`, grouped by month, a
    has no `Download` item (`Generated Document`) cannot be exported; list them as skipped.
 4. Stage the files: copy with names untouched (keep ` (n)` suffixes: stripping them made two different
    Business OS drafts overwrite each other on 2026-09-03), then dedupe by sha256. Filing is judgment work, not
-   a script: an agent reads each artifact and files it per `j-research-triage` §Computer documents —
+   a script: an agent reads each artifact and files it per `j-triage` §Computer documents —
    project folder, `Belongs to`, link to the task that produced it (card menu `Open session` shows it),
    Takeaways, tier. Binaries (`.png/.zip/.pdf/.docx`) go to
    `~/Google Drive/My Drive/Documents/2. Resource/Perplexity artifacts/` and get a hub bullet with the path.

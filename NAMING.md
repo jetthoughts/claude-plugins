@@ -21,3 +21,20 @@ before claiming one.
 that summarises the steps makes the agent follow the description and skip the body. Say what the
 skill is for and when to reach for it, list the phrases a user would actually type, and name what it
 is *not* for with the sibling that owns that instead.
+
+## Two clarifications, from applying it 2026-09-12
+
+**The front door takes the cluster's own name.** A plugin with several skills still needs one you
+reach for when you do not know the sub-step, and that one is named after the cluster:
+`deliberate:deliberate`, `j-research:j-research`, `j-business:j-market`. It looks like repetition and
+is not — it is the address of the front door, and it is what people actually type.
+
+**A term of art beats the anti-stutter rule.** `j-research:j-deep-research` stutters and stays,
+because "deep research" is what the user says and renaming it to something tidier would cost more in
+discoverability than the stutter costs in readability. The rule exists to stop the plugin name doing
+the skill's work — not to ban a word the reader is looking for.
+
+**What was renamed:** `j-research-start` → `j-research` (it was the front door all along),
+`j-research-inbox` → `j-inbox`, `j-research-triage` → `j-triage`. Left alone deliberately:
+`j-independent-ideation` (53 references for a readability gain), `j-paperclip-ops`, and the
+`wigolo-*` set, which is a vendor namespace rather than ours.

@@ -1,5 +1,5 @@
 ---
-name: j-research-start
+name: j-research
 description: The front door for any open-web research request in this vault. Use whenever the user says "research", "look into", "find out about", "dig into", "get me up to speed on", "give me research options", "start a research on", or names a topic and asks what tools/sources to use — before reaching for a specific tool (wigolo, j-perplexica-search, j-deep-research, Council, Research, research-deep, RivalSearchMCP, NotebookLM, Perplexity, brave-search, searxng, exa, OmniRoute web/x search) directly, since this vault has a dozen overlapping research tools and picking the wrong one wastes a round trip. Picks between three shapes — a quick cited answer, a multi-perspective discussion, or a menu of deeper options — and hands off to the tool built for that shape. NOT FOR searching this vault's own notes (use qmd), code in a repo (use semble/tokensave), a question a NotebookLM notebook already answers (query it directly), or a single already-known URL (use wigolo fetch directly).
 ---
 
@@ -73,5 +73,5 @@ out when relaying the answer.
 
 Nothing here auto-saves. If the user wants the result kept, write it as a normal captured-research
 note (`type: Research`, `source`, `url`, `content_hash`) in the path the source implies — a
-Perplexity capture goes through the existing `j-perplexity-sync`/`j-research-triage` pipeline, an ad
+Perplexity capture goes through the existing `j-perplexity-sync`/`j-triage` pipeline, an ad
 hoc synthesis goes in `evidence/research/`. Don't file it unasked.

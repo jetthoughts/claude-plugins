@@ -2,7 +2,7 @@
 
 ## 0.2.0 — 2026-09-11
 
-- `j-research-start` added: front-door dispatcher over every research tool now installed (wigolo,
+- `j-research` added: front-door dispatcher over every research tool now installed (wigolo,
   j-perplexica-search, j-deep-research, Council/deliberate, Research/research-deep, RivalSearchMCP,
   NotebookLM, Perplexity-via-browser). Picks simple/discussion/other-options and hands off; does no
   searching itself. Not wired into `skill-rules.json` deliberately — that file stays reserved for

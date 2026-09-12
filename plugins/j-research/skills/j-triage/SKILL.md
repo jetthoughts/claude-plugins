@@ -1,6 +1,6 @@
 ---
-name: j-research-triage
-description: Preprocess and triage captured research in Paul's vault so it becomes usable evidence. Use when the user asks to triage, preprocess, summarize, digest, tag, link or "make sense of" imported research (Perplexity threads, Computer tasks, NotebookLM output, deep-research reports), asks what a batch of research says, or wants captured notes wired into the projects and decisions they inform. Not for capturing new research (j-perplexity-sync, j-research-inbox) and not for editing the captured text itself.
+name: j-triage
+description: Preprocess and triage captured research in Paul's vault so it becomes usable evidence. Use when the user asks to triage, preprocess, summarize, digest, tag, link or "make sense of" imported research (Perplexity threads, Computer tasks, NotebookLM output, deep-research reports), asks what a batch of research says, or wants captured notes wired into the projects and decisions they inform. Not for capturing new research (j-perplexity-sync, j-inbox) and not for editing the captured text itself.
 ---
 
 # Research triage

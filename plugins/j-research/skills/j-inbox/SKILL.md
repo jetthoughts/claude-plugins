@@ -1,5 +1,5 @@
 ---
-name: j-research-inbox
+name: j-inbox
 description: Save or publish research to Paul's Tolaria vault, and import research exports (Claude data export conversations.json, Perplexity/Perplexica/Gemini/NotebookLM Markdown exports, or hand-dropped Markdown/txt notes) into it. Use for "save/publish this research to my vault", "import my Claude/Perplexity/NotebookLM export", "process the research inbox", or when an agent (e.g. the local ldr MCP) has a finished research result to record.
 ---
 
