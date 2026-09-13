@@ -1,0 +1,65 @@
+{
+  "free-coding": {
+    "description": "Free coding lane. Large-context free models first: nemotron-3-ultra took a 23k-token Claude Code payload and nemotron-3.5-lightning a 29k opencode one (JET-356, JET-358, 2026-09-06); groq gpt-oss-120b 413s above 8k TPM and codestral answers agentic turns with stubs, both kept as tail fallbacks.",
+    "models": [
+      "oc/nemotron-3-ultra-free",
+      "nvidia/nemotron-3.5-lightning:free",
+      "groq/openai/gpt-oss-120b",
+      "mistral/codestral-latest",
+      "oc/north-mini-code-free",
+      "openrouter/cohere/north-mini-code:free",
+      "cfp/qwen/qwen2.5-coder-32b-instruct",
+      "lm-studio/qwen3-coder-30b-a3b-instruct-mlx"
+    ],
+    "strategy": "priority"
+  },
+  "free-thinking": {
+    "description": "Free reasoning lane — only models that actually think. No local floor: a 27B dense model on this laptop froze it on 2026-09-05, and a stop is better than a freeze. Refreshed 2026-09-08 after all 6 members died at once (delisted qwen3.8-27b / glm-5.2 / inkling, uncredentialed cfp): every member below answered a real 1-token probe that day — probe before trusting, free catalogs churn without notice.",
+    "models": [
+      "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free-high",
+      "oc/nemotron-3-ultra-free",
+      "groq/openai/gpt-oss-120b",
+      "openrouter/dots-studio/dots-3-note-preview:free",
+      "openrouter/openrouter/free"
+    ],
+    "strategy": "priority"
+  },
+  "free-cheap": {
+    "description": "Free fast/small lane for mechanical work — titles, classification, summaries.",
+    "models": [
+      "groq/openai/gpt-oss-120b",
+      "gemini/gemini-2.5-flash-lite",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "ddgw/gpt-5.4-nano",
+      "lm-studio/qwen3.5-4b-mlx"
+    ],
+    "strategy": "priority"
+  },
+  "subs-coding": {
+    "description": "Frontier coding on flat-rate subscriptions (Codex, Claude Max), falling through to the free coding lane when the subscription window is exhausted.",
+    "models": [
+      "cc/claude-sonnet-5",
+      "mistral/codestral-latest",
+      "lm-studio/qwen3-coder-30b-a3b-instruct-mlx"
+    ],
+    "strategy": "reset-aware"
+  },
+  "subs-thinking": {
+    "description": "Frontier reasoning on subscriptions, falling through to the strongest free reasoning models.",
+    "models": [
+      "cc/claude-opus-5-high",
+      "cc/claude-sonnet-5-high",
+      "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free-high"
+    ],
+    "strategy": "reset-aware"
+  },
+  "subs-cheap": {
+    "description": "Cheapest subscription tier for volume work; free/local floor underneath.",
+    "models": [
+      "cc/claude-haiku-4-5-20251001",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "lm-studio/qwen3.5-4b-mlx"
+    ],
+    "strategy": "reset-aware"
+  }
+}

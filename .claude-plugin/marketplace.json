@@ -62,6 +62,11 @@
       "name": "j-lanes",
       "source": "./plugins/j-lanes",
       "description": "The two income lanes as skills: j-jobseek (Berlin job search from the Paperclip board, stops at Paul-only steps), j-venture (evidence-led discovery of a JetThoughts service offer to first paid pilot)."
+    },
+    {
+      "name": "personal",
+      "source": "./plugins/personal",
+      "description": "Paul's personal-life skills, kept apart from JetThoughts"
     }
   ]
 }

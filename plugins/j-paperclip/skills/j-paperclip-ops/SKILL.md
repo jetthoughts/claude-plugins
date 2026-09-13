@@ -23,20 +23,16 @@ distrust green.
 ## Start with the overview, always
 
 ```bash
-export PAPERCLIP_TOKEN=...                               # board token; see j-paperclip
-~/.claude/skills/j-paperclip-ops/scripts/pcstat          # active companies
-~/.claude/skills/j-paperclip-ops/scripts/pcstat --all    # include archived
-~/.claude/skills/j-paperclip-ops/scripts/pcstat jet      # one company by name
+export PAPERCLIP_TOKEN=...   # board token; see j-paperclip
+curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" http://localhost:3100/api/companies/eeda44ae-eb2d-46ff-8b9b-a8e88486170c/issues
+curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" http://localhost:3100/api/companies/eeda44ae-eb2d-46ff-8b9b-a8e88486170c/agents
+curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" http://localhost:3100/api/companies/eeda44ae-eb2d-46ff-8b9b-a8e88486170c/attention
+curl -s -H "Authorization: Bearer $PAPERCLIP_TOKEN" http://localhost:3100/api/companies/eeda44ae-eb2d-46ff-8b9b-a8e88486170c/recovery-observability
 ```
 
-One screen per company: server and deployment mode, spend against cap, seats by status, open /
-in-progress / blocked cards, the attention feed (what is waiting on the human), and a `problems`
-block that names each stuck thing with the call that clears it. Read it before answering any
-"how are we doing" question and before changing anything, so you know what you changed.
-
-Archived companies are hidden by default and are a common source of confusion: cards there cannot
-be worked and the UI will not let anyone clear them. If someone says "I can't delete or close
-this", check `--all` first — the item is usually in an archived company.
+Read these before answering any "how are we doing" question and before changing anything, so you
+know what you changed: spend against cap, seats by status, open / in-progress / blocked cards, and
+the attention feed (what is waiting on the human).
 
 ## The runbook
 
@@ -46,9 +42,9 @@ Match the symptom, not the story you form about it. Each row was measured on thi
 | --- | --- | --- |
 | Run says `succeeded`, but the agent clearly read nothing | A wakeup does not put an issue into the run context even when handed `issueId`. No project resolved, so the run opened in an empty fallback dir — and that cwd is then saved on the session and preferred next time | Assign the card to the seat (assignment is what carries the workspace). Wake with `{"forceFreshSession": true}` to drop the poisoned cwd. Read the run log's **first line** to confirm the workspace |
 | Card assigned, seat never moves | The seat was paused at assign time: the server logs *failed to wake agent on issue update … status paused* and never retries | Unpause first, then assign or re-assign. Order matters |
-| A seat keeps waking with nothing to do | A `done`/`cancelled` card still holds an assignee | Clear `assigneeAgentId` on closed cards (`pcstat` lists them). 109 such rows were why one seat failed repeatedly on a cancelled card |
+| A seat keeps waking with nothing to do | A `done`/`cancelled` card still holds an assignee | Clear `assigneeAgentId` on closed cards (read `/api/companies/:id/issues` and filter `status` done/cancelled with `assigneeAgentId` set). 109 such rows were why one seat failed repeatedly on a cancelled card |
 | A card you just cleared goes `blocked` again with a fresh recovery action | Its assignee is a **paused** seat. Paperclip retries the continuation, finds no live execution path, and re-strands it — resolving the recovery action alone does not break the loop, because the assignee is still dead | Unpause the seat (or reassign the card) **first**, then resolve. Pausing a seat that holds open cards is what starts this |
-| A run dies at launch with `workspace_validation_failed` | The card has **no project**, so no execution workspace could be persisted before the adapter started. Cards created by agents and routines do not inherit one — measured three times on 2026-09-05 (JET-217, JET-224, and a status-card compile task) | Give the card a project and that project's workspace, then resolve the recovery action. `pcstat` now lists workspace-less open cards before they fail |
+| A run dies at launch with `workspace_validation_failed` | The card has **no project**, so no execution workspace could be persisted before the adapter started. Cards created by agents and routines do not inherit one — measured three times on 2026-09-05 (JET-217, JET-224, and a status-card compile task) | Give the card a project and that project's workspace, then resolve the recovery action. Check open cards for a missing `projectId` before they fail |
 | Card shows Recovery or Failed and neither UI nor PATCH clears it | A recovery action (`stranded_assigned_issue`, `active_run_watchdog`, `missing_disposition`) is pending and owns the card | `POST /api/issues/:id/recovery-actions/resolve` with `{"outcome":"restored\|false_positive\|blocked\|cancelled","sourceIssueStatus":"todo\|done\|in_review\|blocked"}` — the field is `sourceIssueStatus`, not `issueStatus` (checked against `/api/openapi.json`, 2026-09-07); `resolutionNote` is optional, `note` is not a key. A plain `PATCH /api/issues/:id {"status":"todo"}` also clears a `missing_disposition` action (measured 2026-09-06). A stuck watchdog is `DELETE /api/issues/:id/watchdog` |
 | Seat stops mid-plan | Almost always budget or turns, not a defect. Budget policies enforce even when the overview says `paused: true` — that flag mirrors the *agent's* status, not the policy's | `GET /companies/:id/budgets/overview`, `maxTurnsPerRun` on the agent |
 | `PATCH /api/agents/:id` fails with `expected record, received undefined` | `GET /api/agents/:id/configuration` redacts `modelProfiles.*.adapterConfig`, so a read-modify-write loses it | Restore before writing: `\| if .modelProfiles then .modelProfiles \|= with_entries(.value.adapterConfig //= {}) else . end` |
@@ -59,9 +55,11 @@ Match the symptom, not the story you form about it. Each row was measured on thi
 | The laptop crawls or freezes while agents run | A local model is loaded with a huge context — measured 2026-09-05: `minicpm-v-4.6` at 262144 ctx, 4-way parallel, JIT-loaded on every OpenViking query. Paperclip was not the caller | `lms ps` for the loaded model and its context, then `lsof -nP -i TCP:1234` for who is actually connected. `lms unload --all` frees it; fix the client's config, not Paperclip's |
 | A seat is meant to run on the free gateway but bills or burns the CPU locally | Its `adapterConfig.model` names the provider directly (`lmstudio/...`), which bypasses OmniRoute even when the gateway is declared in `PAPERCLIP_OPENCODE_PROVIDERS` | Set `model` **and** `PAPERCLIP_OPENCODE_SMALL_MODEL` to a combo (`omniroute/free-cheap`); the combo's own last entry is the local floor, so local stays the fallback rather than the default |
 | The free lane suddenly fails everywhere | Usually the upstream daily quota, not local config — configuration that worked an hour ago did not rot | Check the gateway's own usage page before touching any Paperclip setting |
+| Cards blocked with `acpx_turn_failed`; run log shows `API Error: 400 ... not available in the active live catalog` or `504 ... rate-limit execution expiration` | Lane failure, not an agent failure. 400 = a combo member left the provider's live catalog (config; free providers delist without notice — 2026-09-08 all 6 `free-thinking` members died overnight). 504 = OmniRoute killed a queued request at its own `requestQueue.maxWaitMs` deadline (transient rate limit; the seat never got a turn) | 400: probe the combo's members with a real 1-token request, swap dead ones in `services/omniroute/combos.json`, sync. 504: raise `maxWaitMs` (15s -> 120s measured 2026-09-08), or `0` on combo members so a full lane falls through. Both: resolve the recovery action (`restored`, `sourceIssueStatus` `todo`) and the card requeues. A transient 504 never needs a human decision. A human or seat reading the board applies this classification and requeues the card by hand — there is no scheduled sweep any more (Paul, 2026-09-11) |
 
 ## Distrust green
 
+- A frozen run log is not a hung run. The capture stops after an oversized tool result (measured 2026-09-12: 254 KB, right after a 200 KB `qmd get`); the seat kept working for seven minutes. Judge liveness by the seat transcript's mtime (`~/.claude/projects/<worktree-slug>/*.jsonl`) or the browser tab before cancelling.
 - A green run status is not evidence a seat saw a repo — the run log's first line is.
 - A declared MCP server is not a connected one, and an undeclared one is not necessarily missing:
   probe inside a run rather than reading `config.toml`.
@@ -69,22 +67,28 @@ Match the symptom, not the story you form about it. Each row was measured on thi
   they really are. `/configuration` is the honest view.
 - Comments are what an agent chose to publish; the run-log ndjson is what it did. When they
   disagree, the log wins.
+- A seat is ready for a real card only when three reads agree, taken after its last config
+  change (bundle, skills, lane, trust, env, workspace strategy): its probe produced the seat's
+  real job in miniature with its real tool — the job's own output, never a read; the record of
+  the run's model calls (whatever serves the seat: a gateway's call log today, the provider's
+  usage log otherwise) shows the intended model answering for the whole run, no fallbacks; and
+  one real one-turn run through the seat's exact model path answered after the last change to
+  that path. Any of the three changes, the probe reruns. (2026-09-12: a probe with no browser
+  step, a gateway feature switched on by another session, and a trust change after the probe
+  cost a night.)
 
-## The lane repairs itself now
+## Lane health
 
-`~/.infra/bin/omniroute-doctor` (add `--check` to change nothing) is the whole health-and-repair
-path for the free model lane: gateway up — it does **not** survive a reboot — free lane answers a
-real probe, every live opencode seat declares the provider its model names and has its key bound, no
-local model loaded at a size and parallelism that freezes the machine. It repairs the first and
-third; everything else it reports.
-
-The **Local Model Router Operator** owns it on a schedule (08, 11, 14, 17, 20 Berlin), logging to
-the standing card *LANE — OmniRoute health*, and **only when it repaired something or something
-needs a human** — a healthy check is silent. That seat runs on `lmstudio/qwen3.5-4b-mlx` on purpose:
-a seat that repairs the gateway cannot depend on the gateway, or the repair never happens when it is
-most needed. It may start the gateway, re-assert policy and combos, bind an existing key, and unload
-a runaway model. It may never mint a key, widen the allowlist, add a provider, or move a seat to a
-paid lane — those raise `ask_user_questions` and stop.
+There is no automated repair path any more (Paul, 2026-09-11) — check and fix the lane by hand.
+Gateway up (it does **not** survive a reboot): `curl -sf http://127.0.0.1:20128/api/health`. A
+lane probe is one `curl` POST to `/v1/chat/completions` with `max_tokens` 5, reading `.model` off
+the answer — run it for `free-cheap` and for every combo a live (non-paused) seat rides, since a
+combo that only exists on paper strands every seat on it and `/v1/models` never lists combos, so
+the probe is the only check. Combo membership: `GET /api/v1/combos` or the `omniroute_list_combos`
+MCP tool; changing membership is a write to `combos.data` in `~/.omniroute/storage.sqlite`
+followed by `omniroute stop` and `~/.infra/services/omniroute/bin/start`. No local model loaded at
+a size and parallelism that freezes the machine: `lms ps` for what is loaded, `lsof -nP -i
+TCP:1234` for who is connected, `lms unload --all` to free it.
 
 ## Reading run logs: the rules live here, the counting does not
 
@@ -103,9 +107,10 @@ the control plane. That distinction is the whole reason this gate is worth readi
 version flagged 97 things, most of them a seat doing its job, and a gate that cries wolf gets
 ignored within a day.
 
-`~/.infra/bin/runscan [hours]` does the counting — 195 logs in a second, with the denominator
-printed, which is the part a model does badly: it skips, it varies run to run, and it cannot honestly
-say how many it read. **The script counts; you judge.** Read every flagged log by hand, quote the
+Count by hand: list every `.ndjson` under
+`~/.infra/services/paperclip/data/instances/default/data/run-logs/<companyId>/<agentId>/`, grep
+each for the four signatures above, and state the denominator — how many logs you actually read —
+since that is exactly the part a human or model skips. Read every flagged log by hand, quote the
 offending line into a card, and file evidence only — the retro makes the change, one at a time, with
 a kill signal.
 
@@ -115,8 +120,7 @@ measure of whether this loop is alive.
 
 ## Skills for seats that are not Claude Code
 
-`claude_local` seats inherit `~/.claude/skills` for free — 882 of them, measured. **`opencode_local`
-and `codex_local` seats inherit nothing**, so anything they must know is delivered through
+`claude_local` seats inherited `~/.claude/skills` for free — 882 of them, measured — **until 2026-09-12**, when every seat moved to `engine: cli` with `--setting-sources=project,local` to stop "Prompt is too long"; since then a seat-style launch answers `Unknown skill` for `ldj`, `lightning-demos` and `deliberate` in both the pkm and .infra roots (probed 2026-09-13). **So today every seat inherits nothing from the user scope**, the same as `opencode_local` and `codex_local`, so anything they must know is delivered through
 Paperclip's own catalog:
 
 1. `POST /api/companies/:id/skills` with `{name, slug, markdown, sharingScope:"company"}` — the
@@ -148,42 +152,40 @@ original, which is the drift this rule exists to prevent.
 
 ## Maintenance sweep
 
-The mechanical half runs itself now. `~/.infra/bin/pcsweep` (add `--check` to change nothing) is
-scheduled by `dev.pftg.pcsweep.plist` at 08:10 and 20:10, logging to `~/.infra/.git/pcsweep.log`,
-and notifies **only** when something needs a human — a clean sweep is silent (JET-289).
+There is no scheduled sweep any more (Paul, 2026-09-11) — a human or seat reads the board by hand
+and repairs what it finds. What to repair: a stale assignee on a closed card, a
+`missing_disposition` recovery action, a seat left in `error`, a `stranded_assigned_issue` whose
+run log carries a lane-failure signature (2026-09-08 incident) — a 504 queue-deadline is a
+transient rate limit, so the card is requeued with no decision needed; a 400 catalog error means a
+dead combo member, so the lane gets a real probe — answering again means requeue, still dead means
+the seat moves to its fallback lane (`free-* -> subs-*`) and the card requeues, no live fallback
+means a human refreshes the combo. Leave alone a stranded card whose run log carries no
+lane-failure signature (that absence is a judgment call, and re-queueing into the same failure is
+how the 2026-09-08 pileup grew), and a dirty or unmerged worktree (that tree is the only copy of
+work that never reached main — the strand-on-branch defect, JET-293, escalated as one line rather
+than N notifications).
 
-It repairs what is mechanical and reversible: a stale assignee on a closed card, a
-`missing_disposition` recovery action, a seat left in `error`, and a worktree whose card is closed,
-whose branch is merged into the default ref, and whose tree is clean. It **lists** everything else —
-every other recovery kind, a blocked card with no unblock owner, a card with no execution workspace,
-a seat near its budget cap, and every worktree it kept with the reason. Worktree roots come from the
-board's own workspaces (`GET /projects/:id/workspaces` → `cwd`, `defaultRef`), so a new repo is swept
-without editing the script.
+Run this weekly, or before handing the board to anyone:
 
-Two things it deliberately does not do: guess which blocked card was a transient infrastructure
-error (that is a judgment, and it re-queues into the same failure), and force a dirty or unmerged
-worktree (that tree is the only copy of work that never reached main — the strand-on-branch defect,
-JET-293, 18 of them as of 2026-09-07, escalated as one line rather than 18 notifications).
-
-Run the rest by hand, weekly, or before handing the board to anyone:
-
-1. `pcstat` — clear every line in `problems` that `pcsweep` left.
+0. Probe every lane in use with a real 1-token request (see Lane health above) **before** reading
+   the board — a dead lane makes every stuck card one root cause, not N, and requeued cards just
+   strand again.
+1. Read `/issues`, `/agents`, `/attention` and `/recovery-observability` for the company and clear
+   every stuck row left over from the checks above.
 2. Attention feed to zero, or say plainly which items are parked and why. An item sitting there is
    a human decision nobody has taken, not a task.
 3. Any seat with no completed work in 30 days: say so. A roster that only grows is sediment.
 4. Backup age — `/api/health` carries `databaseBackup.latestBackup.ageHours`; over ~26h is stale.
 5. Spend against cap, and whether the split by seat matches what those seats actually do.
-6. `~/.infra/bin` scripts — kill rule is 0 references (launchd, `.zshrc`, another script, or a doc
-   naming it): `grep -rl "bin/<name>" ~/.infra ~/.dotfiles ~/Documents/pkm`. A script with none →
-   delete it and its `~/.infra/README.md` row.
+6. A worktree whose card is closed, whose branch is merged into the default ref, and whose tree is
+   clean can be pruned; leave a dirty or unmerged one alone.
 
 ## What not to do
 
 Do not add a second queue, a mirror of card state into the vault, or a script for a gate a human
-holds. (A scheduler was on this list until 2026-09-06, when Paul asked for one: `pcsweep` is the
-single exception, and it holds because it repairs only mechanical, reversible rows and hands every
-judgment back. A second scheduler, or one that decides anything, is still the thing that drifts.) Every one of those has been tried here and became the thing that drifted. When
-the flow itself is the defect — a step that lets a wrong row through — change the flow and say so,
-rather than patching the single row.
+holds. A scheduler was tried (`pcsweep`, 2026-09-06 to 2026-09-11) and retired: Paul decided
+against custom ops scripts (2026-09-11), so the sweep is read by hand again. Every one of those has
+been tried here and became the thing that drifted. When the flow itself is the defect — a step that
+lets a wrong row through — change the flow and say so, rather than patching the single row.
 
 Routes and PATCH shapes: `j-paperclip` (`references/api.md`). Card movement: `j-board-flow`.

@@ -40,6 +40,8 @@ Nothing ties an approval to issue completion or to a document revision (measured
 
 How we use it: waiting on Paul is `in_review` plus one interaction; an ask in prose is not an ask.
 
+A seat's `ask_user_questions` interaction is answered with `POST /issues/:id/interactions/:interactionId/respond {"answers":[{"questionId":"…","optionIds":["…"]}],"summaryMarkdown":…}` (measured 2026-09-12); a status change to `done` expires every open interaction on the card and removes Paul's reply box. A `request_board_approval` item is what puts Approve/Reject buttons on Paul's Decisions tab; an execution-policy approval stage shows him only a notice. Status cards compile again on the Summarizer (`project_primary`); "Job Seek — filled and filtered rows for Paul's re-review" (2b977154) is the live example: FILLED / FILTERED / OPEN CHECKS with every status word quoted from its source card.
+
 ## 5. Blockers, unblock descriptors, recovery (enforced liveness)
 
 `blockedByIssueIds` (array replaces; include existing) and `unblockDescriptor {owner:{agentId|userId}, action}` are the only waiting paths for `blocked`; a blocked card with neither is `needs_attention`. Paperclip opens a `stranded_assigned_issue` recovery action when a card's assignee cannot run (paused seat), and it re-strands the card after every status change until the seat is live or the assignee released. Resolve with `POST /issues/:id/recovery-actions/resolve {"outcome":"restored|blocked|false_positive","sourceIssueStatus":"todo|done|in_review|blocked"}`. `GET /companies/:c/recovery-observability` is the weekly recovery counter (the goal-2 denominator). `GET /companies/:c/attention` is the human's queue.
