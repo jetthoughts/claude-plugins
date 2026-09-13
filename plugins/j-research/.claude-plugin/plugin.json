@@ -1,6 +1,6 @@
 {
   "name": "j-research",
-  "description": "Local, keyless research tooling guidance: j-perplexica-search (bounded Vane/Perplexica search with citations) and j-deep-research (Local Deep Research MCP: search, quick_research, detailed_research over the local SearXNG + LM Studio, with the measured latencies and call budgets). Requires the ~/.infra stack (bin/start, bin/setup-mcp).",
+  "description": "Local, keyless research tooling guidance: j-perplexica-search (bounded Vane/Perplexica search with citations) and j-deep-research (Local Deep Research MCP: search, quick_research, detailed_research over the local SearXNG + LM Studio, with the measured latencies and call budgets). Requires the ~/.infra stack (bin/start, bin/setup-mcp). `practice-research`: research a collaboration, product or delivery practice from primary sources with a source ledger.",
   "version": "0.2.0",
   "author": {
     "name": "JetThoughts",

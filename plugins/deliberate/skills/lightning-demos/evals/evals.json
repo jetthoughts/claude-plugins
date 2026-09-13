@@ -1,0 +1,26 @@
+{
+  "skill_name": "lightning-demos",
+  "evals": [
+    {
+      "id": 0,
+      "name": "outside-domain-fetch-required",
+      "prompt": "We run a 4-person bookkeeping practice. Getting a new client set up takes us about 3 weeks and they complain the entire time — chasing documents, bank access, chart-of-accounts decisions. Before I design anything I want to see how other people have solved this. Find me some inspiration.",
+      "expected_output": "Runs a real Lightning Demo round: fetches URLs during the run, at least three examples from outside accounting/professional services, one transferable mechanism per example with a scannable headline and source, captured as a board rather than a recommendation. Does not produce a shortlist or a decision.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "resists-competitor-research-drift",
+      "prompt": "I'm about to redesign the pricing page for our dev-tools SaaS. Can you pull together examples I can steal from? Mostly interested in what the good ones do.",
+      "expected_output": "Recognises the pull toward competitor research and resists it — brings pricing mechanisms from outside dev-tools SaaS (insurance, gyms, airlines, utilities, restaurants) rather than a feature matrix of rivals. Names that a board of direct competitors means the round did not happen.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "rejects-obvious-and-remembered-examples",
+      "prompt": "quick one — we need onboarding inspiration for our mobile app, just give me like 5 great examples of onboarding done well, don't overthink it",
+      "expected_output": "Does not answer from memory with the famous handful (Duolingo, Slack, Notion, Airbnb, Apple). Either fetches real examples during the run and says so, or states plainly that recalled examples are priors rather than demos. Assigns distinct domains rather than five apps from one category.",
+      "files": []
+    }
+  ]
+}

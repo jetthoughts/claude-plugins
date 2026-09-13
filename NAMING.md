@@ -38,3 +38,13 @@ the skill's work — not to ban a word the reader is looking for.
 `j-research-inbox` → `j-inbox`, `j-research-triage` → `j-triage`. Left alone deliberately:
 `j-independent-ideation` (53 references for a readability gain), `j-paperclip-ops`, and the
 `wigolo-*` set, which is a vendor namespace rather than ours.
+
+## One home, two deliveries (Paul, 2026-09-13)
+
+Measured that day: `~/.claude/skills` held 458 entries in five homes, two of them unversioned, and three edits to three house skills landed in three different places. So:
+
+- **This repo is the only home for a house skill.** A skill is a folder inside its domain plugin. `~/.claude/skills/<name>` is a symlink into this checkout on Paul's machine and nothing more; skillshare holds third-party packs only; a project keeps a skill in its own `.claude/skills` only when the skill reads that project's files.
+- **A change is a commit here.** Never edit a symlink target's copy elsewhere, a Paperclip catalog copy, or a plugin cache. Version bumps in `plugin.json` when a skill's behaviour changes.
+- **Sources travel with the skill.** A skill that rests on a method carries a `## Sources` section: URL, retrieval date, an excerpt under 30 words per load-bearing claim; local adaptations marked ours; a claim without a source is UNSUPPORTED.
+- **Delivery to Claude Code sessions** is the marketplace in `.claude-plugin/marketplace.json` (`claude plugin marketplace add <path or git URL>`, then `claude plugin install <plugin>@jetthoughts`; refresh with `claude plugin update`). See INSTALL.md.
+- **Delivery to Paperclip seats** is `paperclip-skills.json`: slug to file. Seats launch with `--setting-sources=project,local`, so nothing in `~/.claude/skills` reaches them; the catalog copy is the only path, and it is re-imported when the file changes.

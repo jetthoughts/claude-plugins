@@ -1,7 +1,7 @@
 {
   "name": "deliberate",
-  "description": "Two decision formats. `deliberate`: a domain-agnostic evidence harness - independent scouts, verified ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion. `ldj`: AJ&Smart's 30-90 minute problem-first Lightning Decision Jam, verified procedure, no research required. Opposite entry points - LDJ starts from what holds us back, deliberate from what is true.",
-  "version": "0.2.0",
+  "description": "Decision and method formats. `deliberate`: evidence harness with independent scouts, verified ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion. `ldj`: Lightning Decision Jam, AJ&Smart's problem-first workshop, no research needed. `lightning-demos`: the Design Sprint research round that steals one mechanism per example. `five-whys`: Toyota's root-cause chain with an evidence rule. `decision-panel`: a governed multi-agent decision for Paperclip seats with sealed ballots and one Decision Voter.",
+  "version": "0.3.0",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"
