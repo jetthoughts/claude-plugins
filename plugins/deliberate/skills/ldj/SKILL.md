@@ -1,11 +1,11 @@
 ---
 name: ldj
-description: "Run a Lightning Decision Jam — AJ&Smart's 30–90 minute problem-first workshop that turns a vague complaint into one owned, dated, testable action. Use whenever something is stuck, frustrating, or repeatedly argued about and nobody has decided anything: a recurring team problem, a retro that keeps producing the same list, a meeting that goes in circles, 'what should we fix first', a process that annoys everyone, or any question that starts from what is holding us back rather than where we are going. Also use it as the fast alternative when a full deliberation would be overkill. Domain-agnostic; needs no research."
+description: "Run a Lightning Decision Jam (LDJ) — AJ&Smart's problem-first workshop, about 40 minutes by AJ&Smart's own page and 30–90 by the IfI guide, that turns a vague complaint into one owned, dated, testable action. Use whenever something is stuck, frustrating, or repeatedly argued about and nobody has decided anything: a recurring team problem, a retro that keeps producing the same list, a meeting that goes in circles, 'what should we fix first', a process that annoys everyone, or any question that starts from what is holding us back rather than where we are going. Also use it as the fast alternative when a full deliberation would be overkill. Domain-agnostic; needs no research."
 ---
 
 # Lightning Decision Jam
 
-A 30–90 minute workshop that replaces open discussion with structured silence. It exists for one failure: **a group that talks about a problem for an hour and leaves with nothing owned.**
+A workshop of about 40 minutes (AJ&Smart's own resource page) to 30–90 minutes (the IfI guide) that replaces open discussion with structured silence. It exists for one failure: **a group that talks about a problem for an hour and leaves with nothing owned.**
 
 **Problem-first.** Start here when what is broken is unclear. If what is *unclear* is where you are going, you want a goal-first format instead — see the boundary at the end.
 
@@ -82,4 +82,4 @@ Positives before problems, always. **A board of problems gathered without their 
 
 ## Sources
 
-Procedure verified against Petzolt & Kekwerth's instructional guide (Institut für Innovation und Technik, 2021), which credits AJ&Smart as the originator, cross-checked against AJ&Smart's own published booklet description. **The no-cap dot rule is deliberate and is where LDJ differs from Note-and-Vote**, which caps at two per item — an earlier write-up here asserted the cap for LDJ and was wrong.
+Procedure verified against Petzolt & Kekwerth's instructional guide (Institut für Innovation und Technik, 2021), which credits AJ&Smart as the originator, cross-checked against AJ&Smart's own published booklet description. AJ&Smart's resource page (https://go.ajsmart.com/ldj, retrieved 2026-09-13) confirms the purpose, "Replace all open discussion or brainstorming with a structured process that leads to more ideas, clearer decisions and better outcomes", and gives the duration as "about 40 minutes"; it carries no voting rule, so the dot rule below rests on the guide alone. **The no-cap dot rule is deliberate and is where LDJ differs from Note-and-Vote**, which caps at two per item — an earlier write-up here asserted the cap for LDJ and was wrong.
