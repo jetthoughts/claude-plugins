@@ -21,7 +21,8 @@ SOURCES = ["perplexica", "perplexity", "claude", "gemini", "notebooklm", "local"
 
 
 def default_vault():
-    return Path(os.environ.get("RESEARCH_VAULT", "~/Documents/pkm")).expanduser()
+    # CWD default: run from vault root, no env var needed. RESEARCH_VAULT overrides.
+    return Path(os.environ.get("RESEARCH_VAULT", os.getcwd())).expanduser()
 
 
 def slugify(text, max_len=60):
@@ -79,6 +80,9 @@ def existing_pplx_ids(vault):
 
 
 def write_pplx_note(vault, source_id, title, body, url, date, project, dry_run):
+    # earlier syncs wrote source_id as "pplx-<id8>"; strip a leading "pplx-" if present
+    if source_id.startswith("pplx-"):
+        source_id = source_id[len("pplx-"):]
     id8 = source_id[:8]
     if id8 in existing_pplx_ids(vault):
         return "skip", None
