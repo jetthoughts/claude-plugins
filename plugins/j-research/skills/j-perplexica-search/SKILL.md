@@ -48,4 +48,5 @@ Example tool arguments:
 - Distinguish the generated answer from the underlying source evidence. Cross-check conflicts and high-stakes claims.
 - Prefer one well-formed search over several broad calls.
 - If the MCP tool is unavailable in an existing Claude Code session, tell the user to reconnect it with `/mcp` or restart Claude Code.
-- If the tool connects but search fails, verify that `~/.infra/bin/start` has started Vane and that LM Studio is serving a model on `127.0.0.1:1234`.
+- The `mcp/perplexica-mcp` launcher selects the LM Studio chat model itself (`mcp/lmstudio-model`: prefers a resident model, JIT-loads `google/gemma-4-e4b` ~10 s when none is resident). A startup failure of the MCP server is therefore never "no model loaded" — check Vane first (`docker ps | grep infra-vane`, `~/.infra/bin/start`).
+- Health check: `bin/bench-research --perplexica-only` in `~/.infra` runs three fixed ground-truth searches through the real launcher (~3–5 min).

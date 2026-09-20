@@ -9,10 +9,10 @@ Everything runs on this machine. No API key. Order of escalation, cheapest first
 
 | Step | Tool | Cost (measured 2026-09-02) | Use when |
 |---|---|---|---|
-| 1 | `mcp__perplexica__search` (see `j-perplexica-search`) | ~10–60 s, one cited answer | a focused question with one answer |
+| 1 | `mcp__perplexica__search` (see `j-perplexica-search`) | ~10–90 s, one cited answer | a focused question with one answer |
 | 2 | `mcp__searxng__searxng_web_search` | 0.8 s, raw ranked results | you need URLs/snippets to read yourself, or to check step 1 |
 | 3 | `mcp__ldr__search` with `engine: "searxng"` | ~1 s + ~10 s server start | the same as step 2 through LDR, useful before a research run |
-| 4 | `mcp__ldr__quick_research` | 145 s on `qwen3-coder-30b` (3 iterations) | a cited multi-source summary for one sub-question |
+| 4 | `mcp__ldr__quick_research` | 145 s on `qwen3-coder-30b`; 200–500 s on the 4B `google/gemma-4-e4b` (3 iterations) | a cited multi-source summary for one sub-question |
 | 5 | `mcp__ldr__detailed_research` / `generate_report` | minutes to tens of minutes | a decision-grade report; agree the budget with the user first |
 
 Arguments that matter: `ldr.search` requires `engine` (`searxng`, `arxiv`, `wikipedia`, `pubmed`,
@@ -39,6 +39,11 @@ loses the agent loop).
 - `searxng`: "All connection attempts failed" or an empty result set → Vane is down; run
   `~/.infra/bin/start` and check `curl 'http://127.0.0.1:8081/search?q=hello&format=json'`.
 - `ldr`: first call after a reboot can take ~60 s to initialise (heavy imports); a warm start
-  is ~10 s. "no loaded chat model" → load one in LM Studio (`qwen3-coder-30b-a3b-instruct-mlx`
-  is the tested model); the launcher picks any loaded non-vision LLM.
+  is ~10 s. "no loaded chat model" should no longer happen — the `mcp/ldr-mcp` launcher
+  selects the model itself via `mcp/lmstudio-model` (prefers a resident model, JIT-loads
+  `google/gemma-4-e4b` ~10 s when LM Studio is idle). The 4B is slow at research: budget
+  200–500 s per `quick_research`, and check `lms ps` before quoting a budget to the user.
 - Tool missing in the session → `/mcp` to reconnect, or `~/.infra/bin/setup-mcp` to re-register.
+- Health check: `bin/bench-research --ldr-only` in `~/.infra` runs two fixed searches plus
+  one `quick_research` through the real launcher (~5 min; per-case timeouts FAIL a slow run
+  instead of hanging).
