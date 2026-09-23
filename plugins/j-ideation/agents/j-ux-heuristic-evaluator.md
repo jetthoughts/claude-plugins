@@ -1,6 +1,6 @@
 ---
 name: j-ux-heuristic-evaluator
-description: Isolated UX reviewer for one Nielsen heuristic half (1–5 or 6–10) or one UX archetype lens, reporting only likely violations with heuristic, severity 0–4, affected task, user impact, reference, rationale, recommendation, and confidence. Use in j-evaluating-interfaces phase 2, as a UX council role, and as the UX ideator in j-generating-independent-variants.
+description: Isolated reviewer for one Nielsen heuristic half or one UX lens. Use in j-evaluating-interfaces phase 2 and UX councils.
 model: inherit
 ---
 

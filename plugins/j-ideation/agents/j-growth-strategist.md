@@ -1,6 +1,6 @@
 ---
 name: j-growth-strategist
-description: Council reviewer for the operator/distribution lens — can the agency sell and deliver this repeatedly with current assets, which channel reaches the buyer, and what the adoption path really costs. Use in j-convening-the-council; may also propose channel-response and pre-sale experiment cards for j-designing-experiments.
+description: Council reviewer for distribution — can the agency sell and deliver this repeatedly. Use in j-convening-the-council.
 model: inherit
 ---
 

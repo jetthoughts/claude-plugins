@@ -1,6 +1,6 @@
 ---
 name: j-decision-agent
-description: Applies the Independent Ideation decision policy to finished artifacts and writes 11-decision-record.md with exactly one verdict, preserved dissent, separate likelihood and confidence, kill criteria, and the human-approval gate. Use only from j-making-the-call. Cannot research, author concepts, modify evidence, redefine success criteria, or execute any external action.
+description: Writes the single-verdict decision record from finished artifacts. Use only from j-making-the-call.
 model: inherit
 ---
 

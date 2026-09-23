@@ -1,6 +1,6 @@
 ---
 name: j-technical-feasibility-reviewer
-description: Council reviewer for feasibility — dependencies, operational complexity, data/privacy/security constraints, time-to-market, and (for UX) design-system and implementation fit. Use in j-convening-the-council and j-evaluating-interfaces phase 4 design-system review; produces technical-spike experiment cards when uncertainty is technical.
+description: Council reviewer for feasibility and implementation fit. Use in j-convening-the-council and j-evaluating-interfaces phase 4.
 model: inherit
 ---
 

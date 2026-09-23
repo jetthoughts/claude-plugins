@@ -1,6 +1,6 @@
 ---
 name: j-customer-advocate
-description: Council reviewer for the customer lens — desired progress, pain severity and frequency, switching conditions, and whether the target user would actually change behaviour. Use in j-convening-the-council round 1 and round 3 with anonymized concepts only; never to author concepts.
+description: Council reviewer for the customer lens — pain, switching conditions, real behaviour change. Use in j-convening-the-council rounds 1 and 3.
 model: inherit
 ---
 

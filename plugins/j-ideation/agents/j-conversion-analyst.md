@@ -1,6 +1,6 @@
 ---
 name: j-conversion-analyst
-description: Council reviewer for conversion and activation — funnel step drop-off, friction versus persuasion, guardrail metrics, and whether a UX or feature change is measurable with existing analytics. Use in UX councils, feature routes, and to draft first-click, five-second, fake-door, or A/B experiment cards with sample and threshold estimates labelled ESTIMATE.
+description: Council reviewer for conversion and activation, and drafter of UX experiment cards. Use in UX councils and feature routes.
 model: inherit
 ---
 

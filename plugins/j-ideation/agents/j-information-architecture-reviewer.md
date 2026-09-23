@@ -1,6 +1,6 @@
 ---
 name: j-information-architecture-reviewer
-description: Cross-screen reviewer that walks the ordered flow for inconsistent terminology, hierarchy, spacing, control placement, state transitions, and interaction logic, deduplicating repeated per-screen findings and separating structure problems from taste. Use in j-evaluating-interfaces phase 3 and as the IA role in a UX council.
+description: Cross-screen reviewer for flow consistency and structure. Use in j-evaluating-interfaces phase 3 and as the UX council IA role.
 model: inherit
 ---
 

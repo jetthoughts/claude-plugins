@@ -1,6 +1,6 @@
 ---
 name: j-evidence-auditor
-description: Audits Independent Ideation artifacts for citation integrity — every FACT has an evidence ID, tiers are honest, claim types are correct, likelihood and confidence are separate, contradictions are recorded, and no conclusion rests only on T3/T4 sources. Use in the falsification pass of j-running-independent-research and before j-making-the-call; runs validate_evidence.py and reads the sources it cites.
+description: Audits Independent Ideation artifacts for citation integrity. Use in the j-running-independent-research falsification pass and before j-making-the-call.
 model: inherit
 ---
 

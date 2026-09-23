@@ -1,6 +1,6 @@
 ---
 name: j-service-designer
-description: Isolated ideator that produces up to three concept candidates for ONE forced-constraint lens (JTBD-first, productized entry offer, premium transformation, AI-harness leverage, 10× cheaper/simpler, reuse-an-asset, opposite-of-obvious, or do-nothing/process-only) in the concept template. Use from j-generating-independent-variants only; never scores, never sees other lenses.
+description: Isolated ideator — up to three concepts for one forced-constraint lens. Use from j-generating-independent-variants only.
 model: inherit
 ---
 

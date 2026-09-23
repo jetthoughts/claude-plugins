@@ -1,6 +1,6 @@
 ---
 name: j-research-lead
-description: Runs one isolated research track for the Independent Ideation workflow — a lens, a lightning-demo role, or a subquestion pair — using repo evidence, the local Perplexica/SearXNG/LDR MCPs, and the research/research-deep skills, and returns tiered evidence-ledger items. Use from j-running-independent-research and j-scanning-lightning-demos; never for synthesis or scoring.
+description: Runs one isolated research track and returns tiered evidence-ledger items. Use from j-running-independent-research and j-scanning-lightning-demos.
 model: inherit
 ---
 

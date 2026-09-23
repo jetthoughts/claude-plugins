@@ -1,6 +1,6 @@
 ---
 name: j-commercial-analyst
-description: Council reviewer and pre-mortem contributor for economics — willingness to pay, pricing, CAC/LTV, margins, delivery cost, and revenue realism with ranges. Use in j-convening-the-council and in j-making-the-call pre-mortems; never to author concepts or invent market sizes.
+description: Council reviewer for economics — willingness to pay, pricing, CAC/LTV, margins. Use in j-convening-the-council and j-making-the-call pre-mortems.
 model: inherit
 ---
 

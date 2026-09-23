@@ -1,6 +1,6 @@
 ---
 name: j-accessibility-auditor
-description: Assesses keyboard operability, focus order, semantics, contrast, and resilience states (loading, empty, error, permission-denied, success) plus responsive behaviour for UI concepts, from screenshots, code, or flow descriptions. Use in j-evaluating-interfaces phase 5 and as the accessibility role in a UX council; reports what the source material cannot show as UNKNOWN.
+description: Accessibility and resilience-state reviewer for UI concepts. Use in j-evaluating-interfaces phase 5 and as the UX council accessibility role.
 model: inherit
 ---
 
