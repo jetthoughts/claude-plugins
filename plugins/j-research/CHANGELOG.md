@@ -1,5 +1,12 @@
 # Changelog — j-research
 
+## 0.4.0 — 2026-09-24
+
+- `j-research`: Step 1b (brief research agents blind: goal, constraints and prior-research
+  location only; never the known candidates) and a novelty gate in Step 2 (at least 3 NEW findings
+  absent from the brief and the prior research, or the result fails and is re-run). From Paul's
+  correction that researchers repeated the brief.
+
 ## 0.2.0 — 2026-09-11
 
 - `j-research` added: front-door dispatcher over every research tool now installed (wigolo,

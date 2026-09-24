@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0 - 2026-09-24
+
+Assemble and validate one project's harness; ECC is the parts library.
+
+- `setup` is the buy-first recipe: ask, research (blind brief, ≥3 NEW findings), pick (installed > the library registry, where ECC is one of many and ≥ 2 are compared per need > official > supported), copy picked pieces into `.claude/`, one entry point per goal, trial with `claude plugin eval init` plus `--ablation with-without`.
+- Retired the 0.3.0 generator (`scripts/assemble_harness.py`) and the `harness` skill; backups are in (backup deleted 2026-09-24 per Paul: git only).
+- Fixed: the kanban `reviewer=` claim (the field does not exist), the "nothing written into the target repo" contradiction (it is now: scratch copy until the trial passes and Paul approves), and the ECC `harness-audit` gate (it counts files; it is not a quality check).
+- Run by the overseer session (Paul: "this is your responsibility"), not by Hermes.
+
 ## 0.2.0 - 2026-09-09
 
 Breaking simplification to an instruction-only workflow.

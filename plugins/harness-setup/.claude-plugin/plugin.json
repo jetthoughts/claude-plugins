@@ -1,7 +1,7 @@
 {
   "name": "harness-setup",
-  "version": "0.2.0",
-  "description": "Instruction-only project harness setup: discover capabilities, clarify gaps, reuse existing skills and review changes before editing.",
-  "author": {"name": "JetThoughts"},
+  "version": "0.4.0",
+  "description": "Assemble and validate the AI harness for one project (Claude Code, pi or Hermes): research, pick ready pieces from the library registry (ECC is one of many) and installed plugins, copy in only what the goal needs, and prove it with a trial run.",
+  "author": { "name": "JetThoughts" },
   "license": "MIT"
 }

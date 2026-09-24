@@ -1,14 +1,15 @@
 ---
 name: j-research
-description: The front door for any open-web research request in this vault. Use whenever the user says "research", "look into", "find out about", "dig into", "get me up to speed on", "give me research options", "start a research on", or names a topic and asks what tools/sources to use — before reaching for a specific tool (wigolo, j-perplexica-search, j-deep-research, Council, Research, research-deep, NotebookLM, Perplexity, brave-search, searxng, exa, OmniRoute web/x search) directly, since this vault has a dozen overlapping research tools and picking the wrong one wastes a round trip. Picks between three shapes — a quick cited answer, a multi-perspective discussion, or a menu of deeper options — and hands off to the tool built for that shape. NOT FOR searching this vault's own notes (use qmd), code in a repo (use semble/tokensave), a question a NotebookLM notebook already answers (query it directly), or a single already-known URL (use wigolo fetch directly).
+description: The front door for any open-web research request in this vault. Use whenever the user says "research", "look into", "find out about", "dig into", "get me up to speed on", "give me research options", "start a research on", or names a topic and asks what tools/sources to use — before reaching for a specific tool (wigolo, j-perplexica-search, j-deep-research, Council, Research, research-deep, agent-reach, NotebookLM, Perplexity, brave-search, searxng, exa, OmniRoute web/x search) directly, since this vault has a dozen overlapping research tools and picking the wrong one wastes a round trip. Picks between three shapes — a quick cited answer, a multi-perspective discussion, or a menu of deeper options — and hands off to the tool built for that shape. NOT FOR searching this vault's own notes (use qmd), code in a repo (use semble/tokensave), a question a NotebookLM notebook already answers (query it directly), a named platform or a single already-known URL (use `agent-reach` for platform content, `wigolo fetch` for anything else).
 ---
 
 # Research — entry point
 
 This vault has more research tools than any one request needs: `wigolo` (local-first, the CLAUDE.md
-default), `j-perplexica-search` / `j-deep-research` (the older local Perplexica/SearXNG/LDR stack),
-`Council` / `deliberate` (multi-agent discussion), `Research` / `research-deep` (marketplace,
-heavyweight), and NotebookLM for corpus-grounded questions. Guessing among them
+default), `agent-reach` (16-platform structured fetch — Twitter, Reddit, YouTube, GitHub, LinkedIn
+and more, own CLI per platform), `j-perplexica-search` / `j-deep-research` (the older local
+Perplexica/SearXNG/LDR stack), `Council` / `deliberate` (multi-agent discussion), `Research` /
+`research-deep` (marketplace, heavyweight), and NotebookLM for corpus-grounded questions. Guessing among them
 per request is how a fast lookup ends up running a 90-second multi-agent investigation, or a topic
 that needs three viewpoints gets one cited paragraph. This skill is the dispatcher: name the topic
 once, pick the shape, hand off.
@@ -39,7 +40,14 @@ job, because it's the one that knows this vault's actual tool stack.
   (`-c plugin-skills` `-c skills` `-c skills-share` `-c skills-agents`), or `find-skills`.
 - About a Drive project or a corpus already loaded into a NotebookLM notebook → query that notebook
   directly ([[notebooklm-corpora]] names which one).
-- A single URL the user already has → `wigolo fetch` directly, no mode needed.
+- Names a platform (Twitter/X, Reddit, YouTube, GitHub, LinkedIn, Bilibili, XiaoHongShu, Facebook,
+  Instagram, V2EX, Xueqiu, Xiaoyuzhou, Boss直聘, RSS) or hands you a URL from one → `agent-reach`
+  (installed 2026-09-24; `agent-reach doctor --json` shows which of the 16 backends are live right
+  now — 5 need no login, the rest need a cookie the user provides, secondary account recommended).
+  Read the actual thread/comments/transcript through the platform's own structure, not a search
+  snippet of it.
+- A single URL from an ordinary web page (not one of the platforms above) → `wigolo fetch` directly,
+  no mode needed.
 
 Only proceed past here for a genuinely open-web question with no fixed source.
 
@@ -71,7 +79,27 @@ when available, else a short numbered menu:
 | `mcp__exa__web_search_exa` | Semantic/similarity search reads better than keyword search (e.g. "articles like this one"). |
 | `mcp__omniroute__omniroute_web_search` / `omniroute_x_search` | Already routed through the OmniRoute gateway you're using for models — `x_search` specifically for X/Twitter. |
 
+## Step 1b — when the tool is an agent, brief it blind
+
+A research agent handed your candidates, options or channel list returns them ranked, wearing
+independent-sounding confidence. The brief states only:
+- the goal, in the owner's words;
+- the constraints;
+- where prior research lives.
+
+It **never** names the candidates, options or tools you already know. Put this line in the brief:
+"List at least 3 findings that are not in this brief or in the cited prior research. Mark each
+one NEW, with its source."
+
 ## Step 2 — after the tool answers
+
+**Novelty gate (Paul, 2026-09-24: "your researchers just repeat what I said without bringing new
+stuff to the table").** Before relaying the result, check it against what you and the prior
+research already held. Count the findings marked NEW that are really absent from both.
+- Fewer than 3: the result fails. Re-run it with a sharper question and a different angle or
+  source; do not relay it as research.
+- A result that only ranks or confirms known items is a check, not research. Call it that.
+
 
 Keep whatever confidence/citation tagging the underlying tool already produces (wigolo's
 `evidence_score`/`confidence`, Council's dissent, Research's `[HIGH]/[MED]/[LOW]`) — don't strip it
