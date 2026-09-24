@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.4.0 - 2026-09-24
+
+- `contract` §10, no-code work: research, choose and configure tools with risk
+  tiers (the owner approves the exact change for anything paid, external,
+  shared-config or irreversible), snapshot, dry-run, apply exactly, read back,
+  and three extra checker lines. `/innovate` kicks it off. A separate
+  innovation-cycle skill was drafted, then folded in here, because a second copy
+  of the rules drifts (cold review, 2026-09-24).
+- `contract` §5: the default reviewer is `j-cold-eyes-reviewer`
+  (`cold-reviewer` does not exist).
+  Research: pkm `business-os/knowledge/research/2026-09-24-agile-innovation-cycle-no-code.md`.
+
 ## 0.3.0 - 2026-09-03
 
 - New `board-flow` skill: the JetThoughts Kanban delivery flow for agents and

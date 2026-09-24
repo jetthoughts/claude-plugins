@@ -134,7 +134,7 @@ The review lands **before the artifact leaves the workshop**: a plan before the
 operator sees it, a diff before commit, a finding before it is reported, a
 measurement before it is quoted.
 
-**Who reviews:** `cold-reviewer` by default (goal, artifact and the author's
+**Who reviews:** `j-cold-eyes-reviewer` by default (goal, artifact and the author's
 assumptions; never the author's summary of the result) → `codex:codex-rescue`
 (a different vendor) → peer session → human; if none is reachable, ship marked
 **UNREVIEWED** — disclosure, never a silent skip.
@@ -186,3 +186,32 @@ persistent memory for decisions/corrections/state (that is what §4 step 0
 searches; an unstored decision is invisible to the next pass). Store what a
 competent successor could not derive. **Correct, do not accumulate** — two
 contradictory records are worse than none.
+
+## 10. No-code work: research, choose, configure
+
+Same loop and same four eyes when the output is a decision plus a configured tool (SaaS
+settings, integrations, harness or agent config, MCP servers, cron jobs), not a diff. Add three
+fields to the unit: **RISK**, **SNAPSHOT** (the path of the pre-change export, or "read-only") and
+**ROLLBACK** (the exact restore steps, or "none, irreversible", which forces high risk).
+Pure research stops after the decision record.
+
+| Risk | Examples | Rule |
+|---|---|---|
+| low | research, drafts, read-only probes | checker required for the conclusion |
+| medium | a reversible write in a sandbox, a disabled integration, single-user config with a snapshot | checker PASS before apply |
+| high | paid, external (send, post, share, invite), permissions or credentials, deletes, production-wide or shared config (a file several agents or homes load, SOUL, merged skills), no working rollback | checker PASS **and** the owner approves the exact change just before apply; a changed diff voids the approval |
+| never by an agent | granting itself access, disabling audit or approval, approving its own work, deleting the snapshot | human only |
+
+- **Snapshot before any write**: export the settings, copy the file, or commit. For medium or
+  high risk, restore it once in a sandbox. A snapshot never restored is a hope.
+- **Rollback illusion**: a tool with no export or import cannot be rolled back, so the change is
+  high risk.
+- **Dry-run first**: the tool's own preview or `plan`, a trial account, a throwaway profile, or a
+  copy of the config. Never the live tenant first.
+- **Apply exactly the checked change**, and nothing else. "While I was in there" is a new unit.
+- **Read back, don't trust the write**: "saved" or an HTTP 200 is not evidence. The state read
+  back through another path (an API, the UI, a `status` or `list` command) is.
+- **The checker adds three checks to §5**: the snapshot restores (or the risk is correctly high),
+  the state read back matches the checked change with nothing extra, and the risk tier is right.
+- **In Hermes**, PROPOSAL-018 and TEAM-CHARTER govern. There, every SOUL, skill or config change
+  is a proposal the owner applies.
