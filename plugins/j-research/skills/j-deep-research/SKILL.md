@@ -17,7 +17,16 @@ Two engines can drive that loop; pick one:
 | Engine | Tool | Cost | Use when |
 |---|---|---|---|
 | **LDR** (default) | `mcp__ldr__quick_research` / `detailed_research` | free, runs on this machine's LM Studio residency. 145 s on `qwen3-coder-30b`; 200–500 s on the 4B `google/gemma-4-e4b` — check `lms ps` before quoting a budget | the work must stay local, or the question is well within a 4B's synthesis ability (see measurements below) |
-| **OmniRoute** | `omniroute_web_search` (evidence) + `omniroute_route_request` `role: "analysis"` (synthesis) | varies by combo; check `omniroute_check_quota` first | LDR's local model loses the thread (long/technical/academic synthesis) and a stronger routed model is worth the cost |
+| **OmniRoute** | `omniroute_web_search` ×2–3 (evidence) + `omniroute_route_request` `role: "analysis"` (synthesis) | free with a free-tier model; varies by combo — check `omniroute_check_quota` first | LDR's local model loses the thread (long/technical/academic synthesis) and a stronger routed model is worth the cost, or the loop needs to be fast |
+
+**OmniRoute is manual, not autonomous** — you write the search queries and paste the
+evidence into the synthesis prompt yourself; LDR decides both on its own. Measured
+2026-09-24 on the same question (RAGAS metrics): OmniRoute recipe ≈8s total
+(`gemini/gemini-3.1-flash-lite`, $0) vs. LDR's ~150–250s — 20–30× faster, but only
+because you did LDR's search-and-decide loop by hand first. `model` must be
+provider-prefixed (`gemini/gemini-3.1-flash-lite`, `cc/claude-opus-5` — a bare
+`claude-opus-5` 400s); `model: "auto"` with a combo timed out for us; a premium
+lane can be at 0% daily quota (check `omniroute_check_quota` before promising one).
 
 `ldr.search` is the one-shot half of the same tool — a specialist pull with no
 LLM synthesis, seconds not minutes. Requires `engine` (`searxng`, `arxiv`,
