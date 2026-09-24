@@ -30,7 +30,10 @@ curator and periodic auto-review are all off. On such a correction:
    Template: /Users/pftg/dev/pkm/hermes-ecosystem/retrospectives/2026-09-24-incident-review.md,
    the first one (a 5-whys chain per fact, citing evidence; classes of cause; one mechanism per
    class, with a replay test; ≥ 3 NEW findings).
-3. Run `/refine` in the affected profile's session to trigger the memory and skill review. Its
+3. Run `/refine` in the affected profile's session to trigger the memory and skill review. It must
+   be an INTERACTIVE session (`hermes -p <p> chat --resume <session_id>`, then type /refine).
+   In one-shot mode (`-q "/refine" -Q`) the text is sent as a normal prompt: the agent "refined"
+   a file instead (tested 2026-09-24). Its
    changes are staged, not applied (`skills.write_approval` and `memory.write_approval` are on);
    Paul or the overseer approves them.
 4. Countermeasures are proposals. Nothing changes config, a SOUL or a skill until approved.
