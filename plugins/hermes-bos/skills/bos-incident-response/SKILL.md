@@ -19,6 +19,22 @@ Classify a blocked or gave-up kanban task against a table of known fix recipes, 
 - Incidents directory: `/Users/pftg/dev/pkm/business-os/operations/incidents/`
 - Canonical format carrier: this skill (per the Business OS root `AGENTS.md`)
 
+## Owner-correction trigger (Paul, 2026-09-24): the only trigger for reflection
+
+Reflection and incident review run **only when Paul says an agent was wrong**: in chat, a Plane
+comment, a kanban comment, or through the overseer. They never run on a schedule. Cron jobs, the
+curator and periodic auto-review are all off. On such a correction:
+1. Quote Paul's words verbatim, with the date, on the affected card.
+2. Create ONE incident-review card for kanban-orchestrator, with idempotency key
+   `incident-<YYYYMMDD>-<slug>`. Its body is his words plus the facts, each with an evidence path.
+   Template: /Users/pftg/dev/pkm/hermes-ecosystem/retrospectives/2026-09-24-incident-review.md,
+   the first one (a 5-whys chain per fact, citing evidence; classes of cause; one mechanism per
+   class, with a replay test; ≥ 3 NEW findings).
+3. Run `/refine` in the affected profile's session to trigger the memory and skill review. Its
+   changes are staged, not applied (`skills.write_approval` and `memory.write_approval` are on);
+   Paul or the overseer approves them.
+4. Countermeasures are proposals. Nothing changes config, a SOUL or a skill until approved.
+
 ## When to Use
 
 Use when a kanban task has `status` blocked or gave_up, or when triaging existing incident records in `operations/incidents/`. Do not use for ordinary task progression or for planning new work — that is `bos-intake`.
