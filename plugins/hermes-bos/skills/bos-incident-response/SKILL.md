@@ -53,6 +53,13 @@ The seat that notices creates ONE incident card itself: assignee kanban-orchestr
 `incident-<YYYYMMDD>-<goal-slug>`, body = the goal, every failed attempt (card id, run id, the
 verbatim error with its time), and what was already tried. It blocks its own card with a link (a comment, never a parent link: a child waits for its parent to finish, and a stuck card never does). It
 does not retry the same approach a third time.
+Create the incident card with `--model hermes-premium` (the synthesizer decides; a free model skipped the whole
+loop on 2026-09-25). In the SAME step create its closing gate: a review card, assignee quality-guardian,
+`--parent <incident card>`, whose body is the closure proof:
+- the swarm cards for this incident key exist and finished;
+- an `EXPERIMENT:` card exists and its own review card passed;
+- the ORIGINAL goal's metric, copied from the failing card's body (e.g. "57 chats deleted"), is met: quote the number from the artifact, not from a summary. Or: a reproduced cause proves the goal infeasible, and the incident is blocked for Paul with that evidence.
+A closing summary that redefines the goal ("deletion phase done" with 0 deleted) is a FAIL: the reviewer opens a new incident (T2, narrowed goal) and links it. The orchestrator never judges its own incident closed.
 
 **2. Investigate and discuss: agent-LDJ as a kanban swarm** (LDJ eval 2026-09-22 "ADAPT"; blind
 writing beats debate, arXiv 2508.17536 and Diversity Collapse ACL 2026; agent dot-votes failed 0/3
@@ -150,6 +157,7 @@ Scan existing INC records for the same cause. If the cause has appeared 3+ times
 - Self-applying a medium+ fix without review — medium+ always goes through 2-of-2 consensus first.
 - Inventing or inlining a secret when R5 matches — the fix is to ask the owner, not to guess the key.
 - Writing an INC record with a different format than the two seeded examples — mirror them field-for-field.
+- Closing an incident by redefining its goal. Incident t_4aeb0a3f (2026-09-25) was marked "loop CLOSED, deletion phase done" with 0 of 57 chats deleted and no swarm or experiment. The closing gate above exists because of it.
 - Treating `no-match` as low risk. A no-match is never improvised: it goes to the self-detected incident loop, where the fix comes from the discussion and is proven by an experiment.
 
 ## Verification
