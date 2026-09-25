@@ -35,6 +35,8 @@ This skill is **guidance, not an integration**. It does not ship API clients or 
 
 ## How to Run
 
+**Owner decision (Paul, 2026-09-24) — overrides every `session_use` / `ui_automation_toe` "no", "caution" and "skip" below for Paul's own accounts.** Hermes uses Paul's logged-in Qwen, DeepSeek, Perplexity and Kimi sessions through ego-browser as its default research lanes ("MUST HAVE", HERM-68). When a card asks for web lanes, a run that skips these sessions has failed, whatever else it produced. Proof of use is the chat URL for each lane (e.g. `https://chat.qwen.ai/c/<uuid>`), recorded in the report. The hard stops still hold: no typing credentials, no new accounts, no CAPTCHAs, no payments, no Perplexity Computer mode, never delete or archive a chat. If a lane is unreachable, name the exact failed check (URL, command, output) and continue with the others.
+
 1. Read the relevant verdict file for the service you are targeting (qwen / perplexity / deepseek). The three verdicts live in this workspace family and are mirrored to `business-os/knowledge/research/`. Use them as the source of truth for `recommended_lane`, `session_use`, and `ui_automation_toe` per service — do not re-derive from memory.
 2. Pick the lane the verdict recommends. If the verdict says **skip**, do not build a lane for that service — record the skip in the research log and move on.
 3. Start the deep-research pass using the entry URL and mode from the lane matrix below.
@@ -135,8 +137,8 @@ Per-provider session management lane for DeepSeek consumer chat UI. Verified end
 ## Failure Handling
 
 - **CAPTCHA or login wall = hard stop.** If a lane hits a CAPTCHA or a login wall that cannot be cleared with a vault item, stop the lane immediately and `kanban_block(kind=needs_input)` on the owning task, telling the owner the service, the lane, and the wall. Do not attempt to bypass a CAPTCHA or guess credentials.
-- **ToS-prohibited lane = do not build.** If the verdict says the lane's automation is restricted/prohibited (Perplexity ToS 5.2(d)/(i); DeepSeek ToS 3.5(3)), do not build browser automation for it. Prefer the API lane or skip.
-- **Session-use prohibition = do not reuse the owner's session.** If the verdict says session use is "no" or "caution", do not extract or reuse the owner's logged-in session cookies/tokens for unattended automation.
+- **ToS-prohibited lane = do not build.** If the verdict says the lane's automation is restricted/prohibited (Perplexity ToS 5.2(d)/(i); DeepSeek ToS 3.5(3)), do not build browser automation for it. Prefer the API lane or skip. **Exception:** Paul's own sessions (Owner decision under How to Run).
+- **Session-use prohibition = do not reuse the owner's session.** If the verdict says session use is "no" or "caution", do not extract or reuse the owner's logged-in session cookies/tokens for unattended automation. **Exception:** Paul's own Qwen, DeepSeek, Perplexity and Kimi sessions, driven through ego-browser (see Owner decision under How to Run). Never extract cookies or tokens from them.
 - **Rename failure = escalate, do not retry indefinitely.** If a chat management operation (rename, move, archive) fails after 3 attempts via browser automation, record the failure in the evidence pack and escalate to the owner. Do not loop on the same failing selector.
 - Record every hard stop in the research log with service, lane, wall type, and the block reason.
 
@@ -152,4 +154,5 @@ When a deep-research pass returns a report that needs sharpening:
 
 - For deep-research passes: use the **API lane** for DeepSeek (5M free tokens) or Perplexity (Pro subscription) to avoid ToS uncertainty and get structured output.
 - For session management: verify login via ego-browser, but prefer API lanes for automated deep-research workloads.
+- For Paul's cards that ask for web lanes: his own sessions through ego-browser come first (Owner decision under How to Run); API lanes are an addition, not a substitute.
 - For verification: always save evidence files with the exact chat URL and a captured timestamp. Every T4 answer file must contain the literal word PONG and today's date.
