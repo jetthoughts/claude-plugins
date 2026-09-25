@@ -19,7 +19,7 @@ Classify a blocked or gave-up kanban task against a table of known fix recipes, 
 - Incidents directory: `/Users/pftg/dev/pkm/business-os/operations/incidents/`
 - Canonical format carrier: this skill (per the Business OS root `AGENTS.md`)
 
-## Owner-correction trigger (Paul, 2026-09-24): the only trigger for reflection
+## Owner-correction trigger (Paul, 2026-09-24)
 
 Reflection and incident review run **only when Paul says an agent was wrong**: in chat, a Plane
 comment, a kanban comment, or through the overseer. They never run on a schedule. Cron jobs, the
@@ -38,6 +38,38 @@ curator and periodic auto-review are all off. On such a correction:
    Paul or the overseer approves them.
 4. Countermeasures are proposals. Nothing changes config, a SOUL or a skill until approved.
 
+## Self-detected incident loop (Paul, 2026-09-25): the team finds and fixes its own failures
+
+Paul, 2026-09-25 16:55: "they should be able to realise they are failing; they should initiate the
+incident management and find a solution through group discussions … or even LDJ; they should
+schedule and overview experiment/solution and revise if needed." Nobody waits for Paul to notice.
+A no-match or a repeated failure is not escalated as it is: it enters this loop.
+
+**1. Detect (any seat, and the stuck-guardian sweep as the safety net).** Open the loop when:
+- T1: the same goal has failed on 2+ attempts (retries of one card, or sibling redo cards with the same goal; gave_up, crashed, protocol_violation, block_loop_detected, a worker stopping on its own failure rule, or an overseer/reviewer FAIL);
+- T2: a reviewer finds an invented value, a self-review, or a narrowed goal;
+- T3: the recipe table has no match.
+The seat that notices creates ONE incident card itself: assignee kanban-orchestrator, idempotency key
+`incident-<YYYYMMDD>-<goal-slug>`, body = the goal, every failed attempt (card id, run id, the
+verbatim error with its time), and what was already tried. It blocks its own card with a link. It
+does not retry the same approach a third time.
+
+**2. Investigate and discuss: agent-LDJ as a kanban swarm** (LDJ eval 2026-09-22 "ADAPT"; blind
+writing beats debate, arXiv 2508.17536 and Diversity Collapse ACL 2026; agent dot-votes failed 0/3
+in `Topics/management-methodologies.md`, so scores and a named decider replace the vote). The
+orchestrator runs:
+`hermes kanban swarm "<incident goal>" --worker researcher:"Blind A: what the runs actually did":five-whys --worker researcher:"Blind B: cause hypotheses from the tools and UI":five-whys,ego-browser --worker quality-guardian:"Blind C: cause hypotheses from skills, config and the card":five-whys --verifier quality-guardian --synthesizer kanban-orchestrator --tenant HERM --idempotency-key <incident key>-swarm`
+- Each worker writes BLIND (never reads the other workers' notes): ≤ 3 problems and ≤ 3 fixes, each with an evidence path, and a 1–5 impact and 1–5 effort score. Every worker prompt carries the line: "Generate causes and fixes substantially different from the obvious one."
+- A cause is a HYPOTHESIS until reproduced (automatic failure attribution finds the failing step only 14% of the time, arXiv 2505.00212). The verifier reproduces the top hypotheses and marks each reproduced / not reproduced, with the command and output.
+- The synthesizer is the named decider. It follows the `ldj` skill: take median scores, pick ONE problem, reframe it as "How might we …", place fixes on the impact/effort grid, and choose ONE experiment. Dissent is kept in the record.
+
+**3. Experiment** (schema from `j-designing-experiments`). The synthesizer creates an `EXPERIMENT:` card: hypothesis, the one change, the metric with pass / fail / inconclusive thresholds, a timebox (one run or one day), budget, owner seat, rollback rule. It also creates a SEPARATE review card (assignee quality-guardian, `--parent <experiment card>`) with the proof command. Anything irreversible (deleting, sending, spending) runs first on a sample the owner approved, never on the full set.
+
+**4. Revise.**
+- PASS: the lesson becomes a new row in the recipe table below plus one fixture (a real input and expected outcome in `fixtures/`), proposed through `bos-skill-improvement` as a staged diff (skill text: the overseer approves; config or SOUL: Paul approves). Log expected vs actual with `j-learning-from-decisions`. Schedule one re-check card with `hermes kanban schedule` (critical: 7 days; others: 30 days); PASS there = zero recurrence.
+- FAIL or inconclusive: the next-ranked hypothesis becomes the next experiment. After 3 experiments without a PASS, block the incident card for Paul with the full evidence (every hypothesis, reproduction result and experiment outcome) and one recommended next step.
+- Record the whole loop in the incident file (`INC-YYYYMMDDNN.md`), appending one section per step (house rule 5: never overwrite).
+
 ## When to Use
 
 Use when a kanban task has `status` blocked or gave_up, or when triaging existing incident records in `operations/incidents/`. Do not use for ordinary task progression or for planning new work — that is `bos-intake`.
@@ -54,13 +86,13 @@ Use when a kanban task has `status` blocked or gave_up, or when triaging existin
 2. Run the recipe matcher (below) against the failure text.
 3. Read the matched recipe's risk class and follow the action rule.
 4. Write the INC record and comment the INC id on the task.
-5. If the cause has appeared 3+ times across INC records, escalate to a postmortem swarm proposal.
+5. If the cause has appeared 3+ times across INC records, or the recipe table has no match, open the self-detected incident loop (above).
 
 ## Quick Reference
 
 ### Recipe matcher
 
-For each blocked/gave_up task, scan the failure text and worker logs for the patterns in the table below, in order. Pick the **first** recipe whose match clause fits. If none fit, classify as `no-match` and escalate — never improvise on medium+ risk.
+For each blocked/gave_up task, scan the failure text and worker logs for the patterns in the table below, in order. Pick the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
 
 ### Risk → action
 
@@ -77,7 +109,7 @@ Pull the task's `last_failure_error`, any `gave_up` event payload, and the most 
 
 ### 2. Match against the recipe table
 
-Scan the failure text top-to-bottom against the match clauses below. Return the **first** recipe whose match clause fits. If none fit, classify as `no-match` and escalate — never improvise on medium+ risk.
+Scan the failure text top-to-bottom against the match clauses below. Return the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
 
 When the failure text or the task's own comments reference **multiple** distinct causes (e.g. a subagent rejection loop *and* a concurrent 503 wave), match each cause independently and use the **highest** risk class among the matches as the incident's risk. Record every matched recipe id in the INC `recipe:` field (e.g. `R6 (lane model switch) + R2 (transient 503)`) and apply the action for the highest-risk hit: if any matched recipe is medium+, the whole incident is treated as medium+ (draft + review, never self-apply).
 
@@ -110,7 +142,7 @@ Seeded examples to mirror:
 
 ### 5. Repeat-class escalation
 
-Scan existing INC records for the same cause. If the cause has appeared 3+ times, propose a postmortem swarm to the owner with a memo in `governance/proposals/`. Do not create the swarm inside this skill — surface the trigger.
+Scan existing INC records for the same cause. If the cause has appeared 3+ times, open the self-detected incident loop (above); the swarm runs there and is not proposed to the owner.
 
 ## Pitfalls
 
@@ -118,7 +150,7 @@ Scan existing INC records for the same cause. If the cause has appeared 3+ times
 - Self-applying a medium+ fix without review — medium+ always goes through 2-of-2 consensus first.
 - Inventing or inlining a secret when R5 matches — the fix is to ask the owner, not to guess the key.
 - Writing an INC record with a different format than the two seeded examples — mirror them field-for-field.
-- Treating `no-match` as low risk — no-match is escalated, never improvised.
+- Treating `no-match` as low risk. A no-match is never improvised: it goes to the self-detected incident loop, where the fix comes from the discussion and is proven by an experiment.
 
 ## Verification
 
