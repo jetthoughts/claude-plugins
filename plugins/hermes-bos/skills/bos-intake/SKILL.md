@@ -118,7 +118,11 @@ Everything new lands in triage/queue — nothing is handled ad hoc, including
 the owner's own ideas posted to kanban. Triage scores every item by
 impact/effort (ICE-style: impact 1-5, effort 1-5, score = impact/effort) and
 reprioritizes the queue on every pass; the score and its one-line rationale go
-in the work item. WIP limit: ONE active project/epic at a time — the next
+in the work item. Also write the score to the card's kanban `priority` as
+round(score × 10) (impact 4 / effort 2 → 20): pass `priority` to `kanban_create`
+on a new card, and use `hermes kanban edit <id> --priority N` when you re-score.
+The dispatcher runs the highest `priority` first and uses age only to break ties,
+so a score kept only in the text does nothing (owner, 2026-09-26). WIP limit: ONE active project/epic at a time — the next
 project's tasks are not promoted until the current one is recorded or
 escalated. Worker-level concurrency is enforced separately
 (`kanban.max_in_progress: 2`).
