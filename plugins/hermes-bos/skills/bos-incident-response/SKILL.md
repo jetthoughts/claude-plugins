@@ -51,7 +51,7 @@ A no-match or a repeated failure is not escalated as it is: it enters this loop.
 - T3: the recipe table has no match.
 The seat that notices creates ONE incident card itself: assignee kanban-orchestrator, idempotency key
 `incident-<YYYYMMDD>-<goal-slug>`, body = the goal, every failed attempt (card id, run id, the
-verbatim error with its time), and what was already tried. It blocks its own card with a link. It
+verbatim error with its time), and what was already tried. It blocks its own card with a link (a comment, never a parent link: a child waits for its parent to finish, and a stuck card never does). It
 does not retry the same approach a third time.
 
 **2. Investigate and discuss: agent-LDJ as a kanban swarm** (LDJ eval 2026-09-22 "ADAPT"; blind
