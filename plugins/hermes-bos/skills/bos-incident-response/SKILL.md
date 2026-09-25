@@ -60,6 +60,7 @@ loop on 2026-09-25). In the SAME step create its closing gate: a review card, as
 - an `EXPERIMENT:` card exists and its own review card passed;
 - the ORIGINAL goal's metric, copied from the failing card's body (e.g. "57 chats deleted"), is met: quote the number from the artifact, not from a summary. Or: a reproduced cause proves the goal infeasible, and the incident is blocked for Paul with that evidence.
 A closing summary that redefines the goal ("deletion phase done" with 0 deleted) is a FAIL: the reviewer opens a new incident (T2, narrowed goal) and links it. The orchestrator never judges its own incident closed.
+Every reviewer verdict (closing gate or experiment review) quotes a result for EACH numbered check in its card body; a verdict that covers fewer checks than the body lists is a FAIL. A review that FAILS creates the work, not a comment: one fix card for the seat that did the work (the single follow-up, exact proof command) and one new review card with `--parent <fix card>`. A comment on a DONE card is never read again (t_bba7cf7b → t_242e65df, 2026-09-25), and the gate downstream is released by `done`, not by PASS, so it must read the upstream verdicts itself.
 
 **2. Investigate and discuss: agent-LDJ as a kanban swarm** (LDJ eval 2026-09-22 "ADAPT"; blind
 writing beats debate, arXiv 2508.17536 and Diversity Collapse ACL 2026; agent dot-votes failed 0/3
