@@ -12,12 +12,13 @@ needs an agentic loop, not a single query. Reach for it when a plain search
 was too thin, or the question needs comparison/synthesis up front — don't
 treat it as step 4 of a search ladder.
 
-Two engines can drive that loop; pick one:
+Three engines can drive that loop; pick one:
 
 | Engine | Tool | Cost | Use when |
 |---|---|---|---|
 | **LDR** (default) | `mcp__ldr__quick_research` / `detailed_research` | free, runs on this machine's LM Studio residency. 145 s on `qwen3-coder-30b`; 200–500 s on the 4B `google/gemma-4-e4b` — check `lms ps` before quoting a budget | the work must stay local, or the question is well within a 4B's synthesis ability (see measurements below) |
 | **OmniRoute** | `omniroute_web_search` ×2–3 (evidence) + `omniroute_route_request` `role: "analysis"` (synthesis) | free with a free-tier model; varies by combo — check `omniroute_check_quota` first | LDR's local model loses the thread (long/technical/academic synthesis) and a stronger routed model is worth the cost, or the loop needs to be fast |
+| **You.com** | `you-research` MCP (async: returns `task_id`, poll with it); `research_effort` lite → frontier | paid per call (`YDC_API_KEY`); standard effort answered in < 1 min (2026-09-25) | you need a cited answer from primary sources fast, or LDR's local model is too thin; a third lane to cross-check the other two |
 
 **OmniRoute is manual, not autonomous** — you write the search queries and paste the
 evidence into the synthesis prompt yourself; LDR decides both on its own. Measured
