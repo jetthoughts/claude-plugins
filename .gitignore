@@ -3,3 +3,7 @@
 plugins/*/[a-z]*-workspace/iteration-*/
 plugins/*/[a-z]*-workspace/skill-snapshot*/
 j-delivery-workspace/
+
+# python bytecode: never a deliverable
+__pycache__/
+*.pyc
