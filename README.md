@@ -3,9 +3,9 @@
 Marketplace repo. Install:
 
 ```bash
-claude plugin marketplace add jetthoughts/claude-plugins
+claude plugin marketplace add /Users/pftg/dev/claude-plugins
 claude plugin install j-delivery@jetthoughts
-claude plugin install unfix@jetthoughts
+claude plugin install j-unfix@jetthoughts
 ```
 
 ## j-delivery
@@ -22,7 +22,7 @@ keeps its project-specific appendices (tool snapshot, domain map, gates).
 Versioning: semver git tags; consumers upgrade deliberately via
 `claude plugin update`. CHANGELOG per plugin.
 
-## unfix
+## j-unfix
 
 Jurgen Appelo's unFIX pattern library for organisation design - Bases, the
 seven Crew types, Forums, Captains, Chiefs, Chairs, and the sixteen Role
@@ -34,39 +34,55 @@ recruitment and compensation and agents have neither.
 Use it for org structure, team topology, decision rights, reteaming, or
 naming the seats in an agent org.
 
-## harness-setup
+## j-harness-setup
 
-Instruction-only project harness setup: discover current capabilities, reconcile context,
-ask targeted questions, reuse installed skills and review changes before editing.
-One explicit skill, no bundled agents, Python, scripts, hooks or MCP servers.
-Reuse an available skill-creator instead of installing a duplicate.
+Project harness setup: discover current capabilities, reconcile context, ask targeted
+questions, reuse installed skills and review changes before editing. Instruction-only —
+no scripts, no generator, no MCP servers. Reuse an available skill-creator instead of
+installing a duplicate.
 
 ```bash
-claude plugin install harness-setup@jetthoughts --scope project
+claude plugin install j-harness-setup@jetthoughts --scope project
 ```
 
-Invoke `/harness-setup:setup` with one project outcome. Installation is optional:
-use a reviewed checkout with `claude --plugin-dir /absolute/path/to/plugins/harness-setup`
-for a temporary trial. See [setup and safety boundaries](plugins/harness-setup/README.md).
-Version 0.2.0 replaces the former Python updater and separate verify skill; verification is
-part of the setup conversation, not an executable enforcement layer.
+Invoke `/j-harness-setup:setup` with one project outcome. Installation is optional:
+use a reviewed checkout with `claude --plugin-dir /absolute/path/to/plugins/j-harness-setup`
+for a temporary trial. See [setup and safety boundaries](plugins/j-harness-setup/README.md).
+
+This plugin currently ships **three** skills: `setup`, plus `omniroute-manager` and
+`browseros-neo`, which are machine-environment skills that belong in their own plugin.
+See `SKILLS_REVIEW.md` (T2.4) — the plugin README carries the same caveat.
 
 ## Adding a skill to this repo
 
-Skills authored for JetThoughts live here and are symlinked into
-`~/.claude/skills/<name>`, so the repo is the single source of truth and the
-skill still resolves at its usual path:
+Create the directory and the file — **never a symlink**:
 
 ```bash
-mkdir -p plugins/<name>/{.claude-plugin,skills}
-mv ~/.claude/skills/<name> plugins/<name>/skills/<name>
-ln -s "$PWD/plugins/<name>/skills/<name>" ~/.claude/skills/<name>
+mkdir -p plugins/<plugin>/skills/<skill>
+$EDITOR plugins/<plugin>/skills/<skill>/SKILL.md
 ```
 
-Then add `.claude-plugin/plugin.json`, a `CHANGELOG.md`, and an entry in
-`.claude-plugin/marketplace.json`.
+Then add or bump `plugins/<plugin>/.claude-plugin/plugin.json`, and make sure the plugin
+is listed in `.claude-plugin/marketplace.json` and the root `plugin.json`.
+
+**Do not symlink a skill into `~/.claude/skills`.** That was the documented recipe until
+2026-09-30 and it produced 22 self-referential symlinks committed to git, a skill
+discovered 592 times instead of 99 by anything that followed links, and a plugin cache
+whose entries had *empty targets* — which is why several plugins reported
+`failed to load`. Delivery is the marketplace only; `NAMING.md` and `INSTALL.md` carry
+the reasoning.
+
+Before committing:
+
+```bash
+python3 scripts/validate_skills.py     # 0 errors required
+```
+
+The same check runs in CI (`.github/workflows/validate-skills.yml`). Install it locally
+with `bash scripts/install-hooks.sh`. All of the defects in `SKILLS_REVIEW.md` were
+mechanically detectable, so this is what keeps them from coming back.
 
 **Vault-coupled skills stay in the vault.** `jt`, `jt-exec-ops`,
-`jt-research-brief` and `jt-sprint` read `~/Documents/pkm/.ai/state/*` and the
+`jt-research-brief` and `jt-sprint` read `~/dev/pkm/.ai/state/*` and the
 vault's notes; extracting them would leave a plugin that only works in one
 checkout and split the content away from the repo that owns it.
