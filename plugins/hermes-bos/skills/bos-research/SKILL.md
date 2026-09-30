@@ -43,9 +43,9 @@ substitute for the owner's decision — the matrix informs, it does not decide.
    artifact, and `constitution/risk-policy.md` (secrets never in files —
    reference env var names only).
 2. Gather facts strictly on the ladder, in order. **The ladder is owned by the `j-research` skill**
-   (this repo, the front door). `~/.infra/.okf/references/research-routing.md` still carries the
-   superseded 2026-09-24 "no cost gate" text and must be re-synced; until it is, `j-research` is
-   authoritative. The list below must match it, and `j-research` wins on any disagreement:
+   (this repo, the front door). `~/.infra/.okf/references/research-routing.md` was revised
+   2026-09-30 and now states this same ladder; `j-research` stays authoritative if the two ever
+   drift apart again. The list below must match it, and `j-research` wins on any disagreement:
    1. `mcp__searxng__searxng_web_search` — first rung for any web fact;
       `mcp__searxng__web_url_read` to read a public page as markdown.
    2. `mcp__tavily__tavily_search` — the single metered fallback, only when

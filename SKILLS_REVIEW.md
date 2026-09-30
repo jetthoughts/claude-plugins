@@ -718,35 +718,47 @@ find ~/.claude/skills ~/.agents/skills ~/.config/skillshare/skills -name SKILL.m
 
 ## 8. Residual items that need an owner
 
-These are **not** blockers and are outside the repo, so they were reported rather than
-changed unilaterally. Each is a real contradiction with the policy you approved, so each
-will re-create the T0.6 problem if it is left.
+Items 8.1 and 8.3 were **resolved on 2026-09-30** at the owner's direction; 8.2 and 8.4
+remain. Each was a real contradiction with the policy approved earlier the same day, so
+each would have re-created the T0.6 problem if left.
 
-**8.1 — `~/.infra/.okf/references/research-routing.md` says the opposite of the approved policy.**
-Its title is *"Research routing — local first, no cost gate"* and its body states: *"the
-2026-09-05 'two-rung ladder' and its metered-tool cost gate are gone … there is no 'only
-when the others are down' rule left to enforce."* That was a deliberate rewrite on
-2026-09-24, but on 2026-09-30 you approved the opposite: **searxng first, tavily as the
-announced metered fallback.** The skills now implement your decision and `j-research` owns
-the ladder; this file still contradicts it. Whoever owns `~/.infra` should reconcile it —
-the drift is recorded explicitly in `bos-research` and `bos-omniroute-ops`.
+**8.1 — RESOLVED. `~/.infra/.okf/references/research-routing.md` said the opposite of the approved policy.**
+It was titled *"Research routing — local first, no cost gate"* and stated: *"the 2026-09-05
+'two-rung ladder' and its metered-tool cost gate are gone … there is no 'only when the
+others are down' rule left to enforce."* That was a deliberate 2026-09-24 rewrite, but on
+2026-09-30 the owner approved the opposite.
 
-**8.2 — `~/.claude/CLAUDE.md:356` still says wigolo is for everything.**
+Revised in place (backup: `research-routing.md.bak-20260930-155225`). It is now titled
+*"Research routing — searxng first, metered announced"* and opens with a dated supersession
+note. It states the ladder — `searxng` first → `tavily` as the **single metered fallback,
+named in the answer** → built-in only if both fail — and reframes the rest as **off-ladder
+roles, not rungs**, with a subsection resolving wigolo's position against the global
+`CLAUDE.md` line. `index.md`'s entry was updated to match.
+
+Verified: the `.okf` bundle still reports **✓ conformant** (21 warnings, all pre-existing
+cross-link warnings in `log.md`) via `~/.agents/skills/validate/scripts/okf_validate.py`.
+
+Two `hermes-bos` skills had recorded the drift, and once the file was fixed the *note
+itself* became stale — `bos-research` (fixed directly) and `bos-omniroute-ops` (fixed by
+the agent that owned it). A stale "known drift" note is the same defect as the drift.
+
+**8.2 — STILL OPEN. `~/.claude/CLAUDE.md:356` says wigolo is for everything.**
 `**Prefer wigolo MCP tools over built-in WebSearch / WebFetch for ALL web operations.**`
-This is inside a **machine-managed block** (`<!-- wigolo:start v0.2.1 wigolo -->` …
+This sits inside a **machine-managed block** (`<!-- wigolo:start v0.2.1 wigolo -->` …
 `<!-- wigolo:end -->`), so editing it in place would be overwritten on the next wigolo
-update — it needs disabling at the source, not patching. It is the instruction that
-`j-wigolo` and the global rules disagreed about; `j-wigolo`'s description now correctly
-calls it a backend and not a rung.
+update — it needs disabling at the source, not patching. `research-routing.md` now names
+this line explicitly as superseded, so the two no longer disagree silently. Retiring the
+managed block is the owner's call.
 
-**8.3 — `~/.infra/.okf/references/research-tools-inventory.md` is a second inventory.**
+**8.3 — RESOLVED. `~/.infra/.okf/references/research-tools-inventory.md` is a second inventory.**
 It is **not** a duplicate: 72 lines and 4 headings against the repo reference's 742 lines
-and 30 headings, structured as *one row per capability* and paired with
-`research-routing.md` and the benchmarks. It is a decision matrix; the repo reference is
-the manual. They should cross-reference each other rather than merge — but they can now
-drift on facts (tool lists, cost models), and nothing checks that.
+and 30 headings — a *one row per capability* decision matrix against a manual. Nothing
+could check the two against each other automatically, so the resolution is a
+cross-reference: that file now carries a callout naming
+`plugins/j-research/skills/j-research/references/tools-inventory.md` as the canonical
+runtime copy, and requiring both to be edited together.
 
 **8.4 — Four `hermes-bos` SOP bodies remain over 8k with no `references/`.**
 `bos-incident-response` (18.2k), `bos-research-incident` (18.0k), `bos-omniroute-ops`
-(14.3k), `bos-intake` (8.5k). These are the only remaining validator warnings. Splitting
-them is the last unticked Phase 4 item and was left pending your call.
+(14.3k), `bos-intake` (8.5k). These are the only remaining validator warnings. The owner
+approved splitting them on 2026-09-30; that work is the last item.

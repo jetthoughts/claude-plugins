@@ -1,7 +1,7 @@
 {
   "name": "hermes-bos",
   "description": "Hermes Business OS standard operating procedures (bos-* skills: intake, plan, delegate, research, quality gate, incident response, reviews, skill evolution). Read by Hermes directly from ~/dev/claude-plugins/plugins (external_dirs). Moved here on 2026-09-24 from ~/.config/skillshare/skills, where they had no git history.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": { "name": "JetThoughts", "url": "https://github.com/jetthoughts" },
   "license": "MIT",
   "keywords": ["hermes", "business-os", "sop", "kanban"]

@@ -15,24 +15,16 @@ metadata:
 
 Review the research infrastructure for health, cost, and lane-strategy problems; recommend fixes; and schedule incident hotfixes through kanban triage. Scope covers four services:
 
-1. **OmniRoute** model gateway (`http://192.168.178.66:20128`) — model routing, combos, API keys.
-2. **searxng** (`http://127.0.0.1:8081`, Vane compose) — first-rung web search.
-3. **perplexica** (`http://127.0.0.1:3000`) — cited-answer synthesis.
-4. **LDR** (`~/.local/bin/ldr-mcp`, `ldr-web`) — local deep research.
+Service inventory (four services, endpoints, DB/config paths, model switcher): see `references/service-inventory.md`.
 
 Hermes seats are read-only against all service state; every change they find is packaged as a ready-to-apply instruction. The owner's operator session (Claude Code) may apply OmniRoute changes through the admin API with `OMNIROUTE_API_KEY` from `~/.secrets` (owner authorization 2026-09-23): back up `GET /api/combos` or `GET /api/resilience` first, change one thing, read it back, probe it.
 
-- OmniRoute dashboard: `http://192.168.178.66:20128`; admin API on the same host (`/api/combos`, `/api/resilience`, `/api/settings`). `PATCH /api/resilience` takes only the changed section: the full object fails validation on a stored `comboCooldownWait.maxWaitMs`. `targetTimeoutMs` is per combo, not per lane.
-- OmniRoute DB (read-only): `sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro"`
-- Service catalogue: `~/.infra/bin/services --json` (machine-readable ports/health/start per service)
-- Hermes fleet config: `/Users/pftg/.hermes/config.yaml` plus a separate copy per profile at `~/.hermes/profiles/<p>/config.yaml` (not symlinks since 2026-09-22). Change all of them: `hermes -p <p> config set ...`. Current routing: DEC-2026092302 (`hermes-balanced` / `hermes-economy` / `hermes-premium`).
-- Fleet model switcher: `~/.hermes/bin/hermes-model-all show|set <provider> <model>`
 - Research ladder policy: **owned by the `j-research` skill** (the front door). That ladder is
   `searxng` first → `tavily` as the announced metered fallback → built-in `web_search`/`web_extract`
   only if both fail; perplexica and wigolo are off-ladder roles, not rungs. Where this skill and
-  `j-research` disagree, `j-research` wins. **Known drift:** `~/.infra/.okf/references/research-routing.md`
-  still carries the superseded 2026-09-24 "no cost gate" text (it says gate is gone, wigolo ranks in
-  the search order) and must be re-synced to this ladder.
+  `j-research` disagree, `j-research` wins. **Resolved 2026-09-30:** `~/.infra/.okf/references/research-routing.md`
+  was revised and now states this same ladder (searxng first, tavily the single named metered fallback,
+  everything else off-ladder). `j-research` remains authoritative if they ever diverge again.
 - Incident recipes: `bos-incident-response` (R1–R11)
 
 ## When to Use
@@ -55,66 +47,37 @@ Run these steps in order. Each step names its source and its pass/fail signal.
 
 Compare the models Hermes is configured to use against what OmniRoute actually serves.
 
-```bash
-# What OmniRoute serves (client view)
-curl -s http://192.168.178.66:20128/v1/models -H "Authorization: Bearer $OMNIROUTE_FREE_KEY"
-
-# What Hermes expects
-grep -A5 '^model:' /Users/pftg/.hermes/config.yaml
-```
+Probe command (step 1): see `references/probes-and-commands.md`.
 
 Fail signal: a model in Hermes `model.default` or `providers.omniroute.models` absent from the served list. Currently expected: `kmc/k3` (session model), `cos-thinking` (auxiliary), `bos-main` (aggregator).
 
 ### 2. Provider connection health
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" \
-  "SELECT provider, name, is_active, last_error, last_error_at FROM provider_connections ORDER BY is_active, provider;"
-```
+Probe command (step 2): see `references/probes-and-commands.md`.
 
 Flag: active=0 on a provider the strategy depends on (e.g. moonshot/Kimi Primary disabled while kmc/k3 is the session model); non-NULL recent `last_error` on active connections; rising `backoff_level`.
 
 ### 3. Error-rate scan
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" \
-  "SELECT date(timestamp) d, status, COUNT(*) FROM call_logs WHERE timestamp > datetime('now','-7 days') GROUP BY d, status ORDER BY d DESC, COUNT(*) DESC LIMIT 30;"
-```
+Probe command (step 3): see `references/probes-and-commands.md`.
 
 Flag: any 5xx cluster repeating on one model/account (lane problem, not transient); 401/403 bursts (key problem → owner, never guess).
 
 ### 4. Cost / paid-lane audit
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" \
-  "SELECT provider, account, SUM(tokens_in), SUM(tokens_out), COUNT(*) FROM call_logs WHERE timestamp > datetime('now','-7 days') AND provider NOT IN ('lm-studio') GROUP BY provider, account ORDER BY COUNT(*) DESC LIMIT 20;"
-```
+Probe command (step 4): see `references/probes-and-commands.md`.
 
 Flag: traffic on paid providers when free lanes were available; recommend combo-lane reorder (free-first) as an owner dashboard action.
 
 ### 5. Combo strategy check
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" "SELECT name, sort_order FROM combos ORDER BY sort_order;"
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" "SELECT data FROM combos WHERE name='cos-thinking';"
-```
+Combo probes (step 5): see `references/probes-and-commands.md`.
 
 Compare each combo's lane order against the free-first policy. Note reset-aware handling: after an OmniRoute version update, verify combos still resolve to live connections (post-update lane drift is a known failure class).
 
 **Reweight rules (daily scan).** Compute per-provider success and free-traffic share from call_logs (trailing 48h; the provider-is-a-combo-name rows are combo-exhaustion terminals, not provider traffic — exclude them):
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" \
-  "SELECT provider, COUNT(*) calls,
-     ROUND(100.0*COUNT(*)/SUM(COUNT(*)) OVER (),2) share_pct,
-     ROUND(100.0*SUM(CASE WHEN status BETWEEN 200 AND 299 THEN 1 ELSE 0 END)/COUNT(*),1) success_pct
-   FROM call_logs
-   WHERE timestamp > datetime('now','-2 days')
-     AND combo_name IN ('free-coding','free-thinking','free-cheap','cos-thinking','agents-all','cos-default','cos-small')
-     AND provider NOT IN ('cos-thinking','free-cheap','free-coding','free-thinking','subs-thinking','subs-coding','subs-cheap','bos-main','agents-all','cos-default','cos-small','auto')
-     AND provider NOT LIKE 'combo/%'
-   GROUP BY provider ORDER BY calls DESC;"
-```
+Reweight scan SQL (step 5): see `references/probes-and-commands.md`.
 
 Rules — findings plus owner dashboard actions, never agent DB edits:
 
@@ -122,13 +85,9 @@ Rules — findings plus owner dashboard actions, never agent DB edits:
 2. **40% share cap.** Any free provider >40% of free-web traffic share over the trailing 48h -> trim toward the mean (lane demotion / widen rotation). On round-robin combos a persistent >40% share signals a dead sibling lane absorbing retries, not a spread problem — check sibling lanes first.
 3. **Monthly re-baseline.** First review of each month, or on incident: re-baseline lane order from the trailing 7-day per-provider success table; record the table in the review file.
 
-Strategy context: per PO decision (2026-09-23, t_df591360) free combos run `priority`/`round-robin`, not `weighted` — per-member weight fields are ignored by the deployed binary (v3.8.50) outside the `weighted` strategy. Phrase every reweight recommendation as a lane-order/strategy change for the owner; do not recommend setting weight fields.
-
 ### 6. Circuit breakers and rate limits
 
-```bash
-sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" "SELECT * FROM domain_circuit_breakers;"
-```
+Probe command (step 6): see `references/probes-and-commands.md`.
 
 Flag: open breakers on domains Hermes depends on.
 
@@ -138,27 +97,17 @@ Verify the ladder's first rung and the off-ladder backends are actually alive be
 behavior. `searxng` is the rung; `perplexica` and `LDR` are off-ladder roles (per the `j-research`
 ladder) and their health is checked here because agents depend on them, not because they are rungs:
 
-```bash
-curl -s "http://127.0.0.1:8081/search?q=hello&format=json" | python3 -c "import json,sys; print('searxng results:', len(json.load(sys.stdin).get('results',[])))"
-curl -s -o /dev/null -w "perplexica providers: %{http_code}\n" http://127.0.0.1:3000/api/providers
-~/.local/bin/ldr-mcp --help >/dev/null 2>&1 && echo "ldr: runnable" || echo "ldr: broken"
-```
+Health probes (step 7): see `references/probes-and-commands.md`.
 
 Pass signal: searxng returns >0 results, perplexica API 200, ldr-mcp starts without import crash. A `RequestsDependencyWarning` on ldr startup is noise, not failure — judge by whether the process serves.
 
 ### 8. Research-lane wiring audit (why agents skip the ladder)
 
-When "agents/kimi don't use perplexica/LDR/searxng" is the symptom, check wiring in this order — most common causes first:
-
-1. **Hermes web backend bypass**: `grep -A3 '^web:' /Users/pftg/.hermes/config.yaml`. If `search_backend: exa`, Hermes' built-in web tool goes straight to the metered paid API and never touches searxng. That is a config-policy conflict with the searxng-first ladder — flag as `high`.
-2. **MCP wiring**: confirm `searxng` and `perplexica` entries exist under `mcp_servers:` in the same config and are not `enabled: false`.
-3. **Skill presence**: `ls ~/.hermes/skills | grep -i 'research\|lanes'` — the `local-deep-research` skill lives only in `~/.agents/skills` (kimi scope); Hermes profiles need a Hermes-side skill or SOUL line to reach LDR.
-4. **SOUL ladder line**: researcher SOUL references the ladder; verify other research-touching profiles (growth-operator, delivery-manager) name it too, or they will default to the built-in web tool.
-5. **Kimi side**: `~/.kimi-code/mcp.json` carries searxng/perplexica — if a kimi session skipped them, check whether `[experimental] tool-select` deferred them (loaded on demand only).
+Wiring checklist in most-common-cause order: see `references/wiring-audit.md`.
 
 ### 9. Cost leak: metered backends
 
-Any of `web.backend: exa`, `web.search_backend: exa`, or tavily usage beyond its single announced-fallback role is a cost leak under the `j-research` ladder. Cross-check `call_logs` for exa/tavily traffic volume when the backend config disagrees with the ladder.
+Cost-leak check: see `references/wiring-audit.md`.
 
 ## Output
 
@@ -170,11 +119,7 @@ Write a findings report to `~/dev/pkm/business-os/operations/omniroute-reviews/Y
 
 For every `critical` or `high` finding, create a kanban hotfix task:
 
-```bash
-hermes kanban create "<title>" --triage --assignee quality-guardian --created-by owner --body-file - <<'EOF'
-<body: finding, evidence, proposed owner action, verification step>
-EOF
-```
+Hotfix task creation command: see `references/probes-and-commands.md`.
 
 and record an INC file per `bos-incident-response` when the finding caused (or is causing) blocked kanban tasks.
 

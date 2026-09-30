@@ -47,13 +47,7 @@ Do **not** use for: code/repo questions, single-fact lookups (`wigolo fetch` is 
 
 State the incident in one line: "Opening incident INC-YYYYMMDDNN: missed X / low confidence / stale." Create the OpenViking entries in **one batch**:
 
-```
-viking://user/default/incidents/YYYY-MM-DD/<incident_id>/rca.md       (created later in step 2)
-viking://user/default/incidents/YYYY-MM-DD/<incident_id>/candidates.md (created later in step 3)
-viking://user/default/incidents/YYYY-MM-DD/<incident_id>/vote.md       (created later in step 4)
-viking://user/default/incidents/YYYY-MM-DD/<incident_id>/experiment.md (created later in step 5)
-viking://user/default/incidents/YYYY-MM-DD/<incident_id>/resolution.md (created later in step 8)
-```
+OpenViking artifact layout (create in one batch): see `references/artifact-templates.md`.
 
 Mirror the kanban-side INC file at `operations/incidents/INC-YYYYMMDDNN-<slug>.md` with frontmatter (`id`, `title`, `status: open`, `cause: research-miss-X`, `recipe: no-match`, `risk: medium`, `action: 3-variant swarm`, `verdict: open`, `date`).
 
@@ -69,28 +63,7 @@ Read the failed artifact and the prior research:
 
 Write `rca.md` (concise, ≤1 page):
 
-```
-## Original query
-<the failed question>
-
-## Failed output
-<path + run id + 1-line summary>
-
-## Missing / wrong
-<user's words verbatim, or the auto-trigger>
-
-## Root cause
-Which agent failed, which tools it used, why it missed X:
-- no deep read (snippet-only)
-- outdated filter (time_range not set)
-- duplicate collapse (3 different URLs all returned the same press release)
-- wrong decomposition (asked the wrong sub-question)
-- off-ladder tool substitution (used a tier 3 source instead of tier 1)
-- wrong tool substitution (used Wigolo when Tavily was needed for Reddit via include_domains, etc.)
-
-## Tools demoted
-- <tool> — false_negative += 1 (with the missing item named)
-```
+`rca.md` body template: see `references/artifact-templates.md`.
 
 Append `tool_scores/global` (increment `false_negatives` for tools that missed X). Read `tool_scores/global` first to weight later votes.
 
@@ -98,13 +71,7 @@ Append `tool_scores/global` (increment `false_negatives` for tools that missed X
 
 Spawn 3 researcher subagents in parallel via `delegate_task`. **Each uses a deliberately different tool chain** — same chains guarantee the same miss.
 
-#### Default variant table (researcher profile — adjust per profile)
-
-| Variant | Posture | Tool chain | Why this chain is different |
-|---|---|---|---|
-| **A — Discovery (broad recall)** | Wide-net semantic + structured | `exa.web_search_exa` (numResults=15, semantic) → top 5 URLs via `web_extract` → `perplexica.search` (sources: web) | Semantic recall beats keyword; misses nothing obvious |
-| **B — Freshness (recency-first)** | Time-bounded, primary sources | `searxng.searxng_web_search` (time_range=week) → `you-research` (standard effort, async poll) → `searxng.searxng_web_search` (time_range=month, topic=news) | Two time-bounded rungs catch what an undated search misses |
-| **C — Novelty (alternative + emerging)** | Query expansion + platform/forum sweep | `exa.web_search_exa` (numResults=20, query expansion) → `ldr.search` (openalex, for academic/technical) → `perplexica.search` (sources: discussions) | Brings academic and forum signal that A and B miss |
+Researcher-profile default variant table (A Discovery / B Freshness / C Novelty): see `references/variant-chains.md`.
 
 These are **deliberate diversity chains for the swarm**, not the general research ladder — the point of the 3-variant pattern is that the chains differ, so a re-run cannot reproduce the same miss. A fresh web fact outside the swarm still goes on the `j-research` ladder (`searxng` first → `tavily`, announced).
 
@@ -121,31 +88,12 @@ Brief each subagent blind — do not pass it the failed artifact, just the origi
 
 Consolidate into `candidates.md`:
 
-```
-## Candidates from Variant A (Discovery)
-| candidate | URL | date | evidence | confidence |
-|---|---|---|---|---|
-
-## Candidates from Variant B (Freshness)
-...
-
-## Candidates from Variant C (Novelty)
-...
-```
+`candidates.md` layout: see `references/artifact-templates.md`.
 
 #### Platform-aware variants (when the topic names a platform)
 
 If the topic needs Reddit, Twitter/X, YouTube, GitHub, LinkedIn, Bilibili, XiaoHongShu, RSS feeds, etc., the platform lane runs **the same ladder `j-research` owns** — it does not get an order of its own: rung 1 `searxng_web_search` scoped with a `site:` filter, rung 2 `tavily_search` with `include_domains` (metered — announce it in the answer), rung 3 `agent-reach` **off-ladder**, only for what the general index cannot reach.
-
-| Platform | Rung 1 — `searxng_web_search` | Rung 2 — `tavily_search`, announced | Rung 3 — `agent-reach`, off-ladder |
-|---|---|---|---|
-| Reddit | `site:reddit.com` (+ `time_range`) | `include_domains: ["reddit.com"]`, `search_depth: advanced`, `time_range: month` | Reddit backend — login-walled threads, full comment text |
-| Twitter / X | `site:x.com OR site:twitter.com` | `include_domains: ["twitter.com", "x.com"]` (alternate: `omniroute_x_search`) | X backend — thread text behind a login |
-| YouTube (transcript) | `site:youtube.com` for the page | `tavily_extract` on `youtube.com/watch?v=…` (description + first comments) | YouTube backend — the actual transcript |
-| GitHub | `site:github.com` (+ `web_extract` for README/issues) | `include_domains: ["github.com"]` | GitHub backend — issue/PR trees |
-| LinkedIn (public posts) | `site:linkedin.com` | `include_domains: ["linkedin.com"]` | LinkedIn backend |
-| Bilibili / XiaoHongShu | `site:bilibili.com` / `site:xiaohongshu.com` | the platform domain in `include_domains` | platform backends |
-| RSS feeds | feed item URLs via `searxng_web_search` | feed item URLs via `tavily_search` | RSS backend — full history |
+Platform ladder table (rung 1 `searxng` → rung 2 `tavily` → rung 3 `agent-reach`): see `references/platform-ladders.md`.
 
 **Sub-rule:** never run `agent-reach` before the ladder has had its turn — `searxng` with a `site:` filter first, then `tavily` with `include_domains` (announced, metered). `agent-reach` is reserved for login-gated content, comment transcripts, or full RSS history that neither index reaches. This is the same order `j-research` states for a named platform; where they differ, `j-research` wins.
 
@@ -168,12 +116,7 @@ Voting rule:
 
 Write `vote.md`:
 
-```
-| candidate | evidence | recency | relevance | novelty | weighted total |
-|---|---|---|---|---|---|
-| <A1> | 4 | 5 | 5 | 5 | 17 |
-...
-```
+`vote.md` table format: see `references/artifact-templates.md`.
 
 ### 5. Experiment & verify
 
@@ -211,28 +154,7 @@ If attempts < 3 and not done, return to step 3 with sharper queries and demoted 
 
 On done, write `resolution.md`:
 
-```
-## Original query
-<the question>
-
-## What was fixed
-<the gap that the variants caught>
-
-## Voting winner
-<candidate + total score>
-
-## Verified
-<experiment verdict + proof>
-
-## Freshness
-<last re-check date + result>
-
-## Action taken
-- updated research_notes/{topic}/<slug>.md with corrected version
-- appended user_corrections/{topic}: <X>
-- updated tool_scores/global: <tool1> demoted (+1 false_negative), <tool2> promoted (+1 true_positive)
-- removed gap from known_gaps/{topic}: <X>
-```
+`resolution.md` body template: see `references/artifact-templates.md`.
 
 Then write the corrections:
 
@@ -261,7 +183,7 @@ Always return, in this order:
 - **Snippet-only reads.** The top 5 results must be deep-read full-text. Snippets collapse novelty.
 - **Promoting a winner that missed X.** The +2 bonus on X is non-negotiable. A winner without X cannot be the verdict, regardless of weighted total.
 - **Closing without writing back to OpenViking.** The whole point is that the next run inherits the lesson. Skipping step 8 means the same gap recurs.
-- **Inventing tools in the chains.** Use the tools that are actually enabled in `mcp_servers`. The variant table names the defaults for the researcher profile; if a tool is missing locally, swap to the fallback row in the **Platform-aware variants** table and note the swap in `rca.md`.
+- **Inventing tools in the chains.** Use the tools that are actually enabled in `mcp_servers`. `references/variant-chains.md` names the defaults for the researcher profile; if a tool is missing locally, swap to the fallback row in the **Platform-aware variants** table (`references/platform-ladders.md`) and note the swap in `rca.md`.
 - **Calling the failed output "fine, with caveats".** Caveats do not fix misses. Open the incident.
 - **Running the variants sequentially.** They are independent — parallelize via `delegate_task` in one batch.
 - **Reaching for `agent-reach` before the ladder.** `searxng` with a `site:` filter comes first, then `tavily` with `include_domains` (announced). Reserve `agent-reach` for login-walled or transcript-needing content the indexes do not reach.
@@ -276,47 +198,6 @@ Always return, in this order:
 - Kanban INC file at `operations/incidents/INC-YYYYMMDDNN-<slug>.md` matches frontmatter schema, status=`closed`.
 - The user-facing output follows the 6-line format in step 9, no editorial additions.
 
-## Reference variants — by profile (verified against actual mcp_servers)
+## Reference variants — by profile: see `references/variant-chains.md`.
 
-The researcher profile enables: `searxng`, `perplexica`, `ldr`, `you-research`, `browseros-neo`, `exa`. It does **not** enable: `brave`, `tavily`, `omniroute`, `agent-reach`. The variant tables below use only the tools actually wired in `mcp_servers`, with Tavily/agent-reach as additions when the user enables them.
-
-### researcher (default — already enabled)
-
-| Variant | Tool chain |
-|---|---|
-| A — Discovery | `exa.web_search_exa` (numResults=15) → top 5 via `web_extract` → `perplexica.search` (sources: web) |
-| B — Freshness | `searxng.searxng_web_search` (time_range=week) → `you-research` (standard effort) → `searxng.searxng_web_search` (time_range=month, topic=news) |
-| C — Novelty | `exa.web_search_exa` (numResults=20, query expansion) → `ldr.search` (openalex) → `perplexica.search` (sources: discussions) |
-
-### researcher + Tavily (if `mcp_servers.tavily.enabled: true` is set)
-
-| Variant | Tool chain |
-|---|---|
-| A — Discovery | `tavily_search` (search_depth: advanced, time_range: month) → `exa.web_search_exa` → top 5 via `web_extract` |
-| B — Freshness | `searxng.searxng_web_search` (time_range: week) → `tavily_search` (time_range: week, search_depth: advanced) → `you-research` |
-| C — Novelty | `tavily_search` (with `include_domains` for the named platform) → `exa.web_search_exa` → `perplexica.search` (sources: discussions) |
-
-Tavily is the announced metered fallback in the freshness and platform lanes because `include_domains` handles Reddit/Twitter/YouTube/GitHub/LinkedIn without a login gate — `searxng` with a `site:` filter still comes first (see the platform ladder above). It also has a 2-credit cost per `advanced` search — budget rounds.
-
-### default / kanban-orchestrator (read-only, no Tavily)
-
-| Variant | Tool chain |
-|---|---|
-| A — Discovery | `searxng.searxng_web_search` → `web_extract` |
-| B — Freshness | `searxng.searxng_web_search` (time_range=week) → `you-research` |
-| C — Novelty | `searxng.searxng_web_search` with `include_domains` for the platform → `perplexica.search` (sources: discussions) |
-
-## How to enable Tavily on the researcher profile
-
-Tavily is not currently in `mcp_servers` for the researcher profile. To enable it:
-
-```yaml
-mcp_servers:
-  tavily:
-    type: stdio
-    command: /Users/pftg/.infra/mcp/tavily-mcp    # or the path from `hermes mcp list`
-    args: []
-    enabled: true
-```
-
-`TAVILY_API_KEY` must be in `~/.hermes/.env`. Free tier: 1,000 searches/month; `advanced` search uses 2 credits each. Test before relying on it: `mcp__tavily__tavily_search` with `query: "test"`, `max_results: 1`, then check the response shape.
+Tavily setup for the researcher profile: see `references/variant-chains.md`.

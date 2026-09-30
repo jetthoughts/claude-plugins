@@ -63,11 +63,7 @@ A closing summary that redefines the goal ("deletion phase done" with 0 deleted)
 **Overseer emergency stopgap (DEC-2026092600 rule 1).** When the board cannot dispatch workers, the overseer may apply a process-scoped repair outside the board (never a durable file edit), comments it on the incident the moment it is applied, and the incident record carries `approval: post-hoc-stopgap` until the durable owner action lands. Reviews that ran under the stopgap still count; worker runs completing under it are evidence for the durable fix.
 Every reviewer verdict (closing gate or experiment review) quotes a result for EACH numbered check in its card body; a verdict that covers fewer checks than the body lists is a FAIL. A review that FAILS creates the work, not a comment: one fix card for the seat that did the work (the single follow-up, exact proof command) and one new review card with `--parent <fix card>`. A comment on a DONE card is never read again (t_bba7cf7b → t_242e65df, 2026-09-25), and the gate downstream is released by `done`, not by PASS, so it must read the upstream verdicts itself.
 
-**2. Investigate and discuss: agent-LDJ as a kanban swarm** (LDJ eval 2026-09-22 "ADAPT"; blind
-writing beats debate, arXiv 2508.17536 and Diversity Collapse ACL 2026; agent dot-votes failed 0/3
-in `Topics/management-methodologies.md`, so scores and a named decider replace the vote). The
-orchestrator runs:
-`hermes kanban swarm "<incident goal>" --worker researcher:"Blind A: what the runs actually did":five-whys --worker researcher:"Blind B: cause hypotheses from the tools and UI":five-whys,ego-browser --worker quality-guardian:"Blind C: cause hypotheses from skills, config and the card":five-whys --verifier quality-guardian --synthesizer kanban-orchestrator --tenant HERM --idempotency-key <incident key>-swarm`
+**2. Investigate and discuss: agent-LDJ as a kanban swarm** — the method, rationale and the exact `hermes kanban swarm` command: see `references/self-detected-loop-swarm.md`.
 - Each worker writes BLIND (never reads the other workers' notes): ≤ 3 problems and ≤ 3 fixes, each with an evidence path, and a 1–5 impact and 1–5 effort score. Every worker prompt carries the line: "Generate causes and fixes substantially different from the obvious one."
 - A cause is a HYPOTHESIS until reproduced (automatic failure attribution finds the failing step only 14% of the time, arXiv 2505.00212). The verifier reproduces the top hypotheses and marks each reproduced / not reproduced, with the command and output.
 - Models: the blind workers may run on the seat default (cheap and independent). The VERIFIER and the SYNTHESIZER make the judgments, so pin both to the strong model: `hermes kanban set-model <card> hermes-premium`, or create them with `--model hermes-premium`. On 2026-09-25 both were created on the free default and the overseer had to pin them; the free model had already skipped this loop once.
@@ -76,7 +72,7 @@ orchestrator runs:
 **3. Experiment** (schema from `j-designing-experiments`). The synthesizer creates an `EXPERIMENT:` card: hypothesis, the one change, the metric with pass / fail / inconclusive thresholds, a timebox (one run or one day), budget, owner seat, rollback rule. It also creates a SEPARATE review card (assignee quality-guardian, `--parent <experiment card>`) with the proof command. Anything irreversible (deleting, sending, spending) runs first on a sample the owner approved, never on the full set.
 
 **4. Revise.**
-- PASS: the lesson becomes a new row in the recipe table below plus one fixture (a real input and expected outcome in `fixtures/`), proposed through `bos-skill-improvement` as a staged diff (skill text: the overseer approves; config or SOUL: Paul approves). Log expected vs actual with `j-learning-from-decisions`. Schedule one re-check card with `hermes kanban schedule` (critical: 7 days; others: 30 days); PASS there = zero recurrence.
+- PASS: the lesson becomes a new row in the recipe table (`references/recipe-table.md`) plus one fixture (a real input and expected outcome in `fixtures/`), proposed through `bos-skill-improvement` as a staged diff (skill text: the overseer approves; config or SOUL: Paul approves). Log expected vs actual with `j-learning-from-decisions`. Schedule one re-check card with `hermes kanban schedule` (critical: 7 days; others: 30 days); PASS there = zero recurrence.
 - FAIL or inconclusive: the next-ranked hypothesis becomes the next experiment. After 3 experiments without a PASS, block the incident card for Paul with the full evidence (every hypothesis, reproduction result and experiment outcome) and one recommended next step.
 - Record the whole loop in the incident file (`INC-YYYYMMDDNN.md`), appending one section per step (house rule 5: never overwrite).
 
@@ -102,7 +98,7 @@ Use when a kanban task has `status` blocked or gave_up, or when triaging existin
 
 ### Recipe matcher
 
-For each blocked/gave_up task, scan the failure text and worker logs for the patterns in the table below, in order. Pick the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
+For each blocked/gave_up task, scan the failure text and worker logs for the patterns in `references/recipe-table.md`, in order. Pick the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
 
 ### Risk → action
 
@@ -119,25 +115,17 @@ Pull the task's `last_failure_error`, any `gave_up` event payload, and the most 
 
 ### 2. Match against the recipe table
 
-Scan the failure text top-to-bottom against the match clauses below. Return the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
+Scan the failure text top-to-bottom against the match clauses in `references/recipe-table.md`. Return the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
 
 When the failure text or the task's own comments reference **multiple** distinct causes (e.g. a subagent rejection loop *and* a concurrent 503 wave), match each cause independently and use the **highest** risk class among the matches as the incident's risk. Record every matched recipe id in the INC `recipe:` field (e.g. `R6 (lane model switch) + R2 (transient 503)`) and apply the action for the highest-risk hit: if any matched recipe is medium+, the whole incident is treated as medium+ (draft + review, never self-apply).
 
-| id | Match clause (first fit wins) | Risk | Fix |
-|---|---|---|---|---|
-| R1 | `workspace_kind=dir` AND `workspace_path` is NULL/missing | low | Set a static absolute `workspace_path` under a shared family dir in `~/.hermes/kanban/workspaces/`, create the dir if needed, reset `consecutive_failures`, then unblock the task. |
-| R2 | cos-thinking `503` with `ALL_TARGETS_SKIPPED` or equivalent saturation message | low | Transient lane saturation — wait one dispatch cycle; if still failing after 30 min, probe the combo health and flag degraded lanes in the OmniRoute dashboard. |
-| R3 | LM Studio model 404 / "model not loaded" / model-not-found in the error | low | Check the served models endpoint; if the model exists on disk but is unloaded, the task owner loads it in LM Studio; otherwise switch the lane to a different served model. |
-| R4 | MCP server retry cooldown / connect failed / timeout in the error | low | Verify the service health endpoint (searxng, perplexica, notebooklm, etc.); degrade the lane in the work item rather than retry-looping. |
-| R5 | missing key_env / 401 / "no active credentials" / auth failure | medium | Owner supplies the secret — never invent or inline keys. Block the task with a note pointing at the missing credential. |
-| R6 | subagent output-contract rejection loop (3+ rejections in the log) | medium | Lane model too weak — switch the lane per the deep-research lane table (current default: local bonsai); record the model change in the INC. |
-| R7 | dispatcher promoted task with open parents / stale gateway symptom | medium | Reclaim + block with a comment; likely stale gateway — recommend `hermes gateway restart` to the owner. |
-| R8 | worker crash `pid not alive` repeated across runs | medium | Check the worker's last output for `Unknown skill(s)` or `Unknown toolsets` — fix the profile skill list or disabled list, then unblock. |
-| R9 | gate/blocked task whose condition task has since completed | low | Unblock with a comment pointing at the completed condition's result; the worker re-evaluates. Seed: INC-2026092203. |
-| R10 | worker respawn crash loop after `review_requested` (exit code 1, identical last output, 3+ repeats) | medium | Task already in review — likely stale gateway dispatcher state; recommend `hermes gateway restart`; recurrence = postmortem swarm. Seed: INC-2026092204. |
-| R11 | task blocked on seat-authority conflict (SOUL hard limit "never edit", wrong seat for the work) | low | Reassign to the seat that holds the authority, unblock with context comment. Exception: edits to SOUL.md, SKILL.md, config or code have no agent seat — complete the card with the proposal path as the result and hand it to delivery-manager to file for owner approval in Plane (item assigned to Paul); never reassign such an edit to another agent. Seed: INC-2026092205. |
-| R12 | worker crash `ModuleNotFoundError: No module named 'hermes_cli'` (worker python = `~/.hermes/tools/python-*/bin/python3`), usually right after `hermes update` | medium | Cause (2026-09-25): the pm launcher `hermes-agent/.hermes/bin/hermes` puts the repo on `sys.path` only in-process, so the dispatcher's fallback `sys.executable -m hermes_cli.main` (kanban_db_dispatch.py `_resolve_hermes_argv`) starts a bare python without Hermes. `hermes pm repair` does NOT fix it. Fix: `HERMES_BIN=/Users/pftg/.hermes/hermes-agent/.hermes/bin/hermes` in `~/.hermes/.env` (owner edits .env; stopgap until then, overseer only: `launchctl setenv HERMES_BIN <same path>`, lost on reboot, proven 2026-09-25 run 598), then `hermes gateway restart` run OUTSIDE any worker (a restart drains in-flight runs, including yours). Block the crashed card with needs_input naming this recipe. Verify: one worker run reaches `completed`, not just `spawned`. Seed: t_bba7cf7b runs 592-595. |
-| R13 | every `hermes` call prints `finishing an interrupted source update` and stalls ~3 min; update.log shows `Build inputs changed during compilation; retry the build` | medium | Cause (2026-09-26): an unfinished `hermes update` is retried by every CLI call, each retry fast-forwards `origin/main`, and the moving source (plus parallel calls) breaks the desktop build's input-hash check, so it never completes. Never run `hermes update` from a worker and never switch the update channel yourself (canary/stable roll back migrations). Block with needs_input naming R13; the owner runs one `hermes update` while no card is running. Verify: `hermes --version` returns in seconds and update.log ends with a completed build. Seed: update.log 2026-09-25 20:16 to 2026-09-26 02:06. |
+Recipe table (R1–R13: match clause, risk, fix): see `references/recipe-table.md`.
+
+**Hard stops carried in the recipe rows — read the row before acting:**
+- R5: the owner supplies the secret; never invent or inline keys.
+- R11: edits to SOUL.md, SKILL.md, config or code have no agent seat — never reassign such an edit to another agent; complete the card with the proposal path and hand it to delivery-manager for owner approval.
+- R12: run `hermes gateway restart` OUTSIDE any worker (a restart drains in-flight runs, including yours).
+- R13: never run `hermes update` from a worker and never switch the update channel yourself (canary/stable roll back migrations).
 
 ### 3. Apply or escalate by risk class
 
@@ -148,9 +136,7 @@ When the failure text or the task's own comments reference **multiple** distinct
 
 Write `INC-YYYYMMDDNN.md` into `operations/incidents/` mirroring the two seeded examples. Required frontmatter: `id`, `title`, `status`, `cause`, `recipe` (recipe id, or `no-match`), `risk`, `action`, `verdict`, `date`. Post the same INC id as a comment on the task. Set `status: closed` and `verdict: fixed, recipe validated` when the fix is verified; otherwise `verdict: escalated` or `verdict: open`.
 
-Seeded examples to mirror:
-- `INC-2026092201-workspace-null-path.md` — R1, low, fixed.
-- `INC-2026092202-output-contract-loop.md` — R6 + R2, medium, fixed.
+Seeded examples to mirror: see `references/inc-records.md`.
 
 ### 5. Repeat-class escalation
 
