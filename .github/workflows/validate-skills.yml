@@ -1,0 +1,40 @@
+name: validate-skills
+
+# The findings in SKILLS_REVIEW.md were all mechanically detectable, which means a
+# review should never have to catch them again. This turns that document into a
+# failing build. Errors fail; warnings (description length, monolith bodies,
+# manifest coverage) are reported but do not block.
+#
+# Local equivalent:  python3 scripts/validate_skills.py
+
+on:
+  push:
+    paths:
+      - 'plugins/**'
+      - 'scripts/validate_skills.py'
+      - '.claude-plugin/marketplace.json'
+      - 'plugin.json'
+      - '.github/workflows/validate-skills.yml'
+  pull_request:
+    paths:
+      - 'plugins/**'
+      - 'scripts/validate_skills.py'
+      - '.claude-plugin/marketplace.json'
+      - 'plugin.json'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install PyYAML
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: Validate the skill estate
+        run: python3 scripts/validate_skills.py
