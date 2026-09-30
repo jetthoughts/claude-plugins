@@ -1,10 +1,10 @@
 {
-  "_comment": "Skills delivered to Paperclip seats as company catalog skills. slug: path relative to $HOME. The Platform Engineer's instrument sweep re-imports any entry whose file changed since the revision recorded on its card; the original is the file, the catalog copy is the delivery.",
-  "house-rules": "Documents/pkm/paperclip-house-rules.md",
-  "method-catalogue": "Documents/pkm/management-methodologies.md",
-  "ldj": "dev/claude-plugins/plugins/deliberate/skills/ldj/SKILL.md",
-  "lightning-demos": "dev/claude-plugins/plugins/deliberate/skills/lightning-demos/SKILL.md",
-  "five-whys": "dev/claude-plugins/plugins/deliberate/skills/five-whys/SKILL.md",
-  "decision-panel": "dev/claude-plugins/plugins/deliberate/skills/decision-panel/SKILL.md",
+  "_comment": "Skills delivered to Paperclip seats as company catalog skills. slug: path relative to $HOME. The Platform Engineer's instrument sweep re-imports any entry whose file changed since the revision recorded on its card; the original is the file, the catalog copy is the delivery. Every path here is checked by scripts/validate_skills.py (E7) — 4 of these 7 were silently broken on 2026-09-30 by the plugin rename (plugins/deliberate -> plugins/j-deliberate) and by the vault moving from ~/Documents/pkm to ~/dev/pkm.",
+  "house-rules": "dev/pkm/Notes/paperclip-house-rules.md",
+  "method-catalogue": "dev/pkm/Topics/management-methodologies.md",
+  "ldj": "dev/claude-plugins/plugins/j-deliberate/skills/ldj/SKILL.md",
+  "lightning-demos": "dev/claude-plugins/plugins/j-deliberate/skills/lightning-demos/SKILL.md",
+  "five-whys": "dev/claude-plugins/plugins/j-deliberate/skills/five-whys/SKILL.md",
+  "decision-panel": "dev/claude-plugins/plugins/j-deliberate/skills/decision-panel/SKILL.md",
   "practice-research": "dev/claude-plugins/plugins/j-research/skills/practice-research/SKILL.md"
 }
