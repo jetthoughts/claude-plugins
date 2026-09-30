@@ -1,7 +1,7 @@
 {
   "name": "j-business",
   "description": "Three cluster entry points for the commercial side of JetThoughts: know the market, shape the offer, say it in public. Each composes the installed capability instead of restating it.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"

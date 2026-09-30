@@ -1,20 +1,25 @@
 {
   "name": "jetthoughts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "interface": {
     "displayName": "JetThoughts Plugins"
   },
   "plugins": [
-    "cognee",
-    "deliberate",
-    "harness-setup",
+    "hermes-bos",
+    "hermes-ops",
+    "j-business",
+    "j-cognee",
+    "j-deliberate",
     "j-delivery",
-    "j-delivery-workspace",
+    "j-harness-setup",
     "j-ideation",
+    "j-lanes",
     "j-linkedin-post",
     "j-paperclip",
+    "j-personal",
     "j-research",
-    "unfix",
-    "wigolo"
+    "j-unfix",
+    "j-wigolo",
+    "search-routing"
   ]
 }

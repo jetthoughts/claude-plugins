@@ -1,6 +1,6 @@
 {
   "name": "j-ideation",
-  "description": "Independent Ideation: an evidence-based, groupthink-resistant decision workflow for services, markets, features, experiments and UX. Router /j-independent-ideation plus 11 stage skills (framing, research, lightning demos, opportunities, variants, assumptions, council, experiments, interfaces, call, learning), 13 isolated role agents, templates, and four stdlib validators. Every claim labelled FACT/INFERENCE/ASSUMPTION/ESTIMATE/CONTRADICTION/UNKNOWN; dissent preserved; a named human makes the call.",
+  "description": "Independent Ideation: an evidence-based, groupthink-resistant decision workflow for services, markets, features, experiments and UX. Router /j-independent-ideation plus 10 skills (research, opportunities, variants, assumptions, council, experiments, interfaces, call, learning), 13 isolated role agents, templates, and four stdlib validators; the framing and lightning-demos stages are the j-deliberate skills of those names. Every claim labelled FACT/INFERENCE/ASSUMPTION/ESTIMATE/CONTRADICTION/UNKNOWN; dissent preserved; a named human makes the call.",
   "version": "0.1.0",
   "author": {
     "name": "JetThoughts",

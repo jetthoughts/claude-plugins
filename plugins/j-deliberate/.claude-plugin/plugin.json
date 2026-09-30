@@ -1,7 +1,7 @@
 {
-  "name": "deliberate",
-  "description": "Decision and method formats. `deliberate`: evidence harness with independent scouts, verified ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion. `ldj`: Lightning Decision Jam, AJ&Smart's problem-first workshop, no research needed. `lightning-demos`: the Design Sprint research round that steals one mechanism per example. `five-whys`: Toyota's root-cause chain with an evidence rule. `decision-panel`: a governed multi-agent decision for Paperclip seats with sealed ballots and one Decision Voter.",
-  "version": "0.3.0",
+  "name": "j-deliberate",
+  "description": "Decision and method formats. `deliberate`: evidence harness with independent scouts, verified ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion. `ldj`: Lightning Decision Jam, AJ&Smart's problem-first workshop, no research needed. `lightning-demos`: the Design Sprint research round that steals one mechanism per example, with the five-role evidence contract. `five-whys`: Toyota's root-cause chain with an evidence-or-UNSUPPORTED rule, entered from a `framing` frame. `decision-panel`: a governed multi-agent decision for Paperclip seats with sealed ballots and one Decision Voter. `framing`: the decision sentence, measurable outcome, persona-voice problem narrative, and shape-versus-fix approval gate that precede research and solutioning.",
+  "version": "0.3.1",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"

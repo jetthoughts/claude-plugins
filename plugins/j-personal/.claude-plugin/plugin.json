@@ -1,7 +1,10 @@
 {
-  "name": "personal",
+  "name": "j-personal",
   "description": "Paul's personal-life skills, kept apart from JetThoughts: designing-your-life (Burnett & Evans method), berlin-rental-agreement (German landlord law for the flat).",
-  "version": "0.1.0",
-  "author": { "name": "JetThoughts", "url": "https://github.com/jetthoughts" },
+  "version": "0.1.1",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
   "license": "MIT"
 }

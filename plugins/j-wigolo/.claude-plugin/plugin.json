@@ -1,6 +1,6 @@
 {
-  "name": "wigolo",
-  "description": "Local-first web intelligence: search, fetch, crawl, cache, extract, diff, watch and deep research through the wigolo daemon, with the wigolo skill pack conventions (cache-first, keyword query arrays, domain scoping).",
+  "name": "j-wigolo",
+  "description": "Local-first fetch/search backend for agents: one wigolo skill covering search, fetch, crawl, cache, extract, diff, watch, research, agent and find-similar, with per-tool references (cache-first, keyword query arrays, domain scoping). Fork of KnockOutEZ/wigolo 0.1.43-beta.2.",
   "version": "0.1.0",
   "author": {
     "name": "JetThoughts",

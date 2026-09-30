@@ -14,13 +14,13 @@
       "description": "The JetThoughts autonomous delivery contract: 4-eyes loop, evidence standard, /deliver kickoff, core author/verifier agents"
     },
     {
-      "name": "unfix",
-      "source": "./plugins/unfix",
+      "name": "j-unfix",
+      "source": "./plugins/j-unfix",
       "description": "unFIX organisation-design pattern library: Bases, Crews, Forums, Captains, Chiefs, and the sixteen Role Attributes - for human and AI-agent org structure"
     },
     {
-      "name": "deliberate",
-      "source": "./plugins/deliberate",
+      "name": "j-deliberate",
+      "source": "./plugins/j-deliberate",
       "description": "Decision harness: independent scouts, verified evidence ledger, rival mechanisms, adversarial contest, silent vote, decision record with a kill criterion"
     },
     {
@@ -39,18 +39,18 @@
       "description": "Operating the self-hosted Paperclip control plane: loopback API, agents and adapter config, managed instruction bundles, issues and wakeups, budgets, run logs"
     },
     {
-      "name": "harness-setup",
-      "source": "./plugins/harness-setup",
+      "name": "j-harness-setup",
+      "source": "./plugins/j-harness-setup",
       "description": "Instruction-only project harness setup: discover capabilities, clarify gaps, reuse installed skills and review changes before editing"
     },
     {
-      "name": "cognee",
-      "source": "./plugins/cognee",
+      "name": "j-cognee",
+      "source": "./plugins/j-cognee",
       "description": "Agent memory via Cognee: remember/recall/forget against the knowledge graph (tenant API or local), with the bin/cognee CLI for agents without an MCP client"
     },
     {
-      "name": "wigolo",
-      "source": "./plugins/wigolo",
+      "name": "j-wigolo",
+      "source": "./plugins/j-wigolo",
       "description": "Local-first web intelligence: search, fetch, crawl, cache, extract, diff, watch and deep research through the wigolo daemon, with the wigolo skill pack conventions"
     },
     {
@@ -64,9 +64,29 @@
       "description": "The two income lanes as skills: j-jobseek (Berlin job search from the Paperclip board, stops at Paul-only steps), j-venture (evidence-led discovery of a JetThoughts service offer to first paid pilot)."
     },
     {
-      "name": "personal",
-      "source": "./plugins/personal",
+      "name": "j-personal",
+      "source": "./plugins/j-personal",
       "description": "Paul's personal-life skills, kept apart from JetThoughts"
+    },
+    {
+      "name": "j-linkedin-post",
+      "source": "./plugins/j-linkedin-post",
+      "description": "Draft LinkedIn posts in Paul Keen's voice from voice memos or ideas, run the editorial feedback loop, and learn from every correction"
+    },
+    {
+      "name": "hermes-bos",
+      "source": "./plugins/hermes-bos",
+      "description": "Hermes Business OS standard operating procedures: intake, plan, delegate, research, quality gate, incident response, reviews and skill evolution"
+    },
+    {
+      "name": "hermes-ops",
+      "source": "./plugins/hermes-ops",
+      "description": "Hermes runtime operations: audit agent profiles, memory files and skill drift, then propose structured updates"
+    },
+    {
+      "name": "search-routing",
+      "source": "./plugins/search-routing",
+      "description": "Tool-level search router beneath the j-research front door: once a request's shape is known, pick the server to call - simple search versus deep research"
     }
   ]
 }

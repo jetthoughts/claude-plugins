@@ -1,7 +1,7 @@
 {
   "name": "j-lanes",
   "description": "The two income lanes as runnable skills: j-jobseek drives the Berlin job search from the Paperclip board, j-venture runs evidence-led discovery of a JetThoughts service offer. Both stop at anything only Paul can do.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"

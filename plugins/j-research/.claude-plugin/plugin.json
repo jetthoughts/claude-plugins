@@ -1,7 +1,7 @@
 {
   "name": "j-research",
   "description": "Local, keyless research tooling guidance: j-perplexica-search (bounded Vane/Perplexica search with citations) and j-deep-research (Local Deep Research MCP: search, quick_research, detailed_research over the local SearXNG + LM Studio, with the measured latencies and call budgets). Requires the ~/.infra stack (bin/start, bin/setup-mcp). `practice-research`: research a collaboration, product or delivery practice from primary sources with a source ledger. `sync-perplexity`: sync Perplexity library threads into the vault.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"
@@ -17,8 +17,5 @@
     "mcp",
     "jetthoughts",
     "perplexity-sync"
-  ],
-  "commands": [
-    "sync-perplexity"
   ]
 }

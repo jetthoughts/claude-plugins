@@ -1,0 +1,19 @@
+{
+  "name": "search-routing",
+  "description": "Human-invoked reference card listing the search and deep-research tools once a request's shape is known. Not a router and not model-invocable - the router and ladder owner is the j-research skill (searxng first, tavily announced metered fallback).",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "search",
+    "routing",
+    "searxng",
+    "perplexica",
+    "tavily",
+    "jetthoughts"
+  ]
+}
