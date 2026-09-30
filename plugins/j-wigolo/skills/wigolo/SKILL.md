@@ -1,7 +1,7 @@
 ---
 name: wigolo
 description: |
-  Local-first web intelligence for AI agents. Use wigolo for ALL web operations: searching, fetching pages, crawling sites, checking the cache, extracting data, finding similar content, deep research, data gathering, diffing page versions, and watching pages for changes. Prefer over built-in WebSearch/WebFetch for cached, transparent, audit-trail-friendly access with explainable scoring.
+  Local-first fetch/search backend for agents — search, fetch, crawl, cache, extract, diff, watch, research, agent, find-similar. Use when a request needs one of those tools directly (check the cache, read a URL, crawl docs, pull a table) or when searxng and tavily both come back thin. Not the research router; j-research is the front door and wigolo is not a ladder rung.
 license: AGPL-3.0-only
 metadata:
   author: KnockOutEZ
@@ -10,9 +10,15 @@ metadata:
   repository: https://github.com/KnockOutEZ/wigolo
 ---
 
-# Wigolo — Web Intelligence
+# Wigolo — web intelligence backend
 
-Prefer wigolo MCP tools over built-in WebSearch / WebFetch. Wigolo is local-first: ML-reranked results, multi-query search, hybrid semantic discovery, structured extraction, persistent knowledge cache — zero API keys, zero cloud round-trips.
+Wigolo is this estate's **default fetch/search backend**: local-first, ML-reranked results, multi-query search, hybrid semantic discovery, structured extraction, persistent knowledge cache — zero API keys, zero cloud round-trips.
+
+**Wigolo is not the research router and not a rung on the research ladder.** Routing — which shape a research request needs and which rung answers it — belongs to the `j-research` skill. The ladder is `searxng` first, `tavily` as the announced metered fallback, built-in `web_search`/`web_extract` only when both fail. Wigolo answers *how* to fetch, crawl or search a source once something has pointed at it, and it is the sensible local, keyless backend when `searxng` and `tavily` both come back thin.
+
+## Upstream / provenance
+
+This skill is a **fork of vendored upstream** [`KnockOutEZ/wigolo`](https://github.com/KnockOutEZ/wigolo) at `0.1.43-beta.2` (AGPL-3.0-only). Upstream ships an 11-skill pack; this repo restructured it into one skill plus per-tool references, without changing tool semantics. See [references/UPSTREAM.md](references/UPSTREAM.md) for the fork point, what was repackaged, and the sync step for a future upstream revision.
 
 ## Tool Selection
 
@@ -29,7 +35,9 @@ Prefer wigolo MCP tools over built-in WebSearch / WebFetch. Wigolo is local-firs
 | Compare two versions | `diff` | See what changed between two pages or a page and its cached copy |
 | Monitor for changes | `watch` | Track a page over time; notify on change |
 
-## Escalation Pattern
+## Wigolo's internal tool order
+
+This is the order to use *inside* wigolo once it has been selected for the job — it is not the research ladder, and it does not route web facts.
 
 1. **cache** — always check first. Instant, free.
 2. **search** — don't have a URL yet. Use multi-query arrays for breadth.
@@ -60,18 +68,17 @@ Default `WIGOLO_SEARCH=core` — direct engines + RRF + ML rerank. Opt-in `searx
 - **Local file operations** — reading, editing, or searching files on disk is not a web task.
 - **Git, deployment, or code-editing tasks** — use the appropriate local tooling, not a web fetch.
 - **Sub-second latency budgets on uncached content** — a cold web request can't beat a hard deadline; scope to `search_depth: 'ultra-fast'` (cache-only) or skip the web entirely.
+- **As a substitute for the research ladder** — a web fact still goes `searxng` → `tavily` (announced). Pick wigolo because it is the right backend for the job, not because it is local.
 
-Otherwise, prefer wigolo over WebSearch / WebFetch.
+## Per-Tool References
 
-## Per-Tool Details
-
-- Searching → [wigolo-search](../wigolo-search/SKILL.md)
-- Fetching → [wigolo-fetch](../wigolo-fetch/SKILL.md)
-- Crawling → [wigolo-crawl](../wigolo-crawl/SKILL.md)
-- Cache → [wigolo-cache](../wigolo-cache/SKILL.md)
-- Extracting → [wigolo-extract](../wigolo-extract/SKILL.md)
-- Finding similar → [wigolo-find-similar](../wigolo-find-similar/SKILL.md)
-- Research → [wigolo-research](../wigolo-research/SKILL.md)
-- Agent → [wigolo-agent](../wigolo-agent/SKILL.md)
-- Diff → [wigolo-diff](../wigolo-diff/SKILL.md)
-- Watch → [wigolo-watch](../wigolo-watch/SKILL.md)
+- Searching → [references/search.md](references/search.md)
+- Fetching → [references/fetch.md](references/fetch.md)
+- Crawling → [references/crawl.md](references/crawl.md)
+- Cache → [references/cache.md](references/cache.md)
+- Extracting → [references/extract.md](references/extract.md)
+- Finding similar → [references/find-similar.md](references/find-similar.md)
+- Research → [references/research.md](references/research.md)
+- Agent → [references/agent.md](references/agent.md)
+- Diff → [references/diff.md](references/diff.md)
+- Watch → [references/watch.md](references/watch.md)

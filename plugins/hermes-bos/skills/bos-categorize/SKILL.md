@@ -1,6 +1,6 @@
 ---
 name: bos-categorize
-description: Use when a triage card needs a category assigned before promotion. Implements the bos-categorize rubric to assign one of four categories: quick-lookup, pre-research, deep-research, workshop.
+description: "Use when a triage card needs a category assigned before promotion. Implements the bos-categorize rubric to assign one of four categories: quick-lookup, pre-research, deep-research, workshop."
 version: 0.1.0
 author: kanban-orchestrator
 platforms: [macos]

@@ -32,16 +32,13 @@ cycles are adjacent, defensible, and not asked for.
    a multi-step unit gets a plan (`superpowers:writing-plans`). Concrete →
    straight to GOAL.
 3. **GOAL**: write §1's three lines. No re-runnable DONE WHEN → no dispatch.
-4. **ORCHESTRATE by size** — the contract holds at every scale:
-   - *trivial edit*: inline; a verifier agent still reviews before commit.
-   - *one unit*: author agent + distinct verifier (§5).
-   - *a feature*: commits proceed one at a time on the sprint branch, each
-     independently reviewed; the sprint ships as ONE PR, size-capped per the
-     repo's rules (JT default: ~500 changed lines of CODE; docs/logs exempt;
-     oversized sprints split into sequential PRs, merge N before N+1).
-   - *swarm scale*: NOT the default. With 3+ independent same-shaped units,
-     PROPOSE it in the triage verdict; it activates only on explicit request,
-     workers isolated in worktrees.
+4. **ORCHESTRATE by size** — the contract holds at every scale. The per-shape recipe
+   (*trivial edit* / *one unit* / *a feature* / *swarm scale*) is in
+   `references/orchestration-shapes.md`. The sprint ships as ONE PR, size-capped per the
+   repo's rules (JT default: ~500 changed lines of CODE; docs/logs exempt; oversized sprints
+   split into sequential PRs, merge N before N+1). *Swarm scale*: NOT the default — with 3+
+   independent same-shaped units, PROPOSE it in the triage verdict; it activates only on
+   explicit request, workers isolated in worktrees.
 5. **The contract — non-negotiable regardless of orchestration shape**:
    feature branch + PR, never the default branch · rebase when it moves, never
    merge it in (backup ref first) · author ≠ verifier at every stage · gates
@@ -195,12 +192,9 @@ fields to the unit: **RISK**, **SNAPSHOT** (the path of the pre-change export, o
 **ROLLBACK** (the exact restore steps, or "none, irreversible", which forces high risk).
 Pure research stops after the decision record.
 
-| Risk | Examples | Rule |
-|---|---|---|
-| low | research, drafts, read-only probes | checker required for the conclusion |
-| medium | a reversible write in a sandbox, a disabled integration, single-user config with a snapshot | checker PASS before apply |
-| high | paid, external (send, post, share, invite), permissions or credentials, deletes, production-wide or shared config (a file several agents or homes load, SOUL, merged skills), no working rollback | checker PASS **and** the owner approves the exact change just before apply; a changed diff voids the approval |
-| never by an agent | granting itself access, disabling audit or approval, approving its own work, deleting the snapshot | human only |
+Risk tiers and the rule for each: see `references/no-code-risk-tiers.md`.
+
+**Never by an agent** — granting itself access, disabling audit or approval, approving its own work, deleting the snapshot: human only.
 
 - **Snapshot before any write**: export the settings, copy the file, or commit. For medium or
   high risk, restore it once in a sandbox. A snapshot never restored is a hope.

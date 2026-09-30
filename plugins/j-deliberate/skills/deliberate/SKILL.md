@@ -1,6 +1,6 @@
 ---
 name: deliberate
-description: Run a grounded group deliberation that ends in a decision: gather evidence in disjoint lanes, build a verified evidence ledger, generate rival concepts, force a written dissent, and synthesize one call with its kill criterion. Use whenever a question needs more than one opinion and the answer must be defensible — choosing between options, 'what should we build/do next', strategy calls, vendor or approach selection, prioritising a backlog of ideas, running a decision workshop, or any time someone asks for a panel, a council, multiple perspectives, or 'research this and tell me what to do'. Also use it to audit a decision already made. Domain-agnostic.
+description: "Run a grounded group deliberation that ends in a decision: gather evidence in disjoint lanes, build a verified evidence ledger, generate rival concepts, force a written dissent, and synthesize one call with its kill criterion. Use whenever a question needs more than one opinion and the answer must be defensible — choosing between options, 'what should we build/do next', strategy calls, vendor or approach selection, prioritising a backlog of ideas, running a decision workshop, or any time someone asks for a panel, a council, multiple perspectives, or 'research this and tell me what to do'. Also use it to audit a decision already made. Domain-agnostic."
 ---
 
 # Deliberate
@@ -245,7 +245,7 @@ Over-running this on a small question is its own failure.
 
 | Stage job | First reach | Second choice |
 |---|---|---|
-| Panel briefing and forced veto | `structural-decisions` | — |
+| Panel briefing and forced veto | `framing` (the shape-versus-fix gate) | — |
 | Web gathering, cross-vendor seats, URL verification | — | `Research` (the one worth its friction — its verification machinery has no substitute) |
 | Divergent generation | the lenses in 4b, inline | `BeCreative` · `Ideate` |
 | Adversarial passes | `sadd-judge-with-debate` | `RedTeam` · `brutal-honesty-review` |

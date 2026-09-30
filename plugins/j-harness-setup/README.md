@@ -1,13 +1,23 @@
 # Harness Setup
 
-One instruction-only skill that **assembles and validates the AI harness for one project**:
-Claude Code, pi or Hermes. It works by research, then picking ready pieces, then copying in only
-what the goal needs, then a trial run that passes or fails. It contains no scripts and no
-generator. The generator from 0.3.0 (`assemble_harness.py`) was retired on 2026-09-24 and is kept
+Three skills: one harness assembler plus two environment skills that were added here and
+have **not** yet been moved to a plugin of their own.
+
+| Skill | What it does |
+|---|---|
+| `setup` | **Assembles and validates the AI harness for one project**: Claude Code, pi or Hermes. Research, pick ready pieces, copy in only what the goal needs, then a trial run that passes or fails. Instruction-only — no scripts, no generator. |
+| `omniroute-manager` | Unified management of the OmniRoute gateway on port 20128: MCP server, CLI tools, RTK context compression, model combos, API-key policies, health checks, Context7 docs. |
+| `browseros-neo` | The user's dedicated agent browser: a real signed-in browser with a persistent profile, used for any task that touches a website. |
+
+`omniroute-manager` and `browseros-neo` are machine-environment skills, not harness
+assembly. They belong in an infra/tooling plugin — see `SKILLS_REVIEW.md` T2.4. Until
+they move, this plugin is not installable at `--scope project` without dragging them in.
+
+The generator from 0.3.0 (`assemble_harness.py`) was retired on 2026-09-24 and is kept
 in (backup deleted 2026-09-24 per Paul: git only).
 
 Run by the overseer Claude Code session (Paul, 2026-09-24: "this is your responsibility"). Invoke
-it as `/harness-setup:setup <project goal> [repo path] [harness]`.
+it as `/j-harness-setup:setup <project goal> [repo path] [harness]`.
 
 ## How it works
 

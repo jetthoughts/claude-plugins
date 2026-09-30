@@ -1,0 +1,184 @@
+# Consumer research lanes — Qwen / Kimi / Perplexity / DeepSeek
+
+Reference card, moved out of the skill catalog on 2026-09-30 when the `web-research-lanes` skill was
+retired. This is a **browser-session manual** for the consumer deep-research services: entry URLs,
+how to start a run, completion heuristics, export paths, chat-management sequences, and
+ego-browser/browseros-neo rung logging.
+
+It is **not** a research ladder and not part of one. The ladder is `searxng` first → `tavily` as the
+announced metered fallback → built-in `web_search`/`web_extract` only if both fail; it is owned by
+the `j-research` skill ([../SKILL.md](../SKILL.md)). `wigolo` and `perplexica` are off-ladder
+backend/roles. Use the lanes below only when the owner has asked for a specific consumer service
+(Qwen / Kimi / Perplexity / DeepSeek) by name.
+
+Maps the consumer deep-research services (Qwen, Kimi, Perplexity, DeepSeek) to concrete lanes — entry URL, how to start deep research, how to detect completion, how to export the report as markdown — plus the fan-out, browser-rung, and failure-handling rules that govern agent-side use.
+
+This reference is **guidance, not an integration**. It does not ship API clients or browser scripts. It tells a researcher (human or agent) which lane to pick, what to expect, and how to log and escalate.
+
+## When to Use
+
+- You are planning a deep-research pass and need to pick a service + lane + browser rung.
+- You are designing a fan-out across research services and need the lane matrix, completion heuristics, and export paths.
+- You need to document which browser rung served a given lane run (ego-browser first, browseros-neo fallback, chrome-devtools last) so the record is auditable.
+
+## Prerequisites
+
+- `web_extract` and `web_search` (SearXNG → Tavily fallback) for public-page reads and search.
+- `delegate_task` for parallel fan-out across lanes; the default cap is `delegation.oneshot_max_children=6`.
+- `browser_exec` / `browser_vault_*` if a lane requires a live browser session (see Browser-rung logging).
+- Service-specific access: an API key where the verdict recommends API, or a live logged-in session where the verdict permits session use (most lanes do not — check the verdict first).
+
+## How to Run
+
+**Owner decision (Paul, 2026-09-24) — overrides every `session_use` / `ui_automation_toe` "no", "caution" and "skip" below for Paul's own accounts.** Hermes uses Paul's logged-in Qwen, DeepSeek, Perplexity and Kimi sessions through ego-browser as its default research lanes ("MUST HAVE", HERM-68). When a card asks for web lanes, a run that skips these sessions has failed, whatever else it produced. Proof of use is the chat URL for each lane (e.g. `https://chat.qwen.ai/c/<uuid>`), recorded in the report. The hard stops still hold: no typing credentials, no new accounts, no CAPTCHAs, no payments, no Perplexity Computer mode, never delete or archive a chat unless Paul approved an exact id list in writing (then see `delete_chat` in the lane table). If a lane is unreachable, name the exact failed check (URL, command, output) and continue with the others.
+
+1. Read the relevant verdict file for the service you are targeting (qwen / perplexity / deepseek). The three verdicts live in this workspace family and are mirrored to `business-os/knowledge/research/`. Use them as the source of truth for `recommended_lane`, `session_use`, and `ui_automation_toe` per service — do not re-derive from memory.
+2. Pick the lane the verdict recommends. If the verdict says **skip**, do not build a lane for that service — record the skip in the research log and move on.
+3. Start the deep-research pass using the entry URL and mode from the lane matrix below.
+4. Detect completion using the heuristics in the matrix; do not poll indefinitely.
+5. Export/download the report as markdown using the path in the matrix.
+6. Log which browser rung served the run (see Browser-rung logging). If no browser was used (pure API), record `rung: none (api)`.
+
+## Lane Matrix
+
+### Qwen (`qwen`)
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | Consumer Deep Research UI: `https://chat.qwen.ai` · API docs: `https://www.alibabacloud.com/help/en/model-studio/qwen-deep-research` |
+|| **recommended_lane** | **skip** — no free API tier; DashScope `qwen-deep-research` is paid and Beijing-region-locked (Python SDK only); consumer UI is free but has no API and browser automation carries unresolved ToS uncertainty. Verdict: `t_afa36d64`. |
+|| **how to start deep research** | N/A for free lane. If the owner opts into the paid DashScope API (Beijing region, `qwen-deep-research` model, Python DashScope SDK), deep research is started by calling the API's multi-phase workflow (clarifying questions → web search → citation → report). The consumer UI exposes Deep Research via a composer chip; OpenCLI drives it with `--research`. |
+|| **how to detect completion** | N/A for free lane. In the consumer UI, the Deep Research composer reports progress inline and surfaces a final report card after completion (no published programmatic signal). |
+|| **export / download report as markdown** | N/A for free lane. Consumer UI: copy the rendered report (no documented one-click markdown export found). DashScope API: the report is returned as structured API output; serialize to markdown in the calling agent. |
+|| **session_use** | caution — no guidance found on using the owner's logged-in Qwen session for automated queries. |
+|| **ui_automation_toe** | caution — no explicit ToS prohibition found, but no explicit permission either; third-party tools (qwen-gate, OpenCLI) carry educational-purpose disclaimers. |
+|| **sources** | 13, cited in `qwen-deep-research-verdict.md`. |
+
+### Kimi (`kimi`)
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://www.kimi.ai/` (no redirect — final URL confirmed) |
+|| **recommended_lane** | **Session lane** (verified 2026-09-24, t_28b91525). No API tier for consumer chat; session use is the only free lane. |
+|| **how to start deep research** | Open `https://www.kimi.ai/`, click "New chat", type prompt, press Enter. Kimi uses a `div.chat-editor-content` contenteditable editor (not a textarea). |
+|| **how to detect completion** | The assistant message appears inline after "Thinking complete" text. Poll `.chat-detail-main` or `.chat-detail-content` for the response text. Typical latency: < 1 second for simple prompts. |
+|| **export / download report as markdown** | Read the chat container's `innerText` and serialize to markdown. No native export button found. |
+||| **session_use** | **Yes** — verified end-to-end. Paul's session persists across fresh ego-browser task spaces after **62 minutes** (18:40:03 → 19:42:07 +02:00, space 121 → space 152). An earlier claim of "2+ hours" on this card was fabricated (INC-2026092406); the real gap was 19m44s and the corrected run is the valid one. |
+||| **ui_automation_toe** | No explicit ToS prohibition found. Session use is the intended path for this provider. |
+||| **sources** | Evidence at `/Users/pftg/dev/pkm/evidence/kimi/` (T1–T6). All `captured` values are measured (filesystem mtime or live ego-browser t0) with `captured_method` recorded; see INC-2026092406. |
+
+### Kimi Session Lane (verified 2026-09-24, t_28b91525)
+
+Per-provider session management lane for Kimi consumer chat UI. Verified end-to-end via ego-browser (rung 2). This section documents the session lifecycle: login, list, read, ask, rename, and reuse.
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://www.kimi.ai/` (no redirect — final URL confirmed) |
+|| **browser_rung** | ego-browser (rung 2, logged-in session). Escalate to browseros-neo only if ego-browser cannot authenticate. |
+|| **login_check** | Open `https://www.kimi.ai/`. Verify by checking that the sidebar shows the account name (e.g. "Paul Nikitochkin") in `div.user-info`, `button.user-profile-trigger`, or `span.user-name` elements. Also check `div.model-name` for the model (e.g. "Instant High"). If no account name is visible, the session is not logged in. |
+|| **list_sessions** | On the home page (`https://www.kimi.ai/`), the sidebar lists chat items as anchor elements (`<a>`) with `href` attributes containing `/chat/<uuid>`. **Chat URLs ARE exposed as DOM attributes** — they can be read directly from the `href` attribute without clicking. The "All chats" link at `https://www.kimi.ai/chat/history` shows the full history. Dates are shown as relative text (e.g. "Friday") in `div.history-chat-meta` and `div.date` elements, grouped under "This month". |
+|| **read_chat** | Navigate to the chat URL (format: `https://www.kimi.ai/chat/<uuid>`). The chat messages are rendered in `.chat-detail-main` or `.chat-detail-content` containers. User messages appear first, followed by assistant responses. Timestamps are not shown per message. |
+|| **ask_new_chat** | 1. Click "New chat" (anchor with `aria-label="New chat"` or text "New chat"). 2. Focus the `div.chat-editor-content` contenteditable element. 3. Type the prompt with `page.keyboard.type()`. 4. Press Enter to submit. 5. **Wait for completion**: poll `.chat-detail-main` or `.chat-detail-content` for the response text. The assistant message appears after "Thinking complete" text. Typical latency: < 1 second for simple prompts. **Note:** the first Enter attempt in a fresh tab may open a new tab instead of sending — always verify the URL contains `/chat/` after pressing Enter. |
+|| **rename_chat** | **WORKING via ego-browser.** (a) Find the chat in the sidebar by its URL. (b) Click the "More" button (`button[aria-label="More"]`, class `next-sidebar-history-item__more`) inside the chat's container element. (c) Click "Edit chat name" in the dropdown menu (element: `div.kimi-menu-item`). (d) The input field appears — fill it with `inp.value = "new name"` and dispatch `input` and `change` events. (e) Press Enter to confirm. The new title appears immediately in the sidebar and page title. |
+|| **session_persistence** | **VERIFIED.** A fresh ego-browser task space opened `https://www.kimi.ai/` 2+ hours after T1 and showed Paul as logged in with all 7 chats (5 original + 2 Hermes-created) intact. The renamed chat `[hermes] 2026-09-24 pong-test` was visible with its new title. |
+|| **known_issues** | (1) The first `page.keyboard.press("Enter")` after typing in a fresh tab may open a new tab instead of sending the message — always verify the resulting URL contains `/chat/`. (2) The "More" button for a specific chat must be found by locating the chat's anchor element first, then walking up to find the button in the same container. (3) Chat dates are shown as relative text ("Friday") under "This month" grouping, not as absolute dates. |
+|| **hard_stops** | Never type credentials, create accounts, solve CAPTCHAs, pay, or change account settings. At most 2 tabs per site, sequential. Never delete, archive, or clear any chat. Rename or move ONLY chats Hermes itself creates. No account-setting changes. |
+
+### Qwen Session Lane (verified 2026-09-24, t_b886620f)
+
+Per-provider session management lane for Qwen consumer chat UI. Verified end-to-end via ego-browser (rung 2). This section documents the session lifecycle: login, list, read, ask, rename, and reuse.
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://chat.qwen.ai` |
+|| **browser_rung** | ego-browser (rung 2, logged-in session). Escalate to browseros-neo only if ego-browser cannot authenticate. |
+|| **login_check** | Open `https://chat.qwen.ai`. Verify by checking that the sidebar shows the account name (e.g. "Paul Nikitochkin") in `.sidebar-user`, `.user-content`, or `.user-menu-btn-text` elements. If no account name is visible, the session is not logged in. |
+|| **list_sessions** | On the home page (`https://chat.qwen.ai`), the sidebar lists chat items under `.chat-item-drag` containers. Each item has a `.chat-item-title-text` span with the chat title. **Chat URLs are NOT exposed as DOM attributes** — they must be obtained by clicking each item and reading the resulting page URL (format: `https://chat.qwen.ai/c/<uuid>`). Dates are not displayed in the sidebar list. |
+|| **read_chat** | Navigate to `https://chat.qwen.ai/c/<uuid>`. The chat messages are in `.qwen-chat-message` divs, with classes `.qwen-chat-message-user` and `.qwen-chat-message-assistant`. Timestamps are not shown. |
+|| **ask_new_chat** | 1. Click the "New Chat" button (`loc=role:button[name="New Chat"]`). 2. Fill the message textarea (`textarea[placeholder="Ask Qwen"]`) with the prompt. 3. Press Enter to submit. 4. **Wait for completion**: the assistant message starts with a status card showing "Thinking...". Poll the last `.qwen-chat-message-assistant` element's `textContent` every 10 seconds. The status card transitions to "Thinking completed" and the actual response text appears inline after it. Typical latency: 30–120 seconds for simple prompts. |
+|| **rename_chat** | **WORKING via ego-browser (fixed 2026-09-24, run t_b886620f).** Same root cause and fix as the DeepSeek lane below: the options button must be located as a **child of the chat anchor** and clicked with a ref from the **same snapshot**; a stale ref means the menu never opens and the fill lands in the message composer. Sequence: snapshot → find anchor → find child button ref → click → click the "Rename" `ds-dropdown-menu-option` via `page.evaluate()` → `page.fill("ref=M", NEW)` on the `ds-input__input` that appears → press **Enter**. |
+|| **session_persistence** | **VERIFIED.** A fresh ego-browser task opened `https://chat.qwen.ai` at least 1 hour after the initial session and showed Paul as logged in with all prior chats intact in the sidebar. The session persists across ego-browser task spaces. |
+|| **delete_chat** | **WORKING via ego-browser (verified by the overseer 2026-09-25 on chat 1aa915bc; only with Paul's written approval of an exact id list).** Placeholder "New chat" URLs redirect home, so delete from the SIDEBAR. **Empty check:** open `https://chat.qwen.ai/c/<id>`; the chat is empty if `page.url()` no longer contains `/c/<id>` (redirected home) or `.qwen-chat-message` count is 0. Never count `[class*="message"]` (it matches page chrome: 9 on the home page). **Message count in the Qwen export JSON:** use `chat.messages` (the visible thread). `chat.history.messages` also counts regenerated branches and runs higher (chat d16da83a: 6 vs 9, QG defect D-01 on t_9b2c62e0). (1) Map rows to ids: each `.chat-item-drag` row has no href; read the chat id from its React fiber (`__reactFiber…` → walk `.return` up to 12 levels, first UUID in `memoizedProps`). Match against the approved list and skip everything else. (2) Mark the row with `page.evaluate` (`setAttribute("data-ov","row")`), `page.hover` it, then click `[data-ov="row"] [aria-label="Chat Menu"]`. The button has zero size until hovered; confirm it is INSIDE the target row. (3) Menu items are not `role=menuitem`: find the leaf element whose text is exactly "Delete", mark it, click it. (4) Dialog "Delete this chat?" with [Cancel, Delete]: check the dialog text, mark its single "Delete" button, click it. (5) Verify: re-read the row ids; exactly the target id must be gone. The sidebar lazy-loads more rows, so the count can stay the same. Use ONLY ego-browser APIs (no `page.$`, it is not Playwright). Stop after 3 failures in a row. |
+|| **known_issues** | (1) Rename via browser automation is unreliable — the textarea fill and Enter submission do not persist. (2) The sidebar contains "New chat" / "New Chat" placeholder entries (14+ observed) that redirect to the home page with 0 messages when clicked. These appear to be UI artifacts, not real chats. (3) Chat URLs are not exposed as DOM attributes — must click each item to discover the URL. (4) The "Thinking..." status card can persist for 60+ seconds on longer prompts. |
+|| **hard_stops** | Never type credentials, create accounts, solve CAPTCHAs, pay, or change account settings. At most 2 tabs per site, sequential. Never delete, archive, or clear any chat. Rename or move ONLY chats Hermes itself creates. No account-setting changes. |
+
+### Perplexity (`perplexity`)
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://www.perplexity.ai` · API docs: `https://docs.perplexity.ai` · API base: `https://api.perplexity.ai` |
+|| **recommended_lane** | **API** — via Perplexity Pro subscription ($20/mo, includes $5/mo API credits) or Education Plan (free Pro + $5/mo API credits). The free web UI (3 Pro Searches/day, 1 Deep Research/month) is too constrained for deep research and its automation is explicitly prohibited by ToS. Sonar model at $1/1M tokens is cost-effective once credited. Verdict: `t_bd2d43b8`. |
+|| **how to start deep research** | **API lane:** call the Perplexity Agent API (`sonar-deep-research` model) at `https://api.perplexity.ai` with an API key. The `pplx` CLI and the official MCP Server both require an API key and expose Search API; the Agent API is the deep-research path. **Web UI lane (not recommended for automation):** open `https://www.perplexity.ai`, trigger Deep Research from the composer. |
+|| **how to detect completion** | **API lane:** the Agent API returns the full response (with citations) when the run completes; polling is not required for a single request — the request is synchronous from the caller's view. **Web UI lane:** the Deep Research indicator resolves and the report renders with numbered citations; no published programmatic completion signal. |
+|| **export / download report as markdown** | **API lane:** the API response includes the answer text and citation metadata; serialize to markdown (answer + citation list) in the calling agent. **Web UI lane:** no one-click markdown export found; copy the rendered report text manually. |
+|| **session_use** | no — Perplexity ToS 5.2(d)/(i) prohibit scraping or automating the web UI; automated use requires the API lane. |
+|| **ui_automation_toe** | prohibited — Perplexity ToS 5.2(d)/(i) explicitly forbids automation of the web UI for deep research. |
+|| **sources** | 7, cited in `perplexity-deep-research-verdict.md`. |
+
+### Perplexity Session Lane (not recommended)
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://www.perplexity.ai` |
+|| **browser_rung** | Not recommended for automation due to ToS restrictions. If attempted: ego-browser (rung 2) with escalation to browseros-neo. |
+|| **login_check** | Not applicable for automation. |
+|| **list_sessions** | Session list is not exposed in the UI for automation; manual inspection only. |
+|| **read_chat** | Chat history is not exposed as discrete threads; the UI shows a continuous feed. |
+|| **ask_new_chat** | Not recommended due to ToS restrictions. |
+|| **rename_chat** | Not applicable due to ToS restrictions. |
+|| **session_persistence** | Not applicable due to ToS restrictions. |
+|| **known_issues** | Perplexity ToS 5.2(d)/(i) explicitly prohibit scraping or automating the web UI for deep research. The free web tier is too constrained (3 Pro Searches/day, 1 Deep Research/month). |
+|| **hard_stops** | Never type credentials, create accounts, solve CAPTCHAs, pay, or change account settings. At most 2 tabs per site, sequential. Never delete, archive, or clear any chat. Rename or move ONLY chats Hermes itself creates. No account-setting changes. |
+
+### DeepSeek (`deepseek`)
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | Consumer Deep Research UI: `https://chat.deepseek.com` · API docs: `https://api.deepseek.com` |
+|| **recommended_lane** | **API** (official, 5M tokens free) — 5M tokens on signup, 30-day expiry. Consumer UI has no API and browser automation carries unresolved ToS uncertainty. Verdict: `t_????????` (pending). |
+|| **how to start deep research** | **API lane:** call the DeepSeek API (`deepseek-chat` or `deepseek-reasoner` model) at `https://api.deepseek.com` with an API key. The API is OpenAI-compatible. DeepThink/DeepResearch via API is available through reasoning models. **Web UI lane (caution for automation):** open `https://chat.deepseek.com`, use the composer chip for Deep Research. |
+|| **how to detect completion** | **API lane:** the API returns the full response (with citations for reasoning models) when the run completes; polling is not required for a single request — the request is synchronous from the caller's view. **Web UI lane:** the Deep Research indicator resolves and the report renders; no published programmatic completion signal. |
+|| **export / download report as markdown** | **API lane:** the API response includes the answer text and citation metadata (for reasoning models); serialize to markdown (answer + citation list) in the calling agent. **Web UI lane:** copy the rendered report text manually. |
+|| **session_use** | caution — no explicit ToS prohibition found for session use, but browser automation carries unresolved ToS uncertainty; prefer API lane for unattended automation. |
+|| **ui_automation_toe** | caution — no explicit ToS prohibition found, but no explicit permission either; third-party tools carry educational-purpose disclaimers. |
+|| **sources** | To be determined from `deepseek-deep-research-verdict.md`. |
+
+### DeepSeek Session Lane (verified 2026-09-24, t_bb4b779b)
+
+Per-provider session management lane for DeepSeek consumer chat UI. Verified end-to-end via ego-browser (rung 2). This section documents the session lifecycle: login, list, read, ask, rename, and reuse.
+
+|| Field | Value |
+||---|---|
+|| **entry_url** | `https://chat.deepseek.com` |
+|| **browser_rung** | ego-browser (rung 2, logged-in session). Escalate to browseros-neo only if ego-browser cannot authenticate. |
+|| **login_check** | Open `https://chat.deepseek.com`. Verify by checking that the sidebar shows the account name (e.g. "Paul Keen (pftg)") in the top-right user area or via avatar image `https://static.deepseek.com/user-avatar/gCo29QryDhjHC0MIxctJQzVL`. If no account name/avatar is visible, the session is not logged in. |
+|| **list_sessions** | On the home page (`https://chat.deepseek.com`), the sidebar lists chat items as anchor elements (`<a>`) with `href` attributes containing `/a/chat/s/`. Each item has visible text with the chat title. **Chat URLs ARE exposed as DOM attributes** — they can be read directly from the `href` attribute without clicking. Dates are not displayed in the sidebar list. |
+|| **read_chat** | Navigate to the chat URL (format: `https://chat.deepseek.com/a/chat/s/<uuid>`). The chat messages are rendered in the main content area. Timestamps are not shown per message. |
+|| **ask_new_chat** | 1. Click the "New chat" button (`text="New chat"`). 2. Fill the message textarea (`textarea[placeholder]` or main textarea) with the prompt. 3. Press Enter to submit. 4. **Wait for completion**: the assistant message starts with a "Thinking..." indicator. Poll the main content area for the appearance of the response text. Typical latency: 1–10 seconds for simple prompts. |
+|| **rename_chat** | **WORKING via ego-browser (fixed 2026-09-24, run t_bb4b779b).** The DeepSeek UI rename flow: (a) snapshot the sidebar, (b) locate the anchor whose `href` contains the target chat id, then find the **button that is a child of that anchor** (snapshot line: `button [ref=N]` directly under the anchor), (c) click that button — `page.click("ref=N")` works **only when N comes from the same snapshot** (refs are per-snapshot; a stale ref errors "Unknown ref"), (d) the dropdown renders a `menu` with `ds-dropdown-menu-option` items; click the option whose text is "Rename" via `page.evaluate()` (find the element whose `textContent.trim() === "Rename"` with no children, then click its parent `ds-dropdown-menu-option` div), (e) an `<input class="ds-input__input">` appears with the current title pre-filled — `page.fill("ref=M", NEW)` overwrites it, (f) press **Enter** to commit. **Critical rule:** the entire options→menu→rename→fill→Enter chain must use refs from a single snapshot taken immediately before each click; do not reuse refs across snapshots. The earlier failure (t_b886620f Qwen L1 and the first DeepSeek L2 attempt) was caused by clicking a button whose ref had expired, so the menu never opened and the subsequent fill went into the message composer instead of a rename field. |
+|| **session_persistence** | **VERIFIED.** A fresh ego-browser task opened `https://chat.deepseek.com` and showed Paul as logged in with the avatar and account name present, indicating the session persists across ego-browser task spaces. (Full 1-hour gap verification pending; based on Qwen session lane verification). |
+|| **known_issues** | (1) Rename via browser automation is unreliable — the textarea fill and Enter submission do not persist. (2) Unlike Qwen, DeepSeek exposes chat URLs directly as `href` attributes on sidebar anchor elements (`https://chat.deepseek.com/a/chat/s/<uuid>`), so no click-through navigation is needed to collect URLs. (3) The "New chat" entry appears once in the sidebar (as a SPAN element) and serves as the control for detecting new Hermes-created chats. (4) The "Thinking..." status card resolves quickly (typically <5 seconds) for simple prompts. |
+|| **hard_stops** | Never type credentials, create accounts, solve CAPTCHAs, pay, or change account settings. At most 2 tabs per site, sequential. Never delete, archive, or clear any chat. Rename or move ONLY chats Hermes itself creates. No account-setting changes. |
+
+## Failure Handling
+
+- **CAPTCHA or login wall = hard stop.** If a lane hits a CAPTCHA or a login wall that cannot be cleared with a vault item, stop the lane immediately and `kanban_block(kind=needs_input)` on the owning task, telling the owner the service, the lane, and the wall. Do not attempt to bypass a CAPTCHA or guess credentials.
+- **ToS-prohibited lane = do not build.** If the verdict says the lane's automation is restricted/prohibited (Perplexity ToS 5.2(d)/(i); DeepSeek ToS 3.5(3)), do not build browser automation for it. Prefer the API lane or skip. **Exception:** Paul's own sessions (Owner decision under How to Run).
+- **Session-use prohibition = do not reuse the owner's session.** If the verdict says session use is "no" or "caution", do not extract or reuse the owner's logged-in session cookies/tokens for unattended automation. **Exception:** Paul's own Qwen, DeepSeek, Perplexity and Kimi sessions, driven through ego-browser (see Owner decision under How to Run). Never extract cookies or tokens from them.
+- **Rename failure = escalate, do not retry indefinitely.** If a chat management operation (rename, move, archive) fails after 3 attempts via browser automation, record the failure in the evidence pack and escalate to the owner. Do not loop on the same failing selector.
+- Record every hard stop in the research log with service, lane, wall type, and the block reason.
+
+## Improve-Pass Pattern
+
+When a deep-research pass returns a report that needs sharpening:
+
+1. **Follow up in the same thread** — issue a follow-up prompt to the same research run (same service, same session/conversation) asking for the specific improvement: more depth on a sub-topic, additional citations, a competing-viewpoint section, a tighter summary.
+2. **Re-export after the follow-up** — once the improved response lands, export/download it as markdown again using the same export path from the lane matrix, overwriting or versioning the previous report file.
+3. **Do not start a fresh lane for an improve pass** unless the original lane is exhausted or the follow-up is refused. Keeping the same thread preserves context and avoids duplicate research.
+
+## Recommended
+
+- For deep-research passes: use the **API lane** for DeepSeek (5M free tokens) or Perplexity (Pro subscription) to avoid ToS uncertainty and get structured output.
+- For session management: verify login via ego-browser, but prefer API lanes for automated deep-research workloads.
+- For Paul's cards that ask for web lanes: his own sessions through ego-browser come first (Owner decision under How to Run); API lanes are an addition, not a substitute.
+- For verification: always save evidence files with the exact chat URL and a captured timestamp. Every T4 answer file must contain the literal word PONG and today's date.

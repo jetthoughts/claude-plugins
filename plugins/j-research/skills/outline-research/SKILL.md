@@ -1,12 +1,16 @@
 ---
-name: research-deep
-description: Read research outline, launch independent agent for each item for deep research. Disable task output.
+name: outline-research
+description: Run a `*/outline.yaml` research outline — locate the outline, launch one background agent per item, and validate each JSON result with `validate_json.py`. Use when the user asks to run an outline, execute an outline-based research pass, or invokes /outline-research. Not for multi-source synthesis (j-deep-research) or a single web lookup — the front door is j-research.
 ---
 
-# Research Deep - Deep Research
+# Outline Research
+
+An **outline runner**, not a synthesis skill: it fans a `*/outline.yaml` item list out to background
+agents and collects one validated JSON file per item. For cited multi-source synthesis use
+`j-deep-research`; for routing, `j-research` is the front door.
 
 ## Trigger
-`/research-deep`
+`/outline-research`
 
 ## Workflow
 

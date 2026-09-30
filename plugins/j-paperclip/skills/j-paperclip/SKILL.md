@@ -1,6 +1,6 @@
 ---
 name: j-paperclip
-description: How to operate the self-hosted Paperclip control plane from a session — reach the loopback API, list companies and agents, read and change an agent's model, adapter config and managed instruction bundle, create issues and wake an agent, check budgets and costs, and read run logs. Use whenever the user says Paperclip, the board on :3100, JET-<n> or JETA-<n>, agent company, Chief of Staff, Builder, Reviewer, Strategist, org chart, wake the agent, agent budget, agent instructions, AGENTS.md for an agent, desiredSkills, or asks why an agent did or did not do something. Also use before editing anything under ~/.infra/services/paperclip/data, and when a Paperclip API call returns "API route not found".
+description: "Operate the self-hosted Paperclip control plane from a session — reach the loopback API, list companies and agents, read and change an agent's model, adapter config and instruction bundle, create issues and wake an agent, check budgets, read run logs. Use for Paperclip, the board on :3100, JET-<n>, agent company, org chart, wake the agent, agent budget. Not for diagnosing a stuck company — that is `j-paperclip-ops`."
 ---
 
 # Paperclip control plane

@@ -24,6 +24,7 @@ Classify `decision_type` and `reversibility`. Unknown reversibility → treat as
 03-evidence-ledger.jsonl  04-contradiction-register.md  05-lightning-demos.md
 06-opportunity-tree.md  07-concepts/{concept-A,B,C,concept-map}.md  08-assumption-map.md
 09-council/{brief.md,round-1/,anonymized-rationales.md,round-3/,consensus-report.md}
+09-ux/ux-heatmap.md
 10-experiment-portfolio.md  11-decision-record.md  12-learning-log.md  manifest.yaml
 ```
 
@@ -35,12 +36,12 @@ Create the rest only when the route below uses them. Record every skill and tool
 
 | decision_type | Sequence |
 |---|---|
-| new-service | j-framing-the-question → j-running-independent-research → j-scanning-lightning-demos → j-mapping-opportunities → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call → j-learning-from-decisions |
-| market | j-framing-the-question → j-running-independent-research → j-mapping-opportunities → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
-| feature | j-framing-the-question → **inspect product analytics + customer evidence first** (`01-existing-evidence.md`) → j-running-independent-research → j-mapping-opportunities (use `pm-product-discovery:opportunity-solution-tree`) → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
-| experiment | j-framing-the-question → read existing decision/opportunity/experiment artifacts in `.claude/artifacts/independent-ideation/` → j-mapping-assumptions → j-designing-experiments (prioritised portfolio) → j-making-the-call |
-| solution | j-framing-the-question (the problem, the constraint that makes the obvious answer fail, what "solved" measures) → j-running-independent-research starting from triaged `evidence/` notes (`feeds:` matching this decision) → j-generating-independent-variants with the **solution lenses** and a **Crazy 8s** divergence round → j-mapping-assumptions → j-designing-experiments (code spike / prototype / paper test cards, time-boxed) → j-making-the-call |
-| ux | j-framing-the-question → evaluate UI context + behavioral analytics → j-running-independent-research only for factual gaps → j-scanning-lightning-demos → j-generating-independent-variants (UX archetypes) → j-evaluating-interfaces → j-mapping-assumptions → j-designing-experiments → j-making-the-call |
+| new-service | framing → j-running-independent-research → lightning-demos → j-mapping-opportunities → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call → j-learning-from-decisions |
+| market | framing → j-running-independent-research → j-mapping-opportunities → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
+| feature | framing → **inspect product analytics + customer evidence first** (`01-existing-evidence.md`) → j-running-independent-research → j-mapping-opportunities (use `pm-product-discovery:opportunity-solution-tree`) → j-generating-independent-variants → j-mapping-assumptions → j-convening-the-council → j-designing-experiments → j-making-the-call |
+| experiment | framing → read existing decision/opportunity/experiment artifacts in `.claude/artifacts/independent-ideation/` → j-mapping-assumptions → j-designing-experiments (prioritised portfolio) → j-making-the-call |
+| solution | framing (the problem, the constraint that makes the obvious answer fail, what "solved" measures) → j-running-independent-research starting from triaged `evidence/` notes (`feeds:` matching this decision) → j-generating-independent-variants with the **solution lenses** and a **Crazy 8s** divergence round → j-mapping-assumptions → j-designing-experiments (code spike / prototype / paper test cards, time-boxed) → j-making-the-call |
+| ux | framing → evaluate UI context + behavioral analytics → j-running-independent-research only for factual gaps → lightning-demos → j-generating-independent-variants (UX archetypes) → j-evaluating-interfaces → j-mapping-assumptions → j-designing-experiments → j-making-the-call |
 
 Invoke each step with the Skill tool by name. Each step reads its declared inputs from the workspace and
 writes its declared outputs. Stop and report if a step's hard gate fails; do not skip ahead.
@@ -59,4 +60,4 @@ writes its declared outputs. Stop and report if a step's hard gate fails; do not
 - Ideators never see each other's concepts; reviewers never learn authorship; the decision agent adds no facts.
 - Council consensus is advisory (rank 7 of 8 in the evidence hierarchy, see `~/.claude/skills/j-independent-ideation/DECISION-POLICY.md`).
 - No outreach, ads, publishing, purchases, paid accounts, or production changes without explicit user confirmation.
-- Use the repo's configured tools (Perplexica/SearXNG MCP, `research`, `research-deep`, `pm-*` plugins, semble, OpenViking); never hard-code tool settings.
+- Use the repo's configured tools (Perplexica/SearXNG MCP, `research`, `outline-research`, `pm-*` plugins, semble, OpenViking); never hard-code tool settings.

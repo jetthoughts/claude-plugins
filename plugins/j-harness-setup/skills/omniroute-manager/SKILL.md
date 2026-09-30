@@ -82,6 +82,8 @@ curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" \
   | jq -r '.model // "ERROR"'
 ```
 
+**Root cause of mid-session gateway deaths — measured 2026-09-14.** The 13:45 SIGTERM ("[Shutdown] Bye" in the gateway log) was sent by **loginwindow during a screen lock**: the unified log shows `SACShieldWindowShowing: Enter` at 13:44–13:45 and `Application terminateAppAndSubprocesses | enter` at exactly 13:45:27.869, with launchd reporting the gateway's parent app (iTerm2) `exited due to SIGTERM | sent by loginwindow`. The gateway had been launched inside the GUI session, so **every lock screen kills it unless it runs under its own LaunchAgent** — which is exactly what `dev.pftg.omniroute-watch` (installed 14:48 that day) now provides; the later lock events the same day (13:45:53, 16:52) left the gateway up (`/api/health` ok through both). Symptom signature for the past: gateway dead after Paul locked the machine, `ConnectionRefused` from every seat, no crash trace in the gateway log — it shut down *cleanly*, which is the tell that the killer was external.
+
 There is no automated doctor any more (Paul, 2026-09-11). Check by hand: gateway up, `free-cheap`
 answers a probe, every combo a live Paperclip seat uses answers a probe, every live
 `opencode_local` seat has `OMNIROUTE_API_KEY` bound. Fix what fails — start the gateway, or bind
@@ -103,21 +105,22 @@ curl -s -X PATCH -H "Authorization: Bearer $OMNIROUTE_API_KEY" \
   http://127.0.0.1:20128/api/combos/<id> -d '{"strategy":"priority"}'
 
 # Read back — the write is not the state
-curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" http://127.0.0.1:20128/api/combos | jq '.[] | {name, strategy}'
+curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" http://127.0.0.1:20128/api/combos | jq '.combos[] | {name, strategy}'
 ```
 
-**Write capability is partial — verified 2026-09-11.** You can read everything and change *strategy*,
-but **you cannot change combo membership through MCP or the API**:
+**Membership contract — verified 2026-09-14.** `PUT`/`PATCH /api/combos/{id}` is a **partial merge**: fields left out keep their value, but a `models` array that IS sent **replaces the stored one outright**. So to prune one member, fetch the live array, jq out the dead entries, and PUT the pruned list — do not hand-construct it. Takes effect immediately, no restart needed (lane probes served the new head on the very next request, same minute). With `$OMNIROUTE_API_KEY` set, plain `GET /api/combos` returns `{combos: [...], total}` — the 401 in earlier notes was the unauthenticated request; keep using the key. Full route contract lives in the gateway's own spec at `/api/openapi.json` (or `dist/docs/openapi.yaml` in the bun install).
 
-| Want | Route | Works? |
-| --- | --- | --- |
-| Read combos | `GET /api/v1/combos` (note: `/api/combos` 401s) or `omniroute_list_combos` | yes |
-| Success rate / cost per member | `omniroute_cost_report` | yes |
-| Change strategy | `omniroute_set_routing_strategy` | yes |
-| Activate / deactivate | `omniroute_switch_combo` | yes |
-| **Change members** | `PATCH /api/combos/:id {models, strategy}` with `$OMNIROUTE_API_KEY` (the management token); `/api/v1/combos/:id` has no update route and the subs/free keys are refused on `/api/combos` | **yes**, measured 2026-09-11 |
-
-So membership changes go through `/api/combos/:id` with the management token; the sqlite write plus restart is the fallback only when the gateway is down, because a restart drops every in-flight seat call. Verify by `GET` and a 5-token probe afterwards.
+```bash
+# Prune dead members (full worked example, 2026-09-14: removed two catalog-dead gemini entries)
+CIDC=$(curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" http://127.0.0.1:20128/api/combos \
+  | jq -r '[.combos[] | select(.name=="free-cheap")][0].id')
+curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" http://127.0.0.1:20128/api/combos \
+  | jq '[.combos[] | select(.name=="free-cheap")][0].models
+        | map(select(.model != "gemini/gemini-3.5-flash-lite"))' > /tmp/models.json
+jq -n --slurpfile m /tmp/models.json '{models: $m[0]}' \
+  | curl -s -X PUT -H "Authorization: Bearer $OMNIROUTE_API_KEY" -H 'Content-Type: application/json' \
+      -d @- http://127.0.0.1:20128/api/combos/$CIDC | jq '.models[].model'
+```
 
 **Setting `priority` without fixing member order makes things worse.** Measured 2026-09-11 on
 `free-thinking`: with 36 members left in place, switching `auto`→`priority` took the lane from a
@@ -350,7 +353,7 @@ curl -s "https://context7.com/api/v2/context?libraryId=/fastapi/fastapi&query=de
 | Full health check | `curl -sf http://127.0.0.1:20128/api/health` |
 | Probe single lane | `curl -s -H "Authorization: Bearer $OMNIROUTE_API_KEY" http://127.0.0.1:20128/v1/chat/completions -d '{"model":"free-coding","messages":[{"role":"user","content":"ping"}],"max_tokens":5}' \| jq -r '.model // "ERROR"'` |
 | Audit all combo members | probe each member with the call above |
-| Read / change combos | `omniroute_list_combos` (MCP), then `PATCH /api/combos/:id` and read back |
+| Read / change combos | `GET /api/combos` (keyed) → `PUT /api/combos/:id` (partial merge; a sent `models` array replaces outright, live immediately). Fetch → jq-prune → PUT-back; see the worked example above |
 | Edit & apply policy | `vim ~/.infra/services/omniroute/policy.json && ~/.infra/bin/omniroute-policy` |
 | List MCP tools | `curl -s -H "Auth: Bearer $KEY" http://127.0.0.1:20128/api/mcp/tools \| jq '.tools[].name'` |
 | Test RTK compression | `curl -X POST .../api/context/rtk/test -d '{"text":"...","mode":"stacked"}'` |
@@ -365,6 +368,10 @@ curl -s "https://context7.com/api/v2/context?libraryId=/fastapi/fastapi&query=de
 | `ConnectionRefused` on MCP | Gateway down | `~/.infra/services/omniroute/bin/start`, then `curl -sf http://127.0.0.1:20128/api/health` |
 | Free lane ERROR 429/402 | Provider quota exhausted | Probe the lane directly; if persistent, `PATCH /api/combos/:id` with probed live members, then read back |
 | Paid model served on free key | Policy not restricted | Check `modelAccessMode: restricted` + `allowedModels` in policy.json |
+| Probe returns 200 but empty content, `finish_reason: length` | Member is a reasoning model (e.g. `lm-studio/bonsai-27b`): the probe's `max_tokens` was consumed by hidden thinking | Re-probe with `max_tokens >= 1500`; do not count a 200-empty as proof of health (2026-09-14, measured) |
+| Local LAN model 502 `EHOSTUNREACH` while `curl` to the same URL returns 200 | Runtime-specific connect failure — bun/node try mDNS IPv6 answers first (dead AAAAs, no v4 fallback), and curl masks the problem. Ping loss + instant sub-100ms failures confirm the path, not the host | Test with `node -e "fetch(…)` — the gateway's runtime — never curl alone. Fix = IPv4 literal in the connection's `provider_specific_data.baseUrl`, or deactivate the flapping connection live (`omniroute providers edit <name> --inactive`) and let a healthy `lm-studio` connection serve the model (2026-09-14: jora connection deactivated, bonsai served by local LM Studio). |
+| Same model id resolves to two connections with different hosts (`lm-studio` `main` + `jora`) | Gateway load-balances across active connections of a provider; a JIT-loading host produces `[504] Direct response did not start within 30000ms` storms | Deactivate the unhealthy connection or remove the model from its catalog; check `call_logs.connection_id` to see who actually served |
+| Choosing a floor host when several serve the same local model | The floor's value is residency + context, not just reachability: prefer the host with the model loaded at the largest serving context and no idle-unload; a floor that JIT-loads cold is a 504 generator, and a 128k floor host is strictly worse than a 262k one | Record the serving host explicitly (host, loaded context, resident-vs-JIT) so nobody reverts to the worse host later; reactivate a parked connection only on a proven `node fetch` path + raised context — as redundancy, never as replacement (2026-09-14: bonsai floor = `main` localhost, 262k, resident; jora parked) |
 | `auto/*` hits a paid model | `auto` expanded membership past its `candidatePool` | Set the combo to `priority` with a probed member list via `PATCH /api/combos/:id`, then read back |
 | Combo serves empty `.model` | Combo resolution OK, member failed | Probe each member with a real 1-token request to find the dead one |
 | RTK not compressing | `defaultMode: off`, combos override | Check comboOverrides in `/api/context/rtk/config` |

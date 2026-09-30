@@ -42,15 +42,18 @@ substitute for the owner's decision — the matrix informs, it does not decide.
 1. Read with `read_file`: the Business OS root `AGENTS.md`, the requesting
    artifact, and `constitution/risk-policy.md` (secrets never in files —
    reference env var names only).
-2. Gather facts strictly on the ladder, in order:
+2. Gather facts strictly on the ladder, in order. **The ladder is owned by the `j-research` skill**
+   (this repo, the front door). `~/.infra/.okf/references/research-routing.md` still carries the
+   superseded 2026-09-24 "no cost gate" text and must be re-synced; until it is, `j-research` is
+   authoritative. The list below must match it, and `j-research` wins on any disagreement:
    1. `mcp__searxng__searxng_web_search` — first rung for any web fact;
       `mcp__searxng__web_url_read` to read a public page as markdown.
    2. `mcp__tavily__tavily_search` — the single metered fallback, only when
       rung 1 is thin or answer-shaped results are needed; say in the matrix
-      that rung 2 was used.
+      that rung 2 was used. A metered rung is never used silently.
    3. `web_search` / `web_extract` — built-in fallback only when both rungs
       failed; name which rung failed and why in the matrix.
-   Perplexica and wigolo are off-ladder roles, not rungs.
+   Perplexica, wigolo and LDR are off-ladder roles, not rungs.
 3. Tier each source: `primary` (official docs, standards, filings),
    `secondary` (reputable press, analyst reports), `tertiary` (blogs,
    forums, anecdotes), `unverified` (single unattributed claim). Prefer

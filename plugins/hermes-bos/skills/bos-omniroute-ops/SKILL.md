@@ -8,7 +8,7 @@ platforms: [macos]
 metadata:
   hermes:
     tags: [Business OS, omniroute, ops, incident-response, model-routing, research-lanes, searxng, perplexica, ldr]
-    related_skills: [bos-incident-response, bos-daily-review, bos-intake, web-research-lanes]
+    related_skills: [bos-incident-response, bos-daily-review, bos-intake, j-research]
 ---
 
 # bos-omniroute-ops Skill
@@ -27,7 +27,12 @@ Hermes seats are read-only against all service state; every change they find is 
 - Service catalogue: `~/.infra/bin/services --json` (machine-readable ports/health/start per service)
 - Hermes fleet config: `/Users/pftg/.hermes/config.yaml` plus a separate copy per profile at `~/.hermes/profiles/<p>/config.yaml` (not symlinks since 2026-09-22). Change all of them: `hermes -p <p> config set ...`. Current routing: DEC-2026092302 (`hermes-balanced` / `hermes-economy` / `hermes-premium`).
 - Fleet model switcher: `~/.hermes/bin/hermes-model-all show|set <provider> <model>`
-- Research ladder policy: `~/.infra/.okf/references/research-routing.md` (searxng → tavily fallback; perplexica/wigolo off-ladder roles)
+- Research ladder policy: **owned by the `j-research` skill** (the front door). That ladder is
+  `searxng` first → `tavily` as the announced metered fallback → built-in `web_search`/`web_extract`
+  only if both fail; perplexica and wigolo are off-ladder roles, not rungs. Where this skill and
+  `j-research` disagree, `j-research` wins. **Known drift:** `~/.infra/.okf/references/research-routing.md`
+  still carries the superseded 2026-09-24 "no cost gate" text (it says gate is gone, wigolo ranks in
+  the search order) and must be re-synced to this ladder.
 - Incident recipes: `bos-incident-response` (R1–R11)
 
 ## When to Use
@@ -129,7 +134,9 @@ Flag: open breakers on domains Hermes depends on.
 
 ### 7. Research-lane service health (searxng, perplexica, LDR)
 
-Verify each rung of the research ladder is actually alive before blaming agent behavior:
+Verify the ladder's first rung and the off-ladder backends are actually alive before blaming agent
+behavior. `searxng` is the rung; `perplexica` and `LDR` are off-ladder roles (per the `j-research`
+ladder) and their health is checked here because agents depend on them, not because they are rungs:
 
 ```bash
 curl -s "http://127.0.0.1:8081/search?q=hello&format=json" | python3 -c "import json,sys; print('searxng results:', len(json.load(sys.stdin).get('results',[])))"
@@ -151,7 +158,7 @@ When "agents/kimi don't use perplexica/LDR/searxng" is the symptom, check wiring
 
 ### 9. Cost leak: metered backends
 
-Any of `web.backend: exa`, `web.search_backend: exa`, or tavily usage beyond the single-fallback role is a cost leak under the free-first policy. Cross-check `call_logs` for exa/tavily traffic volume when the backend config disagrees with the ladder.
+Any of `web.backend: exa`, `web.search_backend: exa`, or tavily usage beyond its single announced-fallback role is a cost leak under the `j-research` ladder. Cross-check `call_logs` for exa/tavily traffic volume when the backend config disagrees with the ladder.
 
 ## Output
 

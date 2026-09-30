@@ -14,13 +14,25 @@
     "strategy": "priority"
   },
   "free-thinking": {
-    "description": "Free reasoning lane — only models that actually think. No local floor: a 27B dense model on this laptop froze it on 2026-09-05, and a stop is better than a freeze. Refreshed 2026-09-08 after all 6 members died at once (delisted qwen3.8-27b / glm-5.2 / inkling, uncredentialed cfp): every member below answered a real 1-token probe that day — probe before trusting, free catalogs churn without notice.",
+    "description": "Free reasoning lane for worker seats — only models that actually think, bonsai floor at the tail. The floor serves from connection `main` (localhost LM Studio, bonsai loaded at 262144, resident); the `jora` connection is parked (runtime connect failure + 128k serving context) — reactivate only on a proven node-fetch path as redundancy. Cos-class seats do NOT ride this lane (see cos-thinking): the floor's prefill is ~59 tok/s, so a 150k+ session is fatal here. Probe bonsai with max_tokens >= 1500 (reasoning model, small budgets return empty content). Refreshed 2026-09-14: opencode/nemotron-lightning/openrouter-free/oc-big-pickle/nex-pro all probed live; big-pickle 400-rot and oc delisting fixed same day.",
     "models": [
-      "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free-high",
-      "oc/nemotron-3-ultra-free",
-      "groq/openai/gpt-oss-120b",
-      "openrouter/dots-studio/dots-3-note-preview:free",
-      "openrouter/openrouter/free"
+      "opencode/big-pickle",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "openrouter/openrouter/free",
+      "oc/big-pickle",
+      "openrouter/nex-agi/nex-n2.5-pro:free",
+      "lm-studio/prism-ml/bonsai-27b"
+    ],
+    "strategy": "priority"
+  },
+  "cos-thinking": {
+    "description": "CoS-class lane (2026-09-14): cloud-only, priority, all 5 members >=200k context — for any seat whose runs can exceed ~120k tokens (CoS 137k peak, Captain, Economist 253k, Verifier 176k, Cold Reviewer 179k, Career Coach 130k, Researcher 126k). Exists because the free-thinking floor 400s >128k sessions; deliberately has NO local floor (local prefill too slow as mid-run fallback). Key gate: the free key's allowedCombos must list combo/cos-thinking.",
+    "models": [
+      "opencode/big-pickle",
+      "openrouter/nvidia/nemotron-3.5-lightning:free",
+      "openrouter/openrouter/free",
+      "oc/big-pickle",
+      "openrouter/nex-agi/nex-n2.5-pro:free"
     ],
     "strategy": "priority"
   },

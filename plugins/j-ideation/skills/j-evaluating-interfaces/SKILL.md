@@ -7,7 +7,7 @@ description: Evaluate UI/UX concepts without confusing aesthetics, model prefere
 
 AI reviewers are not end users. They produce hypotheses and heuristic risks; representative-user behaviour settles important UX choices.
 
-**Input**: persona, JTBD and critical task, screenshots/prototype/UI code/flow description, device requirements, accessibility constraints, design system, analytics and known feedback, business outcome; `07-concepts/`. **Outputs**: `09-council/consensus-report.md` (UX heat map) and appended cards in `10-experiment-portfolio.md`.
+**Input**: persona, JTBD and critical task, screenshots/prototype/UI code/flow description, device requirements, accessibility constraints, design system, analytics and known feedback, business outcome; `07-concepts/`. **Outputs**: `09-ux/ux-heatmap.md` (the UX heat map — this skill owns `09-ux/`, not `09-council/`, so it never overwrites the council's consensus report) and appended cards in `10-experiment-portfolio.md`.
 
 ## Phases
 

@@ -1,15 +1,6 @@
 ---
 name: berlin-rental-agreement
-description: >
-  Strategic advisor for German landlords drafting residential rental agreements (Mietvertrag,
-  Wohnraummietvertrag). Use whenever the user mentions: rental contract, lease agreement, Mietvertrag,
-  rent agreement, Mietrecht, Wohnungsvermietung, landlord contract, Vermieter, tenant, Mieter,
-  Mietpreisbremse, Kaution, Nebenkosten, Staffelmiete, Eigenbedarf, or any request to draft,
-  review, or improve a contract for a residential property in Germany. Also trigger when the user
-  asks about landlord rights, rent pricing strategy, risky clauses, or tenant disputes in Germany.
-  This skill does NOT generate PDFs — it produces the ideal contract content, clause-by-clause
-  recommendations, risk analysis, and strategic advice. Always use this skill even if the user just
-  says "I need a rental contract" or "help me protect myself as a landlord."
+description: "Strategic advisor for German landlords drafting residential Wohnraummietvertrag agreements. Use for rental contract, lease agreement, Mietvertrag, Mietrecht, Vermieter, Mieter, Mietpreisbremse, Kaution, Nebenkosten, Staffelmiete, Eigenbedarf, or any request to draft, review or improve a residential lease in Germany. Produces clause-by-clause content and risk analysis, not PDFs."
 ---
 
 # Berlin Landlord Contract Advisor
@@ -96,14 +87,7 @@ For every major decision, research from **official and highly credible sources f
 - `mcp__german-law__build_legal_stance` — comprehensive legal research bundle
 
 ### What to search for
-| Topic | Search query | Best sources |
-|---|---|---|
-| Rent level validation | "[Bezirk] Mietspiegel 2025 [m²]" | stadtentwicklung.berlin.de |
-| Mietpreisbremse applicability | "Mietpreisbremse Berlin Neubau §556f BGB" | berlin.de |
-| Staffelmiete legality | "Staffelmiete §557a BGB Höhe Laufzeit" | haufe.de |
-| Schönheitsreparaturen BGH | "Schönheitsreparaturen BGH aktuell unwirksam" | lto.de |
-| Kaution rules | "Mietkaution §551 BGB Sparkonto Zinsen" | gesetze-im-internet.de |
-| Kleinreparaturklausel | "Kleinreparatur Obergrenze wirksam" | mieterbund.de |
+See `references/research-queries.md`.
 
 ---
 
@@ -126,27 +110,7 @@ For every major decision, research from **official and highly credible sources f
 - 🔴 **Critical** — illegal or will be voided by courts; must fix
 
 ### Clause areas to cover
-
-1. **Vertragsparteien** — correct identification, service address
-2. **Mieträume** — precise description, Wohnfläche, included spaces
-3. **Mietzeit** — unbefristet vs. befristet, Eigenbedarfshinweis, §545 BGB exclusion
-4. **Mietzins und Betriebskosten** — Kaltmiete, Mietpreisbremse, BetrKV itemisation
-5. **Heizung und Warmwasser** — HeizkV compliance, 70/30 split
-6. **Staffelmiete / Indexmiete / Standard** — which model and why
-7. **Mietsicherheit (Kaution)** — amount, installments, Sparkonto obligation
-8. **Zahlung der Miete** — due date, Verzugszinsen, Tilgungsreihenfolge
-9. **Aufrechnung und Zurückbehaltungsrecht** — restricting offset rights
-10. **Nutzung und Tierhaltung** — residential only, pets policy
-11. **Untervermietung** — subletting with consent, Airbnb prohibition
-12. **Hausordnung** — WEG rules, Ruhezeiten
-13. **Schönheitsreparaturen** — flexible clause only, BGH-proof language
-14. **Kleinreparaturen** — Einzelbetrag and Jahresobergrenze
-15. **Instandhaltungspflicht** — tenant obligations, damage reporting
-16. **Betreten der Mieträume** — inspections, viewings
-17. **Personenmehrheit** — Gesamtschuldnerschaft
-18. **WEG-Beschlüsse** — tenant compliance
-19. **Energieausweis** — mandatory disclosure
-20. **Schlussbestimmungen** — Schriftform, Salvatorische Klausel
+See `references/clause-areas.md`.
 
 ### Reviewing an existing contract
 
@@ -187,15 +151,7 @@ Table of all risks with severity, description, and recommended action.
 ---
 
 ## Legal knowledge base
-
-Read `references/legal_notes.md` for detailed reference on:
-- BGB §§ 535–548 core tenancy obligations
-- Berlin Mietpreisbremse (extended until 31 Dec 2029) and §556f Neubau exemption
-- Berlin Kappungsgrenze: max 15% rent increase in 3 years
-- Kaution: max 3× Kaltmiete, 3 installments, interest-bearing separate account
-- Kündigungsfristen: tenant 3 months; landlord 3/6/9 months
-- Schönheitsreparaturen: BGH case law on valid vs. void clauses
-- Nebenkosten: BetrKV §2 permissible charges
+Key legal reference points: see `references/legal-reference.md`.
 
 **Always verify against live data** — reference files are a starting point, not the final word.
 

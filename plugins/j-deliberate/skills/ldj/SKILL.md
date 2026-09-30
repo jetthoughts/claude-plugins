@@ -73,7 +73,7 @@ Positives before problems, always. **A board of problems gathered without their 
 | The thing that is unclear | Use |
 |---|---|
 | **What is holding us back** | **LDJ** — this skill |
-| **Where we are going** | `j-independent-ideation` — goal + metric, lightning demos, isolated variants, council, one call. `j-framing-the-question` alone when only the question is fuzzy |
+| **Where we are going** | `j-independent-ideation` — goal + metric, lightning demos, isolated variants, council, one call. `framing` alone when only the question is fuzzy |
 | **What is actually true** | `deliberate` — independent lanes, verified citations, adversarial contest |
 
 **LDJ and goal-first formats are opposite entry points, not competitors.** Pick by which one is genuinely unknown. Reaching for the heavy evidence harness when the team already knows the problem is how a forty-five minute decision becomes a two-day project.

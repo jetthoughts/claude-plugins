@@ -2,7 +2,7 @@
 
 decision_id: ""
 mode: quick | standard | decision-grade
-tools_available: [] # e.g. mcp__perplexica__search, research, research-deep, mcp__semble__search
+tools_available: [] # e.g. mcp__perplexica__search, research, outline-research, mcp__semble__search
 tools_unavailable: [] # record the limitation
 
 ## Subquestions

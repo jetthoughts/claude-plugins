@@ -1,35 +1,28 @@
 ---
 name: five-whys
-description: Five Whys (5 Whys, Toyota Production System) — iterative root-cause analysis drilling from a symptom to a systemic cause; every why carries evidence or is marked UNSUPPORTED
+description: Five Whys (5 Whys, Toyota Production System) — drill a symptom to a systemic root cause by asking why repeatedly, with evidence or UNSUPPORTED named at every step. Use for "why did this happen again", recurring incidents, postmortems, and any decision that keeps coming back. Not for framing the problem, ranking options, or deciding what to do — frame with framing first, and make the call with decision-panel or deliberate.
 argument-hint: Optional issue or symptom description
 ---
 
 # Five Whys Analysis
 
-Apply Five Whys root cause analysis to investigate issues by iteratively asking "why" to drill from symptoms to root causes.
-
-## Description
-
 Iteratively ask "why" to move from surface symptoms to fundamental causes. Identifies systemic issues rather than quick fixes.
 
-## Usage
+**The framing step is not this skill's job.** The problem statement, the decision sentence, and what "solved" measures come from `framing` — run it first, or confirm a frame already exists, and do not restate it here. Five Whys starts from a symptom that has already been framed.
 
-`/why [issue_description]`
+**Usage**: `/why [issue_description]`
 
-## Variables
-
-- ISSUE: Problem or symptom to analyze (default: prompt for input)
-- DEPTH: Number of "why" iterations (default: 5, adjust as needed)
+**Variables**: ISSUE (problem or symptom to analyze; default: prompt for input) · DEPTH (number of "why" iterations; default: 5, adjust as needed).
 
 ## Steps
 
-1. State the problem clearly
-2. Ask "Why did this happen?" and document the answer
-3. For that answer, ask "Why?" again
-4. Continue until reaching root cause (usually 5 iterations)
-5. Validate by working backwards: root cause → symptom
-6. Explore branches if multiple causes emerge
-7. Propose solutions addressing root causes, not symptoms
+1. Take the problem statement from the frame.
+2. Ask "Why did this happen?" and document the answer.
+3. For that answer, ask "Why?" again.
+4. Continue until reaching root cause (usually 5 iterations).
+5. Validate by working backwards: root cause → symptom.
+6. Explore branches if multiple causes emerge.
+7. Propose solutions addressing root causes, not symptoms.
 
 ## Examples
 
@@ -80,7 +73,7 @@ Why 3: Test runner config has maxWorkers: 1
 Why 4: Previous developer disabled parallelism due to flaky tests
 Root Cause B: Flaky tests masked by disabling parallelism
 
-Solutions: 
+Solutions:
 A) Remove timestamp from Dockerfile, use git SHA
 B) Fix flaky tests, re-enable parallel test execution
 ```
@@ -89,13 +82,10 @@ B) Fix flaky tests, re-enable parallel test execution
 
 - Don't stop at symptoms; keep digging for systemic issues
 - Multiple root causes may exist - explore different branches
-- Document each "why" for future reference
 - Consider both technical and process-related causes
 - The magic isn't in exactly 5 whys - stop when you reach the true root cause
 - Stop when you hit systemic/process issues, not just technical details
-- Multiple root causes are common—explore branches separately
 - If "human error" appears, keep digging: why was error possible?
-- Document every "why" for future reference
 - Root cause usually involves: missing validation, missing docs, unclear process, or missing automation
 - Test solutions: implement → verify symptom resolved → monitor for recurrence
 

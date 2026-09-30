@@ -1,101 +1,93 @@
 ---
 name: j-deep-research
-description: Deep, multi-source, cited web research using LDR (Local Deep Research) — a distinct tool from plain web search, not a further escalation step of it. Use when the user asks to research a topic thoroughly, wants a deep dive, a cited multi-source summary, a research report, competitor or market evidence, background on a company, product, technology or trend, wants several sources compared or contradictions surfaced, or says one quick search was too thin. Not for searching the local codebase, fetching one known URL, or a single-fact lookup — those are plain search (wigolo, searxng, perplexica; see `j-perplexica-search`), not this skill.
+description: Deep, multi-source, cited web research using LDR (Local Deep Research) — a distinct tool from plain web search, not a further escalation step of it. Use when the user asks to research a topic thoroughly, wants a deep dive, a cited multi-source summary, a research report, competitor or market evidence, background on a company, product, technology or trend, wants several sources compared or contradictions surfaced, or says one quick search was too thin. Not for searching the local codebase, fetching one known URL, or a single-fact lookup — those are plain search (see j-research router), not this skill.
 ---
 
-# Deep research — the LDR tool
+# Deep research with LDR
 
-Plain web search (wigolo, searxng, perplexica, omniroute) answers one fact or
-returns ranked pages in under a second to ~60 s. **This skill is for a
-different job: reconciling several sources into one cited answer**, which
-needs an agentic loop, not a single query. Reach for it when a plain search
-was too thin, or the question needs comparison/synthesis up front — don't
-treat it as step 4 of a search ladder.
+Plain web search answers one fact or returns ranked pages in seconds. **This skill is for a different job: reconciling several sources into one cited answer**, which needs an agentic loop, not a single query. Reach for it when a plain search was too thin, or the question needs comparison/synthesis up front.
 
-Three engines can drive that loop; pick one:
+## When to use LDR vs other tools
 
-| Engine | Tool | Cost | Use when |
-|---|---|---|---|
-| **LDR** (default) | `mcp__ldr__quick_research` / `detailed_research` | free, runs on this machine's LM Studio residency. 145 s on `qwen3-coder-30b`; 200–500 s on the 4B `google/gemma-4-e4b` — check `lms ps` before quoting a budget | the work must stay local, or the question is well within a 4B's synthesis ability (see measurements below) |
-| **OmniRoute** | `omniroute_web_search` ×2–3 (evidence) + `omniroute_route_request` `role: "analysis"` (synthesis) | free with a free-tier model; varies by combo — check `omniroute_check_quota` first | LDR's local model loses the thread (long/technical/academic synthesis) and a stronger routed model is worth the cost, or the loop needs to be fast |
-| **You.com** | `you-research` MCP (async: returns `task_id`, poll with it); `research_effort` lite → frontier | paid per call (`YDC_API_KEY`); standard effort answered in < 1 min (2026-09-25) | you need a cited answer from primary sources fast, or LDR's local model is too thin; a third lane to cross-check the other two |
+For detailed routing across all available search tools (Exa, Tavily, You.com, Perplexica, Wigolo, Brave, OmniRoute), use the `j-research` router skill. This skill focuses on LDR specifically.
 
-**OmniRoute is manual, not autonomous** — you write the search queries and paste the
-evidence into the synthesis prompt yourself; LDR decides both on its own. Measured
-2026-09-24 on the same question (RAGAS metrics): OmniRoute recipe ≈8s total
-(`gemini/gemini-3.1-flash-lite`, $0) vs. LDR's ~150–250s — 20–30× faster, but only
-because you did LDR's search-and-decide loop by hand first. `model` must be
-provider-prefixed (`gemini/gemini-3.1-flash-lite`, `cc/claude-opus-5` — a bare
-`claude-opus-5` 400s); `model: "auto"` with a combo timed out for us; a premium
-lane can be at 0% daily quota (check `omniroute_check_quota` before promising one).
+**Use LDR when:**
+- The work must stay local (no API keys, no external services)
+- The question is well within a 4B model's synthesis ability
+- You need specialist academic/biomedical sources (openalex, pubmed, stackexchange)
+- Budget 200-500s per query is acceptable
+- You are running in a lane with no API-keyed cloud tools (Tavily/You.com not available)
 
-`ldr.search` is the one-shot half of the same tool — a specialist pull with no
-LLM synthesis, seconds not minutes. Requires `engine` (`searxng`, `arxiv`,
-`openalex`, `wikipedia`, `pubmed`, `stackexchange`, `semantic_scholar`, …;
-`list_search_engines` for the full set). `quick_research`/`detailed_research`
-take `query` plus optional `search_engine` and `strategy` (`list_strategies`;
-default `langgraph-agent`, fallback `source-based` when the local model loses
-the agent loop) — but see below: don't pass `search_engine` to these two.
+**Use other tools when:**
+- You need speed (<10s): Exa, Tavily, Brave, OmniRoute — all metered, so name the call in the answer
+- You need stronger synthesis: OmniRoute with premium models, You.com
+- You need semantic search with high recall: Exa
+- You need comprehensive crawling: Tavily
+- You need academic + forum sources: Perplexica
+- You need local-first with caching: Wigolo
 
-## Route and lens by context
+**The ladder — one ladder, owned by `j-research` (not by this skill):** `searxng` first → `tavily` as the single metered fallback, announced in the answer → built-in `web_search`/`web_extract` only when both fail, naming the failed rung. `wigolo` and `perplexica` are off-ladder roles (a fetch/search backend and a cited-synthesis helper), not rungs. LDR is this skill's deep-synthesis engine, not a rung either — reach it as a deliberate escalation for the synthesis job, not as something you fall through to. There is no second ladder and no "pick the ladder that matches the tools available": if a tool named here is not callable in this session, say so and stop rather than substituting silently.
 
-Pick the row for the question, pull sources with the named tool, then judge them through the
-lens. The lens is how you read the sources; the engine choice is which sources you get.
+### `mcp__ldr__quick_research` (default)
+- **Use for:** Most deep research queries
+- **Cost:** Free, runs on local LM Studio
+- **Speed:** 150-500s (depends on model: qwen3-coder-30b ~145s, gemma-4-e4b ~200-500s)
+- **Parameters:** `query` (required), optional `search_engine`, `strategy`
+- **Default strategy:** `langgraph-agent`, falls back to `source-based` if local model loses the thread
 
-| Context | Pull sources with | Lens (what makes a source count) |
+### `mcp__ldr__detailed_research`
+- **Use for:** Decision-grade depth, complex synthesis
+- **Cost:** Free, runs on local LM Studio
+- **Speed:** Slower than quick_research
+- **Parameters:** Same as quick_research
+- **Warning:** Never chain without telling the user the expected wait
+
+### `ldr.search` (one-shot, no synthesis)
+- **Use for:** Specialist source pulls when you'll read/synthesize yourself
+- **Cost:** Free, runs on local LM Studio
+- **Speed:** Seconds, not minutes
+- **Parameters:** `query`, `engine` (required)
+- **Engines:** `searxng`, `arxiv`, `openalex`, `wikipedia`, `pubmed`, `stackexchange`, `semantic_scholar` (run `list_search_engines` for full set)
+
+## Specialist engines (use with ldr.search only)
+
+| Engine | Best for | Notes |
 |---|---|---|
-| General or current facts | `searxng_web_search`, or `ldr.search` `engine: "searxng"` | recency, primary source over aggregator |
-| Academic / ML papers | `ldr.search` `engine: "openalex"` (citations, DOI, OA link); `semantic_scholar` as second | peer-reviewed venue, citation count, year; paper beats blog summary |
-| Biomedical | `ldr.search` `engine: "pubmed"` | study type (RCT, meta-analysis > protocol, narrative review) |
-| Code errors, how-to | `ldr.search` `engine: "stackexchange"` | accepted answer, score, date vs the version in use |
-| A library or tool's API | Context7 / DeepWiki, not LDR | matches the installed version |
-| Vendor, market, competitor | `searxng` + `mcp__perplexica__search` | vendor pages are T3; look for an independent buyer or practitioner source |
-| Cited synthesis of one sub-question | `ldr.quick_research` with defaults | then run a second query phrased as the opposite claim and read both |
+| `openalex` | Academic/ML papers | Citations, DOI, OA link. Also indexes arXiv. |
+| `pubmed` | Biomedical literature | Study type filtering (RCT > meta-analysis > protocol) |
+| `stackexchange` | Code errors, how-to | Accepted answer, score, date vs version in use |
+| `arxiv` | Preprint papers | HTTP 406 errors; use openalex instead |
+| `wikipedia` | General knowledge | Can be throttled (429); fallback to searxng |
+| `semantic_scholar` | Academic papers | Returns 429 without API key |
 
-Measured 2026-09-24 on `google/gemma-4-e4b`, known-answer questions:
+**Critical:** Do NOT pass `search_engine` to `quick_research`/`detailed_research`. The academic engines return metadata/abstracts that the 4B model cannot synthesize from. Pull specialist sources with `ldr.search` and read them yourself.
 
-- `quick_research` with defaults (`langgraph-agent`, searxng) answered both correctly: RAGAS
-  metrics and the SQLite "database is locked" fixes, ~150–180 s each.
-- The same question with `search_engine: "openalex"` + `source-based` answered "cannot answer":
-  the academic engines return metadata and abstracts, which the 4B cannot synthesise from. So do
-  not pass `search_engine` to `quick_research`. Pull specialist sources with `ldr.search` and
-  read them yourself.
-- `ldr.search` on `openalex`, `pubmed` and `stackexchange` returned rich, on-topic results in
-  seconds.
-- Before the 2026-09-24 launcher fix, the `search_engine` argument was silently ignored, because
-  `LDR_SEARCH_TOOL` in the environment overrode it. Results measured before then all came from
-  searxng.
+## Budget and timing
 
-## Budget
-
-- One `quick_research` per sub-question, at most three per user request unless the user asked
-  for decision-grade depth. Report the elapsed time with the result.
-- Never chain `detailed_research` runs without telling the user the expected wait.
-- Read the returned sources; the summary is model output and may compress a source badly.
+- One `quick_research` per sub-question, at most three per user request unless decision-grade depth is requested
+- Report elapsed time with the result
+- Check `lms ps` before quoting a budget to the user (model availability affects speed)
+- For any claim that will survive in the output, open the top URL (browseros-neo or wigolo fetch) and read enough to quote it. A synthesized summary of a source is not the same as the source.
 
 ## Evidence discipline
 
-- Cite the returned URLs next to the claims they support; never invent a citation.
-- Tier honestly: T1 primary, T2 practitioner/buyer, T3 vendor or model output, T4 prior.
-- If SearXNG returns nothing useful, say so and try one narrower query, then stop.
+- Cite returned URLs next to the claims they support; never invent citations
+- Tier honestly: T1 primary, T2 practitioner/buyer, T3 vendor or model output, T4 prior
+- If searxng returns nothing useful, say so and try one narrower query, then stop
 
-## When it fails
+## LDR failure modes
 
-- `searxng`: "All connection attempts failed" or an empty result set → Vane is down; run
-  `~/.infra/bin/start` and check `curl 'http://127.0.0.1:8081/search?q=hello&format=json'`.
-- `ldr`: first call after a reboot can take ~60 s to initialise (heavy imports); a warm start
-  is ~10 s. "no loaded chat model" should no longer happen — the `mcp/ldr-mcp` launcher
-  selects the model itself via `mcp/lmstudio-model` (prefers a resident model, JIT-loads
-  `google/gemma-4-e4b` ~10 s when LM Studio is idle). The 4B is slow at research: budget
-  200–500 s per `quick_research`, and check `lms ps` before quoting a budget to the user.
-- `ldr.search` returns `status: success` with 0 results → treat as a failure, not absence. LDR
-  swallows upstream HTTP errors. On 2026-09-24 `arxiv` returned HTTP 406 and `wikipedia` 429
-  (throttled), and `semantic_scholar` returned 429 at times without a key. Use `openalex`, which
-  also indexes arXiv, or searxng. `github` needs an API key; use `gh search` instead.
-- `ldr (CONNECTION_CLOSED)` at session start was the launcher exiting when LM Studio could not
-  load a model. It now starts anyway (fixed 2026-09-24). A research call that fails with an
-  LM Studio error means run `~/.infra/bin/start`.
-- Tool missing in the session → `/mcp` to reconnect, or `~/.infra/bin/setup-mcp` to re-register.
-- Health check: `bin/bench-research --ldr-only` in `~/.infra` runs two fixed searches plus
-  one `quick_research` through the real launcher (~5 min; per-case timeouts FAIL a slow run
-  instead of hanging).
+- **First call after reboot:** ~60s to initialize (heavy imports); warm start ~10s
+- **"no loaded chat model":** Should no longer happen — launcher selects model via `mcp/lmstudio-model` (prefers resident, JIT-loads gemma-4-e4b ~10s when idle)
+- **`ldr.search` returns `status: success` with 0 results:** Treat as failure, not absence. LDR swallows upstream HTTP errors.
+- **Specific engine failures (2026-09-24):** arxiv (HTTP 406), wikipedia (429 throttled), semantic_scholar (429 without key). Use `openalex` for the academic case; for a general web read, go back to the ladder (`searxng`, then `tavily` announced).
+- **`ldr (CONNECTION_CLOSED)` at session start:** Launcher exiting when LM Studio couldn't load model. Fixed 2026-09-24; now starts anyway. Research call failing with LM Studio error means run `~/.infra/bin/start`.
+- **Tool missing in session:** `/mcp` to reconnect, or `~/.infra/bin/setup-mcp` to re-register
+- **Health check:** `bin/bench-research --ldr-only` in `~/.infra` runs two fixed searches plus one `quick_research` (~5 min; per-case timeouts FAIL slow runs instead of hanging)
+
+## Performance measurements (2026-09-24 on gemma-4-e4b)
+
+- `quick_research` with defaults (`langgraph-agent`, searxng) answered known-answer questions correctly (RAGAS metrics, SQLite fixes): ~150-180s each
+- Same question with `search_engine: "openalex"` + `source-based` answered "cannot answer" — academic engines return metadata/abstracts that 4B cannot synthesize
+- `ldr.search` on `openalex`, `pubmed`, `stackexchange` returned rich, on-topic results in seconds
+- Before 2026-09-24 launcher fix, `search_engine` argument was silently ignored (environment override); results measured before then all came from searxng

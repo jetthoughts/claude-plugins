@@ -7,7 +7,7 @@ description: Convert the riskiest assumptions and council disagreements into a r
 
 Method aids: `pm-product-discovery:brainstorm-experiments-new` / `:brainstorm-experiments-existing`. Scoring: `scripts/score_portfolio.py 10-experiment-portfolio.md` (stdlib). Card schema: `../j-independent-ideation/templates/experiment-card.yaml`.
 
-**Input**: `08-assumption-map.md`, `09-council/consensus-report.md` (if any), `00-decision-brief.md`. **Output**: `10-experiment-portfolio.md`.
+**Input**: `08-assumption-map.md`, `09-council/consensus-report.md` (if any), `09-ux/ux-heatmap.md` (if any), `00-decision-brief.md`. **Output**: `10-experiment-portfolio.md`.
 
 ## Allowed patterns
 

@@ -1,6 +1,6 @@
 ---
 name: lightning-demos
-description: Run a Lightning Demos round (the Design Sprint step from Knapp's Sprint, as AJ&Smart runs it) — a timed research-and-show-and-tell that harvests one transferable mechanism from each of several real products, deliberately from outside your own industry, and leaves a board of ten to twenty big ideas to design from. Use this whenever someone needs inspiration before designing anything and would otherwise invent from scratch — "how do others solve this", "find examples", "we need fresh ideas", "what's out there", "look at comparables", "steal from other industries", "related worlds", before a solution sketch or concept round, or as the ideation step of a design sprint. Reach for it especially when a first idea already exists and everyone is anchored on it. Domain-agnostic; run it standalone or inside a sprint.
+description: Run a Lightning Demos round (Knapp's Design Sprint step) — a timed research and show-and-tell that harvests one transferable mechanism from each of several real products, deliberately from outside your own industry. Use for "how do others solve this", "find examples", "we need fresh ideas", "look at comparables", "steal from other industries", before a solution sketch or concept round, or when everyone is anchored on the first idea. Not for competitor feature matrices, ranking a shortlist, or settling questions of fact — use ldj to prioritise and deliberate to decide.
 ---
 
 # Lightning Demos
@@ -60,6 +60,10 @@ Everything above assumes people in a room. Four things change when the contribut
 Start with the cheapest tool that answers the question and escalate only on failure: **`WebFetch`** for the page's text and claims · `mcp__parallel__web_fetch` or `lightpanda` when it 403s or the content is JS-rendered · an external driver (`agent-browser`, `browser-use`, `Interceptor`, `remote-browser`, `playwright`) when you need to *use* the thing rather than read it · `chrome-devtools` `take_screenshot` or `screenshot` when you need to see it, and then actually read the image rather than reasoning from alt text · `BrightData` / `Apify` / `just-scrape` for a site that resists. **`claude-in-chrome` is not for this** — it drives the user's own logged-in browser and is reserved for the Perplexity research seat.
 
 The homework tip transfers too. Human facilitators prefer participants research the night before, because 25 minutes is thin if you haven't thought about the problem. With agents the equivalent is a **pre-brief**: hand each lane the problem statement and its assigned domain before it starts searching, so its budget goes on looking rather than on orienting.
+
+## The evidence contract (five isolated roles)
+
+The round above is the method; the contract that makes an agent-run round auditable is in `references/agent-evidence-contract.md`. In short — five isolated `j-research-lead` roles (**direct-competitor · adjacent-industry · distant-industry · failed-or-negatively-reviewed · consumer-grade/low-friction**), merged only after all five return; every demo cites an `E-nnn` added to the ledger; **≥30% of demos from outside the target industry**, with at least one failure pattern; and **UNKNOWN** recorded for any role returning fewer than three sourced demos, never filled from another role.
 
 ## What this is not
 

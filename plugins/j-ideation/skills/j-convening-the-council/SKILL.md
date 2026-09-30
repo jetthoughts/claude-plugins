@@ -7,6 +7,8 @@ description: Delphi-style, three-round, anonymized review of concepts by five ro
 
 Decision-support, never a voting machine. Not the global `Council` skill (that one debates and negotiates; this one forbids it).
 
+**Scope, against `decision-panel`.** The council's median is advisory input — it never binds, and no seat here decides. `decision-panel` is the one that ends in a binding ballot by a named Decision Voter, with board approval for consequential acts. Need structured critique, use this; need authority, use the panel.
+
 **Input**: `00-decision-brief.md`, `03-evidence-ledger.jsonl`, `04-contradiction-register.md`, anonymized `07-concepts/concept-*.md` (NOT `concept-map.md`), `08-assumption-map.md`. **Outputs**: `09-council/brief.md`, `round-1/<role>.md`, `anonymized-rationales.md`, `round-3/<role>.md`, `consensus-report.md`, `consensus-summary.json`.
 Aggregator: `scripts/aggregate_council.py 09-council`. Review format: `../j-independent-ideation/templates/council-review.md`.
 

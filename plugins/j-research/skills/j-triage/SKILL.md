@@ -5,17 +5,18 @@ description: Preprocess and triage captured research in Paul's vault so it becom
 
 # Research triage
 
-Captured research lives under `~/Documents/pkm/evidence/` as `type: Research` notes with the
+Captured research lives under `~/dev/pkm/evidence/` as `type: Research` notes with the
 source's page text unedited. Triage adds the layer that makes a note usable in a decision without
 re-reading it: takeaways, what it feeds, a tier. The captured text is never edited.
 
 ## Select
 
-Untriaged = a note under `evidence/perplexity/*/pplx-*.md` (later: `evidence/notebooklm/`,
-`evidence/research/`) whose frontmatter has no `triage:` key. List them:
+The vault layout is owned by the `j-inbox` skill (its §Directory layout is the contract; this skill
+reads what it wrote). Untriaged = a note under `evidence/perplexity/*/pplx-*.md` (later:
+`evidence/notebooklm/`, `evidence/research/`) whose frontmatter has no `triage:` key. List them:
 
 ```sh
-grep -L '^triage:' ~/Documents/pkm/evidence/perplexity/*/pplx-*.md
+grep -L '^triage:' ~/dev/pkm/evidence/perplexity/*/pplx-*.md
 ```
 
 Work newest `filed:` first, at most 5 notes per run unless asked for more.
@@ -84,7 +85,8 @@ added, and anything marked UNKNOWN.
 
 ## Headless run
 
-`~/Documents/pkm/scripts/research-triage.sh [N]` runs this skill through `claude -p` on up to N
-untriaged notes and appends to `.git/research-triage.log`. launchd cannot run it reliably from
-`~/Documents` (macOS Full Disk Access; the vault's weekly job has the same limit), so run it by hand
-or from the session-start catch-up, not from a LaunchAgent.
+`~/dev/pkm/scripts/research-triage.sh [N]` runs this skill through `claude -p` on up to N
+untriaged notes and appends to `.git/research-triage.log`. The vault now lives at `~/dev/pkm`, not
+under `~/Documents`, so the old macOS Full Disk Access limit does not obviously apply — confirm the
+runner can read the vault before wiring it up, and prefer running it by hand or from the
+session-start catch-up over a LaunchAgent.

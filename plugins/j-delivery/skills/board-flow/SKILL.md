@@ -1,6 +1,6 @@
 ---
 name: board-flow
-description: How agents and sessions coordinate work on a task board the JetThoughts way — Backlog → Ready → In Progress → Code Review → Verify → Done, pull right-to-left and top-to-bottom, one card in progress per agent, two in flight, never move a card back, split what outgrows its time box, and a fixed list of what to do when the WIP limit is hit. Use this whenever you pick the next task, move or comment on a card, report status, decide who acts next, or find a stale, blocked or oversized card — on Paperclip, GitHub Projects, a markdown kanban, or a plain TODO list — and whenever the user says board, kanban, backlog, ready, in progress, in review, WIP, sprint, stale, "what next" or "what should I pick up". Also use it when several agents share one board and someone must decide which card each takes.
+description: "How agents and sessions coordinate a shared task board — six lists, pull right-to-left, WIP limits, split at the time box. Use when picking the next task, moving or commenting on a card, reporting status, or hitting a stale, blocked or oversized card. Triggers: board, kanban, backlog, WIP, sprint, stale, \"what next\". Not for the delivery contract itself — that is `contract`."
 ---
 
 # Board flow

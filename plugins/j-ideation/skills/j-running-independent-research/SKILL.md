@@ -1,6 +1,6 @@
 ---
 name: j-running-independent-research
-description: Structured, cited research for a decision brief using internal artifacts first, then the local keyless search stack (Perplexica, SearXNG and Local Deep Research MCPs, research and research-deep skills, semble, OpenViking), producing 02-research-plan.md, 03-evidence-ledger.jsonl, and 04-contradiction-register.md with tiered, labelled evidence and an independent falsification pass. Use inside /j-independent-ideation after the brief exists, or whenever a decision needs sourced evidence rather than opinion.
+description: Structured, cited research for a decision brief using internal artifacts first, then the local keyless search stack (Perplexica, SearXNG and Local Deep Research MCPs, research and outline-research skills, semble, OpenViking), producing 02-research-plan.md, 03-evidence-ledger.jsonl, and 04-contradiction-register.md with tiered, labelled evidence and an independent falsification pass. Use inside /j-independent-ideation after the brief exists, or whenever a decision needs sourced evidence rather than opinion.
 ---
 
 # Running independent research
@@ -13,7 +13,7 @@ Validator: `scripts/validate_evidence.py <workspace>`.
 1. Repo + prior decision artifacts (`mcp__semble__search`, tokensave, OpenViking `search`).
 2. Internal customer evidence, sales notes, support, proposals, analytics exports (paths from intake).
 3. Existing product/service implementation and technical constraints.
-4. External via the local keyless stack, in this order (see `j-deep-research` for budgets and measured latencies): `mcp__perplexica__search` (≤2 calls per question, `j-perplexica-search` rules) → `mcp__searxng__searxng_web_search` for raw ranked URLs → `mcp__ldr__quick_research` for a cited multi-source summary of one sub-question (≈2–3 min each) → the installed `research` / `research-deep` skills for multi-source outlines.
+4. External via the local keyless stack, in this order (see `j-deep-research` for budgets and measured latencies): `mcp__perplexica__search` (≤2 calls per question, `j-perplexica-search` rules) → `mcp__searxng__searxng_web_search` for raw ranked URLs → `mcp__ldr__quick_research` for a cited multi-source summary of one sub-question (≈2–3 min each) → the installed `research` / `outline-research` skills for multi-source outlines.
 5. Remote fallbacks only where 1–4 leave a factual gap: `RivalSearchMCP` (keyless), then `WebSearch`. Record the limitation in `02-research-plan.md` when a local tool is down.
 
 ## Mode

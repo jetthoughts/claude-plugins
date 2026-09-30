@@ -1,9 +1,20 @@
 ---
 name: j-jobseek
-description: "Run the Berlin job search — read the board, pick the operation that is due, run it, and stop at anything only Paul can do. Use whenever the ask is run the job search, what is next on Job Seek, take the top card, apply to this posting, engage this company on LinkedIn, scan the boards, rehearse for a screening, or run the weekly review. Reach for it before touching jobseek-pipeline.md or the Job Seek Berlin project. Not for a single posting on its own — that is `j-apply-one-job`; not for a LinkedIn lane on its own — that is `j-linkedin-engage`; not for the generic board dispatcher — that is `j-board-run`, which this skill loads for `next`."
+description: "Run the Berlin job search — read the board, pick the operation that is due, run it, and stop at anything only Paul can do. Use whenever the ask is run the job search, what is next on Job Seek, take the top card, apply to this posting, engage this company on LinkedIn, scan the boards, rehearse for a screening, or run the weekly review. Reach for it before touching jobseek-pipeline.md or the Job Seek Berlin project. Not for the board sweep or a single application — those lanes live in the jobseek-auto skill, which is not installed on this machine; until it is restored, every operation here runs by hand (see Precedence)."
 ---
 
 # j-jobseek
+
+> **Precedence (Paul, 2026-09-18): the sweep and the application lanes now live in the
+> `jobseek-auto` skill** (`/Users/pftg/dev/jobseek-lab/.claude/skills/jobseek-auto`, symlinked
+> user-level) and its two dynamic workflows, `jobseek-sweep` and `jobseek-apply`. Load that skill
+> for `scan` and `apply <url>`. This skill keeps the board dispatch, the LinkedIn lanes, the
+> interview rehearsal and the weekly review.
+>
+> **Three routes below are dead**: `j-board-run`, `j-apply-one-job` and `j-linkedin-engage` are
+> referenced but **not installed on this machine** — the `j-lanes` plugin ships `j-jobseek` and
+> `j-venture` only (verified 2026-09-18). Until they are restored, `next` means read the board
+> and dispatch by hand, and `engage` is Paul's lane.
 
 Drives the system under the vault note `find-an-eng-leading-job`. The procedures live in the Operation notes; this skill decides which one is due, runs it, and records the result. It does not restate them.
 
@@ -27,15 +38,7 @@ Hitting one is not a failure and does not end the run. Write the row into `jobse
 
 **Always read `jobseek-pipeline.md` first** — it is the state. Then:
 
-| Operation | Runs |
-| --- | --- |
-| `next` | **The team dispatcher: load the `j-board-run` skill.** Read the Paperclip board (company JetThoughts, project *Job Seek Berlin*), take the top runnable card (`todo`, not blocked, earliest due), name its seats from the roster in that skill (`references/roster.md`), brief them, run, close the card with the check it names |
-| `apply <url>` | One posting end to end with Paul's gates: load the `j-apply-one-job` skill and run stages 2–5 on it. `next` uses the same skill whenever the top card is a stage 2–5 card or names a posting |
-| `engage [company\|intake\|pick]` | One LinkedIn lane with Paul's gates: load the `j-linkedin-engage` skill. `intake` proposes lanes for newly applied companies (tracker + *Engage:* cards), `pick` finds today's post and drafts the comment for every lane at step 3. `next` uses the same skill whenever the top card sits in project *LinkedIn Engagement (Job Seek)* |
-| `scan` | vault note `op-jobseek-source-and-qualify` — the boards come from the Drive register `22-job-boards_monitor.md` (Lane 1 weighted table, Lane 2 Rails section), never from memory; public boards via `lightpanda`, Cloudflare and login boards via BrowserOS neo, HN via the Algolia API |
-| `conversation` | vault note `op-jobseek-prototype-conversation` |
-| `prep` | vault note `op-jobseek-interview-rehearsal` |
-| `review` | vault note `op-jobseek-weekly-review` |
+Each operation and where it runs (workflow, skill or vault note): see `references/operations.md`.
 
 **Hand-off to Paul (Paul, 2026-09-03).** When a card needs him, assign it to him and add a comment with exactly what to do or the simplest unblock: the click, the link, the one-line question. The card is the hand-off, not the chat. Take it back when his part is done.
 
@@ -59,9 +62,7 @@ Say which branch you took and why, in one line, before running it.
 
 Load the vault note `research-berlin-target-seat` and check the framing against it. Three known-bad patterns are still live in existing artifacts and will be copied if you reuse them:
 
-- Pitching a **seed–Series A founding-engineer** seat — the network-activation framing ruled out on 2026-08-25 (*"not a developer or builder role"*). It bans the **pitch**, not small companies: engineering-team size is a **ceiling** (Paul, 2026-09-05), so small is never a kill on its own — the hands-on rule is. The number lives in `find-an-eng-leading-job` and is not restated here.
-- *"top-50 Ruby on Rails contributor"* stated bare. Hedge it: "50+ merged pull requests, top-50 contributor by commits in 2013." Never "2012": Paul has 0 Rails commits in 2012 and 47 in 2013, rank 24 of 791 authors that year (rails/rails git shortlog, verified 2026-09-03).
-- Gmail-redirect-wrapped links. Retype as plain `linkedin.com/in/paul-keen` and `github.com/pftg`.
+Small is never a kill on its own — engineering-team size is a **ceiling** (Paul, 2026-09-05), so the hands-on rule is what disqualifies; the seed–Series A founding-engineer **pitch** stays banned (2026-08-25). The three known-bad patterns, verbatim: see `references/outbound-patterns.md`.
 
 `1. Area/Job Seek/20-applying_role-filter.md` is **superseded** — it screens for hands-on builder seats. Do not qualify with it until it is rewritten.
 
@@ -69,7 +70,7 @@ Artifacts live on Drive, not in the vault: CVs at `~/Google Drive/My Drive/Docum
 
 ## Team — who handles the next card
 
-The roster and the dispatch-by-card-kind table live in the `j-board-run` skill (`references/roster.md`). `next` loads that skill.
+The roster and the dispatch-by-card-kind table lived in the `j-board-run` skill, which is **not installed on this machine**. Until it is restored, `next` reads the board and dispatches by hand (see Precedence).
 
 ## Finish
 

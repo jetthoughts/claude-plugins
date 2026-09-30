@@ -7,7 +7,7 @@ description: Produce one auditable decision record (11-decision-record.md) with 
 
 Run as the `j-decision-agent` agent: reads final artifacts only; adds no facts; edits no evidence; never redefines success criteria after results; preserves dissent. Validator: `scripts/validate_decision.py 11-decision-record.md --ledger 03-evidence-ledger.jsonl`. Policy: `~/.claude/skills/j-independent-ideation/DECISION-POLICY.md`.
 
-**Input**: `00-decision-brief.md`, `03-evidence-ledger.jsonl`, `04-contradiction-register.md`, `08-assumption-map.md`, `09-council/consensus-report.md` + `consensus-summary.json`, `10-experiment-portfolio.md`. **Output**: `11-decision-record.md` (template in `../j-independent-ideation/templates/`).
+**Input**: `00-decision-brief.md`, `03-evidence-ledger.jsonl`, `04-contradiction-register.md`, `08-assumption-map.md`, `09-council/consensus-report.md` + `consensus-summary.json`, `09-ux/ux-heatmap.md` (if any), `10-experiment-portfolio.md`. **Output**: `11-decision-record.md` (template in `../j-independent-ideation/templates/`).
 
 ## Procedure
 

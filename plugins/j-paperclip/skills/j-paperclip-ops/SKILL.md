@@ -1,16 +1,6 @@
 ---
 name: j-paperclip-ops
-description: >
-  Keep the Paperclip agent company healthy and unstick it when it stalls — one-command overview of
-  every company (seats, money, open work, what is waiting on the human), plus the symptom-to-cause
-  runbook for silent wakes, stranded cards, dead escalation paths, frozen instruction bundles and
-  seats that stop mid-plan. Use this whenever someone asks how Paperclip is doing, what the board
-  or the agents are up to, why a card is stuck, why an agent did nothing or ran and produced
-  nothing, why something cannot be closed or deleted, why a run cost so much, or says a card shows
-  Recovery/Failed, an agent is paused, an escalation path is paused, or a change to an agent had no
-  effect. Also use it before and after any bulk change to seats, budgets or the board, and for the
-  weekly maintenance sweep. For driving the API (routes, PATCH shapes) load j-paperclip; for how
-  cards move between lists load j-board-flow.
+description: "Keep the Paperclip agent company healthy and unstick it when it stalls — one-command overview of every company, plus the symptom-to-cause runbook for silent wakes, stranded cards, dead escalation paths and frozen instruction bundles. Use when asked how Paperclip is doing, why a card is stuck, why an agent did nothing, why a run cost so much, or after any bulk change to seats or budgets. Not for driving the API — that is `j-paperclip`."
 ---
 
 # Paperclip ops
@@ -38,24 +28,7 @@ the attention feed (what is waiting on the human).
 
 Match the symptom, not the story you form about it. Each row was measured on this install.
 
-| Symptom | What is actually true | Fix |
-| --- | --- | --- |
-| Run says `succeeded`, but the agent clearly read nothing | A wakeup does not put an issue into the run context even when handed `issueId`. No project resolved, so the run opened in an empty fallback dir — and that cwd is then saved on the session and preferred next time | Assign the card to the seat (assignment is what carries the workspace). Wake with `{"forceFreshSession": true}` to drop the poisoned cwd. Read the run log's **first line** to confirm the workspace |
-| Card assigned, seat never moves | The seat was paused at assign time: the server logs *failed to wake agent on issue update … status paused* and never retries | Unpause first, then assign or re-assign. Order matters |
-| A seat keeps waking with nothing to do | A `done`/`cancelled` card still holds an assignee | Clear `assigneeAgentId` on closed cards (read `/api/companies/:id/issues` and filter `status` done/cancelled with `assigneeAgentId` set). 109 such rows were why one seat failed repeatedly on a cancelled card |
-| A card you just cleared goes `blocked` again with a fresh recovery action | Its assignee is a **paused** seat. Paperclip retries the continuation, finds no live execution path, and re-strands it — resolving the recovery action alone does not break the loop, because the assignee is still dead | Unpause the seat (or reassign the card) **first**, then resolve. Pausing a seat that holds open cards is what starts this |
-| A run dies at launch with `workspace_validation_failed` | The card has **no project**, so no execution workspace could be persisted before the adapter started. Cards created by agents and routines do not inherit one — measured three times on 2026-09-05 (JET-217, JET-224, and a status-card compile task) | Give the card a project and that project's workspace, then resolve the recovery action. Check open cards for a missing `projectId` before they fail |
-| Card shows Recovery or Failed and neither UI nor PATCH clears it | A recovery action (`stranded_assigned_issue`, `active_run_watchdog`, `missing_disposition`) is pending and owns the card | `POST /api/issues/:id/recovery-actions/resolve` with `{"outcome":"restored\|false_positive\|blocked\|cancelled","sourceIssueStatus":"todo\|done\|in_review\|blocked"}` — the field is `sourceIssueStatus`, not `issueStatus` (checked against `/api/openapi.json`, 2026-09-07); `resolutionNote` is optional, `note` is not a key. A plain `PATCH /api/issues/:id {"status":"todo"}` also clears a `missing_disposition` action (measured 2026-09-06). A stuck watchdog is `DELETE /api/issues/:id/watchdog` |
-| Seat stops mid-plan | Almost always budget or turns, not a defect. Budget policies enforce even when the overview says `paused: true` — that flag mirrors the *agent's* status, not the policy's | `GET /companies/:id/budgets/overview`, `maxTurnsPerRun` on the agent |
-| `PATCH /api/agents/:id` fails with `expected record, received undefined` | `GET /api/agents/:id/configuration` redacts `modelProfiles.*.adapterConfig`, so a read-modify-write loses it | Restore before writing: `\| if .modelProfiles then .modelProfiles \|= with_entries(.value.adapterConfig //= {}) else . end` |
-| Instruction-bundle change has no effect | The bundle is injected only into a **fresh** session; a resumed one keeps the cached copy | Wake with `forceFreshSession: true`, then assert the new line appears in the run log |
-| "Escalation path is paused" warning | The seat's `reportsTo` points at a paused seat | Unpause the parent or repoint `reportsTo` (note: `reportsToAgentId` is silently ignored) |
-| A seat branches in the real checkout and sweeps someone's edits | `workspaceStrategy` lives in the agent's `adapterConfig` and defaults to `project_primary` | `{"type":"git_worktree"}`, and set the workspace's `defaultRef`/`repoRef` or worktree creation stops on an unresolved base ref |
-| Trivial work billed at premium rates | Model per seat is set in `adapterConfig.model`, and nothing tiers it for you | Reserve the expensive model for judgment seats; everything mechanical goes a tier down |
-| The laptop crawls or freezes while agents run | A local model is loaded with a huge context — measured 2026-09-05: `minicpm-v-4.6` at 262144 ctx, 4-way parallel, JIT-loaded on every OpenViking query. Paperclip was not the caller | `lms ps` for the loaded model and its context, then `lsof -nP -i TCP:1234` for who is actually connected. `lms unload --all` frees it; fix the client's config, not Paperclip's |
-| A seat is meant to run on the free gateway but bills or burns the CPU locally | Its `adapterConfig.model` names the provider directly (`lmstudio/...`), which bypasses OmniRoute even when the gateway is declared in `PAPERCLIP_OPENCODE_PROVIDERS` | Set `model` **and** `PAPERCLIP_OPENCODE_SMALL_MODEL` to a combo (`omniroute/free-cheap`); the combo's own last entry is the local floor, so local stays the fallback rather than the default |
-| The free lane suddenly fails everywhere | Usually the upstream daily quota, not local config — configuration that worked an hour ago did not rot | Check the gateway's own usage page before touching any Paperclip setting |
-| Cards blocked with `acpx_turn_failed`; run log shows `API Error: 400 ... not available in the active live catalog` or `504 ... rate-limit execution expiration` | Lane failure, not an agent failure. 400 = a combo member left the provider's live catalog (config; free providers delist without notice — 2026-09-08 all 6 `free-thinking` members died overnight). 504 = OmniRoute killed a queued request at its own `requestQueue.maxWaitMs` deadline (transient rate limit; the seat never got a turn) | 400: probe the combo's members with a real 1-token request, swap dead ones in `services/omniroute/combos.json`, sync. 504: raise `maxWaitMs` (15s -> 120s measured 2026-09-08), or `0` on combo members so a full lane falls through. Both: resolve the recovery action (`restored`, `sourceIssueStatus` `todo`) and the card requeues. A transient 504 never needs a human decision. A human or seat reading the board applies this classification and requeues the card by hand — there is no scheduled sweep any more (Paul, 2026-09-11) |
+Full symptom → cause → fix table: see `references/runbook.md`.
 
 ## Distrust green
 
@@ -80,27 +53,22 @@ Match the symptom, not the story you form about it. Each row was measured on thi
 ## Lane health
 
 There is no automated repair path any more (Paul, 2026-09-11) — check and fix the lane by hand.
-Gateway up (it does **not** survive a reboot): `curl -sf http://127.0.0.1:20128/api/health`. A
-lane probe is one `curl` POST to `/v1/chat/completions` with `max_tokens` 5, reading `.model` off
-the answer — run it for `free-cheap` and for every combo a live (non-paused) seat rides, since a
-combo that only exists on paper strands every seat on it and `/v1/models` never lists combos, so
-the probe is the only check. Combo membership: `GET /api/v1/combos` or the `omniroute_list_combos`
-MCP tool; changing membership is a write to `combos.data` in `~/.omniroute/storage.sqlite`
-followed by `omniroute stop` and `~/.infra/services/omniroute/bin/start`. No local model loaded at
-a size and parallelism that freezes the machine: `lms ps` for what is loaded, `lsof -nP -i
-TCP:1234` for who is connected, `lms unload --all` to free it.
+Gateway up (it does **not** survive a reboot): `curl -sf http://127.0.0.1:20128/api/health`. A LAN model connection that 502s while `curl` still answers 200 is a runtime connect failure (bun tries mDNS IPv6 first), not a dead host — test with `node -e "fetch(…)"`, fix with the IPv4 literal, or deactivate the connection live: `omniroute providers edit <name> --inactive` (measured 2026-09-14, jora).
+
+A lane probe is one `curl` POST to `/v1/chat/completions` with `max_tokens` 5, reading `.model` off the answer — run it for `free-cheap` and for every combo a live (non-paused) seat rides, since a combo that only exists on paper strands every seat on it and `/v1/models` never lists combos, so the probe is the only check.
+
+Do not "restore" jora as the floor host: reactivate it only after `node -e "fetch(…)"` to jora proves the path *and* its serving context is raised on-site — then `omniroute providers edit jora --active` re-adds it as a second floor host for redundancy, never as a replacement. The floor is load-bearing local residency: if LM Studio idle-unloads bonsai, the next floor call JIT-loads a 27B on this Mac while seats run (504 class). Watch `lms ps` + memory on the first multi-seat run; if pressure shows, reload bonsai at ~131k — every worker seat's measured peak fits under that. **Do not re-add bonsai as a `cos-thinking` floor**; it stays floor for `free-thinking`/`free-cheap` worker seats only. Any probe of bonsai must use `max_tokens >= 1500` (reasoning model: at small budgets it burns them all thinking and returns empty content with `finish_reason: length` — looks alive, proves nothing).
+
+No local model loaded at a size and parallelism that freezes the machine: `lms ps` for what is loaded, `lsof -nP -i TCP:1234` for who is connected, `lms unload --all` to free it.
+
+Lane topology, measured probes and combo CRUD: see `references/lane-health.md`.
 
 ## Reading run logs: the rules live here, the counting does not
 
 Comments are what a seat published; the log is what it did. **Four signatures, each from a failure
 that actually happened**, and each is a rule you apply rather than a number a tool decides:
 
-| Signature | Why it is a defect | What it looked like |
-| --- | --- | --- |
-| A **control-plane write to a non-local or placeholder host** | The write went nowhere, `curl` exited 0, and the run reported success | `PUT https://paperclip-api.example.com/api/status-cards/…` — the card sat `compiling` for an hour |
-| A Paperclip API call with **no `-f`/`%{http_code}` and no read-back** | Unreachable host, 400 and 200 all exit 0; the run is reporting a belief | every seat that "updated" a card it never checked |
-| A **tool error swallowed mid-run** | The run continued as if it had not happened, so the output is built on a gap | `"status":"error"` inside a `tool_use` part |
-| A run that produced **one or two lines** | Started and died — capacity spent, nothing produced | 30 of 195 runs in one day |
+The four signatures and what each looked like: see `references/run-log-signatures.md`.
 
 **Calls to GitHub, a job board or Google are ordinary work and are never judged** — only writes to
 the control plane. That distinction is the whole reason this gate is worth reading: the first
@@ -167,18 +135,7 @@ than N notifications).
 
 Run this weekly, or before handing the board to anyone:
 
-0. Probe every lane in use with a real 1-token request (see Lane health above) **before** reading
-   the board — a dead lane makes every stuck card one root cause, not N, and requeued cards just
-   strand again.
-1. Read `/issues`, `/agents`, `/attention` and `/recovery-observability` for the company and clear
-   every stuck row left over from the checks above.
-2. Attention feed to zero, or say plainly which items are parked and why. An item sitting there is
-   a human decision nobody has taken, not a task.
-3. Any seat with no completed work in 30 days: say so. A roster that only grows is sediment.
-4. Backup age — `/api/health` carries `databaseBackup.latestBackup.ageHours`; over ~26h is stale.
-5. Spend against cap, and whether the split by seat matches what those seats actually do.
-6. A worktree whose card is closed, whose branch is merged into the default ref, and whose tree is
-   clean can be pruned; leave a dirty or unmerged one alone.
+The sweep checklist, step by step: see `references/weekly-sweep.md`.
 
 ## What not to do
 
@@ -188,4 +145,4 @@ against custom ops scripts (2026-09-11), so the sweep is read by hand again. Eve
 been tried here and became the thing that drifted. When the flow itself is the defect — a step that
 lets a wrong row through — change the flow and say so, rather than patching the single row.
 
-Routes and PATCH shapes: `j-paperclip` (`references/api.md`). Card movement: `j-board-flow`.
+Routes and PATCH shapes: `j-paperclip`'s `references/api.md`. Card movement: `board-flow`.

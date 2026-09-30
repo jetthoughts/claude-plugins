@@ -20,8 +20,8 @@ without an independent cold-eyes check. It automates the review loop, not the ju
 ## Prerequisites
 
 - A project with `docs/workflows/operating-system.md` in the EOS-lite shape (accountability chart,
-  quarterly OKR, rocks, weekly scorecard, issues/IDS, pipeline). If missing, offer to scaffold it
-  from `templates/operating-system.md` shape.
+  quarterly OKR, rocks, weekly scorecard, issues/IDS, pipeline). If missing, offer to scaffold it —
+  the required shape is described in `references/eos-lite-methodology.md`.
 - Real numbers for the week. This skill will NOT invent metrics — a blank cell stays blank and
   becomes an Issue, never a guessed value.
 

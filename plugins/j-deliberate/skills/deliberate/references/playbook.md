@@ -81,7 +81,7 @@ plenty — the Italian-chef rule applies here too.
 
 | Stage | First reach | Then | When the question is unusual |
 |---|---|---|---|
-| **FRAME** | `problem-framing-canvas` (MITRE) · `problem-statement` | `structural-decisions` | `RootCauseAnalysis` or `kaizen-why` when the question is a symptom, not a problem |
+| **FRAME** | `framing` (decision sentence, outcome, persona narrative, shape-versus-fix gate) | `problem-framing-canvas` (MITRE) | `RootCauseAnalysis` or `five-whys` when the question is a symptom, not a problem |
 | **GOAL+METRIC** | `north-star-metrics` · `define-goal` | `opportunity-solution-tree` | `lean-ux-canvas` when the business problem itself is unframed |
 | **GATHER — web** | **`perplexity-researcher-reasoning-pro`** for deep reasoning passes · `Research` for verified multi-agent sweeps | `tavily-research` (cited), `tavily-search`, `tavily-extract`, `tavily-crawl`, `tavily-map` | `BrightData` when a site resists (4-tier auto-escalation) · `Apify` for platform data · `just-scrape` for structured extraction |
 | **GATHER — corpora** | `mcp__notebooklm-mcp__*` (grounded, cited) · `qmd` | memory (`openviking__search`) | `ArXiv` when the question has a literature · `market-research-analysis` for sizing · `content-trend-researcher` / `social-media-trends-research` for demand signal |

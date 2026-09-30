@@ -13,7 +13,7 @@ Use `mcp__perplexica__search` to search through the locally hosted Vane service.
 2. Select at least one source:
    - `web` for general or current information.
    - `academic` for papers and scholarly material.
-   - `discussions` for forums and community perspectives.
+   - `discussions` returns forum/community perspectives, useful for sentiment cues and lived-use complaints. It is not a sentiment score, a health metric, or an engagement trend — for those, pair it with a count/trend source (agent-reach backend, wigolo search with a time_range, or a platform's own structure) and treat any "sentiment" claim as a cue, not a measurement.
    - Combine source types when the request spans them.
 3. Select an optimization mode:
    - `speed` for a quick lookup.

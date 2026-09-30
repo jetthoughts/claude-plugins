@@ -1,6 +1,6 @@
 ---
 name: j-venture
-description: "Find, test and price a JetThoughts service offer on evidence — from a theme to a first paid pilot, through named forcing parties, buyer quotes, a red team and Paul's approval before anything goes outward. Use whenever the ask is find a new agency service idea, what should JT sell, is this opportunity real, research this theme, pre-validate this pain, design the offer, build the prospect list, analyse these buyer conversations, or resume the active venture. Say a theme or venture id, or say nothing to resume the active one. Not for a single market question — that is `j-market`; not for pricing an offer already chosen — that is `j-offer`; not for a one-off decision between options — that is `deliberate`."
+description: "Find, test and price a JetThoughts service offer on evidence — theme to first paid pilot, with named forcing parties, buyer quotes, a red team and Paul's approval before anything goes outward. Use for what should JT sell, is this opportunity real, design the offer, build the prospect list, resume the active venture. Not for one market question (`j-market`), pricing a chosen offer (`j-offer`), or a decision between options (`deliberate`)."
 ---
 
 # j-venture
@@ -106,14 +106,7 @@ funding, stack, pain or a relationship · **drafts only**, a human approves the 
 Sourcing, competitor mapping and pricing are `j-market` and `j-offer`'s job now — brief them, do not
 re-delegate underneath them. What remains is the work neither owns (vault-scoped agents unless marked):
 
-| Job | Agent |
-| --- | --- |
-| Service concept for one forced-constraint lens | `j-service-designer` (`j-ideation` plugin) |
-| Validation — citation integrity, tiers, contradictions | `j-evidence-auditor` (`j-ideation` plugin); `exec-fact-verifier` opens the primary source |
-| Red team — must return a dissent | `exec-challenger`, or `cold-reviewer` / `j-cold-eyes-reviewer` when the reviewer must not see the reasoning chain |
-| Outreach and proposal drafts, with their evidence and kill criterion | `exec-proposer` |
-| Objection and conversation coding | `exec-customer` |
-| Delivery plan and case-study drafting | no specialist installed — the orchestrator writes these itself, from verified metrics only |
+The specialist roster, job by job: see `references/specialists.md`.
 
 Rules that keep this from becoming a chorus:
 
@@ -125,42 +118,13 @@ Rules that keep this from becoming a chorus:
 
 ## Artifact rules — the placement test
 
-**One question decides where anything goes: is this for Paul to read, or only for agents?** The rule is owned by the vault's `AGENTS.md` (§ *What agents should avoid*, the placement test); in short:
-
-| If… | It goes | Because |
-| --- | --- | --- |
-| Paul should read it, act on it, or find it again in six months | **a vault note**, typed per PORTENT | Tolaria indexes it, boards surface it, `vault-health` checks its dates |
-| Raw research about the world — evidence tables, quotes, source dumps | **`evidence/`** in the vault, Markdown, `type: Research`, stored whole and unfiltered | Tolaria indexes it; it is the citation the notes point to |
-| Only agents read it — superseded reasoning, scratch analysis, the system deliberating about itself | **`.ai/`** at the repo root | dot-prefixed, so Tolaria never indexes it |
-| It is a session transcript or run log | `.ai/sessions/` | byproduct, not knowledge |
-| It is task or run state | the Paperclip card | the board is the queue |
-| It is a large binary, PDF or contract | Google Drive under `Documents/` | the vault stays text |
+**One question decides where anything goes: is this for Paul to read, or only for agents?** The rule is owned by the vault's `AGENTS.md` (§ *What agents should avoid*, the placement test). The placement test, row by row, and the worked example: see `references/artifact-placement.md`.
 
 **Evidence is a staging area, not a destination.** A research pass writes its raw table to `evidence/YYYY-MM-DD-topic.md` — that is correct. But **the moment its conclusion is something Paul needs, refactor the conclusion into the note that owns the topic** and leave the evidence file as the citation. A finding Paul must read that lives only in an evidence file is misplaced: he does not browse `.ai/`, and he should not have to.
 
-Worked example (2026-08-29): the competitor teardown's raw 8-firm table stays in `evidence/`; its conclusion — the entry wedge — belongs in `who-we-serve-and-what-we-offer`, which is the note that owns positioning.
-
 **`.gitignore` ignores dotfiles wholesale (`.*`).** `.ai/` has its own `!` exception; any new hidden directory needs one too or it silently stops being tracked.
 
-Every externally derived evidence item carries these fields:
-
-```json
-{
-  "evidence_id": "unique-id",
-  "venture_id": "venture-id",
-  "claim": "The specific claim this evidence supports",
-  "source_url": "https://...",
-  "source_type": "review | forum | job-post | competitor | interview | community | website",
-  "captured_quote": "Exact relevant text",
-  "captured_at": "ISO-8601 timestamp",
-  "buyer_segment": "Who this concerns",
-  "signal_type": "pain | urgency | budget | workaround | competitor-gap | reachability",
-  "forcing_party": "Who compels the spend, or null",
-  "forcing_date": "ISO-8601 date, or null",
-  "confidence": "low | medium | high",
-  "limitations": "What this does not prove"
-}
-```
+Every externally derived evidence item carries these fields: see `references/artifact-placement.md`.
 
 `forcing_party: null` across an entire evidence set is a **kill signal**, not a gap to fill later.
 
@@ -183,12 +147,7 @@ Below the bar → `NEEDS_RESEARCH` or `KILL`. Do not fill gaps with assumptions.
 
 Score 1–5 with the evidence shown for each: pain severity · urgency · willingness to pay · reachability · delivery fit · differentiation · expansion potential · risk (privacy, compliance, procurement, integrations, sales-cycle length, third-party dependence).
 
-```
-score = 0.25·urgency + 0.20·willingness_to_pay + 0.15·pain_severity
-      + 0.15·reachability + 0.15·delivery_fit + 0.10·differentiation − risk_penalty
-```
-
-**This is deliberately not the generic weighting.** Urgency and willingness-to-pay carry what pain severity used to, because pain severity measures loudness and loudness is the axis that inverts the answer. Pain severity still earns its 0.15 as a reachability proxy — a loud problem is easy to find people talking about.
+The weighting and why it is deliberately not the generic one: see `references/opportunity-scoring.md`.
 
 Thresholds: **≥4.0** advance to offer design · **3.2–3.9** run the smallest targeted experiment · **<3.2** kill or archive unless strong new evidence appears.
 
@@ -216,43 +175,7 @@ Concise, commercially specific, candid. Lead with the decision, the evidence, th
 
 ## Required decision report
 
-End every major run with:
-
-```md
-# Venture Decision Report
-
-## Current venture
-- Name / Stage / ICP / Core problem / Proposed offer:
-- Forcing party and date:
-- Chequebook holder feels the pain: yes | no
-
-## Evidence
-- Items / independent sources / direct quotes / budget signals:
-- Key supporting evidence:
-- Key contradictory evidence:
-
-## Scorecard
-| Criterion | Score | Evidence summary |
-|---|---:|---|
-| Urgency | /5 | |
-| Willingness to pay | /5 | |
-| Pain severity | /5 | |
-| Reachability (Paul-involvement) | /5 | |
-| Delivery fit | /5 | |
-| Differentiation | /5 | |
-| Risk penalty | /5 | |
-
-## Red-team verdict
-- Strongest reason this will fail:
-- Evidence supporting the concern:
-- What would disprove the concern:
-
-## Decision
-ADVANCE | TEST | PIVOT | KILL | HUMAN_APPROVAL_REQUIRED
-
-## Next smallest action
-- Action / Owner / Required inputs / Success criterion / Failure criterion / Effort:
-```
+End every major run with the template in `references/decision-report-template.md` — section by section, including the decision set: `ADVANCE | TEST | PIVOT | KILL | HUMAN_APPROVAL_REQUIRED`.
 
 ## Final command
 

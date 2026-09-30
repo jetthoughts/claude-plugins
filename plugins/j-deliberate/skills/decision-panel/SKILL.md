@@ -7,6 +7,8 @@ description: Governed group decision for Paperclip seats — one framed question
 
 One question, several independent answers, one binding internal vote, and a packet a stranger can audit. Paperclip is the only control plane: the card carries everything as documents; nothing lives in chat or in a seat's memory.
 
+**Scope, against `j-convening-the-council`.** This panel *binds*: one named Decision Voter casts the internal vote, and consequential packets end in board approval. The council is different in kind — a Delphi median that is advisory decision-support, never a voting machine. Need authority, use this; need structured critique, use the council.
+
 ## Roles (session functions, not hires)
 
 | Function | Does | Never |
