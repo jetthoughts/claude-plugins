@@ -1,7 +1,7 @@
 ---
 name: bos-research
 description: 'Produce a sourced claim-evidence matrix. Use for any research, lookup, or question that needs verified facts — this skill owns the protocol and must be invoked before any search tool is called directly.'
-version: 1.1.0
+version: 1.2.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -131,13 +131,68 @@ See `references/quick-vs-deep.md` for the full decision tree.
 
 **Default to deep.** The cost of skipping verification for a "small question" exceeds the cost of running the full protocol. The mode can change mid-run; mark the transition in the matrix header.
 
-## Novelty gate
+## §11 — Novelty gate
 
 **The `## New findings` section must list ≥3 findings absent from both the brief and the prior research it cites, each marked `NEW` with its source.**
 
 - Fewer than 3 new findings = **FAIL** ("a check, not research")
 - Re-run with a sharper question
 - Restating the brief's candidates or options does not count as new
+
+## §12 — Per-claim check table (cross-check discipline)
+
+**Every research deliverable must include a per-claim check table** that runs the cheapest check which FAILS if the claim is false. The check is run against the **primary artifact**, never against the agent's own summary. This is the cross-check skill (j-delivery) embedded in bos-research.
+
+| Claim type | One-line check |
+|---|---|
+| "checks pass" / GREEN | Re-run the exact command on the REAL path (absolute, not a scratch copy); compare exit codes |
+| A timestamp, or "elapsed N min" | `stat -f %Sm <file>` plus the run's start time. Convert any epoch with `date -r` |
+| "N items" / "counts reconcile" | Compute the count yourself from the raw artifact (jq or python) |
+| "content captured" | Open 2–3 random source URLs live; the first user message must appear on the page |
+| "moved" / "backed up to ~/…" | `find` the real absolute path. A worker's `~` may be a different HOME |
+| "recoverable from git" | `git log --all -- <path>`. Zero commits means it is not recoverable |
+| "native feature" / a config key | Grep the installed source for the key, or read the table schema |
+| "no side effects in the account" | Count the relevant items (chats, comments) live, before and after |
+| "goal met" | Compare the done-when with the OWNER's original words, not the card's rewrite |
+
+**Rules:**
+- Sample randomly. Cite the check and its output in the verdict.
+- A mismatch is FAIL plus an incident note.
+- Mark every row not checked as UNVERIFIED.
+- Another agent's PASS (or your own) is never proof.
+- Do NOT write "✅" or "done" without showing the command that produced the ✅.
+
+## §13 — Aggregate channels log
+
+**Every research deliverable must include an `## Aggregate channels log` section** that records: (a) which channels were requested, (b) the actual response, (c) whether the response was used, and (d) why a non-response was a gap. This is the audit trail for cross-agent trust.
+
+Format per row:
+
+```
+| Channel | Requested | Response | Used? | Gap reason |
+|---|---|---|---|---|
+| openviking viking_search "..." | yes | 12 files | yes | — |
+| mcp__tavily__tavily_search | yes | "not a known tool name" | no | tool-name resolution gap (INC-2026100607) |
+| mcp__qmd__query "..." | yes | 0 results | no | qmd index empty (INC-2026100604) |
+| mcp__perplexica__search | yes | "MCP server unreachable after 3 retries" | no | server down (INC-2026100606) |
+| mcp__parallel__web_search | yes | 8 results | yes | — |
+| mcp__brave_search__brave_web_search | yes | "API 422 SUBSCRIPTION_TOKEN_INVALID" | no | API key issue |
+| mcp__exa__web_search_exa | yes | 15 results, 77 KB | yes | — |
+| mcp__ldr__quick_research | yes | timeout 300s | no | LM Studio not warm (INC-2026100605) |
+```
+
+**Rules:**
+- A response is a request's actual output, not a description of what the tool *would* do.
+- "Used?" is yes/no; if no, the gap reason must name the incident.
+- The log lives in the matrix; the incidents live in `operations/incidents/`. Cross-reference by ID.
+
+## §14 — Status-report discipline
+
+**Never write "✅", "done", "moved", "verified", or "PASS" without re-reading the artifact in the same turn.** The cheap check is: don't write completion state on a state I haven't just re-fetched.
+
+When a state cannot be re-read (e.g., a Plane item the agent cannot access), don't fake the check. Write the path forward instead: "Awaiting per delivery-manager" or "Approve/Revise/Defer reply path open."
+
+State move ≠ comment. A comment can exist without the state moving. Only the state is the source of truth for workflow position. Cross-check every status report that uses ✅, "done", "moved", or "applied."
 
 ## Field research sources
 
@@ -173,3 +228,4 @@ When a claim cites "the field's 2026 standard," this is the underlying evidence.
 - **`references/verification-redteam.md`** — §6 + §7 detailed protocol
 - **`references/quick-vs-deep.md`** — mode decision tree
 - **`references/field-research.md`** — Anthropic, OpenAI, Perplexity, Webcite, Cognition, Ptah citations
+- **`references/tool-name-cheatsheet.md`** — invokable `mcp__*` tool names (NOT what `mcp list` shows)
