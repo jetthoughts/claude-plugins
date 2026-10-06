@@ -1,7 +1,7 @@
 ---
 name: bos-research
 description: 'Produce a sourced claim-evidence matrix. Use for any research, lookup, or question that needs verified facts — this skill owns the protocol and must be invoked before any search tool is called directly.'
-version: 1.3.0
+version: 1.3.1
 author: pftg
 platforms: [macos]
 metadata:
@@ -191,6 +191,7 @@ Format per row:
 | mcp__tavily__tavily_search | yes | "not a known tool name" | no | tool-name resolution gap (INC-2026100607) |
 | mcp__qmd__query "..." | yes | 0 results | no | qmd index empty (INC-2026100604) |
 | mcp__perplexica__search | yes | "MCP server unreachable after 3 retries" | no | server down (INC-2026100606) |
+| mcp__wigolo__* (cached scoring) | yes | "not a known tool name" | no | tool-name resolution gap (INC-2026100607) |
 | mcp__parallel__web_search | yes | 8 results | yes | — |
 | mcp__brave_search__brave_web_search | yes | "API 422 SUBSCRIPTION_TOKEN_INVALID" | no | API key issue |
 | mcp__exa__web_search_exa | yes | 15 results, 77 KB | yes | — |
