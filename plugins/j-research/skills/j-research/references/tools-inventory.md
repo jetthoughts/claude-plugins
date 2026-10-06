@@ -8,17 +8,81 @@ Complete inventory of available MCP tools and services for web search and resear
 > this file, not a second copy — do not re-expand it. When the tool stack changes, edit this file and
 > refresh the bundle's `verified:` date.
 
+## Priority — what to reach for, in order
+
+This is the ladder the `j-research` front door owns, and it is stated identically in
+`~/.infra/.okf/references/research-routing.md`. Everything below the ladder is a **role,
+not a rung**: reach for it when its shape is what the job actually needs, not because the
+ladder came back thin.
+
+**The ladder — web search (one fact, or a ranked list of pages):**
+
+1. **`mcp__searxng__searxng_web_search`** — free, ~0.8s, local. The default. Read the
+   source yourself; it returns raw ranked URLs, not a synthesis.
+2. **`mcp__tavily__tavily_search`** — the **single metered fallback**. Reach it only when
+   rung 1 is thin or empty, and **name it in the answer** along with the fact that it is
+   metered. A metered call that is not announced is a defect, not a shortcut.
+3. **built-in `web_search` / `web_extract`** — only when both of the above fail, and name
+   the failed rung when you fall back to it.
+
+**Off-ladder roles — matched to the job:** being off-ladder does not make a tool free.
+`exa`, `brave-search` and `tavily` are all metered, and every metered call is announced.
+
+| When the job is… | Reach for | Cost |
+|---|---|---|
+| academic, biomedical, or a code error/how-to | `mcp__ldr__search` (`engine: "openalex"\|"pubmed"\|"stackexchange"`) | free |
+| a cited synthesized paragraph beats a link list | `mcp__perplexica__search` | free |
+| cached results with explainable per-result scoring | `mcp__wigolo__search` | free |
+| reading one known URL as markdown | `mcp__wigolo__fetch` or `mcp__searxng__web_url_read` | free |
+| multi-source cited synthesis | `mcp__ldr__quick_research` / `detailed_research` | free |
+| speed, with an agent already in the loop | `mcp__omniroute__omniroute_web_search` + `omniroute_route_request` | free tier |
+| semantic / neural recall over keywords | `mcp__exa__web_search_exa` | metered — announce |
+| an index independent of Google and Bing | `mcp__brave-search__brave_web_search` | metered — announce |
+| what *our own* corpora say | `mcp__notebooklm-mcp__notebook_query` | free |
+| login-walled platforms (X, Reddit, YouTube…) | `agent-reach` — a **skill**, not an MCP | free |
+| repo code and structure | `semble`, OpenViking, `codebase-memory-mcp`, `codegraph` | free |
+| a library's own documentation | Context7, DeepWiki | free |
+| the local markdown vault | `qmd` | free |
+| a page that genuinely needs a browser | `lightpanda`, `chrome-devtools` | free |
+
+A full ladder that ignores platform content is incomplete, but platform fetches are the
+`agent-reach` skill's job, not a rung — it does not answer a general web question.
+
+## Availability — verified 2026-09-30
+
+Measured with `claude mcp list` plus live health checks, not from memory. A tool that is
+configured but cannot authenticate is **not available**, and must not be planned around.
+
+| Server | Status | Notes |
+|---|---|---|
+| `searxng` | ✔ connected | local `~/.infra/mcp/searxng-mcp`; `curl 'http://127.0.0.1:8081/search?q=hello&format=json'` returned 10 results |
+| `tavily` | ✔ connected | `npx tavily-mcp@latest`, metered |
+| `ldr` | ✔ connected | local `~/.infra/mcp/ldr-mcp` over LM Studio |
+| `perplexica` | ✔ connected | local `~/.infra/mcp/perplexica-mcp`; Vane up on :3000 |
+| `wigolo` | ✔ connected | pinned global binary `~/.bun/bin/wigolo mcp` |
+| `omniroute` | ✔ connected | `~/.bun/bin/omniroute --mcp` |
+| `exa` | ✔ connected | the **user-level** server. The plugin-provided `exa` variant needs authentication — do not confuse them |
+| `brave-search` | ✔ connected | `npx @modelcontextprotocol/server-brave-search` |
+| `notebooklm-mcp` | ✔ connected | |
+| `deepwiki`, `context7` | ✔ connected | library/repo documentation |
+| `qmd`, `semble`, `openviking`, `codebase-memory-mcp`, `codegraph` | ✔ connected | corpus and code search |
+| `lightpanda`, `chrome-devtools` | ✔ connected | headless fetch and browser |
+| `gemini` | ✔ connected | |
+| `you` / `you-research` / `you-finance` | ✘ **needs authentication** | configured, unusable as-is |
+| `browseros-neo` | ✘ **not running** | `127.0.0.1:9010` connection refused; needs the app started |
+
 ## Quick Reference
 
 | Tool | MCP Server | Speed | Cost | Best For |
 |---|---|---|---|---|
+| SearXNG | searxng | Fast (~0.8s) | Free | **rung 1** — raw ranked URLs, local |
 | LDR | ldr | Slow (150-500s) | Free | Local, academic sources |
 | Wigolo | wigolo | Fast (<15s) | Free | Local-first, caching |
 | Exa | exa | Fast (<10s) | Paid tier | Semantic search, high recall |
-| Tavily | tavily | Fast (<30s) | Paid tier | Comprehensive, crawling |
-| You.com | you-com | Fast (<1min) | Paid | Current events, knowledge |
+| Tavily | tavily | Fast (<30s) | Paid tier | **rung 2** — metered fallback, crawling |
+| You.com | you | Fast (<1min) | Paid | Current events — **needs auth, unavailable** |
 | Perplexica | perplexica | Medium (30-120s) | Free | Academic + forums |
-| Brave | brave-search-mcp | Fast (<5s) | Paid tier | Privacy-first, quality |
+| Brave | brave-search | Fast (<5s) | Paid tier | Privacy-first, quality |
 | OmniRoute | omniroute | Very fast (~8s) | Free tier | Manual routing, fast synthesis |
 | NotebookLM | notebooklm-mcp | Medium (30-180s) | Free | Corpus-grounded questions, studio artifacts |
 | j-inbox | Skill | Fast (batch) | Free | Research import processing |
