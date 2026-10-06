@@ -1,7 +1,7 @@
 ---
 name: bos-research
 description: 'Produce a sourced claim-evidence matrix. Use for any research, lookup, or question that needs verified facts — this skill owns the protocol and must be invoked before any search tool is called directly.'
-version: 1.2.0
+version: 1.3.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -48,6 +48,22 @@ search does not.
 - Requesting work item or decision ID, if one exists
 - Depth hint or deadline, if given (never invent one)
 - Whether this is a quick lookup or a deep research pass
+- **Research mode declaration** (required): `full` (web + corpus) or `corpus-only` (PKM only) or `web-only` (skip corpus)
+
+## Research mode (the user picks, not the skill defaults)
+
+The skill supports three modes. **The user/owner must declare the mode in the run input or the request itself.** The skill does not default to any one mode.
+
+| Mode | When | What runs |
+|---|---|---|
+| `full` (default if the user does not say otherwise) | New question, or fresh web evidence is needed | corpus (openviking) first, then general-web ladder (searxng → tavily → web_search), then synthesis, then verification, then three-contract deliverable |
+| `corpus-only` | User explicitly says "quote from the corpus" or "no new research" or "PKM only." Quote-synthesis, NOT research | openviking only; quote the corpus verbatim; cite source per quote; do not invoke general-web ladder; do not produce NEW findings; output is a quote-synthesis, not a claim-evidence matrix |
+| `web-only` | User explicitly says "skip the corpus" or "fresh web only" | general-web ladder only; corpus is not invoked; for "I already know my corpus; find what's new" |
+
+**Anti-patterns the skill guards against:**
+- Treating "the user said no more research" as a skill-level rule. It is a per-run decision, not a skill default.
+- Defaulting to corpus-only because the user said "use the PKM" once. The skill must invoke web research unless the user explicitly says `corpus-only`.
+- Defaulting to web-only because the agent is in a benchmark/eval mode. The skill must invoke corpus unless the user explicitly says `web-only`.
 
 ## The 5 phases
 
