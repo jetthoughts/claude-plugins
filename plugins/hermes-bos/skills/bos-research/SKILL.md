@@ -1,7 +1,7 @@
 ---
 name: bos-research
 description: 'Produce a sourced claim-evidence matrix. Use for any research, lookup, or question that needs verified facts — this skill owns the protocol and must be invoked before any search tool is called directly.'
-version: 1.3.1
+version: 1.4.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -202,6 +202,7 @@ Format per row:
 - A response is a request's actual output, not a description of what the tool *would* do.
 - "Used?" is yes/no; if no, the gap reason must name the incident.
 - The log lives in the matrix; the incidents live in `operations/incidents/`. Cross-reference by ID.
+- **Tool-name resolution rule (added v1.4, INC-2026100607 lesson):** if a `tool_call` returns "not a known tool name," do NOT file a tool-name-resolution incident immediately. First run `tool_search --queries "<server> <verb> <object>"` and use the returned invokable name. `mcp list` shows server status; `tool_search` shows the actual invokable tool name. They are different primitives. Filing a "name resolution gap" before running tool_search is a wrong-name-guess, not a real gap. The five prior "uninvokable" tools (tavily, agent-reach, you-research, notebooklm, wigolo) were re-tested this way on 2026-10-07: 2 of 5 (tavily via omniroute, notebooklm via tool_search) were actually reachable; 3 of 5 (agent-reach, you-research, wigolo) are genuinely missing and need config additions.
 
 ## §14 — Status-report discipline
 
