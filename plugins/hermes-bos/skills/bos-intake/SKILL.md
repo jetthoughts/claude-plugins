@@ -61,15 +61,26 @@ that file instead of creating a new one.
    item must never reach `operations/work-items/` without explicit owner
    approval. This guard runs before step 6; it is not a field to fill, it is a
    gate that halts the procedure.
+5a. **Skills preflight (REQUIRED GATE).** If the intake surfaces a `skills=`
+   payload (card filing, prompt context, hook call), run the helper FIRST:
 
-   **Skills preflight.** If the intake surfaces a `skills=` payload (card
-   filing, prompt context, hook call), run
-   `scripts/preflight_skills.missing(skills)` first. On any unresolved
-   entry, refuse the work item with `scripts.preflight_skills.format_rejection(missing)`
-   — same wording the worker would print (`Unknown skill(s): ...`).
-   Rationale: a card filed today can boot a worker for 60-90 s before the
-   worker crashes on the same identifier; the preflight moves the rejection
-   to a sub-second intake check. See `fixtures/preflight-skills-rejection.md`.
+   ```
+   python3 ~/dev/claude-plugins/plugins/hermes-bos/skills/bos-intake/scripts/preflight_skills.py <id1> [<id2> ...]
+   ```
+
+   On any unresolved identifier, the helper exits 2 and prints the same
+   `Unknown skill(s): <id>` wording the worker would print at boot 60-90s
+   later. When that line prints, refuse the work item; do not write it.
+   Re-run with corrected identifier(s) until the helper exits 0
+   (`OK: all skills resolve`). Rationale: a card filed today with a bad
+   `skills=` entry boots a worker for 60-90 s before the worker crashes on
+   the same identifier; this gate moves the rejection to a sub-second intake
+   check. This step is **non-optional** — the same surface the rubric's
+   Check 5 ("Prevention is durable and replay-tested without editing
+   hermes-agent") demands. See `fixtures/preflight-skills-rejection.md` and
+   `scripts/test_preflight_skills.py` for the replay guard that fails when
+   this clause is removed. (Backstop for INC-2026100902 / t_bacc26a7; not a
+   "may run," it is a "must run before any kanban filing.")
 6. Write the work item with `patch` at `operations/work-items/<ID>.md` using
    the canonical format below. Derive the ID as `WI-YYYYMMDDNN` (zero-based
    counter within the day) and confirm uniqueness with

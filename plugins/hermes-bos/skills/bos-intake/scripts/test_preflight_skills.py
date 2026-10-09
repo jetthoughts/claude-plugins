@@ -95,6 +95,41 @@ class PreflightSkillTests(unittest.TestCase):
         """An empty skill list is a no-op (no missing)."""
         self.assertEqual(preflight_skills.missing([], env=os.environ.copy()), [])
 
+    def test_bos_intake_skill_md_carries_preflight_clause(self) -> None:
+        """Backstop guard: bos-intake/SKILL.md must carry the step 5a
+        procedure clause verbatim. This is the rubric Check 5 replay guard
+        for INC-2026100902: if a future edit removes or silently rewrites
+        the procedure, this test fails and the durable backstop is broken.
+
+        Required phrases (each must appear somewhere in the file):
+
+        - "Skills preflight (REQUIRED GATE)" — the step heading.
+        - "non-optional" — the duration clause.
+        - "preflight_skills.py <id1>" — the helper command shape.
+        - "Unknown skill(s): <id>" — the worker-mirrored rejection line.
+        - "t_bacc26a7" — the incident lineage pointer (linking back to the
+          original failure that this guard prevents from recurring).
+        """
+        skill_md = (Path(__file__).resolve().parents[1] / "SKILL.md").read_text()
+        required = [
+            "Skills preflight (REQUIRED GATE)",
+            "non-optional",
+            "preflight_skills.py <id1>",
+            "Unknown skill(s): <id>",
+            "t_bacc26a7",
+        ]
+        missing = [r for r in required if r not in skill_md]
+        self.assertEqual(
+            missing,
+            [],
+            (
+                "bos-intake/SKILL.md procedure clause is missing the required "
+                f"phrases: {missing}. The required-gate wording is the durable "
+                "backstop for INC-2026100902 (t_bacc26a7 namespaced-skill "
+                "resolution). Restore the clauses; do not reword silently."
+            ),
+        )
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
