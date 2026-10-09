@@ -42,8 +42,21 @@ After the `skills:` block is restored to the profile's `config.yaml`,
 ]
 ```
 
-And the same `skills=` payload now resolves cleanly — the preflight returns
-no missing entries.
+And the same `skills=` payload is still flagged as unresolvable by the
+preflight (the namespaced path-form is not catalog-resolvable through
+`_load_skill_payload` regardless of the config's `skills:` block — that is
+a runtime identifier-form problem, out of scope for this fixture). What the
+restored config DOES change: under profiles that previously had an empty
+`external_dirs` set (soul-curator, growth-operator), the helper now sees
+the plugins root and can resolve properly-named identifiers like
+`bos-intake` instead of failing the entire profile's catalog.
+
+Note that the prevention contract for this hook is the "unknown
+identifier" path: `preflight_skills.missing([...])` returns the entries
+that fail to resolve under the live profile, with the same
+`Unknown skill(s): <id>` wording the worker would print at boot. A
+malformed payload is rejected at filing instead of crashing the worker
+60-90s later.
 
 ## Reproduction recipe
 
