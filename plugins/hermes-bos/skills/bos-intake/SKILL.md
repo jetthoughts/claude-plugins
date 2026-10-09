@@ -61,6 +61,15 @@ that file instead of creating a new one.
    item must never reach `operations/work-items/` without explicit owner
    approval. This guard runs before step 6; it is not a field to fill, it is a
    gate that halts the procedure.
+
+   **Skills preflight.** If the intake surfaces a `skills=` payload (card
+   filing, prompt context, hook call), run
+   `scripts/preflight_skills.missing(skills)` first. On any unresolved
+   entry, refuse the work item with `scripts.preflight_skills.format_rejection(missing)`
+   — same wording the worker would print (`Unknown skill(s): ...`).
+   Rationale: a card filed today can boot a worker for 60-90 s before the
+   worker crashes on the same identifier; the preflight moves the rejection
+   to a sub-second intake check. See `fixtures/preflight-skills-rejection.md`.
 6. Write the work item with `patch` at `operations/work-items/<ID>.md` using
    the canonical format below. Derive the ID as `WI-YYYYMMDDNN` (zero-based
    counter within the day) and confirm uniqueness with
