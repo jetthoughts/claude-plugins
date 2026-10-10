@@ -38,6 +38,8 @@ curator and periodic auto-review are all off. On such a correction:
    Paul or the overseer approves them.
 4. Countermeasures are proposals. Nothing changes config, a SOUL or a skill until approved.
 
+**Reviewer verdict contract.** A reviewer calling `kanban_complete` MUST pass `result` as a distinct parameter, not bury it in prose. `summary` and `metadata` flow into `task_runs`; only `result` writes to `tasks.result` (see `kanban_db.complete_task` line 2716, the evidence-write UPDATE). A review that ships only a substantive `summary` ("Five numbered checks quoted") with no `result` parameter leaves `tasks.result=NULL` and trips the runtime phantom-detector at completion epoch, even when the rubric is genuine. Verdict format: `result="PASS (5/5)"` on a clean gate, `result="FAIL — <one-line reason>"` on a rework. This is the same defect that failed three `t_f9f21c35` lineage gates and is the reason the closing-review contract was patched.
+
 ## Self-detected incident loop (Paul, 2026-09-25): the team finds and fixes its own failures
 
 Paul, 2026-09-25 16:55: "they should be able to realise they are failing; they should initiate the
@@ -55,13 +57,17 @@ verbatim error with its time), and what was already tried. It blocks its own car
 does not retry the same approach a third time.
 Create the incident card with `--model hermes-premium` (the synthesizer decides; a free model skipped the whole
 loop on 2026-09-25). In the SAME step create its closing gate: a review card, assignee quality-guardian,
-`--parent <incident card>`, whose body is the closure proof:
+`--parent <incident card>`, whose body is the closure proof. When the cause was found and fixed
+directly (a recipe matched, e.g. wrong seat), the proof is only the original metric and the fix;
+no swarm or experiment is required. Only when the fix came out of the swarm discussion add:
 - the swarm cards for this incident key exist and finished;
 - an `EXPERIMENT:` card exists and its own review card passed;
-- the ORIGINAL goal's metric, copied from the failing card's body (e.g. "57 chats deleted"), is met: quote the number from the artifact, not from a summary. Or: a reproduced cause proves the goal infeasible, and the incident is blocked for Paul with that evidence.
+- the ORIGINAL goal's metric, copied from the failing card's body (e.g. "57 chats deleted"), is met: quote the number from the artifact, not from a summary. Or: a reproduced cause proves the goal infeasible as written; the synthesizer then picks the closest feasible variant, records it as `ASSUMPTION: <variant>. Revert: <how>.`, and creates the card that runs it. Paul only for a hard stop (`~/.hermes/governance/escalation-policy.md`).
 A closing summary that redefines the goal ("deletion phase done" with 0 deleted) is a FAIL: the reviewer opens a new incident (T2, narrowed goal) and links it. The orchestrator never judges its own incident closed.
 **Overseer emergency stopgap (DEC-2026092600 rule 1).** When the board cannot dispatch workers, the overseer may apply a process-scoped repair outside the board (never a durable file edit), comments it on the incident the moment it is applied, and the incident record carries `approval: post-hoc-stopgap` until the durable owner action lands. Reviews that ran under the stopgap still count; worker runs completing under it are evidence for the durable fix.
 Every reviewer verdict (closing gate or experiment review) quotes a result for EACH numbered check in its card body; a verdict that covers fewer checks than the body lists is a FAIL. A review that FAILS creates the work, not a comment: one fix card for the seat that did the work (the single follow-up, exact proof command) and one new review card with `--parent <fix card>`. A comment on a DONE card is never read again (t_bba7cf7b → t_242e65df, 2026-09-25), and the gate downstream is released by `done`, not by PASS, so it must read the upstream verdicts itself.
+
+Reviewers carrying a rubric MUST pass `result=PASS (5/5)` (or `FAIL — <reason>`) explicitly to `kanban_complete`. `summary` and `metadata` flow to `task_runs`; only `result` writes to `tasks.result`. A bundle-summary phrasing (`"Five numbered checks quoted"`) without a separate `result` line leaves `tasks.result=NULL` and trips the runtime phantom-detector at completion epoch.
 
 **2. Investigate and discuss: agent-LDJ as a kanban swarm** — the method, rationale and the exact `hermes kanban swarm` command: see `references/self-detected-loop-swarm.md`.
 - Each worker writes BLIND (never reads the other workers' notes): ≤ 3 problems and ≤ 3 fixes, each with an evidence path, and a 1–5 impact and 1–5 effort score. Every worker prompt carries the line: "Generate causes and fixes substantially different from the obvious one."
@@ -72,8 +78,8 @@ Every reviewer verdict (closing gate or experiment review) quotes a result for E
 **3. Experiment** (schema from `j-designing-experiments`). The synthesizer creates an `EXPERIMENT:` card: hypothesis, the one change, the metric with pass / fail / inconclusive thresholds, a timebox (one run or one day), budget, owner seat, rollback rule. It also creates a SEPARATE review card (assignee quality-guardian, `--parent <experiment card>`) with the proof command. Anything irreversible (deleting, sending, spending) runs first on a sample the owner approved, never on the full set.
 
 **4. Revise.**
-- PASS: the lesson becomes a new row in the recipe table (`references/recipe-table.md`) plus one fixture (a real input and expected outcome in `fixtures/`), proposed through `bos-skill-improvement` as a staged diff (skill text: the overseer approves; config or SOUL: Paul approves). Log expected vs actual with `j-learning-from-decisions`. Schedule one re-check card with `hermes kanban schedule` (critical: 7 days; others: 30 days); PASS there = zero recurrence.
-- FAIL or inconclusive: the next-ranked hypothesis becomes the next experiment. After 3 experiments without a PASS, block the incident card for Paul with the full evidence (every hypothesis, reproduction result and experiment outcome) and one recommended next step.
+- PASS: the lesson becomes a new row in the recipe table (`references/recipe-table.md`) plus one fixture (a real input and expected outcome in `fixtures/`), proposed through `bos-skill-improvement` as a staged diff (skill text: the overseer approves; config or SOUL: apply, commit, quality-guardian review after). Log expected vs actual with `j-learning-from-decisions`. Schedule one re-check card with `hermes kanban schedule` (critical: 7 days; others: 30 days); PASS there = zero recurrence.
+- FAIL or inconclusive: the next-ranked hypothesis becomes the next experiment. After 3 experiments without a PASS, the synthesizer applies the best-evidenced option with an `ASSUMPTION` line and schedules its re-check; the incident is blocked for Paul only if that option is a hard stop.
 - Record the whole loop in the incident file (`INC-YYYYMMDDNN.md`), appending one section per step (house rule 5: never overwrite).
 
 ## When to Use
@@ -105,7 +111,7 @@ For each blocked/gave_up task, scan the failure text and worker logs for the pat
 | Risk | Action |
 |---|---|
 | low | Apply the fix directly, then unblock the task. |
-| medium or higher | Draft the fix, `kanban_request_review` to quality-guardian, then the owner approves (item assigned to Paul). Never self-apply. |
+| medium or higher | Apply the fix, commit the paths you touched, unblock the task, then open a quality-guardian review card (`--parent` the task). Review FAIL means `git revert`. Owner only for a hard stop in `~/.hermes/governance/escalation-policy.md`. |
 
 ## Procedure
 
@@ -117,20 +123,23 @@ Pull the task's `last_failure_error`, any `gave_up` event payload, and the most 
 
 Scan the failure text top-to-bottom against the match clauses in `references/recipe-table.md`. Return the **first** recipe whose match clause fits. If none fit, classify as `no-match` and open the self-detected incident loop (never improvise a fix outside it).
 
-When the failure text or the task's own comments reference **multiple** distinct causes (e.g. a subagent rejection loop *and* a concurrent 503 wave), match each cause independently and use the **highest** risk class among the matches as the incident's risk. Record every matched recipe id in the INC `recipe:` field (e.g. `R6 (lane model switch) + R2 (transient 503)`) and apply the action for the highest-risk hit: if any matched recipe is medium+, the whole incident is treated as medium+ (draft + review, never self-apply).
+**Verify the symptom matches the offered fix before applying any recipe.** When dispatched with a fix-tree (e.g. "options a/b/c — pick one"), probe the live system first: read the actual failure, not the dispatch summary; confirm the upstream service is reachable; confirm the assumed path/config exists. A fix-tree offered by a dispatcher who hasn't re-verified is a hypothesis, not a fact. Applying it on top of a wrong cause wastes a run and may regress a working path. If the symptom doesn't match the fix-tree, return to the matcher with the corrected cause.
 
-Recipe table (R1–R13: match clause, risk, fix): see `references/recipe-table.md`.
+When the failure text or the task's own comments reference **multiple** distinct causes (e.g. a subagent rejection loop *and* a concurrent 503 wave), match each cause independently and use the **highest** risk class among the matches as the incident's risk. Record every matched recipe id in the INC `recipe:` field (e.g. `R6 (lane model switch) + R2 (transient 503)`) and apply the action for the highest-risk hit: if any matched recipe is medium+, the whole incident is treated as medium+ (apply, commit, then review).
+
+Recipe table (R1–R15: match clause, risk, fix): see `references/recipe-table.md`.
 
 **Hard stops carried in the recipe rows — read the row before acting:**
 - R5: the owner supplies the secret; never invent or inline keys.
-- R11: edits to SOUL.md, SKILL.md, config or code have no agent seat — never reassign such an edit to another agent; complete the card with the proposal path and hand it to delivery-manager for owner approval.
+- R11: SOUL.md and config edits are applied by kanban-orchestrator (apply, commit, quality-guardian review after). SKILL.md edits go to `~/dev/claude-plugins` the same way. Code in hermes-agent is never patched: find the upstream issue instead.
 - R12: run `hermes gateway restart` OUTSIDE any worker (a restart drains in-flight runs, including yours).
 - R13: never run `hermes update` from a worker and never switch the update channel yourself (canary/stable roll back migrations).
+- R15: before acting on any path/vault/file reference, verify it exists with `ls` / `viking_search` / `viking_read`; a wrong path is a hallucinated convention, not a fix-tree input — if the assumed path is wrong, return to intake and correct the path, do not apply a network/config workaround for a non-existent reachability problem.
 
 ### 3. Apply or escalate by risk class
 
 - **low**: execute the recipe's fix, then unblock the task. Verification is whatever the fix row names (e.g. "dir exists and task unblocks").
-- **medium+**: draft the fix in a comment or review artifact, then hand off for 2-of-2 consensus review. Block the task with a note describing the proposed fix and the review link. Do not self-apply.
+- **medium+**: apply the fix, commit the paths you touched, unblock, and open one quality-guardian review card (`--parent` the task). Revert on FAIL. Block only for a hard stop.
 
 ### 4. Record the incident
 
@@ -150,6 +159,8 @@ Scan existing INC records for the same cause. If the cause has appeared 3+ times
 - Writing an INC record with a different format than the two seeded examples — mirror them field-for-field.
 - Closing an incident by redefining its goal. Incident t_4aeb0a3f (2026-09-25) was marked "loop CLOSED, deletion phase done" with 0 of 57 chats deleted and no swarm or experiment. The closing gate above exists because of it.
 - Treating `no-match` as low risk. A no-match is never improvised: it goes to the self-detected incident loop, where the fix comes from the discussion and is proven by an experiment.
+- Applying a fix-tree the dispatcher offered without re-verifying the symptom against the live system. The dispatcher's summary is a hypothesis; the live probe is the proof. Applying a branch of a fix-tree on a wrong cause wastes a run and may regress a working path.
+- Trusting a path/vault/file reference that the worker assumed. R15 is a hard stop: probe the path with `ls` / `viking_search` / `viking_read` before acting on it. A wrong path is not a reachability problem; it is a stale or hallucinated convention that must be corrected at intake, not worked around.
 
 ## Verification
 
