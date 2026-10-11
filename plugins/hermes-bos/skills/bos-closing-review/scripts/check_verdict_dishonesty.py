@@ -87,11 +87,25 @@ def narrative_gaps(text):
 
 def has_override(text):
     """Return True if the file contains an explicit OVERRIDE comment of the
-    form `OVERRIDE: verdict-with-gap approved by <role> at <iso>`.
+    form `OVERRIDE: verdict-with-gap approved by <role> at <iso>` AND the
+    override is a real approval line (not a documentation reference inside
+    backticks/code). Heuristic: real approvals appear on their own line at
+    the start of a sentence, not nested in ` ` code spans. Documentation
+    matches will contain `<role>` and `<iso>` literal placeholder text.
     """
-    return bool(re.search(
-        r"OVERRIDE\s*:\s*verdict-with-gap\s+approved\s+by\s+\S+\s+at\s+\S+",
-        text, re.IGNORECASE))
+    for m in re.finditer(
+        r"^\s*OVERRIDE\s*:\s*verdict-with-gap\s+approved\s+by\s+(\S+)\s+at\s+(\S+)",
+        text, re.IGNORECASE | re.MULTILINE,
+    ):
+        role, when = m.group(1), m.group(2)
+        # Real approvals use a real role + ISO timestamp, not placeholder
+        # text like `<role>` / `<iso>`. Reject literal angle-bracket placeholders.
+        if role.startswith("<") or role.endswith(">") or role == "<role>":
+            return False
+        if when.startswith("<") or when.endswith(">") or when == "<iso>":
+            return False
+        return True
+    return False
 
 
 def main():
