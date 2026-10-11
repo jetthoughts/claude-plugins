@@ -12,7 +12,7 @@ import re
 import sys
 from pathlib import Path
 
-VERDICT_RE = re.compile(r"^\s*\*+(?:verdict\s*:?\s*)?\*?\s*pass(?:\s*\((?:\d+/\d+|[^)]*)\))?\s*\.?\s*\*+",
+VERDICT_RE = re.compile(r"^\s*\*+(?:verdict\b[^a-z]*?)?\*?\s*pass(?:\s*\((?:\d+/\d+|[^)]*)\))?\s*\.?\s*\*+",
                        re.IGNORECASE | re.MULTILINE)
 ROW_RE = re.compile(r"^\|(.+)\|\s*$")
 STATUS_RE = re.compile(r"(?i)\b(?:gap|partial-pass|fail-uncertain|hedge|open-behind-hardstop|open-behind-block)\b")

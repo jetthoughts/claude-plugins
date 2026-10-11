@@ -89,6 +89,20 @@ hard stop; contract text does not close it. NULL rows preserved unchanged.
 OVERRIDE: verdict-with-gap approved by paul at 2026-10-11T13:00:00Z
 """
 
+# Split-form PASS headline: the form SKILL.md Dimension 5b documents
+# (`**Verdict:** **PASS (5/5)**`). The verifier MUST match this so the
+# PASS-with-prose-gap form is caught even when the only PASS headline uses
+# the split form (which is what SKILL.md + the orchestrator's own closure
+# artifact advertise). Regression guard for D1 in t_7cc2a92c.
+SPLIT_FORM_HEADLINE_PROSE_GAP = """\
+# QG retrospective: split-form headline + prose gap (D1 regression)
+
+**Verdict:** **PASS (5/5)** Path (b) verdict on disk is explicit.
+
+The runtime-enforcement metric remains open behind Paul's external-publication
+hard stop; contract text does not close it. NULL rows preserved unchanged.
+"""
+
 FAIL_CLEAN = """\
 # QG retrospective: clean FAIL
 
@@ -202,6 +216,31 @@ def test_pass_with_prose_gap_override_passes() -> bool:
         f.unlink(missing_ok=True)
 
 
+def test_split_form_headline_prose_gap_diagnostic_on() -> bool:
+    """D1 regression (t_7cc2a92c): the SKILL.md-advertised split-form
+    headline `**Verdict:** **PASS (5/5)**` MUST trigger the verifier
+    when combined with the recipe-0 prose-gap pattern. Pre-fix the
+    regex slipped past this form entirely (exit 0, "no PASS verdict
+    headline, nothing to gate"). Post-fix it must FAIL with at least
+    one narrative diagnostic.
+    """
+    f = write_tmp(SPLIT_FORM_HEADLINE_PROSE_GAP)
+    try:
+        r = run(file=f)
+        out = r.stdout.decode()
+        diagnostics = [ln for ln in out.splitlines()
+                       if ln.strip().startswith("- ")]
+        ok = (r.returncode == 1
+              and len(diagnostics) >= 1
+              and "PASS-with-prose-gap" in out)
+        print(f"  test_split_form_headline_prose_gap_diagnostic_on: "
+              f"{'PASS' if ok else 'FAIL'} — "
+              f"{len(diagnostics)} diagnostic(s); first={diagnostics[0] if diagnostics else '<none>'}")
+        return ok
+    finally:
+        f.unlink(missing_ok=True)
+
+
 def test_replay_t_4e7ea03d_13_11() -> bool:
     """Replay the original 13:11 PASS-with-gap version: must return exactly
     one diagnostic naming C10.
@@ -250,6 +289,7 @@ TESTS = [
     test_current_t_4e7ea03d_14_49_zero,
     test_pass_with_prose_gap_diagnostic_on,
     test_pass_with_prose_gap_override_passes,
+    test_split_form_headline_prose_gap_diagnostic_on,
 ]
 
 

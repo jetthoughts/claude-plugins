@@ -153,7 +153,7 @@ incident `INC-2026101101` records this as the recipe-0 13th iteration
 and links the verifier's expanded regex as the durable prevention
 (Paul-closed by `t_f8c78940`, ASSUMPTION: hermes-agent runtime gate
 remains blocked on the external-publication hard stop; rollback =
-delete the verifier script and revert this SKILL.md section).
+`git -C /Users/pftg/dev/claude-plugins revert eca6964`).
 
 ### Dimension 6 — Parent task verdict reconciliation
 
