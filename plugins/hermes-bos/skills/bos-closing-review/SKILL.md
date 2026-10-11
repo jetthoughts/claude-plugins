@@ -107,19 +107,30 @@ python3 scripts/check_verdict_dishonesty.py <verdict-file>
 ```
 
 **Trigger pattern**: a line at the start of the verdict file declaring
-`**Verdict: PASS**` (case-insensitive, anchored to start of line — rejects
-mid-paragraph prose mentions) AND a Markdown table row whose `status`
-column cell contains one of `gap`, `partial-pass`, `fail-uncertain`,
-`hedge`.
+`**Verdict: PASS**` (case-insensitive, anchored to start of line —
+also matches `**Verdict:** **PASS (5/5)**`, `**PASS (5/5).**`, and
+other bold-PASS headline forms) AND either a Markdown table row whose
+`status` column cell contains one of `gap`, `partial-pass`,
+`fail-uncertain`, `hedge`, `open-behind-hardstop`, `open-behind-block`,
+OR a prose-narrative line containing any of:
 
-**Refusal**: exit 1 with a per-row diagnostic naming the file, line
-number, criterion id, and the offending status. The card's
-`kanban_complete` is blocked on non-zero exit.
+- `remains open`
+- `metric (remains )?(open|unmet)`
+- `contract (text )?(is|does not|doesn't|does not) (satisfy|satisfies|close(s)?|meet(s)?)`
+- `open-behind-(hardstop|hard-stop|block)`
+- `path (b) ... (blocked|hardstop|hard-stop)`
+- `do(es) not (close|satisfy|meet) (the )?runtime`
+- `runtime-enforcement metric`
+
+**Refusal**: exit 1 with per-row AND per-prose-line diagnostics naming
+the file, line number, criterion id (for rows) or matched text (for
+prose), and the offending status. The card's `kanban_complete` is
+blocked on non-zero exit.
 
 **Override**: requires an explicit comment of the form
 `OVERRIDE: verdict-with-gap approved by <role> at <iso>` and re-running
-the verifier after the override comment is added. Override is logged in
-the verdict file's comment thread.
+the verifier after the override comment is added. Override is logged
+in the verdict file's comment thread.
 
 **Why this is a separate sub-dimension, not fold-into step 2**: the 6
 dimensions check cross-card and cross-system claims; 5b is a
@@ -128,6 +139,21 @@ dishonest verdict (PASS + gap) was the 12th-iteration re-emergence of the
 recipe 0 closing-defect lineage (per memory `mem_adaac499b383`); the
 durable prevention is a verifier at verdict-file write time, not a
 card-state reminder.
+
+**Why narrative gaps are included**: the original verifier scanned
+only table cells, but the recipe-0 closing-defect lineage includes a
+sub-pattern where the matrix cells all say "PASS" while the prose
+narrative explicitly says the original metric remains open ("runtime
+metric remains open", "contract text does not satisfy the runtime
+gate"). Such a verdict file reads as PASS to a casual reader and slips
+past a cell-only gate. The narrative gap check catches both forms.
+Verified against historical defects: `t_a0e858ec` (2026-10-11) and
+`t_6afc32f4` (2026-10-11) both FAIL the narrative-gap check; the
+incident `INC-2026101101` records this as the recipe-0 13th iteration
+and links the verifier's expanded regex as the durable prevention
+(Paul-closed by `t_f8c78940`, ASSUMPTION: hermes-agent runtime gate
+remains blocked on the external-publication hard stop; rollback =
+delete the verifier script and revert this SKILL.md section).
 
 ### Dimension 6 — Parent task verdict reconciliation
 

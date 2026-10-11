@@ -12,10 +12,24 @@ import re
 import sys
 from pathlib import Path
 
-VERDICT_RE = re.compile(r"^\s*\*\*\s*verdict\s*:\s*pass\s*\*\*",
+VERDICT_RE = re.compile(r"^\s*\*+(?:verdict\s*:?\s*)?\*?\s*pass(?:\s*\((?:\d+/\d+|[^)]*)\))?\s*\.?\s*\*+",
                        re.IGNORECASE | re.MULTILINE)
 ROW_RE = re.compile(r"^\|(.+)\|\s*$")
-STATUS_RE = re.compile(r"(?i)\b(?:gap|partial-pass|fail-uncertain|hedge)\b")
+STATUS_RE = re.compile(r"(?i)\b(?:gap|partial-pass|fail-uncertain|hedge|open-behind-hardstop|open-behind-block)\b")
+# Prose-narrative gap markers: a verdict PASS headline plus any of these phrases
+# in the verdict file's prose body indicates the closure is a substitution,
+# not an honest closure. Recipes that produced this defect: 0 (PASS-with-gap).
+NARRATIVE_RE = re.compile(
+    r"(?i)\b(?:"
+    r"remains\s+open(?:\s+behind)?|"
+    r"metric\s+(?:remains\s+)?(?:open|unmet)|"
+    r"contract\s+(?:text\s+)?(?:is\s+|does\s+not\s+|doesn'?t\s+|does\s+not\s+)?(?:satisfy|satisfies|close(?:s)?|meet(?:s)?)|"
+    r"open-behind-(?:hardstop|hard-stop|block)|"
+    r"path\s*\(?b\)?.*(?:blocked|hardstop|hard-stop)|"
+    r"do(?:es)?\s+not\s+(?:close|satisfy|meet)\s+(?:the\s+)?runtime|"
+    r"runtime-?enforcement\s+metric"
+    r")\b"
+)
 
 
 def read_input(target):
@@ -53,6 +67,33 @@ def gap_rows(text):
     return out
 
 
+def narrative_gaps(text):
+    """Return (line_no, phrase) for each prose line containing a
+    substitution-pattern phrase. This catches the recipe-0 PASS-with-gap
+    defect where the table cells are all 'PASS' but the prose narrative
+    says the original metric remains open / contract is not runtime.
+    """
+    out = []
+    for i, line in enumerate(text.splitlines(), start=1):
+        # Skip table lines (already covered by gap_rows) and verdict
+        # headline lines (the PASS announcement itself).
+        if ROW_RE.match(line):
+            continue
+        m = NARRATIVE_RE.search(line)
+        if m:
+            out.append((i, m.group(0)))
+    return out
+
+
+def has_override(text):
+    """Return True if the file contains an explicit OVERRIDE comment of the
+    form `OVERRIDE: verdict-with-gap approved by <role> at <iso>`.
+    """
+    return bool(re.search(
+        r"OVERRIDE\s*:\s*verdict-with-gap\s+approved\s+by\s+\S+\s+at\s+\S+",
+        text, re.IGNORECASE))
+
+
 def main():
     if len(sys.argv) != 2:
         print("usage: check_verdict_dishonesty.py <file|->", file=sys.stderr)
@@ -62,15 +103,32 @@ def main():
         print(f"PASS: {label} — no PASS verdict headline, nothing to gate")
         return 0
     rows = gap_rows(text)
-    if not rows:
+    narr = narrative_gaps(text)
+    if not rows and not narr:
         print(f"PASS: {label} — verdict PASS, all rows clean")
         return 0
-    print(f"FAIL: {label} — verdict PASS but {len(rows)} row(s) report "
-          f"a gap; PASS-not-permitted")
+    if has_override(text):
+        print(f"PASS: {label} — verdict PASS with {len(rows)} row-gap(s) "
+              f"+ {len(narr)} narrative-gap(s); OVERRIDE comment present, "
+              f"approved by role")
+        return 0
+    total = len(rows) + len(narr)
+    parts = []
+    if rows:
+        parts.append(f"{len(rows)} row(s) report a gap")
+    if narr:
+        parts.append(f"{len(narr)} prose line(s) carry substitution-pattern "
+                     f"phrases")
+    print(f"FAIL: {label} — verdict PASS but {' / '.join(parts)}; "
+          f"PASS-not-permitted")
     for lineno, crit, status in rows:
         print(f"  - {label}:{lineno} [{crit or '?'}] status={status} — "
               f"PASS-with-gap is INCONCLUSIVE per recipe 0 + closing-review "
               f"rubric step 3")
+    for lineno, phrase in narr:
+        print(f"  - {label}:{lineno} phrase={phrase!r} — "
+              f"PASS-with-prose-gap is INCONCLUSIVE per recipe 0 "
+              f"(PASS-on-open-metric is the recurring defect)")
     return 1
 
 

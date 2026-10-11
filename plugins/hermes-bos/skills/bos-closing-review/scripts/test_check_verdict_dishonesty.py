@@ -58,6 +58,37 @@ PASS_WITH_GAP = """\
 | C10 | author of 11:39 mtime | gap | inferred from dir naming; medium confidence | inferred | medium |
 """
 
+# Recipe-0 PASS-with-prose-gap: table cells all PASS, but the verdict
+# paragraph below says the original metric remains open / contract is
+# not runtime. The 13th-iteration defect on t_a0e858ec (2026-10-11) and
+# t_6afc32f4 (2026-10-11) both used this form.
+PASS_WITH_PROSE_GAP = """\
+# QG retrospective: false PASS-with-prose-gap (recipe-0 13th iteration)
+
+**Verdict: PASS (5/5).** Path (b) verdict on disk is explicit.
+
+| Check | Status | Evidence |
+|---|---|---|
+| 1 | PASS | live read |
+| 2 | PASS | verdict quotes open-behind-hardstop |
+
+The runtime-enforcement metric remains open behind Paul's external-publication
+hard stop; contract text does not close it. NULL rows preserved unchanged.
+"""
+
+# Same shape as PASS_WITH_PROSE_GAP but with explicit OVERRIDE comment —
+# must PASS the verifier with an override-acknowledged line.
+PASS_WITH_PROSE_GAP_OVERRIDE = """\
+# QG retrospective: PASS-with-prose-gap, override approved by Paul
+
+**Verdict: PASS (5/5).** Path (b) verdict on disk is explicit.
+
+The runtime-enforcement metric remains open behind Paul's external-publication
+hard stop; contract text does not close it. NULL rows preserved unchanged.
+
+OVERRIDE: verdict-with-gap approved by paul at 2026-10-11T13:00:00Z
+"""
+
 FAIL_CLEAN = """\
 # QG retrospective: clean FAIL
 
@@ -134,6 +165,43 @@ def test_inconclusive_clean_zero_diagnostics() -> bool:
         f.unlink(missing_ok=True)
 
 
+def test_pass_with_prose_gap_diagnostic_on() -> bool:
+    """Recipe-0 13th-iteration: PASS headline + prose says metric remains
+    open / contract is not runtime. Must FAIL with narrative diagnostic.
+    """
+    f = write_tmp(PASS_WITH_PROSE_GAP)
+    try:
+        r = run(file=f)
+        out = r.stdout.decode()
+        diagnostics = [ln for ln in out.splitlines()
+                       if ln.strip().startswith("- ")]
+        ok = (r.returncode == 1
+              and len(diagnostics) >= 1
+              and "PASS-with-prose-gap" in out)
+        print(f"  test_pass_with_prose_gap_diagnostic_on: {'PASS' if ok else 'FAIL'} — "
+              f"{len(diagnostics)} diagnostic(s); first={diagnostics[0] if diagnostics else '<none>'}")
+        return ok
+    finally:
+        f.unlink(missing_ok=True)
+
+
+def test_pass_with_prose_gap_override_passes() -> bool:
+    """Same shape as PASS_WITH_PROSE_GAP, but with explicit OVERRIDE comment
+    of the documented form. Must PASS the verifier with override-acknowledged
+    line on stdout.
+    """
+    f = write_tmp(PASS_WITH_PROSE_GAP_OVERRIDE)
+    try:
+        r = run(file=f)
+        out = r.stdout.decode()
+        ok = (r.returncode == 0
+              and "OVERRIDE comment present" in out)
+        print(f"  test_pass_with_prose_gap_override_passes: {'PASS' if ok else 'FAIL'} — {out[:200]}")
+        return ok
+    finally:
+        f.unlink(missing_ok=True)
+
+
 def test_replay_t_4e7ea03d_13_11() -> bool:
     """Replay the original 13:11 PASS-with-gap version: must return exactly
     one diagnostic naming C10.
@@ -180,6 +248,8 @@ TESTS = [
     test_inconclusive_clean_zero_diagnostics,
     test_replay_t_4e7ea03d_13_11,
     test_current_t_4e7ea03d_14_49_zero,
+    test_pass_with_prose_gap_diagnostic_on,
+    test_pass_with_prose_gap_override_passes,
 ]
 
 
