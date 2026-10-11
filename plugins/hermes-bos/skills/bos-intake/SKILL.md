@@ -80,7 +80,40 @@ that file instead of creating a new one.
    hermes-agent") demands. See `fixtures/preflight-skills-rejection.md` and
    `scripts/test_preflight_skills.py` for the replay guard that fails when
    this clause is removed. (Backstop for INC-2026100902 / t_bacc26a7; not a
-   "may run," it is a "must run before any kanban filing.")
+   "may run," it is a "must run before any kanban filing".)
+
+5b. **Venture research preflight (REQUIRED GATE).** When the card carries
+   `venture_research: true` in its frontmatter, run the helper before
+   `kanban_create`:
+
+   ```
+   python3 ~/dev/claude-plugins/plugins/hermes-bos/skills/bos-intake/scripts/preflight_venture_research.py < <card-body>
+   ```
+
+   The helper exits 0 (`OK: venture research preflight passed`) only when
+   the card carries all three of `forcing_party`, `forcing_date`, and
+   `pain_fit` (frontmatter preferred; `Forcing party:` / `Date:` / `Pain fit:`
+   body lines are also accepted for prose-paste). On any missing field it
+   exits 2 and prints one line:
+
+   ```
+   venture research preflight: missing field(s) forcing_date, pain_fit
+   ```
+
+   When that line prints, refuse the card; do not call `kanban_create`.
+   Re-draft the body until the helper exits 0. The marker is opt-in: cards
+   without `venture_research: true` are not gated, so non-venture work
+   flows unchanged. The three fields correspond to rock 5.1
+   (`operations/decisions/2026-10-09-rocks.md`) and the owner's standing
+   venture rules
+   (`viking://user/default/memories/preferences/Paul/venture_operating_rules.md`):
+   forcing party + date = JT rule #1; pain fit = JT rule #2 (chequebook =
+   sufferer). This step is **non-optional** — the same surface the rubric's
+   Check 5 demands. See `fixtures/preflight-venture-research-rejection.md`
+   and `scripts/test_preflight_venture_research.py` for the replay guard
+   that fails when this clause is removed. (Backstop for kanban t_41ee06a4
+   / rock 5.1; not a "may run," it is a "must run before filing any
+   venture research card".)
 6. Write the work item with `patch` at `operations/work-items/<ID>.md` using
    the canonical format below. Derive the ID as `WI-YYYYMMDDNN` (zero-based
    counter within the day) and confirm uniqueness with
