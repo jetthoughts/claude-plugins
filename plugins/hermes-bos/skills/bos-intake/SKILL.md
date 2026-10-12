@@ -13,8 +13,8 @@ the Git-backed Business OS. This skill only classifies and writes the work
 item — it never executes the work, contacts anyone, approves anything, or
 commits to Git (the owner reviews and commits).
 
-- Business OS root: `/Users/pftg/dev/pkm/business-os`
-- Work items directory: `/Users/pftg/dev/pkm/business-os/operations/work-items/`
+- Business OS root: `/Users/pftg/dev/pkm/10-domains/business-os` (canonical; pre-reorg `/Users/pftg/dev/pkm/business-os` was closed via DEC-2026101100 D1 on 2026-10-12)
+- Work items directory: `/Users/pftg/dev/pkm/10-domains/business-os/operations/work-items/`
 - Canonical format carrier: this skill (per the Business OS root `AGENTS.md`).
 
 ## Use when
