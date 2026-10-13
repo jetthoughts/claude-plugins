@@ -113,7 +113,12 @@ Run on every opened job, in this order, and stop at the first failure:
    economics 25 (budget and the client's average paid rate against the target), client quality 20,
    competition 15. Below 60 is a skip.
 
-Bid only when scam < 40, chance ≥ 55 and fit ≥ 60. Expect to bid on a small share of opened jobs:
+Exception, a short budget only: when scam < 40, chance ≥ 70 and the only failure is the budget
+path, the job does not die. It becomes a **first-phase bid**: cut the scope to what the budget buys at
+the target rate (budget ÷ target = hours) and name that phase as the paid first step. Never lower the
+rate.
+
+Bid only when scam < 40, chance ≥ 55 and fit ≥ 60 (or the first-phase exception applies). Expect to bid on a small share of opened jobs:
 2–4 bids per working day is the ceiling, not a target.
 
 **Audit the filter.** Every opened job gets one line in the session log
