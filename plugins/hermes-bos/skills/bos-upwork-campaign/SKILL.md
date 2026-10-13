@@ -1,13 +1,13 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.3.0
+version: 0.3.1
 author: pftg
 platforms: [macos]
 metadata:
   hermes:
     tags: [Business OS, upwork, sales, ego-browser]
-    related_skills: [ego-browser, bos-quality-gate]
+    related_skills: [ego-browser, bos-quality-gate, humanizer]
 ---
 
 # bos-upwork-campaign
@@ -51,7 +51,7 @@ Diff, then review, then fill the edit page, then `handOff("check, press Save")`.
 - Hourly if the scope is unclear or the code is inherited. Fixed only with acceptance criteria:
   senior hours × target + risk.
 - Gross = desired net ÷ 0.85 (Upwork fee up to 15%).
-- Cover letter 75–120 words: their constraint first, one verified proof item, a bounded next step,
+- Cover letter by `humanizer`, 75–120 words: their constraint first, one verified proof item, a bounded next step,
   one question. No résumé opening, no stack list, no free plan. An unknown screening answer becomes
   `[PAUL: answer needed]`.
 - No boost unless fit ≥ 85; state the extra Connects.
