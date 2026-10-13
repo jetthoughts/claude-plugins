@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.5.0
+version: 0.5.1
 author: pftg
 platforms: [macos]
 metadata:
@@ -14,6 +14,9 @@ metadata:
 
 JetThoughts sells pre-vetted, self-managed subcontractors; Upwork is one channel. Every new
 opportunity (service, tech stack) is pre-validated before its campaign goes `active`.
+
+**Scope now (Paul, 2026-10-13): profile only.** Bidding runs through an external service; the
+`## Jobs` and `## Bid` sections are parked until Paul reopens them.
 
 Use for any Upwork card. upwork-operator does the work in Paul's session under its SOUL browser
 rules. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
