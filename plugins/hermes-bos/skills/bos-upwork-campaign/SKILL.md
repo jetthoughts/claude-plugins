@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.4.0
+version: 0.5.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -34,15 +34,20 @@ job: URL | stopped at | reason | scam/chance/fit.
 
 Write `## Pre-validation` in the campaign file. Each line needs a number and a source. The campaign
 moves to `active` only when all five pass and Paul says go.
-1. **Demand:** ≥ 10 jobs from the last 14 days pass `references/filters.md` at or above the
-   floor. Count them in one attended search session, or from jobs Paul pasted.
-2. **Price:** billed rates (not listed rates) of ≥ 3 proven competitors in that stack. The band
-   sits at or below the proven ceiling.
+Start with a **market scan, no bids**. Read the work histories of engineers in the niche who
+were hired recently: contracts started in the last 90 days, with title, billed rate (or
+"hidden"), hours and whether still ongoing. That is the demand and price that actually changed
+hands; job posts are a second lens. Read only: never message or invite engineers.
+1. **Demand:** contracts started in the last 90 days in this niche, from the scan. As a second
+   lens, ≥ 10 jobs from the last 14 days pass `references/filters.md` at or above the floor.
+2. **Price:** the billed rates from the scan (≥ 3 proven engineers). The band sits at or below the
+   proven ceiling.
 3. **Margin:** floor × 0.85 − subcontractor cost ≥ $8/h.
 4. **Supply:** a named, vetted subcontractor, or a sourcing pool plus vetting test that can staff
    within 7 days. Self-managed means they own delivery without a JetThoughts PM.
 5. **Proof:** ≥ 1 verifiable case for this service or stack, or the gap is stated in every packet.
-researcher does 2 and 4 off Upwork, upwork-operator does 1, quality-guardian gates.
+researcher seeds the niches and reads public pages and supply. upwork-operator reads profiles and jobs
+in attended sessions. quality-guardian checks the ranked result.
 A FAIL parks the campaign with its numbers. It is not retried unchanged.
 
 ## Profile
