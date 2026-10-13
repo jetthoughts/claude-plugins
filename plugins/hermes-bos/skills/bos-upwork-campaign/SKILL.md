@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.3.1
+version: 0.4.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -11,6 +11,9 @@ metadata:
 ---
 
 # bos-upwork-campaign
+
+JetThoughts sells pre-vetted, self-managed subcontractors; Upwork is one channel. Every new
+opportunity (service, tech stack) is pre-validated before its campaign goes `active`.
 
 Use for any Upwork card. upwork-operator does the work in Paul's session under its SOUL browser
 rules. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
@@ -26,6 +29,21 @@ Vault `~/dev/pkm/10-domains/business-os/ventures/jetthoughts/upwork/`:
 - `ledger.md`: one row per packet. Outcome stays blank until seen.
 Session log: `~/dev/hermes/projects/upwork/opportunities/<date>-session.md`, one line per opened
 job: URL | stopped at | reason | scam/chance/fit.
+
+## Pre-validate (every new service or stack)
+
+Write `## Pre-validation` in the campaign file. Each line needs a number and a source. The campaign
+moves to `active` only when all five pass and Paul says go.
+1. **Demand:** ≥ 10 jobs from the last 14 days pass `references/filters.md` at or above the
+   floor. Count them in one attended search session, or from jobs Paul pasted.
+2. **Price:** billed rates (not listed rates) of ≥ 3 proven competitors in that stack. The band
+   sits at or below the proven ceiling.
+3. **Margin:** floor × 0.85 − subcontractor cost ≥ $8/h.
+4. **Supply:** a named, vetted subcontractor, or a sourcing pool plus vetting test that can staff
+   within 7 days. Self-managed means they own delivery without a JetThoughts PM.
+5. **Proof:** ≥ 1 verifiable case for this service or stack, or the gap is stated in every packet.
+researcher does 2 and 4 off Upwork, upwork-operator does 1, quality-guardian gates.
+A FAIL parks the campaign with its numbers. It is not retried unchanged.
 
 ## Profile
 
@@ -50,7 +68,10 @@ Diff, then review, then fill the edit page, then `handOff("check, press Save")`.
 
 - Hourly if the scope is unclear or the code is inherited. Fixed only with acceptance criteria:
   senior hours × target + risk.
-- Gross = desired net ÷ 0.85 (Upwork fee up to 15%).
+- Margin per hour = bid × 0.85 − subcontractor cost. Never bid where that is below $8.
+- Say who delivers: a named, vetted engineer. Hourly contracts run on the delivering engineer's
+  own profile (an agency member); fixed price may run on Paul's as business manager (Upwork
+  agency rules). Never sell Paul's own hours when a subcontractor does the work.
 - Cover letter by `humanizer`, 75–120 words: their constraint first, one verified proof item, a bounded next step,
   one question. No résumé opening, no stack list, no free plan. An unknown screening answer becomes
   `[PAUL: answer needed]`.
