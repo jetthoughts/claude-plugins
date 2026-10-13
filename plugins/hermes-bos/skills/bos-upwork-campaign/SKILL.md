@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.5.1
+version: 0.6.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -12,19 +12,13 @@ metadata:
 
 # bos-upwork-campaign
 
-JetThoughts sells pre-vetted, self-managed subcontractors; Upwork is one channel. Every new
-opportunity (service, tech stack) is pre-validated before its campaign goes `active`.
-
-**Scope now (Paul, 2026-10-13): profile only.** Bidding runs through an external service; the
-`## Jobs` and `## Bid` sections are parked until Paul reopens them.
-
 Use for any Upwork card. upwork-operator does the work in Paul's session under its SOUL browser
 rules. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
 Paul picks the lane, presses every Save/Submit, and talks to clients.
 
 ## Records
 
-Vault `~/dev/pkm/10-domains/business-os/ventures/jetthoughts/upwork/`:
+In the project's records folder (its AGENTS.md names it):
 - `campaigns/<slug>.md`: lane, buyer, rate floor/target/anchor, search seeds, extra gates, `## Learnings`.
   One `active`.
 - `profile/<date>-<surface>-diff.md`: current text, proposed text, claim source for every number.
@@ -45,9 +39,9 @@ hands; job posts are a second lens. Read only: never message or invite engineers
    lens, ≥ 10 jobs from the last 14 days pass `references/filters.md` at or above the floor.
 2. **Price:** the billed rates from the scan (≥ 3 proven engineers). The band sits at or below the
    proven ceiling.
-3. **Margin:** floor × 0.85 − subcontractor cost ≥ $8/h.
-4. **Supply:** a named, vetted subcontractor, or a sourcing pool plus vetting test that can staff
-   within 7 days. Self-managed means they own delivery without a JetThoughts PM.
+3. **Margin:** floor × 0.85 − delivery cost ≥ $8/h.
+4. **Supply:** a named person who delivers, or a sourcing pool plus vetting test that can staff
+   within 7 days.
 5. **Proof:** ≥ 1 verifiable case for this service or stack, or the gap is stated in every packet.
 researcher seeds the niches and reads public pages and supply. upwork-operator reads profiles and jobs
 in attended sessions. quality-guardian checks the ranked result.
@@ -58,7 +52,7 @@ A FAIL parks the campaign with its numbers. It is not retried unchanged.
 There is one main profile per person (specialized profiles were retired 2026-05-28). Positioning per
 campaign = headline, overview, 15 ordered skills, portfolio order, one Project Catalog offer. Agency
 first, then Paul's freelancer profile. Every number cites
-`~/dev/jetthoughts.github.io/.okf/content/claims-canon.md`; uncited means it stays out.
+the project's claims source; uncited means it stays out.
 Diff, then review, then fill the edit page, then `handOff("check, press Save")`.
 
 ## Jobs
@@ -76,10 +70,10 @@ Diff, then review, then fill the edit page, then `handOff("check, press Save")`.
 
 - Hourly if the scope is unclear or the code is inherited. Fixed only with acceptance criteria:
   senior hours × target + risk.
-- Margin per hour = bid × 0.85 − subcontractor cost. Never bid where that is below $8.
+- Margin per hour = bid × 0.85 − delivery cost. Never bid where that is below $8.
 - Say who delivers: a named, vetted engineer. Hourly contracts run on the delivering engineer's
   own profile (an agency member); fixed price may run on Paul's as business manager (Upwork
-  agency rules). Never sell Paul's own hours when a subcontractor does the work.
+  agency rules). Never sell one person's hours when someone else does the work.
 - Cover letter by `humanizer`, 75–120 words: their constraint first, one verified proof item, a bounded next step,
   one question. No résumé opening, no stack list, no free plan. An unknown screening answer becomes
   `[PAUL: answer needed]`.
