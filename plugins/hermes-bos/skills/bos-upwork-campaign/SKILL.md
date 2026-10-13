@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.1.0
+version: 0.2.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -94,24 +94,33 @@ Working files (screenshots, raw page extracts) stay in ~/dev/hermes/projects/upw
    hourly or fixed bands from the rate floor, `proposals=0-4,5-9,10-14`, `sort=recency`.
 2. Read result cards, then open at most 8 job pages per session. Total Upwork page loads per card
    ≤ 20, with 5–20 s between actions.
-3. Each opened job goes through Stage 3 immediately; nothing is stored about jobs that fail.
+3. Each opened job goes through Stage 3 immediately; a job that fails keeps only its one audit line.
 
-## Stage 3: Validate (hard gates first, then score)
+## Stage 3: Filter and analyze (cheapest filter first; most jobs should die here)
 
-Hard gates (any one fails the job, with the reason in the session log):
-- scam score ≥ 40 from `references/scam-guard.md`;
-- no budget path to the campaign floor (hourly max below floor; fixed budget / estimated hours
-  below floor);
-- skill or offer outside the campaign;
-- more than 20 proposals, or the client is already interviewing 5 or more;
-- the job needs Paul or a named engineer we cannot commit.
+Run on every opened job, in this order, and stop at the first failure:
 
-Score 0–100 for the jobs that pass:
-- Fit 40: the posted problem matches the campaign offer and we have proof for it.
-- Economics 25: budget and the client's average paid hourly rate against the target.
-- Client quality 20: payment verified, hire rate, total spend, review language.
-- Competition 15: proposal count, interviewing count, how recently the client viewed proposals.
-Below 60 is a skip. 60 and above gets a packet.
+1. **Scam / fake**: `references/scam-guard.md`. A score of 40 or more is a reject.
+   "Payment verified" is a signal, never proof.
+2. **Low chance (ghost jobs, crowded jobs, cheap buyers)**: run the gates in
+   `references/chance-score.md`, then the chance score. Below 45 is a reject; 45–54 is held for Paul (a summary line, no packet); 55 and above goes on.
+3. **Fit and economics**: reject outright if any of these is true:
+   - there is no budget path to the campaign floor (the hourly maximum is below the floor, or the
+     fixed budget divided by the estimated hours is below the floor);
+   - the skill or offer is outside the campaign;
+   - the job needs a named engineer we cannot commit.
+   For the jobs that pass, score 0–100: fit 40 (problem matches the offer and we have proof),
+   economics 25 (budget and the client's average paid rate against the target), client quality 20,
+   competition 15. Below 60 is a skip.
+
+Bid only when scam < 40, chance ≥ 55 and fit ≥ 60. Expect to bid on a small share of opened jobs:
+2–4 bids per working day is the ceiling, not a target.
+
+**Audit the filter.** Every opened job gets one line in the session log
+`~/dev/hermes/projects/upwork/opportunities/<date>-session.md`. The line holds the URL, the stage that
+stopped it, the reason, and the scam, chance and fit scores. Rejected jobs get only that line, no
+other record. At the weekly review, quality-guardian rereads 5 rejected jobs at random to catch
+over-filtering, and 5 bid jobs that got no view to catch under-filtering.
 
 ## Stage 4: Bid
 
@@ -128,7 +137,7 @@ Below 60 is a skip. 60 and above gets a packet.
 
 ## Stage 5: Packet, review, prefill, hand-off
 
-Packet file `packets/<date>-<job-slug>.md`:
+Packet file `packets/<date>-<job-slug>.md` (only for jobs that passed all three filters):
 
 ```
 ---
@@ -137,6 +146,7 @@ job_url: <url>
 checked_at: <ISO time the live page was read>
 score: <n> (fit/econ/client/competition)
 scam_score: <n> flags: [...]
+chance_score: <n> signals: [...]
 bid: {type: hourly|fixed, floor: , target: , anchor: , proposed: }
 connects: <n read from the page>
 member: <named agency member who delivers>
@@ -148,7 +158,8 @@ status: draft|reviewed|prefilled|submitted|skipped
 ## Risks
 ```
 
-1. quality-guardian review card (`--parent` yours) checks claims, economics, scam flags and tone.
+1. quality-guardian review card (`--parent` yours) re-checks the scam and chance scores on the
+   recorded page facts, then claims, economics and tone.
 2. On PASS, in the same attended session: reopen the job, recheck status and Connects, open the
    apply form, fill rate or bid, cover letter and answers, then `task.handOff()` with a note:
    "<job title> | bid <x> | <n> Connects | check and Submit". Keep the tab.
@@ -157,7 +168,7 @@ status: draft|reviewed|prefilled|submitted|skipped
 
 ## Stage 6: Learn (weekly, delivery-manager drafts, quality-guardian checks)
 
-From `ledger.md`: Connects spent, views, replies, calls, contracts, cost per reply, cost per
+From `ledger.md`: chance score versus outcome (calibration in `references/chance-score.md`), Connects spent, views, replies, calls, contracts, cost per reply, cost per
 call, margin. Open outcomes stay open. Change one variable per review (lane, filter, opening,
 proof, price) and record it in the campaign file. A Paul edit to a packet is a lesson: note what
 he changed and why in the campaign file's `## Learnings`.
