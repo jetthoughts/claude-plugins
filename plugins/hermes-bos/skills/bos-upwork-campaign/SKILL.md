@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
-description: 'Run an Upwork campaign: profile, jobs, bids, prefill.'
-version: 0.6.0
+description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
+version: 0.7.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -53,7 +53,8 @@ There is one main profile per person (specialized profiles were retired 2026-05-
 campaign = headline, overview, 15 ordered skills, portfolio order, one Project Catalog offer. Agency
 first, then Paul's freelancer profile. Every number cites
 the project's claims source; uncited means it stays out.
-Diff, then review, then fill the edit page, then `handOff("check, press Save")`.
+Audit the live profile against `references/profile.md` first. The diff fixes only failed checks, so
+a line that passes stays. Then review, fill the edit page, and `handOff("check, press Save")`.
 
 ## Jobs
 
