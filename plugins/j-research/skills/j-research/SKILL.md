@@ -15,10 +15,12 @@ a fast lookup ends up running a 90-second multi-agent investigation, or a topic 
 viewpoints gets one cited paragraph. This skill is the dispatcher: name the topic once, pick the
 shape, hand off.
 
-**This skill owns the research ladder.** In order: `mcp__searxng__searxng_web_search` first →
-`mcp__tavily__tavily_search` as the single metered fallback, announced in the answer → built-in
-`web_search`/`web_extract` only when both fail, naming the failed rung. **A metered tool is never
-used silently.** `wigolo`, `perplexica` and LDR are off-ladder backends and roles (a fetch/search
+**This skill owns the research ladder.** Run `mcp__searxng__searxng_web_search` first and add a
+second MCP service in the same batch, chosen by question shape: `tavily` (extraction, crawl,
+`include_domains`, `time_range`), `exa` (semantic recall), `brave-search` (independent index),
+`you-research` (current events), `parallel` (fan-out). Built-in `web_search`/`web_extract` only when
+both fail, naming what failed. Every configured search tool is approved; cost is never a reason to
+skip one. `wigolo`, `perplexica` and LDR are off-ladder backends and roles (a fetch/search
 backend, a cited-synthesis helper, a deep-synthesis engine), not rungs. The consumer
 browser-session lanes (Qwen/Kimi/Perplexity/DeepSeek) are a separate manual — see
 [references/consumer-lanes.md](references/consumer-lanes.md) — and are not part of this ladder.
@@ -57,8 +59,8 @@ job, because it's the one that knows this vault's actual tool stack.
 - Names a platform (Twitter/X, Reddit, YouTube, GitHub, LinkedIn, Bilibili, XiaoHongShu, Facebook,
   Instagram, V2EX, Xueqiu, Xiaoyuzhou, Boss直聘, RSS) or hands you a URL from one → run the same
   ladder, scoped to the platform: `mcp__searxng__searxng_web_search` with a `site:<platform>`
-  filter first → `mcp__tavily__tavily_search` with `include_domains` as the announced metered
-  fallback → `agent-reach` **only** for what the index cannot reach (login-walled threads, full
+  filter first → `mcp__tavily__tavily_search` with `include_domains` as the second service →
+  `agent-reach` **only** for what the index cannot reach (login-walled threads, full
   comment trees, transcripts, RSS history). Never run `agent-reach` before the ladder has had its
   turn; `agent-reach doctor --json` shows which of its 16 backends are live right now (5 need no
   login, the rest need a cookie the user provides). Read the actual thread/comments/transcript
@@ -76,11 +78,11 @@ when available, else a short numbered menu:
 
 | Shape | When | Route |
 |---|---|---|
-| **Simple** | One focused question, one answer will do | The ladder, in order: `mcp__searxng__searxng_web_search` (free, ~0.8s, raw URLs) → `mcp__tavily__tavily_search`, the single metered fallback, announced in the answer → built-in `web_search`/`web_extract` only if both fail, naming the failed rung. Off-ladder roles, not rungs: `j-perplexica-search` when a cited synthesized paragraph beats a link list; `wigolo search`/`wigolo fetch` as the local keyless backend when the ladder comes back thin. Other keyed tools (`exa`, `brave-search`, `omniroute_web_search` with `provider: "duckduckgo-free"`) are metered too — announce them; never call OmniRoute without `provider`, it silently bills `brave-search`. Say which rung or tool answered. |
+| **Simple** | One focused question, one answer will do | The ladder: `mcp__searxng__searxng_web_search` (free, ~0.8s, raw URLs) plus a second MCP service in the same batch, by shape: `mcp__tavily__tavily_search` (extraction, `time_range`), `mcp__exa__web_search_exa` (semantic recall), `mcp__brave-search__brave_web_search` (independent index), `mcp__parallel__web_search` (fan-out, `session_id` required). Built-in `web_search`/`web_extract` only if all fail, naming what failed. Off-ladder roles, not rungs: `j-perplexica-search` when a cited synthesized paragraph beats a link list; `wigolo search`/`wigolo fetch` as the local keyless backend when the ladder comes back thin. Never call OmniRoute without `provider`, it silently bills `brave-search`. Say which tools answered. |
 | **Discussion** | The topic has real disagreement, or the ask is "what do people/experts think", "weigh the options", "get different views" | `Council` (QUICK mode by default, DEBATE for a harder split). If the output must end in one call with a kill criterion, not just viewpoints, escalate to `deliberate` instead. |
 | **Must survive triangulation** | A claim expensive to get wrong — a number you will act on, a legal or contractual fact | `deep-research:cs-deep-research` — refuses to state a claim carried by fewer than three independent, differently-typed sources, and runs a mandatory adversarial pass. |
 | **What is being said right now** | Recency matters more than authority — a tool's current reputation, a live controversy, whether something still works | `pulse:cs-pulse` — Reddit, HN and web in parallel, cross-platform patterns. |
-| **Community signal** | Mentions, sentiment, health score, engagement trend for a tool/company/topic | platform backends via the platform ladder above — `searxng` with `site:<platform>` → `tavily` with `include_domains` (announced) → `agent-reach` (Reddit, X, YouTube, GitHub, LinkedIn) off-ladder for counted thread text → `wigolo search`/`wigolo research` for cross-platform aggregation and trend shape → `j-perplexica-search` (sources: discussions) for sentiment cues → output a 4-line signal card: mentions (trend + volume), sentiment (polarity cue + representative posts), health (release cadence + issue/PR velocity where extractable), engagement (comment/view shape where extractable). Cite each lane's source. Signal limits per tool: see `references/community-signal.md`. |
+| **Community signal** | Mentions, sentiment, health score, engagement trend for a tool/company/topic | platform backends via the platform ladder above — `searxng` with `site:<platform>` → `tavily` with `include_domains` → `agent-reach` (Reddit, X, YouTube, GitHub, LinkedIn) off-ladder for counted thread text → `wigolo search`/`wigolo research` for cross-platform aggregation and trend shape → `j-perplexica-search` (sources: discussions) for sentiment cues → output a 4-line signal card: mentions (trend + volume), sentiment (polarity cue + representative posts), health (release cadence + issue/PR velocity where extractable), engagement (comment/view shape where extractable). Cite each lane's source. Signal limits per tool: see `references/community-signal.md`. |
 | **Other options** | The user wants to see the menu, or none of the above fits (need a full report, need explainable per-source scoring, need a private/paid API tradeoff spelled out) | See the table below — present it, let them pick. |
 
 ### Other options — the menu
@@ -93,7 +95,7 @@ when available, else a short numbered menu:
 | `wigolo search` with `evidence_score` | Want per-result quality scoring — relevance, domain quality, lexical alignment, freshness — rather than a synthesized answer. *(`RivalSearchMCP` filled this row until 2026-09-12 and is not installed.)* |
 | `Research` skill (marketplace, 4 depth modes) | The topic genuinely needs iterative, multi-session investigation with its own persistent vault — heaviest option here. It fires an unrelated voice-notification `curl` to `localhost:31337` on invocation (harmless no-op if nothing's listening) — that's the tool's own baggage, not this skill's. |
 | Perplexity, Search or Deep Research mode, via browser | Paul specifically wants a Perplexity thread (e.g. to capture into `evidence/perplexity/`). **Never Computer/orchestrator mode** for a new research task — that rule is load-bearing, not this skill's call to relax. |
-| `mcp__brave-search__brave_web_search` / `brave_local_search` | Metered (announce the call). Independent index when searxng and tavily both come back thin; `brave_local_search` specifically for real-world places/businesses, not web pages. |
+| `mcp__brave-search__brave_web_search` / `brave_local_search` | Independent index (non-Google/Bing), a good second service next to searxng; `brave_local_search` specifically for real-world places/businesses, not web pages. |
 | `you-research` (You.com managed research, MCP) | One-shot **cited** synthesis from primary sources when a paid call is fine (`YDC_API_KEY`). Async: the call returns a `task_id`; call again with `task_id` to poll. `research_effort`: lite / standard (default) / deep / exhaustive / frontier; `source_control` (beta) restricts domains. Measured 2026-09-25: standard effort, result on the first poll (< 1 min), cited GitHub releases + RubyGems for a Rails-version question. Claude: `you:you-research` plugin. Hermes: researcher seat, MCP server `you-research`. |
 | `mcp__searxng__searxng_web_search` | Raw URLs fast (0.8s), no synthesis — when you want the link list yourself, not an answer. |
 | `mcp__exa__web_search_exa` | Semantic/similarity search reads better than keyword search (e.g. "articles like this one"). |

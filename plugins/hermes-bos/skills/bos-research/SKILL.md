@@ -86,10 +86,10 @@ See `references/channel-routing.md` for the full 12-channel routing table.
 **The research ladder (rung order for general web):**
 
 1. `mcp__searxng__searxng_web_search` — free, ~0.8s, raw ranked URLs
-2. `mcp__tavily__tavily_search` — **metered fallback, announce it in the answer**
-3. Built-in `web_search` / `web_extract` — only when both above fail; name the failed rung
+2. A second MCP service in the same `tool_call` batch, by question shape: `tavily`, `exa`, `brave-search`, `you-research`, `parallel`, `perplexica`, `ldr`, `wigolo`
+3. Built-in `web_search` / `web_extract` — only when both above fail; name what failed
 
-A metered tool is never used silently. If tavily was used, say so in the matrix header (`ladder_used: searxng+tavily`).
+Name every service that returned results in the matrix header (`ladder_used: searxng+tavily`).
 
 **Off-ladder roles:** `perplexica` (cited synthesis), `wigolo` (cached scoring),
 `ldr quick_research` (deep multi-source synthesis). These supplement the ladder, they don't replace it.
@@ -229,7 +229,7 @@ When a claim cites "the field's 2026 standard," this is the underlying evidence.
 ## Failure modes
 
 - **Protocol violation** — calling any search tool before invoking this skill
-- **Metered tool silently** — using tavily, exa, brave-search, or you-research without announcing it in the matrix header
+- **One service only** — an evidence run whose search calls all went to one service, or that took built-in `web_search` as the second
 - **Single-source claim at high confidence** — T1 requires ≥2 independent sources
 - **Contradiction resolved by convenience** — lowering confidence while a material contradiction stands, not burying it
 - **Guess instead of unsupported** — recording a claim as fact when no source was found

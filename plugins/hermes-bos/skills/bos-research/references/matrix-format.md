@@ -25,8 +25,8 @@ ladder_used: <searxng | searxng+tavily | searxng+tavily+builtin — with reason>
 ---
 ```
 
-`ladder_used` MUST match the actual rungs invoked. If a metered tool
-was used, name it here AND in the prose answer.
+`ladder_used` MUST match the actual rungs invoked. Name every service that
+returned results here AND in the prose answer.
 
 ## Required sections
 
@@ -101,7 +101,7 @@ file internal-only.
 - [ ] Source tiers use only the vocabulary: primary / secondary / tertiary / unverified
 - [ ] Confidence levels use only: high / medium / low / unsupported
 - [ ] Ladder rungs actually invoked match `ladder_used` in the header
-- [ ] All metered tool use announced in `ladder_used` and in the answer
+- [ ] Every service that returned results is named in `ladder_used` and in the answer
 - [ ] Contradiction table has both positions with sources for every conflict
 - [ ] New findings ≥ 3 (deep research mode) or marked as quick lookup
 - [ ] Verification log completed for deep research mode

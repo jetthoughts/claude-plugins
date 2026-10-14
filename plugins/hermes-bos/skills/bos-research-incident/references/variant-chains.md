@@ -30,7 +30,7 @@ The researcher profile enables: `searxng`, `perplexica`, `ldr`, `you-research`, 
 | B — Freshness | `searxng.searxng_web_search` (time_range: week) → `tavily_search` (time_range: week, search_depth: advanced) → `you-research` |
 | C — Novelty | `tavily_search` (with `include_domains` for the named platform) → `exa.web_search_exa` → `perplexica.search` (sources: discussions) |
 
-Tavily is the announced metered fallback in the freshness and platform lanes because `include_domains` handles Reddit/Twitter/YouTube/GitHub/LinkedIn without a login gate — `searxng` with a `site:` filter still comes first (see `references/platform-ladders.md`). It also has a 2-credit cost per `advanced` search — budget rounds.
+Tavily is the second service in the freshness and platform lanes because `include_domains` handles Reddit/Twitter/YouTube/GitHub/LinkedIn without a login gate — `searxng` with a `site:` filter still comes first (see `references/platform-ladders.md`). It also has a 2-credit cost per `advanced` search — budget rounds.
 
 ### default / kanban-orchestrator (read-only, no Tavily)
 

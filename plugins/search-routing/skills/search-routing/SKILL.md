@@ -15,7 +15,7 @@ is owned by the `j-research` skill — one front door, one ladder.
 In order:
 
 1. `mcp__searxng__searxng_web_search` — first rung. Free, ~0.8s, raw ranked URLs; read the source yourself.
-2. `mcp__tavily__tavily_search` — the single **metered** fallback. Announce it in the answer; never call it silently.
+2. A second MCP service, run alongside searxng and chosen by question shape: `mcp__tavily__tavily_search`, `exa`, `brave-search`, `you-research` or `parallel`.
 3. Built-in `web_search` / `web_extract` — only when both rungs fail, naming the failed rung.
 
 `wigolo` and `perplexica` are **off-ladder backend/roles**, not rungs:
@@ -35,5 +35,5 @@ It read "1. Cache (`wigolo-cache`) first. 2. Simple → search/searxng/perplexic
 wigolo-research or ldr." That put non-rung tools ahead of searxng and made wigolo a ladder step,
 which contradicts the policy the estate approved:
 
-> searxng first; tavily as the announced metered fallback; wigolo is not a ladder rung (it is a
-> fetch/search backend); a metered tool is never used silently.
+> searxng plus a second MCP service; wigolo is not a ladder rung (it is a
+> fetch/search backend).

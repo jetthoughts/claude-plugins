@@ -17,16 +17,17 @@ ladder came back thin.
 
 **The ladder — web search (one fact, or a ranked list of pages):**
 
-1. **`mcp__searxng__searxng_web_search`** — free, ~0.8s, local. The default. Read the
-   source yourself; it returns raw ranked URLs, not a synthesis.
-2. **`mcp__tavily__tavily_search`** — the **single metered fallback**. Reach it only when
-   rung 1 is thin or empty, and **name it in the answer** along with the fact that it is
-   metered. A metered call that is not announced is a defect, not a shortcut.
-3. **built-in `web_search` / `web_extract`** — only when both of the above fail, and name
-   the failed rung when you fall back to it.
+1. **`mcp__searxng__searxng_web_search`** — free, ~0.8s, local. Always. Read the source yourself;
+   it returns raw ranked URLs, not a synthesis.
+2. **A second MCP service, in the same `tool_call` batch as rung 1**, chosen by question shape
+   (table below): `tavily` for extraction, crawl, `include_domains`, `time_range`; `exa` for semantic
+   recall; `brave-search` for an independent index; `you-research` for current events; `parallel` for
+   fan-out queries. Every configured search tool is approved; cost is never a reason to skip one.
+3. **built-in `web_search` / `web_extract`** — only when both of the above fail, and name what
+   failed. They are directly listed tools, so they are the easy path; using them in place of rung 2
+   breaks the two-service rule.
 
-**Off-ladder roles — matched to the job:** being off-ladder does not make a tool free.
-`exa`, `brave-search` and `tavily` are all metered, and every metered call is announced.
+**Off-ladder roles — matched to the job:**
 
 | When the job is… | Reach for | Cost |
 |---|---|---|
@@ -36,8 +37,8 @@ ladder came back thin.
 | reading one known URL as markdown | `mcp__wigolo__fetch` or `mcp__searxng__web_url_read` | free |
 | multi-source cited synthesis | `mcp__ldr__quick_research` / `detailed_research` | free |
 | speed, with an agent already in the loop | `mcp__omniroute__omniroute_web_search` + `omniroute_route_request` | free tier |
-| semantic / neural recall over keywords | `mcp__exa__web_search_exa` | metered — announce |
-| an index independent of Google and Bing | `mcp__brave-search__brave_web_search` | metered — announce |
+| semantic / neural recall over keywords | `mcp__exa__web_search_exa` | paid |
+| an index independent of Google and Bing | `mcp__brave-search__brave_web_search` | paid |
 | what *our own* corpora say | `mcp__notebooklm-mcp__notebook_query` | free |
 | login-walled platforms (X, Reddit, YouTube…) | `agent-reach` — a **skill**, not an MCP | free |
 | repo code and structure | `semble`, OpenViking, `codebase-memory-mcp`, `codegraph` | free |
@@ -56,7 +57,7 @@ configured but cannot authenticate is **not available**, and must not be planned
 | Server | Status | Notes |
 |---|---|---|
 | `searxng` | ✔ connected | local `~/.infra/mcp/searxng-mcp`; `curl 'http://127.0.0.1:8081/search?q=hello&format=json'` returned 10 results |
-| `tavily` | ✔ connected | `npx tavily-mcp@latest`, metered |
+| `tavily` | ✔ connected | `npx tavily-mcp@latest` |
 | `ldr` | ✔ connected | local `~/.infra/mcp/ldr-mcp` over LM Studio |
 | `perplexica` | ✔ connected | local `~/.infra/mcp/perplexica-mcp`; Vane up on :3000 |
 | `wigolo` | ✔ connected | pinned global binary `~/.bun/bin/wigolo mcp` |
@@ -79,7 +80,7 @@ configured but cannot authenticate is **not available**, and must not be planned
 | LDR | ldr | Slow (150-500s) | Free | Local, academic sources |
 | Wigolo | wigolo | Fast (<15s) | Free | Local-first, caching |
 | Exa | exa | Fast (<10s) | Paid tier | Semantic search, high recall |
-| Tavily | tavily | Fast (<30s) | Paid tier | **rung 2** — metered fallback, crawling |
+| Tavily | tavily | Fast (<30s) | Paid tier | second service, crawling |
 | You.com | you | Fast (<1min) | Paid | Current events — **needs auth, unavailable** |
 | Perplexica | perplexica | Medium (30-120s) | Free | Academic + forums |
 | Brave | brave-search | Fast (<5s) | Paid tier | Privacy-first, quality |

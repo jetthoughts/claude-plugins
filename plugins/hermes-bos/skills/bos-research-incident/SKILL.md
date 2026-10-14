@@ -73,7 +73,7 @@ Spawn 3 researcher subagents in parallel via `delegate_task`. **Each uses a deli
 
 Researcher-profile default variant table (A Discovery / B Freshness / C Novelty): see `references/variant-chains.md`.
 
-These are **deliberate diversity chains for the swarm**, not the general research ladder — the point of the 3-variant pattern is that the chains differ, so a re-run cannot reproduce the same miss. A fresh web fact outside the swarm still goes on the `j-research` ladder (`searxng` first → `tavily`, announced).
+These are **deliberate diversity chains for the swarm**, not the general research ladder — the point of the 3-variant pattern is that the chains differ, so a re-run cannot reproduce the same miss. A fresh web fact outside the swarm still goes on the `j-research` ladder (`searxng` plus a second MCP service).
 
 Each variant must:
 
@@ -92,10 +92,10 @@ Consolidate into `candidates.md`:
 
 #### Platform-aware variants (when the topic names a platform)
 
-If the topic needs Reddit, Twitter/X, YouTube, GitHub, LinkedIn, Bilibili, XiaoHongShu, RSS feeds, etc., the platform lane runs **the same ladder `j-research` owns** — it does not get an order of its own: rung 1 `searxng_web_search` scoped with a `site:` filter, rung 2 `tavily_search` with `include_domains` (metered — announce it in the answer), rung 3 `agent-reach` **off-ladder**, only for what the general index cannot reach.
+If the topic needs Reddit, Twitter/X, YouTube, GitHub, LinkedIn, Bilibili, XiaoHongShu, RSS feeds, etc., the platform lane runs **the same ladder `j-research` owns** — it does not get an order of its own: rung 1 `searxng_web_search` scoped with a `site:` filter, rung 2 `tavily_search` with `include_domains`, rung 3 `agent-reach` **off-ladder**, only for what the general index cannot reach.
 Platform ladder table (rung 1 `searxng` → rung 2 `tavily` → rung 3 `agent-reach`): see `references/platform-ladders.md`.
 
-**Sub-rule:** never run `agent-reach` before the ladder has had its turn — `searxng` with a `site:` filter first, then `tavily` with `include_domains` (announced, metered). `agent-reach` is reserved for login-gated content, comment transcripts, or full RSS history that neither index reaches. This is the same order `j-research` states for a named platform; where they differ, `j-research` wins.
+**Sub-rule:** never run `agent-reach` before the ladder has had its turn — `searxng` with a `site:` filter first, then `tavily` with `include_domains`. `agent-reach` is reserved for login-gated content, comment transcripts, or full RSS history that neither index reaches. This is the same order `j-research` states for a named platform; where they differ, `j-research` wins.
 
 ### 4. Voting
 
@@ -186,7 +186,7 @@ Always return, in this order:
 - **Inventing tools in the chains.** Use the tools that are actually enabled in `mcp_servers`. `references/variant-chains.md` names the defaults for the researcher profile; if a tool is missing locally, swap to the fallback row in the **Platform-aware variants** table (`references/platform-ladders.md`) and note the swap in `rca.md`.
 - **Calling the failed output "fine, with caveats".** Caveats do not fix misses. Open the incident.
 - **Running the variants sequentially.** They are independent — parallelize via `delegate_task` in one batch.
-- **Reaching for `agent-reach` before the ladder.** `searxng` with a `site:` filter comes first, then `tavily` with `include_domains` (announced). Reserve `agent-reach` for login-walled or transcript-needing content the indexes do not reach.
+- **Reaching for `agent-reach` before the ladder.** `searxng` with a `site:` filter comes first, then `tavily` with `include_domains`. Reserve `agent-reach` for login-walled or transcript-needing content the indexes do not reach.
 - **Treating Tavily's free tier as unlimited.** Each `tavily_search` with `search_depth: advanced` costs 2 credits; budget rounds accordingly.
 
 ## Verification

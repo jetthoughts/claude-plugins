@@ -3,7 +3,7 @@
 Same ladder `j-research` owns; the platform lane gets no order of its own.
 
 
-| Platform | Rung 1 — `searxng_web_search` | Rung 2 — `tavily_search`, announced | Rung 3 — `agent-reach`, off-ladder |
+| Platform | Rung 1 — `searxng_web_search` | Rung 2 — `tavily_search` | Rung 3 — `agent-reach`, off-ladder |
 |---|---|---|---|
 | Reddit | `site:reddit.com` (+ `time_range`) | `include_domains: ["reddit.com"]`, `search_depth: advanced`, `time_range: month` | Reddit backend — login-walled threads, full comment text |
 | Twitter / X | `site:x.com OR site:twitter.com` | `include_domains: ["twitter.com", "x.com"]` (alternate: `omniroute_x_search`) | X backend — thread text behind a login |

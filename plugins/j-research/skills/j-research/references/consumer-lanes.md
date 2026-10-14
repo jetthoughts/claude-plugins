@@ -5,8 +5,8 @@ retired. This is a **browser-session manual** for the consumer deep-research ser
 how to start a run, completion heuristics, export paths, chat-management sequences, and
 ego-browser/browseros-neo rung logging.
 
-It is **not** a research ladder and not part of one. The ladder is `searxng` first → `tavily` as the
-announced metered fallback → built-in `web_search`/`web_extract` only if both fail; it is owned by
+It is **not** a research ladder and not part of one. The ladder is `searxng` plus a second MCP service →
+built-in `web_search`/`web_extract` only if both fail; it is owned by
 the `j-research` skill ([../SKILL.md](../SKILL.md)). `wigolo` and `perplexica` are off-ladder
 backend/roles. Use the lanes below only when the owner has asked for a specific consumer service
 (Qwen / Kimi / Perplexity / DeepSeek) by name.

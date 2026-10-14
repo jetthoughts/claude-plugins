@@ -1,6 +1,6 @@
 {
   "name": "search-routing",
-  "description": "Human-invoked reference card listing the search and deep-research tools once a request's shape is known. Not a router and not model-invocable - the router and ladder owner is the j-research skill (searxng first, tavily announced metered fallback).",
+  "description": "Human-invoked reference card listing the search and deep-research tools once a request's shape is known. Not a router and not model-invocable - the router and ladder owner is the j-research skill (searxng plus a second MCP service).",
   "version": "0.1.0",
   "author": {
     "name": "JetThoughts",

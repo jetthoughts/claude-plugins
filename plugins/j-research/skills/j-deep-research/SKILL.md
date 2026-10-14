@@ -19,14 +19,14 @@ For detailed routing across all available search tools (Exa, Tavily, You.com, Pe
 - You are running in a lane with no API-keyed cloud tools (Tavily/You.com not available)
 
 **Use other tools when:**
-- You need speed (<10s): Exa, Tavily, Brave, OmniRoute — all metered, so name the call in the answer
+- You need speed (<10s): Exa, Tavily, Brave, OmniRoute
 - You need stronger synthesis: OmniRoute with premium models, You.com
 - You need semantic search with high recall: Exa
 - You need comprehensive crawling: Tavily
 - You need academic + forum sources: Perplexica
 - You need local-first with caching: Wigolo
 
-**The ladder — one ladder, owned by `j-research` (not by this skill):** `searxng` first → `tavily` as the single metered fallback, announced in the answer → built-in `web_search`/`web_extract` only when both fail, naming the failed rung. `wigolo` and `perplexica` are off-ladder roles (a fetch/search backend and a cited-synthesis helper), not rungs. LDR is this skill's deep-synthesis engine, not a rung either — reach it as a deliberate escalation for the synthesis job, not as something you fall through to. There is no second ladder and no "pick the ladder that matches the tools available": if a tool named here is not callable in this session, say so and stop rather than substituting silently.
+**The ladder — one ladder, owned by `j-research` (not by this skill):** `searxng` plus a second MCP service → built-in `web_search`/`web_extract` only when both fail, naming what failed. `wigolo` and `perplexica` are off-ladder roles (a fetch/search backend and a cited-synthesis helper), not rungs. LDR is this skill's deep-synthesis engine, not a rung either — reach it as a deliberate escalation for the synthesis job, not as something you fall through to. There is no second ladder and no "pick the ladder that matches the tools available": if a tool named here is not callable in this session, say so and stop rather than substituting silently.
 
 ### `mcp__ldr__quick_research` (default)
 - **Use for:** Most deep research queries
@@ -80,7 +80,7 @@ For detailed routing across all available search tools (Exa, Tavily, You.com, Pe
 - **First call after reboot:** ~60s to initialize (heavy imports); warm start ~10s
 - **"no loaded chat model":** Should no longer happen — launcher selects model via `mcp/lmstudio-model` (prefers resident, JIT-loads gemma-4-e4b ~10s when idle)
 - **`ldr.search` returns `status: success` with 0 results:** Treat as failure, not absence. LDR swallows upstream HTTP errors.
-- **Specific engine failures (2026-09-24):** arxiv (HTTP 406), wikipedia (429 throttled), semantic_scholar (429 without key). Use `openalex` for the academic case; for a general web read, go back to the ladder (`searxng`, then `tavily` announced).
+- **Specific engine failures (2026-09-24):** arxiv (HTTP 406), wikipedia (429 throttled), semantic_scholar (429 without key). Use `openalex` for the academic case; for a general web read, go back to the ladder (`searxng` plus a second MCP service).
 - **`ldr (CONNECTION_CLOSED)` at session start:** Launcher exiting when LM Studio couldn't load model. Fixed 2026-09-24; now starts anyway. Research call failing with LM Studio error means run `~/.infra/bin/start`.
 - **Tool missing in session:** `/mcp` to reconnect, or `~/.infra/bin/setup-mcp` to re-register
 - **Health check:** `bin/bench-research --ldr-only` in `~/.infra` runs two fixed searches plus one `quick_research` (~5 min; per-case timeouts FAIL slow runs instead of hanging)

@@ -8,13 +8,13 @@ claims need different tools.
 
 | Channel | First tool | Fallback | Cost | Notes |
 |---|---|---|---|---|
-| General web (general facts, news) | `searxng` | `tavily` (metered, announce) | Free / metered | Rung 1 / rung 2 |
+| General web (general facts, news) | `searxng` | `tavily` | Free / paid | Rung 1 + rung 2 together |
 | Academic, biomedical, code errors | `ldr` with `engine: openalex \| pubmed \| stackexchange` | `searxng` | Free | |
-| Cited synthesis paragraph | `perplexica` | `tavily` (metered, announce) | Free / metered | Off-ladder role |
+| Cited synthesis paragraph | `perplexica` | `tavily` | Free / paid | Off-ladder role |
 | Cached, explainable scoring | `wigolo` | `searxng` | Free | Off-ladder role |
-| Semantic / neural recall | `exa` | `searxng` | Metered | Announce |
-| Real-time / current events | `you-research` | `searxng` with `time_range` | Metered | Announce |
-| Independent index (non-Google/Bing) | `brave-search` | `searxng` | Metered | Announce |
+| Semantic / neural recall | `exa` | `searxng` | Paid | |
+| Real-time / current events | `you-research` | `searxng` with `time_range` | Paid | |
+| Independent index (non-Google/Bing) | `brave-search` | `searxng` | Paid | |
 | Reddit, Twitter, YouTube, GitHub, LinkedIn | `tavily` with `include_domains` | `agent-reach` (skill) | Free | Prefer tavily for cost/speed |
 | Chinese-language sources | Kimi via `ego-browser` (logged-in session) | `searxng` | Free | Consumer lane |
 | Primary documentation, libraries | `context7` or `deepwiki` | `searxng` | Free | |
@@ -25,10 +25,10 @@ claims need different tools.
 ## The research ladder (rung order for general web)
 
 1. `mcp__searxng__searxng_web_search` — free, ~0.8s, raw ranked URLs
-2. `mcp__tavily__tavily_search` — **metered fallback, announce it in the answer**
-3. Built-in `web_search` / `web_extract` — only when both above fail; name the failed rung
+2. A second MCP service in the same `tool_call` batch, by question shape: `tavily`, `exa`, `brave-search`, `you-research`, `parallel`, `perplexica`, `ldr`, `wigolo`
+3. Built-in `web_search` / `web_extract` — only when both above fail; name what failed
 
-A metered tool is never used silently. If tavily was used, say so in the matrix header (`ladder_used: searxng+tavily`).
+Name every service that returned results in the matrix header (`ladder_used: searxng+tavily`).
 
 ## Off-ladder roles (NOT rungs)
 
@@ -45,7 +45,7 @@ These are backend roles, not rungs. They don't replace the ladder; they suppleme
 When the topic names a platform (Upwork jobs, Reddit threads, GitHub issues):
 
 1. `searxng` with `site:` filter first (rung 1)
-2. `tavily` with `include_domains` (rung 2, metered — announce it)
+2. `tavily` with `include_domains` (rung 2)
 3. `agent-reach` (off-ladder) only for login-walled content the indexes can't reach
 
 **Sub-rule:** never run `agent-reach` before the ladder has had its turn.
