@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.0
+version: 0.7.1
 author: pftg
 platforms: [macos]
 metadata:
@@ -13,7 +13,10 @@ metadata:
 # bos-upwork-campaign
 
 Use for any Upwork card. upwork-operator does the work in Paul's session under its SOUL browser
-rules. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
+rules.
+
+**Pace (Paul, 2026-10-15):** never load pages fast. After each navigation or click, wait until the
+page settles, then pause another 1–2 s before the next one. Never fire page loads back to back or in parallel. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
 Paul picks the lane, presses every Save/Submit, and talks to clients.
 
 ## Records
