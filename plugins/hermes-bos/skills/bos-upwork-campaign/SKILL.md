@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.1
+version: 0.7.2
 author: pftg
 platforms: [macos]
 metadata:
@@ -53,8 +53,9 @@ A FAIL parks the campaign with its numbers. It is not retried unchanged.
 ## Profile
 
 There is one main profile per person (specialized profiles were retired 2026-05-28). Positioning per
-campaign = headline, overview, 15 ordered skills, portfolio order, one Project Catalog offer. Agency
-first, then Paul's freelancer profile. Every number cites
+campaign = headline, overview, 15 ordered skills, portfolio order, and Project Catalog listings: one per
+service, each backed by a site page with a stated price (Paul, 2026-10-16). Agency first, then Paul's
+freelancer profile. Every number cites
 the project's claims source; uncited means it stays out.
 Audit the live profile against `references/profile.md` first. The diff fixes only failed checks, so
 a line that passes stays. Then review, fill the edit page, and `handOff("check, press Save")`.
