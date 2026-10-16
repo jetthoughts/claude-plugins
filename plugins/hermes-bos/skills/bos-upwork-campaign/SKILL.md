@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.4
+version: 0.7.5
 author: pftg
 platforms: [macos]
 metadata:
@@ -21,6 +21,11 @@ fill or scroll, wait until the page has settled, then sleep 1–2 s (`page.waitF
 Never fire page loads back to back or in parallel. Scroll only to bring a section you are about to read
 or edit into view. Mouse movement and scrolling added only to look human are out of scope: if Upwork
 challenges the session, stop and hand it to Paul.
+
+**Agency editor needs the agency context (2026-10-16).** The agency page at
+`/agencies/<id>/` shows its edit pencils only while the browser is acting as the agency. Upwork offers that
+switch only in the profile-picture menu, which the operator never opens. If the page has no edit controls,
+stop after one look and ask Paul to switch to the agency profile. Never probe guessed URLs: two misses means stop.
 
 ## Records
 
