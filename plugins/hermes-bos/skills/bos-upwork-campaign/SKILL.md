@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.2
+version: 0.7.3
 author: pftg
 platforms: [macos]
 metadata:
@@ -13,11 +13,11 @@ metadata:
 # bos-upwork-campaign
 
 Use for any Upwork card. upwork-operator does the work in Paul's session under its SOUL browser
-rules.
+rules. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
+Paul picks the lane, presses every Save/Submit, and talks to clients.
 
 **Pace (Paul, 2026-10-15):** never load pages fast. After each navigation or click, wait until the
-page settles, then pause another 1–2 s before the next one. Never fire page loads back to back or in parallel. quality-guardian reviews every profile diff and bid packet as a separate `--parent` card.
-Paul picks the lane, presses every Save/Submit, and talks to clients.
+page settles, then pause another 1–2 s before the next one. Never fire page loads back to back or in parallel.
 
 ## Records
 
@@ -29,6 +29,12 @@ In the project's records folder (its AGENTS.md names it):
 - `ledger.md`: one row per packet. Outcome stays blank until seen.
 Session log: `~/dev/hermes/projects/upwork/opportunities/<date>-session.md`, one line per opened
 job: URL | stopped at | reason | scam/chance/fit.
+
+**Front matter must parse strictly (Paul, 2026-10-16).** Keep each value to a short plain phrase and put
+prose in the body. Double-quote any value that contains `: ` (title, surface, lane). The vault validator
+auto-quotes loose colons on purpose, so it passes files that Tolaria and strict YAML readers reject.
+After writing a record, run: `ruby -ryaml -rdate -e 'm=File.read(ARGV[0]).match(/\A---\n(.*?)\n---\n/m); YAML.safe_load(m[1], permitted_classes: [Date, Time]); puts "ok"' <file>`.
+It prints `ok` or the line and column that breaks.
 
 ## Pre-validate (every new service or stack)
 
