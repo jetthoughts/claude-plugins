@@ -1,8 +1,8 @@
 # Profile: audit, then diff
 
 Adapted from `sarmad-mughal/upwork-profile-optimizer-skill@upwork-optimizer` (read 2026-10-14). Kept what
-fits a single main profile and cited claims; dropped specialized profiles (retired 2026-05-28) and the
-catalog listings (now one per service, see SKILL.md § Profile).
+fits a single main profile and cited claims; dropped specialized profiles (retired 2026-05-28).
+Catalog listings are one per service (SKILL.md § Profile), not the source's fixed 3-5.
 
 ## 1. Audit the live profile first
 
