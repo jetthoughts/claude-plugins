@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.6
+version: 0.7.7
 author: pftg
 platforms: [macos]
 metadata:
@@ -78,8 +78,8 @@ a line that passes stays. Then review, fill the edit page, and `handOff("check, 
 
 ## Jobs
 
-1. Run the campaign's saved searches (payment verified, rate band, `proposals` ≤ 14, newest first).
-   Open ≤ 8 jobs.
+1. Find jobs from the Nibwright feed first (Paul's saved search, polls hourly, notifies only; Paul presses Submit on Upwork), then the campaign's saved searches (payment verified, rate band, `proposals` ≤ 14, newest first).
+   Open ≤ 8 jobs. Nibwright's match percentage is a hint, not a filter: every job still passes the filters below.
 2. Filter each opened job with `references/filters.md`, in order, stopping at the first failure:
    **scam** ≥ 40 rejects; **chance** < 45 rejects, 45–54 is held for Paul (log line only);
    **fit** < 60 rejects. Then apply the campaign's extra gates.
@@ -95,7 +95,7 @@ a line that passes stays. Then review, fill the edit page, and `handOff("check, 
 - Say who delivers: a named, vetted engineer. Hourly contracts run on the delivering engineer's
   own profile (an agency member); fixed price may run on Paul's as business manager (Upwork
   agency rules). Never sell one person's hours when someone else does the work.
-- Cover letter by `humanizer`, 75–120 words: their constraint first, one verified proof item, a bounded next step,
+- Cover letter by `humanizer`, 75–120 words, skeleton and evidence in `references/bid-template.md`: their constraint first, one verified proof item, a bounded next step,
   one question. No résumé opening, no stack list, no free plan. An unknown screening answer becomes
   `[PAUL: answer needed]`.
 - No boost unless fit ≥ 85; state the extra Connects.
