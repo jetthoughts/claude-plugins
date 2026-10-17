@@ -36,3 +36,26 @@ Fill every bracket from the post. Every number in the letter must have a canon r
 - Reply-rate figures come from third-party samples (GigRadar, 133,872 proposals; GetMany video data), not from our own bids. Our own record is zero replies in 100 bids in 2026 (`Projects/upwork-outreach.md`), so treat every percentage as a hypothesis for the 30-day test.
 - The Perplexity templates in the vault contain claims the canon now forbids. Use the skeleton above, not the old text.
 - Measure per template: replies per 15 bids, per the campaign decision rule on 2026-11-17.
+
+## Variant for outstaffing and build jobs (Paul, 2026-10-17)
+
+For jobs that want a developer or a team, not an audit. Same length, same rules.
+
+```
+[Line 1 only if the post demands a keyword: that phrase, alone.]
+
+You wrote "[their exact phrase]". [One sentence naming the specific risk they did not mention and will hit.]
+
+The engineer for this job: [name or role, one project shipped on their stack with its outcome, link to a public artefact if one exists]. We confirm the engineer and start date before you commit. [One sentence of our own proof, only if it is true and sourced.]
+
+Rate [X] an hour or [Y] fixed, available from [date]. I review the work and answer to you for it.
+
+[One technical question that only someone who read the post would ask.]
+```
+
+Where it comes from, in order of weight:
+1. Governing doctrine: `Projects/upwork-outreach.md`, pitch doctrine 2026 (diagnosis-first, proof link, 75 to 100 words, one question, human edit).
+2. `evidence/perplexity/ai-harness-setup/pplx-e01720c3-doc-jetthoughts-upwork-operating-kit.md`, "Proposal recipe": buyer's constraint, one verified proof item, bounded next step, one question; confirm the delivery engineer before committing; no free plan.
+3. `evidence/perplexity/jetthoughts-marketing/pplx-260f1fb5-doc-upwork-for-outstaffing-what-actually-sells-and-how-to-win-th.md`, "Proposal template, senior full-stack": the first two lines decide, so no preamble and no credentials; name a risk they did not mention; link one real artefact. It asks for two questions and a rate and overlap line; we keep one question to stay inside the word limit.
+
+Not used: the three templates in `pplx-260f1fb5-doc-upwork-next-js-campaign-for-jetthoughts-positioning-profile.md` (250 words, and they carry claims the canon forbids) and `Notes/upwork-1a-extended-formula.md` (superseded 2026-08-26).
