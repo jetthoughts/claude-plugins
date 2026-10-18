@@ -1,6 +1,6 @@
 # Bid template for the audit lane (evidence from the vault, 2026-10-17)
 
-Use this for Next.js, Supabase and AI-built-app audit jobs. Write the letter by hand from this skeleton, run it through `humanizer`, and press Submit yourself. 75 to 120 words.
+Use this for Next.js, Supabase and AI-built-app audit jobs. Write the letter by hand from this skeleton, run it through `humanizer`, and press Submit yourself. 100 to 180 words.
 
 ## Skeleton
 
@@ -59,3 +59,23 @@ Where it comes from, in order of weight:
 3. `evidence/perplexity/jetthoughts-marketing/pplx-260f1fb5-doc-upwork-for-outstaffing-what-actually-sells-and-how-to-win-th.md`, "Proposal template, senior full-stack": the first two lines decide, so no preamble and no credentials; name a risk they did not mention; link one real artefact. It asks for two questions and a rate and overlap line; we keep one question to stay inside the word limit.
 
 Not used: the three templates in `pplx-260f1fb5-doc-upwork-next-js-campaign-for-jetthoughts-positioning-profile.md` (250 words, and they carry claims the canon forbids) and `Notes/upwork-1a-extended-formula.md` (superseded 2026-08-26).
+
+## Reconciliation with the external playbook (2026-10-18)
+
+Source: `knowledge/research/2026-10-18-upwork-bidding-playbook.md` (third-party, unverified). What we took, changed or left out:
+
+| Playbook says | We do | Why |
+| --- | --- | --- |
+| 200 to 300 words (agency up to 400) | 100 to 180 | The playbook's own data cites a peak at 100 to 199 words for developer roles, and the vault doctrine says 75 to 100. We take the overlap. |
+| Open with a question about the job | Open by quoting their phrase, then name the risk | Same effect (their problem first) without a staged question. |
+| Close with a question, not a sign-off (21.17% vs 1.38% reply, third-party) | One closing question, kept | Matches the existing rule. |
+| Template invents a past client result in the opener | Only sourced proof, with a link | The canon forbids unsourced numbers and fabricated comparable clients. |
+| Name the engineer who will do the work | Confirm the engineer before the client commits, introduce them on the intro call | Paul 2026-10-17: the engineer comes later. The Operating Kit allows this. |
+| Paid test of $100 to $300 in 48 to 72 hours | Offer a small paid first phase on build jobs | Fits "never free work". Our paid unit for audits is the Catalog listing. |
+| Admit a short history | Say it only if asked; lead with proof | Our profiles carry 18 contracts and $200K+ earned. |
+| Triage score and 20-proposal cap | Existing scam, chance and fit filters, proposals under 15 | Already stricter. |
+| Agency Plus shares Connects across the team | Not adopted yet | Check the plan and cost before relying on it. |
+| Never share off-platform contact; never share a login | Added as rules | Compliance. |
+| After the win: recap in 24 hours, ask for the review, one case per contract | Added to the skill | Compounds proof. |
+
+Everything above that carries a percentage is a third-party figure. Our own record is zero replies in 100 bids earlier this year, so the 30-day test decides which variant stays.

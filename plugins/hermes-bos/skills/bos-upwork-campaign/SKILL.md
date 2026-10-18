@@ -1,7 +1,7 @@
 ---
 name: bos-upwork-campaign
 description: 'Run an Upwork campaign: profile audit and rewrite, jobs, bids, prefill.'
-version: 0.7.7
+version: 0.8.0
 author: pftg
 platforms: [macos]
 metadata:
@@ -95,9 +95,21 @@ a line that passes stays. Then review, fill the edit page, and `handOff("check, 
 - Say who delivers: a named, vetted engineer. Hourly contracts run on the delivering engineer's
   own profile (an agency member); fixed price may run on Paul's as business manager (Upwork
   agency rules). Never sell one person's hours when someone else does the work.
-- Cover letter by `humanizer`, 75–120 words, skeleton and evidence in `references/bid-template.md`: their constraint first, one verified proof item, a bounded next step,
-  one question. No résumé opening, no stack list, no free plan. An unknown screening answer becomes
+- Cover letter by `humanizer`, 100–180 words, skeleton and evidence in `references/bid-template.md`. The first
+  two lines are all the client sees in the proposal list, so they carry their constraint in their own words.
+  Then one verified proof item with a link, a bounded next step (for build jobs a small paid first phase, never
+  free work), and one closing question that only someone who read the post could ask. No résumé opening,
+  no stack list, no free plan, no "Hi, thanks for posting". An unknown screening answer becomes
   `[PAUL: answer needed]`.
+- Screening questions: answer each in its first sentence, under 40 words, in the client's wording. If the
+  post plants a keyword, it is the whole first line.
+- Never put an email, Calendly link or any off-platform contact in a bid, a message or a file before a
+  contract is active. It breaks Upwork's terms and risks the account.
+- Speed matters on fresh posts: bid in the first hours while the post has under 15 proposals. A slow
+  perfect letter loses to a decent early one.
+- The proposal explains only part of the reply (the playbook's third-party sample says about 16%); the
+  profile, fit and timing carry the rest. Do not polish a letter for a job that failed a filter.
+- Log every bid with its variant (which opener, which proof, which length) so the weekly review can compare.
 - No boost unless fit ≥ 85; state the extra Connects.
 - Packet front matter: `job_url, checked_at, scam, chance, fit, bid{type,proposed,floor}, connects,
   status`. Body: why, cover letter, answers, risks.
@@ -105,6 +117,13 @@ a line that passes stays. Then review, fill the edit page, and `handOff("check, 
   then `handOff("<title> | <bid> | <n> Connects | check and Submit")`. Write Paul's decision to the
   packet and the ledger. If it is unclear whether it was sent, check the proposal list before
   anything else.
+
+## After a win
+
+Within 24 hours send a written recap: scope, milestones, acceptance criteria, how often we report. Ask for
+the review at delivery. Turn every finished contract into one case line (problem, what we did, result, a
+quote if the client agrees) and one portfolio item, so the next bid has a proof link. Never share a login
+to write bids: use the agency's business-manager role.
 
 ## Learn (weekly)
 
