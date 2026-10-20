@@ -82,7 +82,7 @@ Everything above that carries a percentage is a third-party figure. Our own reco
 
 ## Ready bids (Paul, 2026-10-20)
 
-Four filled-in letters built from our live profile facts. Replace every [bracket] from the post, delete any line you cannot fill, run `humanizer`, then press Submit yourself. Every figure has a canon row or a live Upwork page behind it: $750 and $2,400 are Catalog tiers, 5 days and the 45-minute call are the live listing, 5 s to 0.5 s is Crosslake, 8+ years and 4.8/5 from 9 reviews are in the canon. $65 an hour is the campaign anchor (floor $55). Elital is worded as Paul set it for Upwork: first built on Next.js and Supabase.
+Four filled-in letters built from our live profile facts. Replace every [bracket] from the post, delete any line you cannot fill, run `humanizer`, then press Submit yourself. Every figure has a canon row or a live Upwork page behind it: the $750 audit figure is the Catalog tier (an overview number, not a promise), 5 days and the 45-minute call are the live listing, 5 s to 0.5 s is Crosslake, 8+ years and 4.8/5 from 9 reviews are in the canon. Billing is time and material at $65 an hour (campaign anchor, floor $55); every figure is an estimate and moves with the developer's rate. Elital is worded as Paul set it for Upwork: first built on Next.js and Supabase.
 
 Pick by job: A for audit or review posts; B for build posts with a spec; C when the post names an AI tool; D when the post wants a developer or a team. Skip the job if more than 20 proposals are in, or the filters fail.
 
@@ -93,7 +93,7 @@ Pick by job: A for audit or review posts; B for build posts with a spec; C when 
 
 You wrote "[their exact phrase]". In apps built fast on Next.js and Supabase, that usually points to row-level security rules that look right and leak between tenants, or a Stripe webhook that fails without telling anyone.
 
-I audit exactly this: auth and tenant isolation, secrets, payments and webhooks, data and slow queries, deploy and rollback, tests and CI. You get a written report in 5 days with a cost for each finding, then a 45-minute call. Fixed price, $750 for a running app. If it is in good shape, the report says so and you stop there. I review every finding myself; an engineer from our team writes any fixes, as pull requests in your repo.
+I audit exactly this: auth and tenant isolation, secrets, payments and webhooks, data and slow queries, deploy and rollback, tests and CI. You get a written report in 5 days with a cost for each finding, then a 45-minute call. Billed hourly at $65. For a running app the estimate is about $750, and I confirm the number after a first look at the app. If it is in good shape, the report says so and you stop there. I review every finding myself; an engineer from our team writes any fixes, as pull requests in your repo.
 
 Proof: [Catalog listing link]. Our own product, elital, was first built on Next.js and Supabase.
 
@@ -109,7 +109,7 @@ You wrote "[their phrase about access control, isolation or scale]". In an MVP l
 
 The engineer for this job writes and tests those policies first, then builds the screens on top of them. We confirm the engineer and the start date with you before you commit. I review the work and answer to you for it. Our own product, elital, was first built on Next.js and Supabase. On a legacy Rails and React product for Crosslake, average request time went from 5 s to 0.5 s. Profile: https://www.upwork.com/freelancers/pftg
 
-Proposal: a paid first phase of [1 to 2 days] on [the riskiest slice], then a fixed price for the rest. Rate $65 an hour, or fixed once we have read the spec.
+Proposal: a paid first phase of [1 to 2 days] on [the riskiest slice], then an estimate for the rest once we have read the spec. Billed hourly at $65.
 
 [One question, for example: which two roles must never see each other's rows?]
 ```
@@ -121,7 +121,7 @@ Proposal: a paid first phase of [1 to 2 days] on [the riskiest slice], then a fi
 
 You wrote "[their exact phrase]". Apps assembled with [their tool] usually run fine in a demo and fail on the first real load: secrets in the browser bundle, no tests, deploys nobody can roll back.
 
-Start with the paid audit: a written report in 5 days, each area rated red, yellow or green, with a cost for each finding. Fixes come as reviewable pull requests in your repo, only for what fails, and only after you have read the report. Hardening, tests and CI follow if you want them. $750 for the audit, or $2,400 with the first fixes included (10 days).
+Start with the paid audit: a written report in 5 days, each area rated red, yellow or green, with a cost for each finding. Fixes come as reviewable pull requests in your repo, only for what fails, and only after you have read the report. Hardening, tests and CI follow if you want them. Billed hourly at $65. The audit is typically about $750; I estimate the first fixes after you have read the report.
 
 I review every change myself; an engineer from our team writes the code. Rated 4.8/5 on Clutch from 9 verified reviews. Profile: https://www.upwork.com/freelancers/pftg
 
@@ -137,7 +137,7 @@ You wrote "[their exact phrase]". [One sentence naming the risk they did not men
 
 I can put a senior full-stack engineer on this who manages their own work and reports progress as it happens. Developers on our team average 8+ years of experience. Before you commit we confirm the engineer, one project they shipped on your stack, and the start date. Our own product, elital, was first built on Next.js and Supabase. I review the work and answer to you for it.
 
-Rate $65 an hour, [X] hours a week, from [date]. We start with a two-week trial and a weekly review.
+Rate $65 an hour, [X] hours a week, from [date]. We start with a two-week trial, you can stop at any point, and we review weekly.
 
 [One technical question about the stack or the first task.]
 ```
