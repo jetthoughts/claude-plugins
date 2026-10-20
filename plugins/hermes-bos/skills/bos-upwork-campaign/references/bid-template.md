@@ -79,3 +79,65 @@ Source: `knowledge/research/2026-10-18-upwork-bidding-playbook.md` (third-party,
 | After the win: recap in 24 hours, ask for the review, one case per contract | Added to the skill | Compounds proof. |
 
 Everything above that carries a percentage is a third-party figure. Our own record is zero replies in 100 bids earlier this year, so the 30-day test decides which variant stays.
+
+## Ready bids (Paul, 2026-10-20)
+
+Four filled-in letters built from our live profile facts. Replace every [bracket] from the post, delete any line you cannot fill, run `humanizer`, then press Submit yourself. Every figure has a canon row or a live Upwork page behind it: $750 and $2,400 are Catalog tiers, 5 days and the 45-minute call are the live listing, 5 s to 0.5 s is Crosslake, 8+ years and 4.8/5 from 9 reviews are in the canon. $65 an hour is the campaign anchor (floor $55). Elital is worded as Paul set it for Upwork: first built on Next.js and Supabase.
+
+Pick by job: A for audit or review posts; B for build posts with a spec; C when the post names an AI tool; D when the post wants a developer or a team. Skip the job if more than 20 proposals are in, or the filters fail.
+
+### A. Audit of a running Next.js, Supabase or AI-built app (fixed price) (127 words before brackets are filled)
+
+```
+[Line 1 only if the post asks for a keyword or phrase: that phrase, alone.]
+
+You wrote "[their exact phrase]". In apps built fast on Next.js and Supabase, that usually points to row-level security rules that look right and leak between tenants, or a Stripe webhook that fails without telling anyone.
+
+I audit exactly this: auth and tenant isolation, secrets, payments and webhooks, data and slow queries, deploy and rollback, tests and CI. You get a written report in 5 days with a cost for each finding, then a 45-minute call. Fixed price, $750 for a running app. If it is in good shape, the report says so and you stop there. I review every finding myself; an engineer from our team writes any fixes, as pull requests in your repo.
+
+Proof: [Catalog listing link]. Our own product, elital, was first built on Next.js and Supabase.
+
+[One question only someone who read the post would ask, for example: which tables hold data from more than one customer?]
+```
+
+### B. Build an MVP on Next.js and Supabase (fixed scope, milestones) (134 words before brackets are filled)
+
+```
+[Line 1 only if the post asks for a keyword or phrase: that phrase, alone.]
+
+You wrote "[their phrase about access control, isolation or scale]". In an MVP like this the risky part is rarely the screens. It is the policy that decides who can read which row once the second kind of user arrives.
+
+The engineer for this job writes and tests those policies first, then builds the screens on top of them. We confirm the engineer and the start date with you before you commit. I review the work and answer to you for it. Our own product, elital, was first built on Next.js and Supabase. On a legacy Rails and React product for Crosslake, average request time went from 5 s to 0.5 s. Profile: https://www.upwork.com/freelancers/pftg
+
+Proposal: a paid first phase of [1 to 2 days] on [the riskiest slice], then a fixed price for the rest. Rate $65 an hour, or fixed once we have read the spec.
+
+[One question, for example: which two roles must never see each other's rows?]
+```
+
+### C. Rescue an app built with Lovable, Bolt, Replit, Cursor or v0 (121 words before brackets are filled)
+
+```
+[Line 1 only if the post asks for a keyword or phrase: that phrase, alone.]
+
+You wrote "[their exact phrase]". Apps assembled with [their tool] usually run fine in a demo and fail on the first real load: secrets in the browser bundle, no tests, deploys nobody can roll back.
+
+Start with the paid audit: a written report in 5 days, each area rated red, yellow or green, with a cost for each finding. Fixes come as reviewable pull requests in your repo, only for what fails, and only after you have read the report. Hardening, tests and CI follow if you want them. $750 for the audit, or $2,400 with the first fixes included (10 days).
+
+I review every change myself; an engineer from our team writes the code. Rated 4.8/5 on Clutch from 9 verified reviews. Profile: https://www.upwork.com/freelancers/pftg
+
+[One question about their app, for example: where do the API keys live today?]
+```
+
+### D. Embedded senior developer (hourly, outstaffing) (90 words before brackets are filled)
+
+```
+[Line 1 only if the post asks for a keyword or phrase: that phrase, alone.]
+
+You wrote "[their exact phrase]". [One sentence naming the risk they did not mention, for example: a second developer joining a codebase without tests slows the first one for weeks.]
+
+I can put a senior full-stack engineer on this who manages their own work and reports progress as it happens. Developers on our team average 8+ years of experience. Before you commit we confirm the engineer, one project they shipped on your stack, and the start date. Our own product, elital, was first built on Next.js and Supabase. I review the work and answer to you for it.
+
+Rate $65 an hour, [X] hours a week, from [date]. We start with a two-week trial and a weekly review.
+
+[One technical question about the stack or the first task.]
+```
