@@ -60,9 +60,9 @@
       "plugins/harness-setup/tests/test_harness.py (glob: **/test_*.py)",
       "plugins/harness-setup/tests/test_independent_regressions.py (glob: **/test_*.py)",
       "plugins/harness-setup/tests/test_plugin_contract.py (glob: **/test_*.py)",
-      "plugins/j-research/skills/j-research-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
-      "plugins/j-research/skills/j-research-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
-      "plugins/j-research/skills/j-research-inbox/tests/test_normalize.py (glob: **/test_*.py)"
+      "plugins/j-research/skills/j-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
+      "plugins/j-research/skills/j-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
+      "plugins/j-research/skills/j-inbox/tests/test_normalize.py (glob: **/test_*.py)"
     ],
     "parse_errors": 0,
     "heuristic_insights": 22,

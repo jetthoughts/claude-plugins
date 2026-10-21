@@ -68,7 +68,7 @@
       "mod_time": "2026-08-31T19:18:42Z"
     },
     {
-      "path": "plugins/j-research/skills/j-research-inbox/SKILL.md",
+      "path": "plugins/j-research/skills/j-inbox/SKILL.md",
       "hash": "b2f64fa46c2e9530da02aac11eb807a939216b4c11de922bb7cf0586d4aa5f1e",
       "mod_time": "2026-09-02T22:26:04Z"
     },
@@ -113,7 +113,7 @@
       "mod_time": "2026-09-02T20:46:20Z"
     },
     {
-      "path": "plugins/j-research/skills/j-research-inbox/scripts/normalize.py",
+      "path": "plugins/j-research/skills/j-inbox/scripts/normalize.py",
       "hash": "eb7198650968f509c0b61a3e7b0ed63bfe629e3ac7877e120f0b8585df07ce36",
       "mod_time": "2026-09-02T22:46:15Z"
     },
@@ -763,7 +763,7 @@
       "mod_time": "2026-09-02T19:52:17Z"
     },
     {
-      "path": "plugins/j-research/skills/j-research-triage/SKILL.md",
+      "path": "plugins/j-research/skills/j-triage/SKILL.md",
       "hash": "0a5ca8fa5c8ab422aab70aadd800bf67ca191e5275bff88a82398d1090f004d2",
       "mod_time": "2026-09-03T00:59:42Z"
     },
@@ -961,9 +961,9 @@
     "plugins/harness-setup/tests/test_harness.py (glob: **/test_*.py)",
     "plugins/harness-setup/tests/test_independent_regressions.py (glob: **/test_*.py)",
     "plugins/harness-setup/tests/test_plugin_contract.py (glob: **/test_*.py)",
-    "plugins/j-research/skills/j-research-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
-    "plugins/j-research/skills/j-research-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
-    "plugins/j-research/skills/j-research-inbox/tests/test_normalize.py (glob: **/test_*.py)"
+    "plugins/j-research/skills/j-inbox/scripts/__pycache__/ (glob: **/__pycache__/**)",
+    "plugins/j-research/skills/j-inbox/tests/__pycache__/ (glob: **/__pycache__/**)",
+    "plugins/j-research/skills/j-inbox/tests/test_normalize.py (glob: **/test_*.py)"
   ],
   "ignore_glob_hash": "sha256:7523cc6397a498e151125a682d28fbf6df20c6f51f6dfaf18fd8f5239a20d2d8",
   "heuristic_insights": 22,

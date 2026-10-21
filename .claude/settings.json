@@ -1,0 +1,58 @@
+{
+  "enabledPlugins": {},
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const r=process.env.CLAUDE_PROJECT_DIR+'/.claude/hooks/ecc-vendored';process.env.CLAUDE_PLUGIN_ROOT=r;process.env.ECC_HOOK_PROFILE='strict';const s=r+'/scripts/hooks/plugin-hook-bootstrap.js';process.argv.splice(1,0,s);require(s)\" node scripts/hooks/pre-bash-dispatcher.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const r=process.env.CLAUDE_PROJECT_DIR+'/.claude/hooks/ecc-vendored';process.env.CLAUDE_PLUGIN_ROOT=r;process.env.ECC_HOOK_PROFILE='strict';const s=r+'/scripts/hooks/plugin-hook-bootstrap.js';process.argv.splice(1,0,s);require(s)\" node scripts/hooks/run-with-flags.js pre:write:doc-file-warning scripts/hooks/doc-file-warning.js standard,strict"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const r=process.env.CLAUDE_PROJECT_DIR+'/.claude/hooks/ecc-vendored';process.env.CLAUDE_PLUGIN_ROOT=r;process.env.ECC_HOOK_PROFILE='strict';const s=r+'/scripts/hooks/plugin-hook-bootstrap.js';process.argv.splice(1,0,s);require(s)\" node scripts/hooks/run-with-flags.js post:skill:track scripts/hooks/skill-run-tracker.js standard,strict"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const r=process.env.CLAUDE_PROJECT_DIR+'/.claude/hooks/ecc-vendored';process.env.CLAUDE_PLUGIN_ROOT=r;process.env.ECC_HOOK_PROFILE='strict';const s=r+'/scripts/hooks/plugin-hook-bootstrap.js';process.argv.splice(1,0,s);require(s)\" node scripts/hooks/session-start-bootstrap.js"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"const r=process.env.CLAUDE_PROJECT_DIR+'/.claude/hooks/ecc-vendored';process.env.CLAUDE_PLUGIN_ROOT=r;process.env.ECC_HOOK_PROFILE='strict';const s=r+'/scripts/hooks/lifecycle-hook-bootstrap.js';if(require('fs').existsSync(s)){process.argv.splice(1,0,s);require(s).cli()}else{process.stderr.write('[Hook] lifecycle bootstrap unavailable; skipping hook'+String.fromCharCode(10))}\" stop:session-end scripts/hooks/session-end.js minimal,standard,strict 30000"
+          }
+        ]
+      }
+    ]
+  }
+}

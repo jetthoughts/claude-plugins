@@ -36,22 +36,11 @@ curator and periodic auto-review are all off. On such a correction:
    a file instead (tested 2026-09-24). Its
    changes are staged, not applied (`skills.write_approval` and `memory.write_approval` are on);
    Paul or the overseer approves them.
-4. Countermeasures are proposals. Nothing changes config, a SOUL or a skill until approved.
+4. Countermeasures are applied, committed, then reviewed (`~/.hermes/governance/escalation-policy.md`).
 
-**Reviewer verdict contract.** A reviewer MUST pass `kanban_complete.result` as a distinct top-level parameter, not bury it in prose and not nest it inside `metadata`. `summary` and `metadata` flow into `task_runs`; only `result` writes to `tasks.result` (see `kanban_db.complete_task` line 2716, the evidence-write UPDATE — `params = (result, now, task_id)`). A review that ships only a substantive `summary` ("Five numbered checks quoted") with no `result` parameter leaves `tasks.result=NULL` and trips the runtime phantom-detector at completion epoch, even when the rubric is genuine. Likewise, a `kanban_complete(metadata={"result": "PASS (5/5)", ...})` call persists NULL because `metadata` does not flow into `tasks.result`. Verdict format: a single closing call of the shape `kanban_complete(task_id=<this>, summary=<1-3 sentences>, result="PASS (5/5)")` on a clean gate, or `kanban_complete(..., result="FAIL — <one-line reason>")` on a rework. The `result` argument is a positional-independent **string parameter** to the tool, not a JSON key inside another field. This is the same defect that failed three `t_f9f21c35` lineage gates, recurred on `t_2f04b66f` and `t_6afc32f4` (2026-10-10/11), and is the reason the closing-review contract was patched.
-
-If you are unsure what "top-level parameter" means in this context, the full required tool call on a rubric-bearing closing review is:
-
-```python
-kanban_complete(
-    task_id="t_<this card>",
-    summary="Pass 1: ...",
-    result="PASS (5/5)",          # <-- this exact named argument, not inside metadata
-    metadata={"checks": [...], "evidence_quotes": [...]},
-)
-```
-
-Omitting `result=` and writing `"result": "PASS (5/5)"` inside `metadata` is the failure mode — the runtime will NOT promote `metadata.result` into `tasks.result`; it binds the literal `result` parameter to the SQL UPDATE.
+**Reviewer verdict.** Put the verdict as the first line of `summary` and, when you can, also as
+`result`: `PASS (n/n)` or `FAIL — <one-line reason>`. A missing `result` field is not a defect and never
+an incident.
 
 ## Self-detected incident loop (Paul, 2026-09-25): the team finds and fixes its own failures
 
@@ -59,6 +48,11 @@ Paul, 2026-09-25 16:55: "they should be able to realise they are failing; they s
 incident management and find a solution through group discussions … or even LDJ; they should
 schedule and overview experiment/solution and revise if needed." Nobody waits for Paul to notice.
 A no-match or a repeated failure is not escalated as it is: it enters this loop.
+
+**Meta-work cap.** At most ONE open incident per goal. Never open an incident about an incident,
+a review card, a closing gate, a verdict format or a `result` field: those are process noise, fixed by
+a one-line comment or by archiving the card. Do not add new verifier rules to a review skill because a
+review was imperfect; only a failed real-world outcome (the user's goal unmet) justifies a skill change.
 
 **1. Detect (any seat, and the stuck-guardian sweep as the safety net).** Open the loop when:
 - T1: the same goal has failed on 2+ attempts (retries of one card, or sibling redo cards with the same goal; gave_up, crashed, protocol_violation, block_loop_detected, a worker stopping on its own failure rule, or an overseer/reviewer FAIL);
@@ -79,8 +73,6 @@ no swarm or experiment is required. Only when the fix came out of the swarm disc
 A closing summary that redefines the goal ("deletion phase done" with 0 deleted) is a FAIL: the reviewer opens a new incident (T2, narrowed goal) and links it. The orchestrator never judges its own incident closed.
 **Overseer emergency stopgap (DEC-2026092600 rule 1).** When the board cannot dispatch workers, the overseer may apply a process-scoped repair outside the board (never a durable file edit), comments it on the incident the moment it is applied, and the incident record carries `approval: post-hoc-stopgap` until the durable owner action lands. Reviews that ran under the stopgap still count; worker runs completing under it are evidence for the durable fix.
 Every reviewer verdict (closing gate or experiment review) quotes a result for EACH numbered check in its card body; a verdict that covers fewer checks than the body lists is a FAIL. A review that FAILS creates the work, not a comment: one fix card for the seat that did the work (the single follow-up, exact proof command) and one new review card with `--parent <fix card>`. A comment on a DONE card is never read again (t_bba7cf7b → t_242e65df, 2026-09-25), and the gate downstream is released by `done`, not by PASS, so it must read the upstream verdicts itself.
-
-Reviewers carrying a rubric MUST pass `result=PASS (5/5)` (or `FAIL — <reason>`) explicitly to `kanban_complete` as a **top-level** parameter. `summary` and `metadata` flow to `task_runs`; only the top-level `result` argument writes to `tasks.result`. A bundle-summary phrasing (`"Five numbered checks quoted"`) without a separate top-level `result` line leaves `tasks.result=NULL` and trips the runtime phantom-detector at completion epoch. Likewise, embedding `"result": "PASS (5/5)"` inside the `metadata` dict does NOT flow into `tasks.result` — only the parameter does. The single required closing call shape is `kanban_complete(task_id=<this>, summary=<1-3 sentences>, result="PASS (n/n)", metadata=<dict>)`.
 
 **2. Investigate and discuss: agent-LDJ as a kanban swarm** — the method, rationale and the exact `hermes kanban swarm` command: see `references/self-detected-loop-swarm.md`.
 - Each worker writes BLIND (never reads the other workers' notes): ≤ 3 problems and ≤ 3 fixes, each with an evidence path, and a 1–5 impact and 1–5 effort score. Every worker prompt carries the line: "Generate causes and fixes substantially different from the obvious one."

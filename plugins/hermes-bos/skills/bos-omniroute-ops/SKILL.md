@@ -37,7 +37,7 @@ Use when: a Hermes task fails with a model/routing error (503, ALL_TARGETS_SKIPP
 2. **Never route to paid models without owner approval.** Paid lanes (OpenRouter paid, Codex/Claude subscriptions marked inactive, subs-* combos) are flagged, not enabled. Prefer free lanes and local models (LM Studio).
 3. **Never print secrets.** Keys come from `~/.secrets` / `~/.hermes/.env` via env inheritance only; quote key names, never values.
 4. **Do not touch the `hermes` API-key allowlist** (`api_keys.name='hermes'.allowed_combos = ["combo/*"]`, covering the three live combos `hermes-balanced`, `hermes-economy`, `hermes-premium`, DEC-2026092302) without owner sign-off — narrowing it silently breaks Paperclip seats and Hermes aux slots. Use `sqlite3 "file:/Users/pftg/.omniroute/storage.sqlite?mode=ro" "SELECT allowed_combos FROM api_keys WHERE name='hermes';"` to verify current allowlist before quoting it.
-5. Findings that block Hermes work become a kanban hotfix task (`--triage`) assigned to quality-guardian, following the `bos-incident-response` record format.
+5. Findings that block Hermes work become a kanban hotfix task (plain create, not `--triage`: auto-decompose is off) assigned to quality-guardian, following the `bos-incident-response` record format.
 
 ## Review Procedure
 
@@ -140,6 +140,6 @@ and record an INC file per `bos-incident-response` when the finding caused (or i
 
 - Review file exists under `business-os/operations/omniroute-reviews/` and is readable in PKM.
 - Every FAIL has evidence (query output quoted) and a concrete owner action.
-- Critical/high findings have a corresponding `--triage` kanban task.
+- Critical/high findings have a corresponding kanban task assigned to quality-guardian.
 - Research-lane findings state service health first, wiring second, agent behavior last.
 - No secret value appears anywhere in the report or the kanban body.

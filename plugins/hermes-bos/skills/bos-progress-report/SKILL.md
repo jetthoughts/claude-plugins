@@ -28,6 +28,15 @@ Emit a Shape Up-style progress report per initiative into `~/dev/pkm/business-os
 - Read access to `~/dev/pkm/business-os/evaluations/*.md` (verdict/memo files).
 - Write access to `~/dev/pkm/business-os/operations/reviews/`.
 
+## Sister artifact: the comprehensive inventory
+
+`bos-progress-report` emits a **Shape Up hill chart** that the owner reads as today's state per initiative (scope, blockers, next action). It is **not** the same thing as a comprehensive **board-state inventory**, which is the cross-source reconciliation Paul asks for when he wants "where are we, what's next" visibility — the kanban is the dispatch layer, the inventory is the record layer. The inventory lives at `~/dev/pkm/business-os/operations/inventory-YYYY-MM-DD.md` and rolls up: kanban.db (status counters + blocked-by-kind + recurrences), DEC files (status: awaiting-owner), INC count, eval count, governance notes, work-items, constitution files, the progress board, the stuck-sweeps log. Two files, one judgment rule:
+
+- `progress-board.md` = per-initiative hill chart, what is on each hill and what unblocks it.
+- `inventory-YYYY-MM-DD.md` = strategic-thread rollup, what crosses what, what is held owner-yes, what is held recipe, what crossed since the last pass.
+
+When a pass emits an inventory, link it from `progress-board.md`'s header (sibling link to the per-pass file). When a pass is asked for and only the inventory exists, run the inventory pass first (cheap, no parent/child grouping) and reference the Shape Up progress in the inventory's provenance section.
+
 ## Shape Up report contract (per initiative)
 
 Each initiative section carries:
@@ -45,6 +54,8 @@ Each initiative section carries:
 ## Data sources (local, read-only)
 
 1. **kanban DB** — `~/.hermes/kanban.db`. Group tasks by initiative family via `task_links` (parent_id → children). Fall back to title-prefix matching when a parent is absent. Never read from memory for task state — the DB is the source of truth.
+   - **Reconcile the status counters before publishing** — `done + archived + todo + blocked = total` MUST hold. A drift of 1+ means a status changed between the count and the read, a card was created without status, or the DB is mid-write; do not publish a pass that fails this check. The same rule applies to the inventory's cross-source totals (kanban + DEC + INC + eval + work-items + governance notes — counts must reconcile to what the directory actually lists; open a "Known double-counts" caveat when an evaluation references an incident, so future passes do not chase the drift).
+   - **Read the `block_kind` and `block_recurrences` columns** — they carry the structured reason a card is `blocked`. A card with `block_kind=needs_input` and `block_recurrences>0` is a spinning loop that needs the operator, not the worker. Report those as a separate count under "Blockers / unknowns"; they are not the same as a healthy `blocked`.
 2. **INC records** — `~/dev/pkm/business-os/operations/incidents/*.md`. Read the files; carry id, title, status, verdict, date.
 3. **Evaluations** — `~/dev/pkm/business-os/evaluations/*.md`. Read frontmatter (status, verdict) and the first heading; link the file.
 

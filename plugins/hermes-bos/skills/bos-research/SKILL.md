@@ -48,11 +48,11 @@ search does not.
 - Requesting work item or decision ID, if one exists
 - Depth hint or deadline, if given (never invent one)
 - Whether this is a quick lookup or a deep research pass
-- **Research mode declaration** (required): `full` (web + corpus) or `corpus-only` (PKM only) or `web-only` (skip corpus)
+- **Research mode**: `full` (web + corpus, the default) or `corpus-only` (PKM only) or `web-only` (skip corpus)
 
-## Research mode (the user picks, not the skill defaults)
+## Research mode
 
-The skill supports three modes. **The user/owner must declare the mode in the run input or the request itself.** The skill does not default to any one mode.
+The skill supports three modes. Use the mode the request names; when it names none, run `full` and say so in the deliverable. Never block to ask for a mode.
 
 | Mode | When | What runs |
 |---|---|---|
@@ -232,7 +232,8 @@ When a claim cites "the field's 2026 standard," this is the underlying evidence.
 - **One service only** — an evidence run whose search calls all went to one service, or that took built-in `web_search` as the second
 - **Single-source claim at high confidence** — T1 requires ≥2 independent sources
 - **Contradiction resolved by convenience** — lowering confidence while a material contradiction stands, not burying it
-- **Guess instead of unsupported** — recording a claim as fact when no source was found
+- **Surfaced contradiction ≠ verified contradiction** — when a research output lists a contradiction between two sources, record it AND read the source-of-truth file directly (YAML frontmatter for status claims, body section for narrative claims). Research-grade tooling sometimes reads derivative summaries (batch files, indices, prior session scratch) that lag the canonical artifact. A contradiction that survives a source read is a real contradiction; one that doesn't is a stale claim — lower confidence on the affected claims rather than "resolving" the contradiction by convenience.
+- **Guess instead of unsupported** — recording a claim as a fact when no source was found
 - **Matrix as decision** — the matrix informs; it does not decide
 - **Secrets in output** — no key material, credentials, or PII in the matrix
 

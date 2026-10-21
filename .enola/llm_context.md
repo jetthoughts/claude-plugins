@@ -10,7 +10,7 @@
 | `plugins/j-ideation/skills/j-designing-experiments/scripts` | python | 4 | 4 |
 | `plugins/j-ideation/skills/j-making-the-call/scripts` | python | 4 | 4 |
 | `plugins/j-ideation/skills/j-running-independent-research/scripts` | python | 2 | 2 |
-| `plugins/j-research/skills/j-research-inbox/scripts` | python | 18 | 18 |
+| `plugins/j-research/skills/j-inbox/scripts` | python | 18 | 18 |
 
 ## Extraction Quality
 
@@ -28,7 +28,7 @@ _No specific architecture pattern detected._
 - **main**: `plugins/j-ideation/skills/j-designing-experiments/scripts/score_portfolio.main` (plugins/j-ideation/skills/j-designing-experiments/scripts/score_portfolio.py)
 - **main**: `plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.main` (plugins/j-ideation/skills/j-making-the-call/scripts/validate_decision.py)
 - **main**: `plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.main` (plugins/j-ideation/skills/j-running-independent-research/scripts/validate_evidence.py)
-- **main**: `plugins/j-research/skills/j-research-inbox/scripts/normalize.main` (plugins/j-research/skills/j-research-inbox/scripts/normalize.py)
+- **main**: `plugins/j-research/skills/j-inbox/scripts/normalize.main` (plugins/j-research/skills/j-inbox/scripts/normalize.py)
 
 ## Dependency Rules
 

@@ -64,7 +64,40 @@ rework, or execution — only for judging.
    reference it from the work item's `status` (`verify` on pass input,
    `escalated` with a `why` line on fail input per the escalation policy).
 
-Defect format (each defect must be independently re-checkable):
+## Trigger-path verification (proposed mechanisms)
+
+Step 4 and 5 verify components; they do not verify that a proposed control
+actually *fires*. A sweep, backstop, or periodic guard is only as live as the
+thing that calls its entry point — and a component that exists on disk is not
+evidence that anything invokes it.
+
+When the artifact proposes a sweep, tick, or scheduled backstop, before scoring
+it, trace the trigger path:
+
+1. Find the entry point the control is wired into (e.g. `dispatch_once`,
+   `block_task`, a cron `jobs.json` entry).
+2. Ask who calls that entry point, and how often. Search the repo for callers;
+   do not assume the dispatcher self-ticks.
+3. Ask what happens in **steady state with no external action** — no claim, no
+   comment, no human command. If the control only runs when something else
+   runs, it is dormant in exactly the state it exists to cover.
+4. Check the scheduler layer separately: is there a cron job, a daemon, or a
+   heartbeat that fires the entry point on a schedule? A `jobs.json` that
+   returns `{"jobs": []}` means no scheduled trigger exists, however sound the
+   control looks in isolation.
+
+A control whose trigger path is dormant in steady state is a **blocker**, not a
+minor gap — it is a safety net with a hole in the middle of the floor it was
+hung under. Record it as a defect with the missing caller named, and require the
+wiring (a scheduler entry, or moving the call above the early-return that
+guards it) before the artifact passes.
+
+This applies to any time-bound or reactive control: aging sweeps, idle
+escalators, heartbeat checks, and the "someone will notice eventually" class
+of hand-waving. A control that fires only on another action is not a control;
+it is a conditional.
+
+## Defect format (each defect must be independently re-checkable):
 
 ```markdown
 - id: DEF-<NNN>

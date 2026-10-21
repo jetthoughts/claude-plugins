@@ -1175,48 +1175,48 @@
     ]
   },
   {
-    "title": "Large public surface: plugins/j-research/skills/j-research-inbox/scripts/normalize exports 18 of 18 symbols (100%)",
+    "title": "Large public surface: plugins/j-research/skills/j-inbox/scripts/normalize exports 18 of 18 symbols (100%)",
     "source": "exported-surface",
-    "description": "Module \"plugins/j-research/skills/j-research-inbox/scripts/normalize\" exports 18 of its 18 symbols (100%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
+    "description": "Module \"plugins/j-research/skills/j-inbox/scripts/normalize\" exports 18 of its 18 symbols (100%). A large, near-fully-exported module hides little of its implementation, so consumers can couple to internals and it is hard to change without breaking them. Worth a visibility review — though a deliberate library API may legitimately export most of its surface.",
     "confidence": 0.6,
     "evidence": [
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.build_note",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.build_note",
         "detail": "exported",
         "fact_id": "6c1accff7a6939db6b2272aa513612e7"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.default_vault",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.default_vault",
         "detail": "exported",
         "fact_id": "292460e73f2f87f7ff83e2807296c443"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.existing_hashes",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.existing_hashes",
         "detail": "exported",
         "fact_id": "dec6230fab543aa8f74078408d4078cc"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.existing_pplx_ids",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.existing_pplx_ids",
         "detail": "exported",
         "fact_id": "4364a1c8ea529bbd8ee7a3b61117184d"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.extract_h1",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.extract_h1",
         "detail": "exported",
         "fact_id": "217d1670d534bee1a4cf0cf015c25f87"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.humanize",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.humanize",
         "detail": "exported",
         "fact_id": "de2a1d021f7f920cd5d1872daccdc9f2"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.ingest",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.ingest",
         "detail": "exported",
         "fact_id": "6ef0b6becc4ab379d6c4633c84a56bb7"
       },
       {
-        "symbol": "plugins/j-research/skills/j-research-inbox/scripts/normalize.main",
+        "symbol": "plugins/j-research/skills/j-inbox/scripts/normalize.main",
         "detail": "exported",
         "fact_id": "21194c3c2d4626b456e5d43c37c6402b"
       }

@@ -258,9 +258,8 @@ The shape: a load-time structural check on `~/Library/LaunchAgents/*.plist`
 that rejects any plist whose body lacks an `EnvironmentVariables` block
 when the script invokes `hermes` or `~/.infra/bin/*`. Same shape for cron
 prompts: a cron-template reviewer rejects any prompt body lacking an
-evidence-step command. Lives in operator territory; goes to
-governance-auditor per R11 ("edits to SOUL.md, SKILL.md, config or code
-have no agent seat").
+evidence-step command. kanban-orchestrator applies it (apply, commit,
+quality-guardian review after; `~/.hermes/governance/escalation-policy.md`).
 
 ## Failure modes
 

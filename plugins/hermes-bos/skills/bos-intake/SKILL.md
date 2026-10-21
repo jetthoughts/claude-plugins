@@ -202,6 +202,12 @@ approval class, and the next approval required.
   during intake.
 - If a required constitution file is missing, record that as the first open
   question and set `risk_class: high` until governance is confirmed.
+- **Verify the playbook's named paths against the live tree.** The
+  `strategy/opportunity-flow.md` playbook describes the ideas-bank as a
+  "root note" without specifying the actual path. The canonical home is
+  `~/dev/pkm/Responsibilities/ideas-bank.md`, not `~/dev/pkm/ideas-bank.md`. Use
+  `find ~/dev/pkm -maxdepth 3 -name "ideas-bank*"` to confirm before writing or
+  referring to the file. The playbook is a rule, not a map.
 
 ## Verification
 
@@ -222,7 +228,9 @@ Every intake item references the opportunity flow doc
    registered the same day in `business-os/knowledge/research/INDEX.md` — one table line.
 2. `applies_to` holds forward wikilinks to initiative/project notes; never maintain
    reverse-link fields (Obsidian backlinks give the reverse view).
-3. Un-evaluated ideas go to root `ideas-bank.md`, not the kanban queue. Kanban triage is
-   only for evaluated, ICE-scored items (owner rule: nothing ad hoc).
+3. Un-evaluated ideas go to the canonical ideas bank at
+   `~/dev/pkm/Responsibilities/ideas-bank.md` (NOT at `~/dev/pkm/ideas-bank.md` —
+   that path does not exist), not the kanban queue. Kanban triage is only for
+   evaluated, ICE-scored items (owner rule: nothing ad hoc).
 4. If needed research for an intake item is missing, create a research task
    (assignee researcher, triage) — do not invent conclusions.

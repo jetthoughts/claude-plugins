@@ -58,6 +58,20 @@ With no operation named, pick by state, first match wins:
 
 Say which branch you took and why, in one line, before running it.
 
+## Before evaluating any LinkedIn JD
+
+LinkedIn is the **manual-discovery channel** for JDs — not a scannable board (its classic search is retired, AI search is not scriptable, and the search-results panel does not enumerate via browser scroll). When a LinkedIn JD reaches this skill, the workflow is:
+
+1. **Extract the JD URL** from the LinkedIn Job Alert email (`himalaya -a applications envelope list -m Inbox`) or from Paul pasting a `linkedin.com/jobs/view/<id>` link. Use ego-browser to read **one JD at a time** from the direct `/jobs/view/<id>` URL — the page renders the full JD in `main` text after a `waitForTimeout(4000)` on `domcontentloaded`.
+2. **Do not attempt to enumerate the LinkedIn search-results panel** (e.g. the `?keywords=…&geoId=…` page) by scrolling. The left rail is a virtualised React list that does not load DOM nodes on `mouse.wheel` from the script runner; repeated `page.evaluate` reads return only the first card. Treat any list of N search results longer than 2-3 as "extract the 3 from the email digest and stop."
+3. **Queue the URL into `career-ops/data/pipeline.md`** under `## Pending` in the inbox format the file documents (`- [ ] {url} | Company | Role | Location | posted: YYYY-MM-DD`). Do **not** evaluate the JD here — career-ops owns evaluation.
+4. **Run `career-ops` for the queue**, in this order: liveness sweep (`node check-liveness.mjs --file urls.txt --throttle 1500`) → pre-screen against `modes/_custom.md` deal-breakers → full A–G evaluation → `data/discard.log` for pre-screen rejects → tracker + report for survivors. The pre-screen rule in `modes/pipeline.md` is mandatory: an obvious-mismatch JD skips the LLM eval entirely and writes a one-line reason to `data/discard.log`.
+5. **Manager-of-managers guard.** Even at a sub-25-engineer org, auto-reject any JD that names an Engineering-Manager-of-EMs pattern: "Lead Engineering Managers", "manage a Director of Engineering", "engineering leadership bench beneath you", "matrix-manage multidisciplinary teams", "sparring partner for Product Owners / Business Owners / Tech Leadership Team". Paul must be the top of engineering. This catches seats that the size rule alone misses (mobile.de's Berlin role reads as 25-eng but reports into the Product/Tech Leadership bench).
+6. **Language-required check is a kill, even when the company passes every other filter.** Before writing Touch 1 (founder outbound) or accepting any JD into the evaluation queue, read the current job ad and search the page text for `Gute Deutsch Kenntnisse`, `Deutsch verhandlungssicher`, `German is a prerequisite`, `German C1`, or any equivalent. A bootstrapped profitable Berlin company that ticks every other box (Situation A from the strategy doc) is still a kill if the operating language is German. The 2024 archived ad is not enough — the **current** ad on arbeitnow / join.com / the company site is the source of truth, and language requirements change.
+7. **Apply never from the agent.** `j-jobseek`'s hard-stop "Never click a final submit or join button" applies; career-ops is read/evaluate/prepare only. The apply click is Paul's.
+
+This skill and `career-ops` are not redundant — j-jobseek owns the route (which operation is due, when to escalate, hand-offs to Paul) and career-ops owns the JD processing (liveness, scoring, tracker, reports). Update `data/pipeline.md` and the tracker; do not duplicate those writes elsewhere.
+
 ## Before writing anything outbound
 
 Load the vault note `research-berlin-target-seat` and check the framing against it. Three known-bad patterns are still live in existing artifacts and will be copied if you reuse them:
