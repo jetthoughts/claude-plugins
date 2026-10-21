@@ -20,7 +20,10 @@ Never write drafts into the site repo.
 Read in order before drafting:
 
 1. `docs/linkedin-post-pipeline.md` - voice rules, anti-AI patterns, AI scoring
-   rubric, frontmatter schema. THE primary reference; defer to it when this summary disagrees.
+   rubric, frontmatter schema. THE primary reference; defer to it when this summary
+   disagrees - with one exception: the first-line rule below (line 1 is always the flat
+   conviction, 2026-09-06 decision of record) overrides the doc's hook-rotation section
+   and its hook-rotation checklist item.
 2. `docs/linkedin-icp-validation-plan.md` - campaign plan, hypotheses being tested.
 3. `content-plan.md` - decision of record for shape and lanes.
 4. `jetthoughts.github.io/docs/90-99-content-strategy/strategy-analysis/90.10-icp-primary-website-target.md` - ICP-E pain language.
