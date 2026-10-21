@@ -1,0 +1,26 @@
+{
+  "skill_name": "blog-next",
+  "evals": [
+    {
+      "id": 0,
+      "name": "plain-next-post-request",
+      "prompt": "what should we write next on the blog?",
+      "expected_output": "A topic row, a rebuilt plan section, or a HOLD - each grounded in a live GSC/GA4 pull with the measurement traps applied. Must NOT draft a post. Must report the 2607 P0 gate state.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "user-names-own-topic",
+      "prompt": "let's do a post on Rails 8 background jobs - solid queue vs sidekiq, that feels like a gap. can you get it started?",
+      "expected_output": "Runs the premise audit ANYWAY rather than accepting the named topic. Should find solid-queue-vs-sidekiq-complete-comparison and rails-8-solid-queue-migration-guide already exist and report a dedup collision / RESCOPE, not start writing.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "rebuild-the-stale-plan",
+      "prompt": "our content plan is out of date and I don't trust the queue anymore. rebuild it from what the search data actually says.",
+      "expected_output": "Produces a rebuilt plan section where each candidate carries its live figure + pull window, which traps were run, a demand ceiling in clicks/day, dedup result, and a WRITE/UPGRADE/FLAG/DO-NOT-WRITE verdict. DO-NOT-WRITE rows recorded with their numbers.",
+      "files": []
+    }
+  ]
+}

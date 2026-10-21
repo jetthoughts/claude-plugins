@@ -1,0 +1,16 @@
+{
+  "name": "j-blog",
+  "description": "JetThoughts blog pipeline for jetthoughts.com: j-blog decides the next action, blog-next picks and gates the topic, blog-write drafts and ships the post. Run from the jetthoughts.github.io checkout.",
+  "version": "0.1.0",
+  "author": {
+    "name": "JetThoughts",
+    "url": "https://github.com/jetthoughts"
+  },
+  "homepage": "https://github.com/jetthoughts/claude-plugins",
+  "license": "MIT",
+  "keywords": [
+    "blog",
+    "content",
+    "jetthoughts"
+  ]
+}

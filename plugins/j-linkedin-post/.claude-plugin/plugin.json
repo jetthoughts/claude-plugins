@@ -1,7 +1,7 @@
 {
   "name": "j-linkedin-post",
-  "description": "Drafts LinkedIn posts in Paul Keen's voice for the JetThoughts ICP-E validation campaign, with hypothesis-tracking conventions. Scoped to jetthoughts.github.io, not the pkm vault.",
-  "version": "0.1.0",
+  "description": "Drafts LinkedIn posts in Paul Keen's voice into the private jetthoughts/linkedin-posts repo (drafts, metrics ledger, review board), with the editorial feedback loop and campaign conventions.",
+  "version": "0.2.0",
   "author": {
     "name": "JetThoughts",
     "url": "https://github.com/jetthoughts"
