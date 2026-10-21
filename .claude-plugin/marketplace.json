@@ -71,7 +71,12 @@
     {
       "name": "j-linkedin-post",
       "source": "./plugins/j-linkedin-post",
-      "description": "Draft LinkedIn posts in Paul Keen's voice from voice memos or ideas, run the editorial feedback loop, and learn from every correction"
+      "description": "Draft LinkedIn posts in Paul Keen's voice from voice memos or ideas into the jetthoughts/linkedin-posts repo, run the editorial feedback loop, and learn from every correction"
+    },
+    {
+      "name": "j-blog",
+      "source": "./plugins/j-blog",
+      "description": "jetthoughts.com blog pipeline: j-blog picks the next action (repair, upgrade, write, restock), blog-next audits and gates topics, blog-write drafts and ships posts. Run from the jetthoughts.github.io checkout."
     },
     {
       "name": "hermes-bos",

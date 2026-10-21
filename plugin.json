@@ -7,6 +7,7 @@
   "plugins": [
     "hermes-bos",
     "hermes-ops",
+    "j-blog",
     "j-business",
     "j-cognee",
     "j-deliberate",

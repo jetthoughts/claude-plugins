@@ -22,6 +22,7 @@ The entry point for *anything a stranger will read*. It exists because published
 | Writing a full piece end to end | `content-production` — brief, draft, SEO, readability, internal links · `blog-post` for structure · `blog-writing-guide` |
 | Marketing copy that has to convert | `copywriting-core` · `marketing-skills:copywriting` · `positioning` when the claim itself is unsettled |
 | A LinkedIn post in Paul's voice | `j-linkedin-post` — the house voice rules; do not hand-roll this |
+| A jetthoughts.com blog post (pick, write, upgrade, repair) | `j-blog:j-blog` — run from the jetthoughts.github.io checkout |
 | Engaging before contacting anyone | `j-linkedin-engage` — **not installed on this machine**, so do this by hand; never DM a target first |
 | Social beyond LinkedIn, or what is trending | `social-content` · `marketing-skills:social-media-manager` · `content-trend-researcher` · `social-media-trends-research` |
 | Being found — search and AI answers | `seo-audit` · `ai-seo` · `marketing-skills:schema-markup` · `geo-content-publisher` |
