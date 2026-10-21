@@ -65,9 +65,9 @@ rubric-beige neutrality. Deliver the point, not the setup. State convictions fla
 - **One concrete failure mechanism in plain words** - the sentence a reader can quote
   and argue with ("the AI doesn't edit your code, it writes new code, so the bug comes
   back from the copies").
-- **~130 words, text only - no designed exhibit** (every imaged post stayed under 350
-  impressions, both text-only posts cleared 9,000), no hashtags, one real peer question
-  to close.
+- **~130 words (short applied-AI insights: 100-150), text only - no designed exhibit**
+  (every imaged post stayed under 350 impressions, both text-only posts cleared 9,000),
+  no hashtags, one real peer question to close.
 - LinkedIn's job is referrals and credibility with CTOs, heads of engineering and
   agencies who see broken founder apps. Founder discovery happens in comments on
   founders' posts, in calls and in DMs, not in Paul's broadcast.
@@ -78,18 +78,16 @@ Skeleton (reference writers: John Cutler, Luca Rossi):
 Beat 1 (1 line):    The conviction, flat - no staged encounter, no credential
 Beat 2 (1-2 lines): Restate plainly, or show why the opposite looks reasonable
 Beat 3 (1-2 lines): The failure mechanism, in plain words
-Beat 4 (2-4 lines): The tactic, delivered in full - the actual move the reader can make
+Beat 4 (3-5 lines): The tactic, delivered in full - the actual move the reader can make
 Beat 5 (1 line):    Why it matters
 Close (1 line):     Real peer question tied to the topic
 ```
 
-Plain short sentences, one idea per paragraph. Connectors ("so", "and", "honestly") at
-seams keep it sounding spoken, but never as beat-marking.
+Plain short sentences, one idea per paragraph; paragraph breaks are fine. Connectors
+("so", "and", "honestly") at seams keep it sounding spoken, but never as beat-marking.
 
-## Hook rotation
-
-Never open with the same archetype twice in a row. Check the last 2-3 drafts first.
-Archetypes: dialogue-led, question-led, observation-led, stat-led, conflict-led, history-led.
+Line 1 is always the flat conviction - no dialogue-, question- or stat-led openers.
+Variety comes from the topic and the mechanism, not the opener archetype.
 
 ## Sentence-level tests (every line)
 
@@ -98,6 +96,8 @@ Archetypes: dialogue-led, question-led, observation-led, stat-led, conflict-led,
 3. Practitioner: specific recent incident instead of "founders often...".
 4. Conviction: sounds like a flat, long-held belief, not a hedged marketing draft.
 5. No-pitch: the close must not read as the start of a sales conversation.
+6. Pattern: name the pattern via observation ("this shows up in almost every team I
+   look at"), not via slogan.
 
 ## Save location (three lanes)
 
@@ -115,7 +115,7 @@ required fields: `status` (draft/scheduled/posted - the board's source of truth)
 `first_comment` (staged verbatim; verify it actually ships - one sat unposted for 17
 days), `utm_campaign`/`utm_content`.
 
-## Self-check before handback (BLOCKING)
+## Self-check before saving (BLOCKING)
 
 1. Score the draft against the pipeline's AI rubric: +2 for each "high" pattern
    (parallelism, credential stamp, slogany flip, marketing CTA, em dash,
@@ -127,10 +127,6 @@ days), `utm_campaign`/`utm_content`.
 3. Check every Learned rule below.
 4. `reflexion-reflect` BEFORE first handback; `reflexion-critique` after any pushback
    on the same draft.
-5. Handback ends with the board preview link, served from the linkedin-posts repo
-   (`cd /Users/pftg/dev/linkedin-posts && PORT=$((20000 + RANDOM % 20000)) bin/dev`, never 1313):
-   `http://localhost:<session port>/linkedin/<lane>/<slug>/` - always the link, never
-   the post body pasted instead.
 
 ## Workflow
 
@@ -139,14 +135,18 @@ days), `utm_campaign`/`utm_content`.
 2. Draft against the shape, using only real specifics from the memo or the vault.
 3. Self-check (above). Fix violations first.
 4. Save to the right lane in the linkedin-posts repo via a branch + PR.
-5. Editorial loop, on every correction from Paul:
+5. Handback = the board preview link, never the post body pasted instead. Board runs
+   from the linkedin-posts repo (`cd /Users/pftg/dev/linkedin-posts &&
+   PORT=$((20000 + RANDOM % 20000)) bin/dev`, never 1313):
+   `http://localhost:<session port>/linkedin/<lane>/<slug>/`.
+6. Editorial loop, on every correction from Paul:
    a. Apply it to the draft with a new commit.
    b. Generalize it into a dated rule under "Learned rules" with the trigger example.
       The principle, not the instance: "never open with a rhetorical question", not
       "remove this question". A contradicting new rule marks the older learned rule
       superseded; never silently delete.
-6. On "final": reply with paste-ready text.
-7. Append to the log below: date, slug, correction rounds.
+7. On "final": the board link plus paste-ready text.
+8. Append to the log below: date, slug, correction rounds.
 
 ## Posting mechanics
 
